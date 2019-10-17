@@ -1,0 +1,245 @@
+#audio-control-panel {
+  box-sizing: border-box;
+  padding: 30px 20px;
+  text-align: center;
+  width: 439px;
+  position: fixed;
+  z-index: 5;
+  bottom: 0;
+  left: 0;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 88%, rgba(0, 0, 0, 0) 100%);
+}
+
+#audio-control-panel span.tooltip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 10px auto;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 50px;
+  background-color: #000;
+  box-shadow: 0 15px 35px rgba(147, 147, 224, 0.1),
+  0 5px 15px rgba(225, 225, 225, 0.16);
+
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+
+#playlist-wrapper {
+  height: 200px;
+  max-height: 200px;
+  overflow-y: scroll;
+  transition: height 1s;
+}
+
+#playlist-song-container li {
+  list-style: none;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+#playlist-song-container li.active p{
+  color: #0e83cd;
+
+}
+#playlist-wrapper.minimized {
+  height: 0;
+}
+
+
+#minimize-playlist {
+  position: absolute;
+  right: 0;
+}
+
+#upload-file-icon{
+  position: absolute;
+  left: 0;;
+}
+
+input#upload-file {
+  display: none;
+}
+
+#ctrlObject-control-panel.audio-player-open {
+  padding-bottom:425px;
+}
+
+#audio-player a:hover {
+  text-decoration: underline;
+}
+
+
+#audio-player ul {
+  padding: 0 0 10px 0;
+}
+
+#playlist-wrapper li {
+  list-style: none;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+#audio-player #song-time, #audio-player #song-name {
+  color: #fff;
+  padding-bottom: 10px;
+}
+
+#audio-player a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#audio-player .playlist-username {
+  opacity: .7;
+  font-size: 12px;
+}
+
+#audio-player .playlist-username, #audio-player .playlist-song-title {
+  text-align: left;
+  margin: 0;
+  cursor: pointer;
+}
+
+#soundcloud-link-resolver {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid #d4d4d4;
+  color: #fff;
+  line-height: 20px;
+  text-align: center;
+  padding: 5px 0;
+  background-color: black;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+
+
+.progress {
+  position: relative;
+}
+
+progress,
+progress[role] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  display: block;
+  background-size: auto;
+  background-color: #fff;
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+}
+
+progress[role]:after {
+  background-image: none;
+}
+
+progress[role] strong {
+  display: none;
+}
+
+progress,
+progress[role][aria-valuenow] {
+  background: transparent !important;
+}
+
+progress::-webkit-progress-bar {
+  background: transparent;
+}
+
+/* IE10 */
+progress#loadingBar {
+  position: absolute;
+  color: #ccc;
+}
+
+/* Firefox */
+progress#loadingBar::-moz-progress-bar {
+  position: absolute;
+  background: #ccc;
+}
+
+/* Chrome */
+progress#loadingBar::-webkit-progress-value {
+  position: absolute;
+  background: #ccc;
+}
+
+/* Polyfill */
+progress#loadingBar[aria-valuenow]:before {
+  position: absolute;
+  background: #ccc;
+}
+
+/* IE10 */
+progress#progressBar {
+  position: relative;
+  color: #0eb1ff;
+}
+
+/* Firefox */
+progress#progressBar::-moz-progress-bar {
+  position: relative;
+  background: #0eb1ff;
+}
+
+/* Chrome */
+progress#progressBar::-webkit-progress-value {
+  position: relative;
+  background: #0eb1ff;
+}
+
+/* Polyfill */
+progress#progressBar[aria-valuenow]:before {
+  position: relative;
+  background: #0eb1ff;
+}
+
+
+
+.ctrl-bttns {
+  position: relative;
+}
+
+#playlist-title {
+  color: #fff;
+  left: 0;
+}
+
+
+
+
+
+
+
+
+/*  For non-soundcloud audio integration*/
+#play-audio.audio-button {
+  width: 80px;
+}
+
+#play-audio:hover + span.tooltip {
+  bottom: 75%;
+  opacity: 0.9;
+}
+
+#upload-file-label {
+  padding: 0 20px;
+}
+
