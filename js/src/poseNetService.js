@@ -196,6 +196,13 @@ class PoseDetector {
   }
 }
 
+
+let poseDetectionInstance = new PoseDetector(window.innerWidth, window.innerHeight);
+var registeredCtrlElements = registeredCtrlElements || [];
+registeredCtrlElements.push(poseDetectionInstance);
+
+
+
 PoseDetector.prototype.render = function () {
   // We can call both functions to draw all keypoints and the skeletons
 

@@ -1,9 +1,6 @@
 /**
  *
  *    --  HERE ARE MY AMBITIONS - BEHOLD THEIR MULTITUDE!  --
- * todo - audio controls to be more like a remote - pause, play, stop, rewind, ff, volume
- *        - todo this would be better if we can queue music
- * todo - make a playlist, queue music, if possible get music from Spotify (can it be processed through fft though?)
  * todo - make a toggle to spin/rotate the inner and outer waves like the 3D ones
  * todo - make patterns by saving current config and make them triggerable (ie a pattern bank)
  * todo - put controls into an iFrame
@@ -17,19 +14,15 @@
 
 let audio;
 let bgColor = 0;
+var registeredCtrlElements = registeredCtrlElements || [];
 
 let s = (sketch) => {
   'use strict';
 
-  let centerWave;
-  let outerWaves;
-  let threeDWave;
-  let domCtrl = {};
-
 
   // keep all 'custom' code here
 
-  sketch.preload = (lodsong) => {
+  sketch.preload = () => {
     sketch.objects = {};
     sketch.objects.lambo = myp5.loadModel('/files/3d_obj/lp670.obj', true);
     sketch.objects.glock = myp5.loadModel('/files/3d_obj/Glock 3d.obj', true);
@@ -40,19 +33,7 @@ let s = (sketch) => {
     sketch.objects.whale = myp5.loadModel('/files/3d_obj/whale.obj', true);
     sketch.objects.shuttle = myp5.loadModel('/files/3d_obj/shuttle.obj', true);
 
-    // this is where each different "sketch" should change - this should be the only customizing
-    // all future controllable objects should integrate via this
-    // todo pass in these as arguments from another file?
-
-    centerWave = new CenterWave(sketch.windowWidth, sketch.windowHeight);
-    outerWaves = new OuterWaves(sketch.windowWidth, sketch.windowHeight);
-    threeDWave = new ThreeDWave(sketch.windowWidth, sketch.windowHeight);
-    poseInstance = new PoseDetector(sketch.windowWidth, sketch.windowHeight);
-
-    sketch.ctrlElementsArray = [];
-
-    sketch.ctrlElementsArray.push(centerWave, outerWaves, threeDWave, poseInstance);
-    // sketch.ctrlElementsArray.push(poseInstance, centerWave);
+    sketch.ctrlElementsArray = registeredCtrlElements;
   };
 
 
@@ -72,7 +53,7 @@ let s = (sketch) => {
     }
 
     // add all of the elements to a global variable to 'register' them
-    domCtrl = createDOMControls(sketch.ctrlElementsArray);
+    createDOMControls(sketch.ctrlElementsArray);
 
     // when everything is loaded open the control bar
     $("#settings-open").click();

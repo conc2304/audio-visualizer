@@ -272,6 +272,9 @@ class OuterWaves {
   }  // end constructor
 }
 
+let outerWavesInstance = new OuterWaves(window.innerWidth, window.innerHeight);
+var registeredCtrlElements = registeredCtrlElements || [];
+registeredCtrlElements.push(outerWavesInstance);
 
 // METHODS
 
@@ -317,8 +320,8 @@ OuterWaves.prototype.render = function () {
     s = this.ySpacing.currentValue * 2.5 * (i + 1);
 
     for (let x = 0; x < this.yPoints.length; x++) {
-      let xPos = x * this.xSpacing.currentValue - this.windowWidth / 2;
-      let yPos = myp5.height / 2 + this.yPoints[x] - this.windowHeight / 2;
+      let xPos = x * this.xSpacing.currentValue - myp5.windowWidth / 2;
+      let yPos = myp5.height / 2 + this.yPoints[x] - myp5.windowHeight / 2;
 
       if (this.shake === true) {
         xPos +=  myp5.noise(xPos) / this.noiseGain;

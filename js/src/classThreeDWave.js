@@ -514,7 +514,9 @@ class ThreeDWave {
   }
 }
 
-
+let threeDWaveInstance = new ThreeDWave(window.innerWidth, window.innerHeight);
+var registeredCtrlElements = registeredCtrlElements || [];
+registeredCtrlElements.push(threeDWaveInstance);
 // METHODS
 
 
