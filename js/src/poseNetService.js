@@ -1,6 +1,5 @@
 let video;
 let poses = [];
-let poseInstance;
 let pose;
 
 const partsToTrack = ['nose', 'rightWrist', 'rightElbow', 'leftElbow', 'leftWrist', 'rightAnkle', 'leftAnkle', 'leftHip', 'rightHip'];
@@ -415,7 +414,7 @@ class Boid {
   // Method to update location
   updateBoid() {
     // Update velocity
-    this.maxspeed = poseInstance.magnitude.currentValue;
+    this.maxspeed = poseDetectionInstance.magnitude.currentValue;
 
     this.velocity.add(this.acceleration);
     // Limit speed
@@ -438,16 +437,16 @@ class Boid {
     desired.mult(this.maxspeed);
     // Steering = Desired minus Velocity
     let steer = p5.Vector.sub(desired, this.velocity);
-    this.maxforce = myp5.map(poseInstance.magnitude.currentValue, poseInstance.magnitude.min, poseInstance.magnitude.min, 0.03, 1)
+    this.maxforce = myp5.map(poseDetectionInstance.magnitude.currentValue, poseDetectionInstance.magnitude.min, poseDetectionInstance.magnitude.min, 0.03, 1)
     steer.limit(this.maxforce); // Limit to maximum steering force
     return steer;
   }
   renderBoid() {
-    this.r = myp5.map(poseInstance.radius.currentValue, poseInstance.radius.min, poseInstance.radius.max, 1, 30, true);
+    this.r = myp5.map(poseDetectionInstance.radius.currentValue, poseDetectionInstance.radius.min, poseDetectionInstance.radius.max, 1, 30, true);
     // Draw a triangle rotated in the direction of velocity
     let theta = this.velocity.heading() + radians(90);
     myp5.noFill();
-    myp5.stroke(poseInstance.hue.currentValue, poseInstance.saturation.currentValue, 200);
+    myp5.stroke(poseDetectionInstance.hue.currentValue, poseDetectionInstance.saturation.currentValue, 200);
     myp5.strokeWeight(2);
     myp5.push();
     myp5.translate(this.position.x - myp5.width / 2, this.position.y - myp5.height / 2);
@@ -473,7 +472,7 @@ class Boid {
   // Separation
   // Method checks for nearby boids and steers away
   separateBoids(boids) {
-    let desiredseparation = myp5.map(poseInstance.trailLength.currentValue, poseInstance.trailLength.min, poseInstance.trailLength.max, 10, 60);
+    let desiredseparation = myp5.map(poseDetectionInstance.trailLength.currentValue, poseDetectionInstance.trailLength.min, poseDetectionInstance.trailLength.max, 10, 60);
     let steer = myp5.createVector(0, 0);
     let count = 0;
     // For every boid in the system, check if it's too close
@@ -715,7 +714,7 @@ function renderParticleNet() {
   for (var i = allParticles.length - 1; i > -1; i--) {
     allParticles[i].move();
 
-    if (allParticles[i].vel.mag() < myp5.map(poseInstance.magnitude.currentValue, poseInstance.magnitude.min, poseInstance.magnitude.max, 0.05,  0.5)) {
+    if (allParticles[i].vel.mag() < myp5.map(poseDetectionInstance.magnitude.currentValue, poseDetectionInstance.magnitude.min, poseDetectionInstance.magnitude.max, 0.05,  0.5)) {
       allParticles.splice(i, 1);
     }
   }
@@ -736,8 +735,8 @@ function renderParticleNet() {
       var p3 = allParticles[data[i + 2]];
 
       // Don't draw triangle if its area is too big.
-      var distThreshMax = myp5.map(poseInstance.trailLength.currentValue, poseInstance.trailLength.min, poseInstance.trailLength.max, 100, 500);
-      var distTreshMin = myp5.map(poseInstance.trailLength.currentValue, poseInstance.trailLength.min, poseInstance.trailLength.max, 5, 30);
+      var distThreshMax = myp5.map(poseDetectionInstance.trailLength.currentValue, poseDetectionInstance.trailLength.min, poseDetectionInstance.trailLength.max, 100, 500);
+      var distTreshMin = myp5.map(poseDetectionInstance.trailLength.currentValue, poseDetectionInstance.trailLength.min, poseDetectionInstance.trailLength.max, 5, 30);
 
       if (myp5.dist(p1.pos.x, p1.pos.y, p2.pos.x, p2.pos.y) > distThreshMax || myp5.dist(p1.pos.x, p1.pos.y, p2.pos.x, p2.pos.y) < distTreshMin) {
         continue;
@@ -754,15 +753,15 @@ function renderParticleNet() {
       // Base its hue by the particle's life.
       if (useFill) {
         myp5.noStroke();
-        myp5.fill(poseInstance.hue.currentValue + p1.life * 1.5, poseInstance.saturation.currentValue, 360);
+        myp5.fill(poseDetectionInstance.hue.currentValue + p1.life * 1.5, poseDetectionInstance.saturation.currentValue, 360);
       } else {
         myp5.noFill();
-        myp5.stroke(poseInstance.hue.currentValue + p1.life * 1.5, poseInstance.saturation.currentValue, 360);
+        myp5.stroke(poseDetectionInstance.hue.currentValue + p1.life * 1.5, poseDetectionInstance.saturation.currentValue, 360);
       }
 
-      myp5.strokeWeight(myp5.map(poseInstance.radius.currentValue, poseInstance.radius.min, poseInstance.radius.max, 1, 4))
+      myp5.strokeWeight(myp5.map(poseDetectionInstance.radius.currentValue, poseDetectionInstance.radius.min, poseDetectionInstance.radius.max, 1, 4))
       myp5.push();
-      myp5.scale(myp5.map(poseInstance.radius.currentValue, poseInstance.radius.min, poseInstance.radius.max, 1, 4));
+      myp5.scale(myp5.map(poseDetectionInstance.radius.currentValue, poseDetectionInstance.radius.min, poseDetectionInstance.radius.max, 1, 4));
       myp5.triangle(p1.pos.x, p1.pos.y,
         p2.pos.x, p2.pos.y,
         p3.pos.x, p3.pos.y);
