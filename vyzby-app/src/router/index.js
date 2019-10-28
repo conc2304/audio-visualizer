@@ -18,6 +18,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
+  {
+    path: '/splash-screen',
+    name: 'splash-screen',
+    component: () => import(/* webpackChunkName: "spash-screen" */ '../views/SplashScreen.vue'),
+  },
 ];
 
 const router = new VueRouter({
