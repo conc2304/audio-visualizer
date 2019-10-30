@@ -7,7 +7,7 @@
         <h2>{{ tagline}}</h2>
       </div>
       <div class="btn-wrapper">
-        <v-btn @click.stop="changeLocation()" outlined x-large color="white">{{ buttonText }}</v-btn>
+        <v-btn @click.stop="changeLocation()" dark x-large color="#0e83cd">{{ buttonText }}</v-btn>
         <i @click.stop="dialog = true" id="about" class="material-icons-outlined">info</i>
       </div>
     </div>
