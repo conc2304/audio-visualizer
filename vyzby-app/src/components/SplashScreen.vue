@@ -7,7 +7,7 @@
         <h2>{{ tagline}}</h2>
       </div>
       <div class="btn-wrapper">
-        <v-btn @click.stop="changeLocation()" outlined color="white">{{ buttonText }}</v-btn>
+        <v-btn @click.stop="changeLocation()" outlined x-large color="white">{{ buttonText }}</v-btn>
         <i @click.stop="dialog = true" id="about" class="material-icons-outlined">info</i>
       </div>
     </div>
@@ -54,30 +54,69 @@ export default {
     changeLocation,
   },
   mounted() {
-    console.log('mounted');
-    const script = function(p5) {
-      let speed = 2;
-      let posX = 0;
+    class Ball {
+      constructor(p5) {
+        this.Xv = 0;
+        this.Yv = 0;
+        this.pX = 0;
+        this.pY = 0;
 
-      // NOTE: Set up is here
+        this.X = p5.random(p5.windowWidth);
+        this.Y = p5.random(p5.windowHeight);
+        this.w = p5.random(1 / thold, thold);
+
+        this.render = function() {
+          if (!p5.mouseIsPressed) {
+            this.Xv /= spifac;
+            this.Yv /= spifac;
+          }
+          this.Xv += drag * (mX - this.X) * this.w;
+          this.Yv += drag * (mY - this.Y) * this.w;
+          this.X += this.Xv;
+          this.Y += this.Yv;
+          p5.line(this.X, this.Y, this.pX, this.pY);
+          this.pX = this.X;
+          this.pY = this.Y;
+        };
+      }
+    }
+
+    let thold = 5;
+    let spifac = 1.05;
+    let drag = 0.001;
+    let big = 500;
+    let bodies = [];
+    let mX = 0;
+    let mY = 0;
+
+    const script = function(p5) {
       p5.setup = _ => {
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
-        p5.ellipse(p5.width / 2, p5.height / 2, 500, 500);
+        p5.strokeWeight(1);
+        p5.fill(255, 255, 255);
+        p5.stroke(255, 255, 255, 5);
+        p5.background(0, 0, 0);
+        p5.smooth();
+        for (let i = 0; i < big; i++) {
+          console.log(i);
+          bodies[i] = new Ball(p5);
+        }
+        console.log('stope');
+        let traf = true;
       };
       // NOTE: Draw is here
       p5.draw = _ => {
-        p5.background(0);
-        const degree = p5.frameCount * 3;
-        const y = p5.sin(p5.radians(degree)) * 50;
+        if (p5.mouseIsPressed) {
+          console.log('test');
+          p5.background(0, 0, 0);
 
-        p5.push();
-        p5.translate(0, p5.height / 2);
-        p5.ellipse(posX, y, 50, 50);
-        p5.pop();
-        posX += speed;
-
-        if (posX > p5.width || posX < 0) {
-          speed *= -1;
+          mX += 0.3 * (p5.mouseX - mX);
+          mY += 0.3 * (p5.mouseY - mY);
+        }
+        mX += 0.3 * (p5.mouseX - mX);
+        mY += 0.3 * (p5.mouseY - mY);
+        for (let i = 0; i < big; i++) {
+          bodies[i].render();
         }
       };
     };
@@ -89,6 +128,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+*::selection {
+  // background: rgba(0,0,0,0); /* WebKit/Blink Browsers */
+}
+
 #splash-container {
   flex-direction: column;
   justify-content: center;
@@ -103,6 +147,10 @@ export default {
 
 .content {
   z-index: 1;
+    *::selection {
+    background: rgba(0,0,0,0); /* WebKit/Blink Browsers */
+    color: $color-primary-blue;
+  }
 }
 
 #splash-sketch-background {
@@ -120,14 +168,14 @@ export default {
 h1 {
   font-family: 'Montserrat', 'sans-serif';
   font-weight: 900;
-  font-size: 6.5rem;
+  font-size: 8.5rem;
   line-height: 1.5em;
 }
 
 h2 {
   font-family: 'Roboto', 'sans-serif';
   font-weight: 300;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   line-height: 1.15em;
 }
 
@@ -137,6 +185,7 @@ h2 {
 }
 
 #about {
+  font-size: 3rem;
   color: $color-primary-blue;
   display: block;
   margin: 20px 0;
