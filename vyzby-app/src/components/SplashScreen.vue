@@ -98,16 +98,13 @@ export default {
         p5.background(0, 0, 0);
         p5.smooth();
         for (let i = 0; i < big; i++) {
-          console.log(i);
           bodies[i] = new Ball(p5);
         }
-        console.log('stope');
         let traf = true;
       };
       // NOTE: Draw is here
       p5.draw = _ => {
         if (p5.mouseIsPressed) {
-          console.log('test');
           p5.background(0, 0, 0);
 
           mX += 0.3 * (p5.mouseX - mX);
