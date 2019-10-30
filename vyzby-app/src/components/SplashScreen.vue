@@ -23,6 +23,11 @@
 </template>
 
 <script>
+
+function goPlay() {
+  this.$emit('loc-change', 'main');
+}
+
 export default {
   data: () => ({
     title: 'VYZBY',
@@ -43,11 +48,10 @@ export default {
     ],
   }),
   methods: {
-    goPlay: () => {
-      this.$dispatch('loc-change', 'main');
-    },
+    goPlay,
   },
 };
+
 </script>
 
 <style lang="scss" scoped>
