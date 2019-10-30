@@ -1,14 +1,18 @@
 <template>
   <div id="splash-container">
-    <div class="title-bar">
-      <h1>{{ title }}</h1>
-      <h2>{{ tagline}}</h2>
+    <div id="splash-sketch-background"></div>
+    <div class="content">
+      <div class="title-bar">
+        <h1>{{ title }}</h1>
+        <h2>{{ tagline}}</h2>
+      </div>
+      <div class="btn-wrapper">
+        <v-btn @click.stop="changeLocation()" outlined color="white">{{ buttonText }}</v-btn>
+        <i @click.stop="dialog = true" id="about" class="material-icons-outlined">info</i>
+      </div>
     </div>
-    <div class="btn-wrapper">
-      <v-btn @click.stop="goPlay()" outlined color="white">{{ buttonText }}</v-btn>
-      <i @click.stop="dialog = true" id="about" class="material-icons-outlined">info</i>
-    </div>
-    <v-dialog v-model="dialog" max-width="350">
+
+    <v-dialog v-model="dialog" max-width="450">
       <v-card dark color="#000" elevation="10">
         <v-card-title class="headline">{{ dialogHeadline }}</v-card-title>
         <v-card-text>
@@ -23,8 +27,7 @@
 </template>
 
 <script>
-
-function goPlay() {
+function changeLocation() {
   this.$emit('loc-change', 'main');
 }
 
@@ -48,24 +51,68 @@ export default {
     ],
   }),
   methods: {
-    goPlay,
+    changeLocation,
+  },
+  mounted() {
+    console.log('mounted');
+    const script = function(p5) {
+      let speed = 2;
+      let posX = 0;
+
+      // NOTE: Set up is here
+      p5.setup = _ => {
+        p5.createCanvas(p5.windowWidth, p5.windowHeight);
+        p5.ellipse(p5.width / 2, p5.height / 2, 500, 500);
+      };
+      // NOTE: Draw is here
+      p5.draw = _ => {
+        p5.background(0);
+        const degree = p5.frameCount * 3;
+        const y = p5.sin(p5.radians(degree)) * 50;
+
+        p5.push();
+        p5.translate(0, p5.height / 2);
+        p5.ellipse(posX, y, 50, 50);
+        p5.pop();
+        posX += speed;
+
+        if (posX > p5.width || posX < 0) {
+          speed *= -1;
+        }
+      };
+    };
+    // NOTE: Use p5 as an instance mode
+    const P5 = require('p5');
+    new P5(script, 'splash-sketch-background');
   },
 };
-
 </script>
 
 <style lang="scss" scoped>
 #splash-container {
-  height: 100%;
-  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100vh;
   padding: 0;
   margin: 0;
   overflow: hidden;
   background-color: #000;
 }
 
+.content {
+  z-index: 1;
+}
+
+#splash-sketch-background {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
 .title-bar {
-  margin-top: 20%;
   color: $color-primary-blue;
   text-align: center;
 }
