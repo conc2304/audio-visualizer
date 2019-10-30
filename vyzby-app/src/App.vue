@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-content>
-      <HelloWorld v-if="location ==='home'"/>
-      <SplashScreen v-if="location === 'splash'"/>
+      <HelloWorld v-if="location ==='main'" />
+      <SplashScreen v-if="location === 'splash'" />
     </v-content>
   </v-app>
 </template>
@@ -20,9 +20,13 @@ export default {
   data: () => ({
     location: 'splash',
   }),
+  events: {
+    'loc-change': function (toLocation) {
+      this.location = toLocation;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>
