@@ -56,13 +56,13 @@ export default {
   mounted() {
     class Ball {
       constructor(p5) {
-        this.Xv = 0;
-        this.Yv = 0;
-        this.pX = 0;
-        this.pY = 0;
+        this.Xv = p5.random(0, p5.windowWidth);
+        this.Yv = p5.random(0, p5.windowHeight);
+        this.pX = p5.random(0, p5.windowWidth);
+        this.pY = p5.random(0, p5.windowHeight);
 
-        this.X = p5.random(p5.windowWidth);
-        this.Y = p5.random(p5.windowHeight);
+        this.X = p5.random(0, p5.windowWidth);
+        this.Y = p5.random(0, p5.windowHeight);
         this.w = p5.random(1 / thold, thold);
 
         this.render = function() {
@@ -74,7 +74,7 @@ export default {
           this.Yv += drag * (mY - this.Y) * this.w;
           this.X += this.Xv;
           this.Y += this.Yv;
-          p5.line(this.X, this.Y, this.pX, this.pY);
+          p5.line(p5.noise(p5.frameCount * 0.001 ) * 100 + this.X, p5.noise(p5.frameCount) * 20 + this.Y, this.pX, this.pY);
           this.pX = this.X;
           this.pY = this.Y;
         };
@@ -84,7 +84,7 @@ export default {
     let thold = 5;
     let spifac = 1.05;
     let drag = 0.001;
-    let big = 500;
+    let big = 250;
     let bodies = [];
     let mX = 0;
     let mY = 0;
@@ -94,30 +94,24 @@ export default {
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
         p5.strokeWeight(1);
         p5.fill(255, 255, 255);
-        p5.stroke(255, 255, 255, 5);
+        p5.stroke(255, 255, 255, 100);
         p5.background(0, 0, 0);
         p5.smooth();
         for (let i = 0; i < big; i++) {
           bodies[i] = new Ball(p5);
         }
-        let traf = true;
       };
-      // NOTE: Draw is here
-      p5.draw = _ => {
-        if (p5.mouseIsPressed) {
-          p5.background(0, 0, 0);
 
-          mX += 0.3 * (p5.mouseX - mX);
-          mY += 0.3 * (p5.mouseY - mY);
-        }
+      p5.draw = _ => {
+        p5.background(0, 0, 0, 10);
         mX += 0.3 * (p5.mouseX - mX);
         mY += 0.3 * (p5.mouseY - mY);
+
         for (let i = 0; i < big; i++) {
           bodies[i].render();
         }
       };
     };
-    // NOTE: Use p5 as an instance mode
     const P5 = require('p5');
     new P5(script, 'splash-sketch-background');
   },
@@ -125,11 +119,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-*::selection {
-  // background: rgba(0,0,0,0); /* WebKit/Blink Browsers */
-}
-
 #splash-container {
   flex-direction: column;
   justify-content: center;
@@ -144,8 +133,8 @@ export default {
 
 .content {
   z-index: 1;
-    *::selection {
-    background: rgba(0,0,0,0); /* WebKit/Blink Browsers */
+  *::selection {
+    background: rgba(0, 0, 0, 0); /* WebKit/Blink Browsers */
     color: $color-primary-blue;
   }
 }
