@@ -6,7 +6,7 @@
         h1 {{ title }}
         h2 {{ tagline }}
       .btn-wrapper
-        v-btn( dark x-large color="#0e83cd") {{ buttonText }}
+        v-btn( to='/visualizer' dark x-large color="#0e83cd") {{ buttonText }}
         i#about( @click.stop="dialog = true" class="material-icons-outlined") info
 
     v-dialog( v-model="dialog" max-width="450")
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-// import Particle from '@/js/ParticleMouseClass';
 import ParticleScript from '@/js/ParticleMouseClass';
 
 export default {

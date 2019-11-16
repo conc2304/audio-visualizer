@@ -1,21 +1,20 @@
 <template lang="pug">
-  v-app
-    v-content
-      router-view
+  #test
+    h1 Bnananas
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  components: {
-  },
+  name: 'visualizer',
   data: () => ({
   }),
-  events: {
+  methods: {},
+  mounted() {
+
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
+
 </style>
