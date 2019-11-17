@@ -15,7 +15,7 @@ import SettingsMenu from '@/components/SettingsMenu.vue';
 export default {
   name: 'visualizer',
   data: () => ({
-    menuOpen = true
+    menuOpen : true
   }),
   components: {
     SettingsMenu,
@@ -53,12 +53,7 @@ export default {
 <style lang="scss">
 
 i.material-icons {
-  z-index: 2;
-  font-size: 24px;
-  padding: 15px;
-  display: inline-block;
   color: #0e83cd;
-  vertical-align: middle;
   cursor: pointer;
 }
 
@@ -75,7 +70,7 @@ i.material-icons:hover {
 }
 
 i.material-icons:active, i.material-icons.inactive:active {
-  color: #0ecd78;
+  // color: #0ecd78;
 }
 
 </style>
