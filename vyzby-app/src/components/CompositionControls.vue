@@ -5,17 +5,17 @@
       :key="menuItemData.title"
       @click=""
     )
-      CompositionControlItem(
+      IconWithTooltip(
         :menuItemData='menuItemData'
       )
 </template>
 
 <script>
-import CompositionControlItem from '@/components/CompositionControlItem.vue';
+import IconWithTooltip from '@/components/IconWithTooltip.vue';
 
 export default {
   components: {
-    CompositionControlItem
+    IconWithTooltip
   },
   data: () => ({
     masterMenuItems: [

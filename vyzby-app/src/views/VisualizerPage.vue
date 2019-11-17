@@ -53,24 +53,24 @@ export default {
 <style lang="scss">
 
 i.material-icons {
-  color: #0e83cd;
+  color: $color-primary-blue;
   cursor: pointer;
 }
 
 i.material-icons.inactive {
-  color: #6f0000;
+  color: $color-inactive-red-hover;
 }
 
 i.material-icons.inactive:hover {
-  color: #aa0000;
+  color: $color-inactive-red
 }
 
 i.material-icons:hover {
-  color: #0eb1ff;
+  color: $color-secondary-blue;
 }
 
 i.material-icons:active, i.material-icons.inactive:active {
-  // color: #0ecd78;
+  // color: $color-active-green;
 }
 
 </style>
