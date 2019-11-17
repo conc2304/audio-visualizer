@@ -13,16 +13,29 @@
 
 <script>
 import SettingsMenu from '@/components/SettingsMenu.vue';
+// import ParticleScript from '@/js/sketches/ParticleMouseClass';
+
+import Visualizer from '@/js/sketches/sketchVisualizer';
+
+
+
+
 export default {
   name: 'visualizer',
   data: () => ({
-    menuOpen : true
+    menuOpen: true,
   }),
   components: {
     SettingsMenu,
   },
   methods: {},
-  mounted() {},
+  mounted() {
+    const P5 = require('p5');
+    new P5(Visualizer, 'sketch-container');
+
+    // const P5 = require('p5');
+    // new P5(ParticleScript, 'splash-sketch-background');
+  },
 };
 </script>
 

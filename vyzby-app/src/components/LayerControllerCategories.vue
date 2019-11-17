@@ -1,7 +1,7 @@
 <template lang="pug">
 
   #controller-property-categories
-    v-expansion-panels( accordion focusable="false")
+    v-expansion-panels( accordion focusable=false)
       v-expansion-panel(
         v-for="(item,i) in 5"
         :key="i"

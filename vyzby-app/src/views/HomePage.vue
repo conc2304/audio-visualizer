@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import ParticleScript from '@/js/ParticleMouseClass';
+import ParticleScript from '@/js/sketches/ParticleMouseClass';
 
 export default {
   data: () => ({
