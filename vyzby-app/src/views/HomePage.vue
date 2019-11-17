@@ -16,6 +16,8 @@
           p {{ dialogTagline }}
           ul
             li( v-for="(point, index) in dialogPoints" :key="index") {{ point }}
+          .to-about
+            v-btn( to='/about' dark large color="#0e83cd" outlined) About
 </template>
 
 <script>
@@ -98,6 +100,11 @@ h2 {
 .btn-wrapper {
   margin-top: 20%;
   text-align: center;
+}
+
+.to-about {
+  text-align: center;
+  margin: 20px;
 }
 
 #about {

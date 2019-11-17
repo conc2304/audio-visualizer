@@ -6,7 +6,8 @@
       title="Open Menu"
       data-helper="Open the Master menu"
       v-show="menuOpen"
-    ) ☰
+    )
+      v-icon menu
     SettingsMenu
 </template>
 
@@ -48,29 +49,4 @@ export default {
   padding: 15px;
   float: left;
 }
-</style>
-
-<style lang="scss">
-
-i.material-icons {
-  color: $color-primary-blue;
-  cursor: pointer;
-}
-
-i.material-icons.inactive {
-  color: $color-inactive-red-hover;
-}
-
-i.material-icons.inactive:hover {
-  color: $color-inactive-red
-}
-
-i.material-icons:hover {
-  color: $color-secondary-blue;
-}
-
-i.material-icons:active, i.material-icons.inactive:active {
-  // color: $color-active-green;
-}
-
 </style>

@@ -9,7 +9,7 @@
           v-on="on"
           class="global-control helper"
         ) {{ menuItemData.mdIconText }}
-      span  {{ menuItemData.title }}
+      span.test  {{ menuItemData.title }}
 </template>
 
 <script>
@@ -39,5 +39,10 @@ i.menu-icon.inactive:hover {
 
 i.menu-icon:hover {
   color: $color-secondary-blue;
+}
+
+.v-tooltip__content {
+  background-color: #000;
+  border: 1px solid #555555
 }
 </style>

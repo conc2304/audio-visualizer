@@ -1,30 +1,41 @@
 <template lang="pug">
 
   v-card#control-panel(
-    class="mx-auto"
     dark
   )
-    #master-controls-container()
+    #master-controls-container
       v-list-item( to="/")
         v-icon home
       v-divider
       CompositionControls
+      v-divider
+      LayerSelector(
+        :layers="compositionLayers"
+      )
+      v-divider
 
     #layer-controls-container
-      LayerControlProperties
+      h3 Layer Controls
+      LayerControllerCategories
+
 
 </template>
 
 <script>
 import CompositionControls from '@/components/CompositionControls.vue';
-import LayerControlProperties from '@/components/LayerControlProperties.vue';
+import LayerControllerCategories from '@/components/LayerControllerCategories.vue';
+import LayerSelector from '@/components/LayerSelector.vue';
+
 
 export default {
   components: {
     CompositionControls,
-    LayerControlProperties,
+    LayerControllerCategories,
+    LayerSelector,
   },
-  data: () => ({}),
+  data: () => ({
+    compositionLayers: 3,
+  }),
 };
 </script>
 
@@ -38,11 +49,12 @@ export default {
   background-color: #000000bd;
   overflow: hidden;
   border-right: 1px solid #292929;
+  border-radius: 0;
 }
 
 #master-controls-container {
   background-color: #424242;
-  width: 56px;
+  width: 60px;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -54,7 +66,12 @@ export default {
 }
 
 #layer-controls-container {
-  width: 400px;
+  width: 300px;
+
+  h3 {
+    text-align: center;
+    border-bottom: 1px solid #fff;
+  }
 }
 
 #layer-control-menu {
@@ -62,4 +79,6 @@ export default {
   overflow-y: scroll;
   border-right: 1px solid #292929;
 }
+
+
 </style>

@@ -9,12 +9,19 @@
         v-expansion-panel-header.layer-name Layer {{ i }}
           template( v-slot:actions)
             v-icon expand_more
-        v-expansion-panel-content banana
+        v-expansion-panel-content
+          LayerControllerGroupDropown
+
 </template>
 
 <script>
+import LayerControllerGroupDropown from '@/components/LayerControllerGroupDropown.vue';
+
 export default {
   name: 'LayerControlProperties',
+  components: {
+    LayerControllerGroupDropown,
+  },
   data: () => ({}),
 };
 </script>
@@ -28,6 +35,7 @@ export default {
   }
 }
 
+
 .layer-name {
   font-size: 18px;
   font-weight: bold;
@@ -35,5 +43,16 @@ export default {
 
 h2 {
   text-align: center;
+}
+</style>
+
+<style lang="scss">
+
+#layer-control-inner .v-expansion-panel-content__wrap {
+  padding: 0;
+}
+
+.v-expansion-panel-header {
+  border-radius: 0;
 }
 </style>

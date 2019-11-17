@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-list(dense nav)
+  v-list( dense nav)
     v-list-item(
       v-for="menuItemData in masterMenuItems"
       :key="menuItemData.title"
