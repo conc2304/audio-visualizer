@@ -1,23 +1,31 @@
 <template lang="pug">
+  #settings-menubar
 
-  v-card#control-panel(
-    dark
-  )
-    #master-controls-container
-      v-list-item( to="/")
-        v-icon home
-      v-divider
-      CompositionControls
-      v-divider
-      LayerSelector(
-        :layers="compositionLayers"
-      )
-      v-divider
+    #toggle-layer-controls-container( v-if="!menuOpen")
+      v-card( dark)
+        v-list-item( @click="menuOpen = true")
+          v-icon menu
 
-    #layer-controls-container
-      h3 Layer Controls
-      LayerControllerCategories
+    v-card#control-panel(
+      dark
+    )
+      #master-controls-container
+        v-list-item( to="/")
+          v-icon home
+        v-divider
+        CompositionControls
+        v-divider
+        LayerSelector(
+          :layers="compositionLayers"
+        )
+        v-divider
 
+      #layer-controls-container( v-if="menuOpen")
+        .layer-control-header
+          h3 Layer Controls
+          v-list-item.close( @click="menuOpen = false")
+            v-icon close
+        LayerControllerCategories
 
 </template>
 
@@ -25,7 +33,6 @@
 import CompositionControls from '@/components/CompositionControls.vue';
 import LayerControllerCategories from '@/components/LayerControllerCategories.vue';
 import LayerSelector from '@/components/LayerSelector.vue';
-
 
 export default {
   components: {
@@ -35,12 +42,13 @@ export default {
   },
   data: () => ({
     compositionLayers: 3,
+    menuOpen: false,
   }),
 };
 </script>
 
 <style lang="scss" scoped>
-
+$subtle_boarder: rgba(255, 255, 255, 0.12);
 #control-panel {
   position: absolute;
   top: 0;
@@ -48,11 +56,12 @@ export default {
   left: 0;
   background-color: #000000bd;
   overflow: hidden;
-  border-right: 1px solid #292929;
+  border-right: 1px solid $subtle_boarder;
   border-radius: 0;
 }
 
 #master-controls-container {
+  position: relative;
   background-color: #424242;
   width: 60px;
   height: 100%;
@@ -60,7 +69,8 @@ export default {
   overflow-x: hidden;
 }
 
-#master-controls-container, #layer-controls-container {
+#master-controls-container,
+#layer-controls-container {
   display: inline-block;
   vertical-align: top;
 }
@@ -70,7 +80,7 @@ export default {
 
   h3 {
     text-align: center;
-    border-bottom: 1px solid #fff;
+    line-height: 48px;
   }
 }
 
@@ -80,5 +90,28 @@ export default {
   border-right: 1px solid #292929;
 }
 
+#toggle-layer-controls-container {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  background-color: #424242;
+  border-left: 1px solid $subtle_boarder;
+  border-radius: 0 10px 10px 0;
+  i {
+    color: #fff;
+  }
+}
 
+.layer-control-header {
+  position: relative;
+  height: 50px;
+  border-bottom: 1px solid #fff;
+
+  .close {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
 </style>

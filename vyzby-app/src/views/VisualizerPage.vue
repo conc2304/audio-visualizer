@@ -1,13 +1,6 @@
 <template lang="pug">
   div#visualizer-wrapper
     #sketch-container
-
-    #settings-open.helper(
-      title="Open Menu"
-      data-helper="Open the Master menu"
-      v-show="menuOpen"
-    )
-      v-icon menu
     SettingsMenu
 </template>
 
