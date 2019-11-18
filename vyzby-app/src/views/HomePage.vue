@@ -12,17 +12,19 @@
           x-large
           dark
         ) Go Play
-        v-btn(
-          @click.stop="loginDialog = true"
-          color="#0e83cd"
-          outlined
-          large
-          dark
-        ) Login
-        i#about.material-icons-outlined(
-          @click.stop="infoDialog = true"
-        ) info
-
+        .user-wrapper( :user-login-event="updateUser")
+          p.username( v-if="user.loggedIn && user.username != ''") Welcome Back {{ user.username }} !
+          v-btn(
+            v-else
+            @click.stop="loginDialog = true"
+            color="#0e83cd"
+            outlined
+            large
+            dark
+          ) Login
+          i#about.material-icons-outlined(
+            @click.stop="infoDialog = true"
+          ) info
 
     v-dialog( v-model="infoDialog" max-width="450")
       v-card( dark color="#000" elevation="10")
@@ -54,6 +56,10 @@ export default {
     tagline: 'A visceral interactive digital canvas to play and create in.',
     loginDialog: false,
     infoDialog: false,
+    user: {
+      username: '',
+      loggedIn: false,
+    },
     dialogHeadline: 'How to play',
     dialogTagline:
       "VYZBY is an interactive audio visualizer that let's you interact with in in many ways.",
@@ -67,10 +73,25 @@ export default {
       'Use your body as a brush via the webcam.  ** Only available on some layers',
     ],
   }),
-  methods: {},
+  methods: {
+    updateUser(userObj) {
+      console.log('login complete');
+      console.log(userObj);
+      this.username = userObj.username;
+      this.userLoggedIn = userObj.loggedIn;
+    },
+  },
   mounted() {
     const P5 = require('p5');
     new P5(ParticleScript, 'splash-sketch-background');
+
+    const userObj = JSON.parse(localStorage.getItem('user'));
+    console.log('userObj');
+    console.log(userObj);
+    if (userObj) {
+      this.user.username = userObj.username;
+      this.user.loggedIn = userObj.loggedIn;
+    }
   },
 };
 </script>
@@ -127,6 +148,9 @@ h2 {
   text-align: center;
 }
 
+.user-wrapper {
+  margin: 15px auto;
+}
 .to-about {
   text-align: center;
   margin: 20px;
@@ -145,5 +169,9 @@ h2 {
 }
 .headline {
   text-align: center;
+}
+.username {
+  font-size: 24px;
+  color: #fff;
 }
 </style>

@@ -8,9 +8,6 @@
         :counter=25
         v-model.trim="$v.username.$model"
       )
-    //- .error(v-if="!$v.username.required") Username is required
-    //- .error(v-if="!$v.username.minLength")
-    //-   | Username must have at least {{$v.username.$params.minLength.min}} letters.
 
     .submission-wrapper
       v-btn(
@@ -54,7 +51,12 @@ export default {
         this.submitStatus = 'PENDING';
         setTimeout(() => {
           this.submitStatus = 'OK';
-          localStorage.setItem('user', JSON.stringify(this.username));
+          const userObj = {
+            loggedIn: true,
+            username: this.username,
+          };
+          this.$emit('user-login-event', userObj);
+          localStorage.setItem('user', JSON.stringify(userObj));
         }, 500);
       }
     },
