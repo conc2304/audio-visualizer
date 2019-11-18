@@ -6,10 +6,25 @@
         h1 {{ title }}
         h2 {{ tagline }}
       .btn-wrapper
-        v-btn( to='/visualizer' dark x-large color="#0e83cd") {{ buttonText }}
-        i#about( @click.stop="dialog = true" class="material-icons-outlined") info
+        v-btn(
+          to='/visualizer'
+          color="#0e83cd"
+          x-large
+          dark
+        ) Go Play
+        v-btn(
+          @click.stop="loginDialog = true"
+          color="#0e83cd"
+          outlined
+          large
+          dark
+        ) Login
+        i#about.material-icons-outlined(
+          @click.stop="infoDialog = true"
+        ) info
 
-    v-dialog( v-model="dialog" max-width="450")
+
+    v-dialog( v-model="infoDialog" max-width="450")
       v-card( dark color="#000" elevation="10")
         v-card-title.headline {{ dialogHeadline }}
         v-card-text
@@ -18,17 +33,27 @@
             li( v-for="(point, index) in dialogPoints" :key="index") {{ point }}
           .to-about
             v-btn( to='/about' dark large color="#0e83cd" outlined) About
+
+    v-dialog( v-model="loginDialog" max-width="450")
+      v-card( dark color="#000" elevation="10")
+        v-card-title.headline Login
+        v-card-text
+          LoginComponent
 </template>
 
 <script>
 import ParticleScript from '@/js/sketches/ParticleMouseClass';
+import LoginComponent from '@/components/LoginComponent.vue';
 
 export default {
+  components: {
+    LoginComponent,
+  },
   data: () => ({
     title: 'VYZBY',
     tagline: 'A visceral interactive digital canvas to play and create in.',
-    buttonText: 'Go Play',
-    dialog: false,
+    loginDialog: false,
+    infoDialog: false,
     dialogHeadline: 'How to play',
     dialogTagline:
       "VYZBY is an interactive audio visualizer that let's you interact with in in many ways.",
