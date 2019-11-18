@@ -35,6 +35,14 @@ export default {
       submitStatus: null,
     };
   },
+
+  props: {
+    isLoggedIn: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   validations: {
     username: {
       required,
@@ -47,7 +55,6 @@ export default {
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR';
       } else {
-        // do your submit logic here
         this.submitStatus = 'PENDING';
         setTimeout(() => {
           this.submitStatus = 'OK';
@@ -55,9 +62,15 @@ export default {
             loggedIn: true,
             username: this.username,
           };
-          this.$emit('user_login_event', userObj);
           localStorage.setItem('user', JSON.stringify(userObj));
+
+          this.$emit('user_login_event', userObj);
+
+          this.$v.$reset();
+          this.submitStatus = null,
+          this.username = '';
         }, 500);
+
       }
     },
   },

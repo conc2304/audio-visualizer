@@ -12,27 +12,27 @@
           x-large
           dark
         ) Go Play
-        .user-wrapper( v-on:user_login_event="updateUser")
-          .logged-in-wrapper( v-if="user.loggedIn && user.username != ''")
-            p.username Welcome Back {{ user.username }} !
-            v-btn(
-              @click.stop="userLogout"
-              color="#0e83cd"
-              outlined
-              large
-              dark
-            ) Logout
-          .logged-out-wrapper( v-else)
-            v-btn(
-              @click.stop="loginDialog = true"
-              color="#0e83cd"
-              outlined
-              large
-              dark
-            ) Login
-          i#about.material-icons-outlined(
-            @click.stop="infoDialog = true"
-          ) info
+      .user-wrapper
+        .logged-in-wrapper( v-if="user.loggedIn && user.username != ''")
+          p.username Welcome {{ user.username }} !
+          v-btn(
+            @click.stop="userLogout"
+            color="#0e83cd"
+            outlined
+            large
+            dark
+          ) Logout
+        .logged-out-wrapper( v-else)
+          v-btn(
+            @click.stop="loginDialog = true"
+            color="#0e83cd"
+            outlined
+            large
+            dark
+          ) Login
+        i#about.material-icons-outlined(
+          @click.stop="infoDialog = true"
+        ) info
 
     v-dialog( v-model="infoDialog" max-width="450")
       v-card( dark color="#000" elevation="10")
@@ -48,7 +48,10 @@
       v-card( dark color="#000" elevation="10")
         v-card-title.headline Login
         v-card-text
-          LoginComponent
+          LoginComponent(
+            v-on:user_login_event="updateUser"
+            :userLoggedIn="user.loggedIn"
+          )
 </template>
 
 <script>
@@ -85,8 +88,9 @@ export default {
     updateUser(userObj) {
       console.log('login complete');
       console.log(userObj);
-      this.username = userObj.username;
-      this.userLoggedIn = userObj.loggedIn;
+      this.user.username = userObj.username;
+      this.user.loggedIn = userObj.loggedIn;
+      this.loginDialog = false;
     },
     userLogout() {
       console.log('test')
@@ -141,6 +145,7 @@ export default {
 .title-bar {
   color: $color-primary-blue;
   text-align: center;
+  margin-bottom: 2%;
 }
 
 h1 {
@@ -157,13 +162,12 @@ h2 {
   line-height: 1.15em;
 }
 
-.btn-wrapper {
-  margin-top: 20%;
+.btn-wrapper, .user-wrapper {
   text-align: center;
 }
 
 .user-wrapper {
-  margin: 15px auto;
+  margin: 10% auto;
 }
 .to-about {
   text-align: center;
