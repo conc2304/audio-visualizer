@@ -15,15 +15,14 @@ import IconWithTooltip from '@/components/IconWithTooltip.vue';
 
 export default {
   components: {
-    IconWithTooltip
+    IconWithTooltip,
   },
   data: () => ({
     masterMenuItems: [
       {
         mdIconText: 'close',
         id: 'close-menu',
-        tooltipText:
-          'Close the Layer Controller Menu',
+        tooltipText: 'Close the Layer Controller Menu',
         title: 'Close Menu',
         function: '',
       },
@@ -79,7 +78,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 #settings-close {
   position: absolute;
   top: 0;
@@ -108,5 +106,4 @@ export default {
   padding: 0 20px;
   text-align: center;
 }
-
 </style>
