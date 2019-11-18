@@ -12,16 +12,24 @@
           x-large
           dark
         ) Go Play
-        .user-wrapper( :user-login-event="updateUser")
-          p.username( v-if="user.loggedIn && user.username != ''") Welcome Back {{ user.username }} !
-          v-btn(
-            v-else
-            @click.stop="loginDialog = true"
-            color="#0e83cd"
-            outlined
-            large
-            dark
-          ) Login
+        .user-wrapper( v-on:user_login_event="updateUser")
+          .logged-in-wrapper( v-if="user.loggedIn && user.username != ''")
+            p.username Welcome Back {{ user.username }} !
+            v-btn(
+              @click.stop="userLogout"
+              color="#0e83cd"
+              outlined
+              large
+              dark
+            ) Logout
+          .logged-out-wrapper( v-else)
+            v-btn(
+              @click.stop="loginDialog = true"
+              color="#0e83cd"
+              outlined
+              large
+              dark
+            ) Login
           i#about.material-icons-outlined(
             @click.stop="infoDialog = true"
           ) info
@@ -79,6 +87,12 @@ export default {
       console.log(userObj);
       this.username = userObj.username;
       this.userLoggedIn = userObj.loggedIn;
+    },
+    userLogout() {
+      console.log('test')
+      localStorage.removeItem('user');
+      this.user.username = '';
+      this.user.loggedIn = false;
     },
   },
   mounted() {

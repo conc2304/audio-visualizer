@@ -55,7 +55,7 @@ export default {
             loggedIn: true,
             username: this.username,
           };
-          this.$emit('user-login-event', userObj);
+          this.$emit('user_login_event', userObj);
           localStorage.setItem('user', JSON.stringify(userObj));
         }, 500);
       }
