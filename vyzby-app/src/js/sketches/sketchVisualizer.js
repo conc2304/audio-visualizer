@@ -11,6 +11,7 @@
 
 
 import CenterWave from '@/js/sketches/classCenterWave';
+import renderPolygon from '@/js/services/renderPolygon';
 
 var registeredCtrlElements = registeredCtrlElements || [];
 
@@ -35,8 +36,11 @@ const VisualizerSketch = (p5) => {
     p5.objects.whale = p5.loadModel('@/assets/3d_obj/whale.obj', true);
     p5.objects.shuttle = p5.loadModel('@/assets/3d_obj/shuttle.obj', true);
 
-    const centerWaveInstance = new CenterWave(window.innerWidth, window.innerHeight, p5);
-    registeredCtrlElements.push(centerWaveInstance);
+    registeredCtrlElements[0] = new CenterWave(window.innerWidth, window.innerHeight, p5);
+
+    // TODO this keeps creating a new instance when we land on the page,
+    // const centerWaveInstance = new CenterWave(window.innerWidth, window.innerHeight, p5);
+    // registeredCtrlElements.push(centerWaveInstance);
 
     p5.ctrlElementsArray = registeredCtrlElements;
   };
@@ -105,14 +109,14 @@ const VisualizerSketch = (p5) => {
       if (!p5.ctrlElementsArray.hasOwnProperty(ctrlElement)) {
         continue;
       }
-      tempObj =  p5.ctrlElementsArray[ctrlElement];
+
       // don't render an object if we have made it not visible it
-      if (tempObj.bypass === true) {
+      if (p5.ctrlElementsArray[ctrlElement].bypass === true) {
         continue;
       }
 
-      tempObj.easeInto();
-      tempObj.render(p5);
+      p5.ctrlElementsArray[ctrlElement].easeInto();
+      p5.ctrlElementsArray[ctrlElement].render(p5);
     }
   };
 
