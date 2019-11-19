@@ -4,7 +4,7 @@
  * todo - make a toggle to spin/rotate the inner and outer waves like the 3D ones
  * todo - make patterns by saving current config and make them triggerable (ie a pattern bank)
  * todo - put controls into an iFrame
- * todo - convert this entire thing into an angular web app #Angular8!
+ * todo - convert this entire thing into an web app
  * todo - loading animation
  *
  */
@@ -44,8 +44,6 @@ const VisualizerSketch = (p5) => {
 
   p5.setup = () => {
 
-
-
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.polygon = renderPolygon;
     p5.colorMode(p5.HSB);
@@ -58,12 +56,6 @@ const VisualizerSketch = (p5) => {
       let ctrlObjectName = p5.ctrlElementsArray[ctrlElement].constructor.name;
       p5[`get${ctrlObjectName}`] = () => p5.ctrlElementsArray[ctrlElement];
     }
-
-    // add all of the elements to a global variable to 'register' them
-    // createDOMControls(p5.ctrlElementsArray);
-
-    // when everything is loaded open the control bar
-    // $("#settings-open").click();
 
     // p5setupPoseNet(p5);
   };
@@ -124,22 +116,6 @@ const VisualizerSketch = (p5) => {
     }
   };
 
-
-};
-
-
-
-// todo - this probably needs to be moved to a new file
-const renderPolygon = function (x, y, radius, numPoints) {
-  'use strict';
-  const angle = p5.TWO_PI / numPoints;
-  p5.beginShape();
-  for (let a = 0; a < p5.TWO_PI; a += angle) {
-    let sx = x + p5.cos(a) * radius;
-    let sy = y + p5.sin(a) * radius;
-    p5.vertex(sx, sy);
-  }
-  p5.endShape(p5.CLOSE);
 };
 
 
