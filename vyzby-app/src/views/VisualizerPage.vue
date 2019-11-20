@@ -6,7 +6,7 @@
 
 <script>
 import SettingsMenu from '@/components/SettingsMenu.vue';
-import Visualizer from '@/js/sketches/sketchVisualizer';
+import Visualizer from '@/js/sketches/SketchBaseVisualizer';
 
 export default {
   name: 'visualizer',

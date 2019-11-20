@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import ParticleScript from '@/js/sketches/ParticleMouseClass';
+import ParticleScript from '@/js/sketches/SketchBaseHomePage';
 import LoginComponent from '@/components/LoginComponent.vue';
 
 export default {
