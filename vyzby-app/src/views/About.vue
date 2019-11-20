@@ -3,6 +3,8 @@
     h1( v-if="title") {{ title }}
     h3( v-if="subtitle") {{ subtitle }}
 
+    p sorry this page is boring
+
     nav
       ul
         li( v-for='link in links' :key='link')
