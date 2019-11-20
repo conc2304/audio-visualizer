@@ -57,7 +57,6 @@ CenterWave.prototype.calcWave = function(p5) {
 /**
  * Paint the object onto the screen based on the object's attributes.
  */
-
 CenterWave.prototype.render = function(p5) {
   if (this.xSpacing.currentValue <= 0) {
     this.xSpacing.currentValue = this.xSpacing.min / 2;

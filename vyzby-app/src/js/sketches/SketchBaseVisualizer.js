@@ -33,13 +33,6 @@ const VisualizerSketch = (p5) => {
     p5.objects.whale = p5.loadModel('@/assets/3d_obj/whale.obj', true);
     p5.objects.shuttle = p5.loadModel('@/assets/3d_obj/shuttle.obj', true);
 
-    // registeredCtrlElements[0] = new CenterWave(window.innerWidth, window.innerHeight, p5);
-
-
-    // TODO this keeps creating a new instance when we land on the page,
-    // const centerWaveInstance = new CenterWave(window.innerWidth, window.innerHeight, p5);
-    // registeredCtrlElements.push(centerWaveInstance);
-
     p5.ctrlElementsArray = RegisteredSketches;
   };
 
@@ -71,10 +64,12 @@ const VisualizerSketch = (p5) => {
         continue;
       }
 
-      p5.ctrlElementsArray[ctrlElement].width = p5.windowWidth;
+      p5.ctrlElementsArray[ctrlElement].windowWidth = p5.windowWidth;
       p5.ctrlElementsArray[ctrlElement].waveWidth = p5.windowWidth + 200;
-      p5.ctrlElementsArray[ctrlElement].height = p5.windowHeight;
+      p5.ctrlElementsArray[ctrlElement].windowHeight = p5.windowHeight;
     }
+    // console.log('teste')
+    // console.log(p5.windowHeight);
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
   };
 
