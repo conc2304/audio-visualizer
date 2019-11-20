@@ -28,21 +28,15 @@ export default {
 
   watch: {
     sketchSelected(newValue, oldValue) {
-      console.log('select TRIGGERED');
-      console.log(newValue);
       this.propertyCategories = this.getPropertyCategories();
     }
   },
-
-  computed: {},
 
   methods: {
     getPropertyCategories() {
       let categories = [];
       for (let property in this.sketchSelected) {
-        // console.log(this.sketchSelected[property]);
         const category = this.sketchSelected[property].category;
-        console.log(category);
         if (category && !categories.includes(category)) {
           categories.push(category);
         }
@@ -53,7 +47,6 @@ export default {
   },
 
   mounted() {
-    console.log(this);
     this.propertyCategories = this.getPropertyCategories();
   },
 };

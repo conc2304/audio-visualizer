@@ -56,8 +56,6 @@ export default {
   methods: {
 
     updateSketchSelected(sketchSelected) {
-      console.log('selectedLayer');
-      console.log(sketchSelected);
       this.menuOpen = true;
       this.sketchSelected = sketchSelected;
     }
