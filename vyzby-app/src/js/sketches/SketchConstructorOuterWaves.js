@@ -37,7 +37,7 @@ class OuterWaves {
     ]);
 
     this.yPoints = new Array(Math.floor(this.waveWidth / this.xSpacing.currentValue));
-  } // end constructor
+  }
 }
 
 /**
@@ -159,6 +159,5 @@ OuterWaves.prototype.renderShape = function(xPos, yPos, radius, spacing, p5) {
  * For each attribute transition from the current value to the target value
  */
 OuterWaves.prototype.easeInto = easeInto;
-
 
 export default OuterWaves;
