@@ -4,9 +4,9 @@
 
     v-list( dense nav)
       v-list-item(
-        v-for="(layer, i) in layers"
+        v-for="(sketch, i) in sketches"
         :key="i"
-        @click=""
+        @click="selectLayer(i)"
       )
         v-icon.menu-icon filter_{{ i+1 }}
 </template>
@@ -17,7 +17,19 @@ export default {
     layers: {
       type: Number,
     },
+    sketches: {
+      type: Array,
+    },
   },
+
+  methods: {
+    selectLayer(layerIndex) {
+      console.log(`Layer Selected ${layerIndex}`);
+      this.$emit('layer_selected', this.sketches[layerIndex]);
+    },
+  },
+
+  mounted() {},
 };
 </script>
 
@@ -42,7 +54,7 @@ i.menu-icon.inactive {
 }
 
 i.menu-icon.inactive:hover {
-  color: $color-inactive-red
+  color: $color-inactive-red;
 }
 
 i.menu-icon:hover {

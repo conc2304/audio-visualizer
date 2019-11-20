@@ -68,8 +68,7 @@ const VisualizerSketch = (p5) => {
       p5.ctrlElementsArray[ctrlElement].waveWidth = p5.windowWidth + 200;
       p5.ctrlElementsArray[ctrlElement].windowHeight = p5.windowHeight;
     }
-    // console.log('teste')
-    // console.log(p5.windowHeight);
+
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
   };
 

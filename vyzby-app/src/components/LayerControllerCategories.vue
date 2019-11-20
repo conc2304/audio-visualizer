@@ -3,10 +3,10 @@
   #controller-property-categories
     v-expansion-panels( accordion focusable=false)
       v-expansion-panel(
-        v-for="(item,i) in 5"
+        v-for="(category, i) in propertyCategories"
         :key="i"
       )
-        v-expansion-panel-header.layer-name Group {{ i }}
+        v-expansion-panel-header.layer-name  {{category }}
           template( v-slot:actions)
             v-icon expand_more
         v-expansion-panel-content  actual controls
@@ -16,8 +16,37 @@
 export default {
   name: 'LayerControllerCategories',
   components: {},
-  data: () => ({}),
-  props: {},
+  data: () => ({
+    propertyCategories: [],
+  }),
+  props: {
+    sketchSelected: {
+      type: Object,
+    },
+  },
+
+  computed: {},
+
+  methods: {
+    getPropertyCategories() {
+      let categories = [];
+      for (let property in this.sketchSelected) {
+        // console.log(this.sketchSelected[property]);
+        const category = this.sketchSelected[property].category;
+        console.log(category);
+        if (category && !categories.includes(category)) {
+          categories.push(category);
+        }
+      }
+
+      return categories;
+    },
+  },
+
+  mounted() {
+    console.log(this);
+    this.propertyCategories = this.getPropertyCategories();
+  },
 };
 </script>
 

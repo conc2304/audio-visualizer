@@ -17,6 +17,8 @@
         v-divider
         LayerSelector(
           :layers="compositionLayers"
+          :sketches="RegisteredSketches"
+          v-on:layer_selected="updateSketchSelected"
         )
         v-divider
 
@@ -25,7 +27,9 @@
           h3 Layer Controls
           v-list-item.close( @click="menuOpen = false")
             v-icon close
-        LayerControllerCategories
+        LayerControllerCategories(
+          :sketchSelected="sketchSelected"
+        )
 
 </template>
 
@@ -33,6 +37,8 @@
 import CompositionControls from '@/components/CompositionControls.vue';
 import LayerControllerCategories from '@/components/LayerControllerCategories.vue';
 import LayerSelector from '@/components/LayerSelector.vue';
+
+import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
   components: {
@@ -43,7 +49,18 @@ export default {
   data: () => ({
     compositionLayers: 3,
     menuOpen: false,
+    RegisteredSketches,
+    sketchSelected : null,
   }),
+
+  methods: {
+
+    updateSketchSelected(sketchSelected) {
+      console.log('selectedLayer');
+      console.log(sketchSelected);
+      this.sketchSelected = sketchSelected;
+    }
+  }
 };
 </script>
 
