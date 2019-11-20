@@ -2,6 +2,12 @@
   .about
     h1( v-if="title") {{ title }}
     h3( v-if="subtitle") {{ subtitle }}
+
+    nav
+      ul
+        li( v-for='link in links' :key='link')
+          router-link( :to="paths[link]" exact) {{ link }}
+    router-view
 </template>
 
 <script>
@@ -11,18 +17,21 @@ export default {
   data: () => ({
     title: '',
     subtitle: '',
+    links: ['home', 'visualizer'],
+    paths: {
+      home: '/',
+      visualizer: '/visualizer',
+    },
   }),
 
   mounted() {
-    this.title = axios.get(
-      'https://my-json-server.typicode.com/conc2304/test-api/db',
-    )
-    .then(response => {
-      console.log(response);
-      let data = response.data.about;
-      this.title = data.title;
-      this.subtitle = data.subtitle;
-    });
+    this.title = axios
+      .get('https://my-json-server.typicode.com/conc2304/test-api/db')
+      .then(response => {
+        let data = response.data.about;
+        this.title = data.title;
+        this.subtitle = data.subtitle;
+      });
   },
 };
 </script>
