@@ -19,10 +19,19 @@ export default {
   data: () => ({
     propertyCategories: [],
   }),
+
   props: {
     sketchSelected: {
       type: Object,
     },
+  },
+
+  watch: {
+    sketchSelected(newValue, oldValue) {
+      console.log('select TRIGGERED');
+      console.log(newValue);
+      this.propertyCategories = this.getPropertyCategories();
+    }
   },
 
   computed: {},
