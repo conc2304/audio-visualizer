@@ -1,3 +1,5 @@
+import p5 from 'p5';
+
 const renderPolygon = function (x, y, radius, numPoints) {
   'use strict';
   const angle = p5.TWO_PI / numPoints;
