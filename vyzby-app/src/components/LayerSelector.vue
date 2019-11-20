@@ -6,6 +6,7 @@
       v-list-item(
         v-for="(sketch, i) in sketches"
         :key="i"
+        :class="{ 'layer-selected': layerSelected === i }"
         @click="selectLayer(i)"
       )
         v-icon.menu-icon filter_{{ i+1 }}
@@ -13,6 +14,10 @@
 
 <script>
 export default {
+  data: () => ({
+    layerSelected: null,
+  }),
+
   props: {
     layers: {
       type: Number,
@@ -24,6 +29,7 @@ export default {
 
   methods: {
     selectLayer(layerIndex) {
+      this.layerSelected = layerIndex;
       console.log(`Layer Selected ${layerIndex}`);
       this.$emit('layer_selected', this.sketches[layerIndex]);
     },
@@ -59,5 +65,9 @@ i.menu-icon.inactive:hover {
 
 i.menu-icon:hover {
   color: $color-secondary-blue;
+}
+
+.layer-selected {
+  border: 1px solid $color-active-green;
 }
 </style>
