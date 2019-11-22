@@ -1,6 +1,6 @@
 // to do make shared object functions into an object
 
-let easeInto = function() {
+const easeInto = function() {
   let attribute;
   let easeBy;
 
@@ -15,10 +15,10 @@ let easeInto = function() {
     if (!this[attribute].targetValue) continue;
     if (this[attribute].options) continue;
 
-    let triggerIsDrumPad = (this[attribute].hasOwnProperty('triggerSource') && this[attribute].triggerSource === Drum_Pad_Hit);
-    let targetValue = this[attribute].targetValue;
-    let currentValue = this[attribute].currentValue;
-    let resetValue = this[attribute].resetValue;
+    const triggerIsDrumPad = (this[attribute].hasOwnProperty('triggerSource') && this[attribute].triggerSource === Drum_Pad_Hit);
+    const targetValue = this[attribute].targetValue;
+    const currentValue = this[attribute].currentValue;
+    const resetValue = this[attribute].resetValue;
 
     if (this[attribute].hasOwnProperty('triggerSource')) {
       switch (this[attribute].triggerSource) {
@@ -34,7 +34,6 @@ let easeInto = function() {
       }
     }
 
-
     // if the message came from the drum pad
     // then ease into the target value,
     // once we have hit the target value
@@ -46,10 +45,8 @@ let easeInto = function() {
 
     // since we will near but never reach the target value with easing
     if (targetValue && (currentValue !== targetValue)) {
-      let difference = targetValue - currentValue;
-      // let valueAdded = difference * easeBy;
-      let valueAdded = difference * EasingFunctions.linear(easeBy);
-
+      const difference = targetValue - currentValue;
+      const valueAdded = difference * easeBy;
 
       if (triggerIsDrumPad) {
         // if ( Math.floor(Math.abs(valueAdded)) === 0) {
@@ -65,31 +62,3 @@ let easeInto = function() {
   }
 };
 
-EasingFunctions = {
-  // no easing, no acceleration
-  linear: function (t) { return t },
-  // accelerating from zero velocity
-  easeInQuad: function (t) { return t*t },
-  // decelerating to zero velocity
-  easeOutQuad: function (t) { return t*(2-t) },
-  // acceleration until halfway, then deceleration
-  easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
-  // accelerating from zero velocity 
-  easeInCubic: function (t) { return t*t*t },
-  // decelerating to zero velocity 
-  easeOutCubic: function (t) { return (--t)*t*t+1 },
-  // acceleration until halfway, then deceleration 
-  easeInOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
-  // accelerating from zero velocity 
-  easeInQuart: function (t) { return t*t*t*t },
-  // decelerating to zero velocity 
-  easeOutQuart: function (t) { return 1-(--t)*t*t*t },
-  // acceleration until halfway, then deceleration
-  easeInOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
-  // accelerating from zero velocity
-  easeInQuint: function (t) { return t*t*t*t*t },
-  // decelerating to zero velocity
-  easeOutQuint: function (t) { return 1+(--t)*t*t*t*t },
-  // acceleration until halfway, then deceleration 
-  easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
-}

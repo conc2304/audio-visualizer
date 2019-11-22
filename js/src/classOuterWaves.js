@@ -1,6 +1,7 @@
 class OuterWaves {
   constructor(windowWidth, windowHeight) {
 
+
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     this.waveWidth = windowWidth + 200;  // have some of it go off the page
@@ -9,6 +10,8 @@ class OuterWaves {
 
     this.shake = false;
     this.shakeGain = 0.009;  // should be make this a dial/ controllable by button
+
+    this.easeInto = this.easeInto;
 
     //  Numeric Type Attributes
     this.numWaves = {
@@ -403,8 +406,3 @@ OuterWaves.prototype.renderShape = function (xPos, yPos, radius, spacing) {
   }
 };
 
-
-/**
- * For each attribute transition from the current value to the target value
- */
-OuterWaves.prototype.easeInto = easeInto;

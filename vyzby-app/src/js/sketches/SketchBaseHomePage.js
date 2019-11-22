@@ -36,7 +36,7 @@ class Particle {
   }
 }
 
-const big = 250;
+const numParticles = 250;
 const bodies = [];
 
 const ParticleScript = function(p5) {
@@ -47,7 +47,7 @@ const ParticleScript = function(p5) {
     p5.stroke(255, 255, 255, 100);
     p5.background(0, 0, 0);
     p5.smooth();
-    for (let i = 0; i < big; i++) {
+    for (let i = 0; i < numParticles; i++) {
       bodies[i] = new Particle(p5);
     }
   };
@@ -57,7 +57,7 @@ const ParticleScript = function(p5) {
     mX += 0.3 * (p5.mouseX - mX);
     mY += 0.3 * (p5.mouseY - mY);
 
-    for (let i = 0; i < big; i++) {
+    for (let i = 0; i < numParticles; i++) {
       bodies[i].render();
     }
   };
