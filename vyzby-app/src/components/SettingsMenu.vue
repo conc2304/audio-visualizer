@@ -16,8 +16,7 @@
         CompositionControls
         v-divider
         LayerSelector(
-          :layers="compositionLayers"
-          :sketches="RegisteredSketches"
+          :registeredSketches="registeredSketches"
           v-on:layer_selected="updateSketchSelected"
         )
         v-divider
@@ -38,7 +37,7 @@ import CompositionControls from '@/components/CompositionControls.vue';
 import LayerControllerCategories from '@/components/LayerControllerCategories.vue';
 import LayerSelector from '@/components/LayerSelector.vue';
 
-import RegisteredSketches from '@/js/services/SketchRegistration';
+import registeredSketches from '@/js/services/SketchRegistration';
 
 export default {
   components: {
@@ -47,9 +46,8 @@ export default {
     LayerSelector,
   },
   data: () => ({
-    compositionLayers: 3,
     menuOpen: false,
-    RegisteredSketches,
+    registeredSketches,
     sketchSelected : null,
   }),
 
