@@ -6,9 +6,18 @@
       :key="i"
     )
 
+      SketchParameterControl(
+        :sketchSelected="sketchSelected"
+        :parameter="parameter"
+      )
+
+
+
 </template>
 
 <script>
+import SketchParameterControl from "@/components/SketchParameterControl.vue";
+
 export default {
   data: () => ({
     sketchCategoryParameters: '',
@@ -21,6 +30,10 @@ export default {
     category: {
       type: String,
     },
+  },
+
+  components: {
+    SketchParameterControl
   },
 
   mounted() {

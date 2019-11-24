@@ -4,13 +4,13 @@ import router from './router';
 import Vuelidate from 'vuelidate';
 import store from './store';
 import vuetify from './plugins/vuetify';
-import VueNouislider from './vue-nouislider';
+import VNus from "vue-nouislider-fork"
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
-Vue.use(VueNouislider);
+Vue.use(VNus);
 
 new Vue({
   router,
