@@ -1,11 +1,11 @@
 <template lang="pug">
   div#visualizer-wrapper
     #sketch-container
-    SettingsMenu
+    SketchParameterSettingsMenu
 </template>
 
 <script>
-import SettingsMenu from '@/components/SettingsMenu.vue';
+import SketchParameterSettingsMenu from '@/components/SketchParameterSettingsMenu.vue';
 import Visualizer from '@/js/sketches/SketchBaseVisualizer';
 
 export default {
@@ -14,7 +14,7 @@ export default {
     menuOpen: true,
   }),
   components: {
-    SettingsMenu,
+    SketchParameterSettingsMenu,
   },
   methods: {},
   mounted() {

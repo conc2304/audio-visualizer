@@ -48,7 +48,7 @@
       v-card( dark color="#000" elevation="10")
         v-card-title.headline Login
         v-card-text
-          LoginComponent(
+          LoginPane(
             v-on:user_login_event="updateUser"
             :userLoggedIn="user.loggedIn"
           )
@@ -56,11 +56,11 @@
 
 <script>
 import ParticleScript from '@/js/sketches/SketchBaseHomePage';
-import LoginComponent from '@/components/LoginComponent.vue';
+import LoginPane from '@/components/LoginPane.vue';
 
 export default {
   components: {
-    LoginComponent,
+    LoginPane,
   },
   data: () => ({
     title: 'VYZBY',
