@@ -8,7 +8,7 @@ class ThreeDWave {
     this.windowHeight = windowHeight;
     this.waveWidth = windowWidth + 200; // have some of it go off the page
     this.origin = 0;
-    this.bypass = true;
+    this.bypass = false;
 
     this.shake = false;
     this.shakeGain = 0.009; // should be make this a dial/ controllable by button
