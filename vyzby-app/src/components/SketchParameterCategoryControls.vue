@@ -5,9 +5,6 @@
       v-for="(parameter, i) in sketchCategoryParameters"
       :key="i"
     )
-      span {{ parameter.displayLabel }}-
-      span {{ parameter.currentValue }}
-
 
 </template>
 
@@ -35,8 +32,6 @@ export default {
       let properties = [];
       const validPropTypes = ['numeric', 'variable', 'boolean'];
 
-      console.log(this.category);
-      console.log(this.sketchSelected);
       for (let parameter in this.sketchSelected) {
         let thisParameter = this.sketchSelected[parameter];
 
@@ -48,9 +43,6 @@ export default {
         }
 
         properties.push(thisParameter);
-
-        console.log(parameter);
-        console.log(thisParameter);
       }
 
       return properties;

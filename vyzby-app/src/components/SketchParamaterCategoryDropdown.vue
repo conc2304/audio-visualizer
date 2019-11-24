@@ -9,7 +9,7 @@
         v-expansion-panel-header.layer-name  {{ category }}
           template( v-slot:actions)
             v-icon expand_more
-        v-expansion-panel-content  actual controls
+        v-expansion-panel-content
           SketchParameterCategoryControls(
             :sketchSelected="sketchSelected"
             :category="category"
