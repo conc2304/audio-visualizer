@@ -6,17 +6,26 @@
         v-for="(category, i) in propertyCategories"
         :key="i"
       )
-        v-expansion-panel-header.layer-name  {{category }}
+        v-expansion-panel-header.layer-name  {{ category }}
           template( v-slot:actions)
             v-icon expand_more
         v-expansion-panel-content  actual controls
+          SketchParameterCategoryControls(
+            :sketchSelected="sketchSelected"
+            :category="category"
+          )
+
 
 </template>
 
 <script>
+import SketchParameterCategoryControls from '@/components/SketchParameterCategoryControls.vue'
+
 export default {
   name: 'LayerControllerCategories',
-  components: {},
+  components: {
+    SketchParameterCategoryControls
+  },
   data: () => ({
     propertyCategories: [],
   }),

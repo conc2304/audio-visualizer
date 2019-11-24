@@ -63,6 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 $subtle-border: rgba(255, 255, 255, 0.12);
+
 #control-panel {
   position: absolute;
   top: 0;
