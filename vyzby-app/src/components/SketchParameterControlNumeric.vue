@@ -27,8 +27,9 @@ export default {
 
   mounted() {
     this.config = {
-      connect: true,
-      connectColors: ['blue', 'red', 'red', 'green', 'green'],
+      connect: [false, true, true, false],
+      connectColors: ["#0e83cd", "#0e83cd"],
+      start: [this.parameter.min, this.parameter.currentValue, this.parameter.max],
       range: {
         min: [this.parameter.defaultMin],
         max: [this.parameter.defaultMax],
