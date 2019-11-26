@@ -1,21 +1,22 @@
-<template >
-  <div class='sketch-parameter-control'>
+<template lang="pug">
+  .sketch-parameter-control
 
-    <span>{{ parameter.displayLabel }}</span>
+    p {{ parameter.displayLabel }}
 
-    <v-nus
-      v-if="parameter.attrType === 'numeric'"
-      :config="{ connect: true, connectColors: ['#b2b2b2', 'red', '#0e83cd', '#b2b2b2'], range: { min: [0], max: [100], }, tooltips: true,}"
-      :value="[this.parameter.min, this.parameter.currentValue, this.parameter.max]"
+    v-nus(
+      v-if="parameter.attrType === 'numeric' && config && value"
+      :config="config"
+      :value="value"
       @update="values = $event"
-     />
-  </div>
-
+    )
 </template>
 
 <script>
 export default {
-  data: () => ({}),
+  data: () => ({
+    config: false,
+    value: false,
+  }),
 
   props: {
     sketchSelected: {},
@@ -24,5 +25,17 @@ export default {
     },
   },
 
+  mounted() {
+    this.config = {
+      connect: true,
+      connectColors: ['blue', 'red', 'red', 'green', 'green'],
+      range: {
+        min: [this.parameter.defaultMin],
+        max: [this.parameter.defaultMax],
+      },
+      tooltips: true,
+    };
+    this.value = [this.parameter.min, this.parameter.currentValue, this.parameter.max];
+  },
 };
 </script>

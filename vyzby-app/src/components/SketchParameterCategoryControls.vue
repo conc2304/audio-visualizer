@@ -49,10 +49,6 @@ export default {
       for (let parameter in this.sketchSelected) {
         let thisParameter = this.sketchSelected[parameter];
 
-        console.log('TESETING');
-        console.log(this.sketchSelected.constructor.name);
-        console.log(parameter);
-
         if (
           thisParameter.category !== this.category ||
           !validPropTypes.includes(thisParameter.attrType) ||
