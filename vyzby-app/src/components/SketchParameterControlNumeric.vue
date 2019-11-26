@@ -42,18 +42,28 @@ export default {
     },
   },
 
-  mounted() {
-    this.sliderConfig = {
-      connect: [false, true, true, false],
-      connectColors: ['#0e83cd', '#0e83cd'],
-      start: [this.parameter.min, this.parameter.currentValue, this.parameter.max],
-      range: {
-        min: [this.parameter.defaultMin],
-        max: [this.parameter.defaultMax],
-      },
-      tooltips: true,
-    };
-    this.sliderValue = [this.parameter.min, this.parameter.currentValue, this.parameter.max];
+  methods: {
+    getParameterAttributes() {
+      this.sliderConfig = {
+        connect: [false, true, true, false],
+        connectColors: ['#0e83cd', '#0e83cd'],
+        start: [this.parameter.min, this.parameter.currentValue, this.parameter.max],
+        range: {
+          min: [this.parameter.defaultMin],
+          max: [this.parameter.defaultMax],
+        },
+        tooltips: true,
+      };
+      this.sliderValue = [this.parameter.min, this.parameter.currentValue, this.parameter.max];
+    },
+  },
+
+  mounted() {},
+
+  watch: {
+    sketchSelected(newValue, oldValue) {
+      this.getParameterAttributes();
+    },
   },
 };
 </script>

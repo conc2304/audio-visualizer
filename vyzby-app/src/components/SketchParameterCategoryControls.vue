@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import SketchParameterControlNumeric from "@/components/SketchParameterControlNumeric.vue";
+import SketchParameterControlNumeric from '@/components/SketchParameterControlNumeric.vue';
 
 export default {
   data: () => ({
@@ -32,7 +32,7 @@ export default {
   },
 
   components: {
-    SketchParameterControlNumeric
+    SketchParameterControlNumeric,
   },
 
   mounted() {
@@ -61,6 +61,15 @@ export default {
       }
 
       return properties;
+    },
+  },
+
+  watch: {
+    sketchSelected(newValue, oldValue) {
+      console.log('sketch selection triggered watch at Category Control comp.');
+      this.numericAttributes = this.getCategoryParameters('numeric');
+      this.booleanAttributes = this.getCategoryParameters('boolean');
+      this.variableAttributes = this.getCategoryParameters('variable');
     },
   },
 };

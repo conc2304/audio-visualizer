@@ -1,7 +1,7 @@
 <template lang="pug">
 
   #controller-property-categories
-    v-expansion-panels( accordion focusable=false)
+    v-expansion-panels( accordion focusable=true)
       v-expansion-panel(
         v-for="(category, i) in propertyCategories"
         :key="i"
@@ -38,6 +38,7 @@ export default {
 
   watch: {
     sketchSelected(newValue, oldValue) {
+      console.log('sketch selection triggered watch at Dropdown comp.');
       this.propertyCategories = this.getPropertyCategories();
     }
   },
