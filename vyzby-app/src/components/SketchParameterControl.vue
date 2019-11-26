@@ -27,9 +27,6 @@
     v-switch(
       v-if="parameter.attrType === 'boolean'"
     )
-
-
-
 </template>
 
 <script>

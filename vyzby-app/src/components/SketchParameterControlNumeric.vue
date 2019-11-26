@@ -3,17 +3,18 @@
 
     p {{ parameter.displayLabel }}
 
-    v-nus(
-      v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValue"
-      :config="sliderConfig"
-      :value="sliderValue"
-      @update="values = $event"
-    )
+    .controller-wrapper
+      v-nus(
+        v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValue"
+        :config="sliderConfig"
+        :value="sliderValue"
+        @update="values = $event"
+      )
 
-    AudioReactiveControls(
-      v-if="parameter.audio"
-      :parameter="parameter"
-    )
+      AudioReactiveControls(
+        v-if="parameter.audio && audioEnabled"
+        :parameter="parameter"
+      )
 
 </template>
 
@@ -27,6 +28,7 @@ export default {
   data: () => ({
     sliderConfig: false,
     sliderValue: false,
+    audioEnabled: true,
   }),
 
   components: {
@@ -55,3 +57,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.controller-wrapper {
+  margin-left: 15px;
+}
+</style>
