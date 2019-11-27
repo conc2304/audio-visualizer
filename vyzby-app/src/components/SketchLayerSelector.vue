@@ -46,7 +46,7 @@ export default {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
       // console.log(`Layer Selected ${layerIndex}`);
-      this.$emit('layer_selected', this.RegisteredSketches[layerIndex]);
+      this.$emit('layer_selected', layerIndex);
     },
 
     addNewSketch() {

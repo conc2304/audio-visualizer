@@ -7,7 +7,8 @@
       :key="i"
     )
       SketchParameterControlNumeric(
-        :sketchSelected="sketchSelected"
+        :sketchIndexSelected="sketchIndexSelected"
+        :RegisteredSketches="RegisteredSketches"
         :parameter="parameter"
       )
 
@@ -23,11 +24,14 @@ export default {
   }),
 
   props: {
-    sketchSelected: {
-      type: Object,
+    sketchIndexSelected: {
+      type: Number,
     },
     category: {
       type: String,
+    },
+    RegisteredSketches: {
+      type: Array,
     },
   },
 
@@ -46,8 +50,8 @@ export default {
       let properties = [];
       const validPropTypes = ['numeric', 'variable', 'boolean'];
 
-      for (let parameter in this.sketchSelected) {
-        let thisParameter = this.sketchSelected[parameter];
+      for (let parameter in this.RegisteredSketches[this.sketchIndexSelected]) {
+        let thisParameter = this.RegisteredSketches[this.sketchIndexSelected][parameter];
 
         if (
           thisParameter.category !== this.category ||
@@ -65,10 +69,10 @@ export default {
   },
 
   watch: {
-    sketchSelected(newValue, oldValue) {
-      this.numericAttributes = this.getCategoryParameters('numeric');
-      this.booleanAttributes = this.getCategoryParameters('boolean');
-      this.variableAttributes = this.getCategoryParameters('variable');
+    sketchIndexSelected(newValue, oldValue) {
+      // this.numericAttributes = this.getCategoryParameters('numeric');
+      // this.booleanAttributes = this.getCategoryParameters('boolean');
+      // this.variableAttributes = this.getCategoryParameters('variable');
     },
   },
 };

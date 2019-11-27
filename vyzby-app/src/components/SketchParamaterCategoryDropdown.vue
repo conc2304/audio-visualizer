@@ -1,50 +1,60 @@
 <template lang="pug">
 
   #controller-property-categories
-    v-expansion-panels( accordion focusable=true)
-      v-expansion-panel(
-        v-for="(category, i) in propertyCategories"
-        :key="i"
-      )
-        v-expansion-panel-header.layer-name  {{ category }}
-          template( v-slot:actions)
-            v-icon expand_more
-        v-expansion-panel-content
-          SketchParameterCategoryControls(
-            :sketchSelected="sketchSelected"
-            :category="category"
-          )
+
+    .layer-wrapper(
+      v-for="(layer, layerIndex) in RegisteredSketches"
+      v-show="layerIndex === sketchIndexSelected"
+      :key="layerIndex"
+    )
+
+      v-expansion-panels( accordion focusable=true)
+        v-expansion-panel(
+          v-for="(category, i) in getPropertyCategories(layerIndex)"
+          :key="i"
+        )
+          v-expansion-panel-header.layer-name  {{ category }}
+            template( v-slot:actions)
+              v-icon expand_more
+          v-expansion-panel-content
+            SketchParameterCategoryControls(
+              :sketchIndexSelected="sketchIndexSelected"
+              :RegisteredSketches="RegisteredSketches"
+              :category="category"
+            )
+
 </template>
 
 <script>
-import SketchParameterCategoryControls from '@/components/SketchParameterCategoryControls.vue'
+import SketchParameterCategoryControls from '@/components/SketchParameterCategoryControls.vue';
 
 export default {
   name: 'LayerControllerCategories',
   components: {
-    SketchParameterCategoryControls
+    SketchParameterCategoryControls,
   },
   data: () => ({
-    propertyCategories: [],
   }),
 
   props: {
-    sketchSelected: {
-      type: Object,
+    sketchIndexSelected: {
+      type: Number,
+    },
+    RegisteredSketches: {
+      type: Array,
     },
   },
 
   watch: {
-    sketchSelected(newValue, oldValue) {
-      this.propertyCategories = this.getPropertyCategories();
-    }
   },
 
   methods: {
-    getPropertyCategories() {
+    getPropertyCategories(layerIndex) {
       let categories = [];
-      for (let property in this.sketchSelected) {
-        const category = this.sketchSelected[property].category;
+
+      const currentSketch = this.RegisteredSketches[layerIndex];
+      for (let property in currentSketch) {
+        const category = currentSketch[property].category;
         if (category && !categories.includes(category)) {
           categories.push(category);
         }
@@ -55,7 +65,6 @@ export default {
   },
 
   mounted() {
-    this.propertyCategories = this.getPropertyCategories();
   },
 };
 </script>
