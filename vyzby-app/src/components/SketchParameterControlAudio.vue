@@ -44,7 +44,7 @@ import KnobControl from 'vue-knob-control';
 export default {
   data: () => ({
     gain: false,
-    freqRangeSelected: {},
+    freqRangeSelected: {label: 'Low', ranges: '1 - 140 Hz'},
     defaultSelect: {},
 
     frequencies: [
