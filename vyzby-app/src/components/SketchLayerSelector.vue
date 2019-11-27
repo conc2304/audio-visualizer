@@ -40,12 +40,14 @@ export default {
     RegisteredSketches: {
       type: Array,
     },
+    menuOpen: {
+      type: Boolean
+    }
   },
 
   methods: {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
-      // console.log(`Layer Selected ${layerIndex}`);
       this.$emit('layer_selected', layerIndex);
     },
 
@@ -77,11 +79,15 @@ export default {
 
   mounted() {
     this.numSketches = this.RegisteredSketches.length;
-
-    if (this.layerSelected === null) {
-      this.selectLayer(0);
-    }
   },
+
+  watch: {
+      menuOpen(newValue, oldValue) {
+      if (!newValue) {
+        this.layerSelected = -1;
+      }
+    },
+  }
 };
 </script>
 

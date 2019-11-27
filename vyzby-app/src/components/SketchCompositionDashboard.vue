@@ -19,13 +19,6 @@ export default {
   },
   data: () => ({
     masterMenuItems: [
-      // {
-      //   mdIconText: 'close',
-      //   id: 'close-menu',
-      //   tooltipText: 'Close the Layer Controller Menu',
-      //   title: 'Close Menu',
-      //   function: '',
-      // },
       {
         mdIconText: 'help',
         id: 'toggle-help',

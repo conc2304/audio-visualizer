@@ -69,11 +69,6 @@ export default {
   },
 
   watch: {
-    sketchIndexSelected(newValue, oldValue) {
-      // this.numericAttributes = this.getCategoryParameters('numeric');
-      // this.booleanAttributes = this.getCategoryParameters('boolean');
-      // this.variableAttributes = this.getCategoryParameters('variable');
-    },
   },
 };
 </script>

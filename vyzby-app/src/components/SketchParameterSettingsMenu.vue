@@ -1,11 +1,10 @@
 <template lang="pug">
   #settings-menubar
 
-
-
     v-card#control-panel(
       dark
     )
+
       #master-controls-container
         v-list-item( to="/")
           v-icon.off-white home
@@ -13,6 +12,7 @@
         v-divider
         SketchLayerSelector(
           :RegisteredSketches="RegisteredSketches"
+          :menuOpen="menuOpen"
           v-on:layer_selected="updatesketchIndexSelected"
         )
         v-divider
@@ -23,7 +23,7 @@
       #layer-controls-container( v-if="menuOpen")
         .layer-control-header
           h3 Layer {{ sketchIndexSelected + 1 }} Controls
-          v-list-item.close( @click="menuOpen = false")
+          v-list-item.close( @click="closeMenu")
             v-icon.off-white close
         SketchParamaterCategoryDropdown(
           :sketchIndexSelected="sketchIndexSelected"
@@ -48,16 +48,20 @@ export default {
   data: () => ({
     menuOpen: false,
     RegisteredSketches,
-    sketchIndexSelected : null,
+    sketchIndexSelected: null,
   }),
 
   methods: {
-
     updatesketchIndexSelected(sketchIndexSelected) {
       this.menuOpen = true;
       this.sketchIndexSelected = sketchIndexSelected;
-    }
-  }
+    },
+
+    closeMenu() {
+      this.sketchIndexSelected = -1;
+      this.menuOpen = false;
+    },
+  },
 };
 </script>
 

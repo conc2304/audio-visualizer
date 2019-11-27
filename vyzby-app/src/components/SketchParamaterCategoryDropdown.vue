@@ -38,7 +38,6 @@ export default {
 
   props: {
     sketchIndexSelected: {
-      type: Number,
     },
     RegisteredSketches: {
       type: Array,
@@ -66,6 +65,13 @@ export default {
 
   mounted() {
   },
+
+  watch: {
+    sketchIndexSelected(newValue, oldValue) {
+      console.log('watch - ')
+      console.log(newValue);
+    }
+  }
 };
 </script>
 
