@@ -66,7 +66,6 @@ export default {
 
   watch: {
     sketchSelected(newValue, oldValue) {
-      console.log('sketch selection triggered watch at Category Control comp.');
       this.numericAttributes = this.getCategoryParameters('numeric');
       this.booleanAttributes = this.getCategoryParameters('boolean');
       this.variableAttributes = this.getCategoryParameters('variable');

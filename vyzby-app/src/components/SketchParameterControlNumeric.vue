@@ -58,7 +58,11 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    this.getParameterAttributes();
+    console.log(this.parameter);
+    console.log(this.sliderConfig);
+  },
 
   watch: {
     sketchSelected(newValue, oldValue) {

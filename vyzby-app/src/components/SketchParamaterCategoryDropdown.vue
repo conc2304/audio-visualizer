@@ -14,8 +14,6 @@
             :sketchSelected="sketchSelected"
             :category="category"
           )
-
-
 </template>
 
 <script>
@@ -38,7 +36,6 @@ export default {
 
   watch: {
     sketchSelected(newValue, oldValue) {
-      console.log('sketch selection triggered watch at Dropdown comp.');
       this.propertyCategories = this.getPropertyCategories();
     }
   },

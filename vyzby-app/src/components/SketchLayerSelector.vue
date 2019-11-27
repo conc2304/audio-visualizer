@@ -45,7 +45,7 @@ export default {
   methods: {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
-      console.log(`Layer Selected ${layerIndex}`);
+      // console.log(`Layer Selected ${layerIndex}`);
       this.$emit('layer_selected', this.registeredSketches[layerIndex]);
     },
 
@@ -54,7 +54,6 @@ export default {
     },
 
     sketchOrderShift(deltaPos) {
-      console.log(deltaPos);
       this.registeredSketches[this.layerSelected];
 
       this.registeredSketches = array_move(
@@ -78,6 +77,10 @@ export default {
 
   mounted() {
     this.numSketches = this.registeredSketches.length;
+
+    if (this.layerSelected === null) {
+      this.selectLayer(0);
+    }
   },
 };
 </script>
