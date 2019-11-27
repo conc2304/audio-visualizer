@@ -1,4 +1,10 @@
 // to do make shared object functions into an object
+const Note_Pressed   = 159;
+const Note_Held      = 175;
+const Note_Off       = 143;
+const Knob_Active    = 176;
+const Drum_Pad_Hit   = 153;
+
 
 const easeInto = function() {
   let attribute;

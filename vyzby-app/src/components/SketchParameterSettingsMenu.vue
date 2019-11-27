@@ -16,7 +16,7 @@
         SketchCompositionDashboard
         v-divider
         SketchLayerSelector(
-          :registeredSketches="registeredSketches"
+          :RegisteredSketches="RegisteredSketches"
           v-on:layer_selected="updateSketchSelected"
         )
         v-divider
@@ -37,7 +37,7 @@ import SketchCompositionDashboard from '@/components/SketchCompositionDashboard.
 import SketchParamaterCategoryDropdown from '@/components/SketchParamaterCategoryDropdown.vue';
 import SketchLayerSelector from '@/components/SketchLayerSelector.vue';
 
-import registeredSketches from '@/js/services/SketchRegistration';
+import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
   components: {
@@ -47,7 +47,7 @@ export default {
   },
   data: () => ({
     menuOpen: false,
-    registeredSketches,
+    RegisteredSketches,
     sketchSelected : null,
   }),
 

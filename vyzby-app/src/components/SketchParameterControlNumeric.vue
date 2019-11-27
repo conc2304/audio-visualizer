@@ -5,21 +5,21 @@
 
     .controller-wrapper
       v-nus(
-        v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValue"
+        v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
         :config="sliderConfig"
-        :value="sliderValue"
-        @update="values = $event"
+        :value="sliderValues"
+        @update="sliderValues = $event"
       )
 
       AudioReactiveControls(
         v-if="parameter.audio && audioEnabled"
         :parameter="parameter"
       )
-
 </template>
 
 <script>
 import AudioReactiveControls from '@/components/SketchParameterControlAudio.vue';
+import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
   // Note:
@@ -27,8 +27,9 @@ export default {
 
   data: () => ({
     sliderConfig: false,
-    sliderValue: false,
+    sliderValues: false,
     audioEnabled: true,
+    RegisteredSketches,
   }),
 
   components: {
@@ -54,20 +55,24 @@ export default {
         },
         tooltips: true,
       };
-      this.sliderValue = [this.parameter.min, this.parameter.currentValue, this.parameter.max];
+      this.sliderValues = [this.parameter.min, this.parameter.currentValue, this.parameter.max];
     },
   },
 
   mounted() {
     this.getParameterAttributes();
-    console.log(this.parameter);
-    console.log(this.sliderConfig);
+    console.log(this.RegisteredSketches);
   },
 
   watch: {
     sketchSelected(newValue, oldValue) {
       this.getParameterAttributes();
     },
+    sliderValues(newValue, oldValue) {
+      this.parameter.min = newValue[0];
+      this.parameter.targetValue = newValue[1];
+      this.parameter.max = newValue[2];
+    }
   },
 };
 </script>

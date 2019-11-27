@@ -6,7 +6,7 @@
       v-list-item.add-sketch(@click="addNewSketch"  v-if="layerAddEnabled")
         v-icon library_add
       v-list-item(
-        v-for="(sketch, i) in registeredSketches"
+        v-for="(sketch, i) in RegisteredSketches"
         :key="i"
         :class="{ 'layer-selected': layerSelected === i, 'layer-inactive': sketch.bypass }"
         @click="selectLayer(i)"
@@ -37,7 +37,7 @@ export default {
   }),
 
   props: {
-    registeredSketches: {
+    RegisteredSketches: {
       type: Array,
     },
   },
@@ -46,7 +46,7 @@ export default {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
       // console.log(`Layer Selected ${layerIndex}`);
-      this.$emit('layer_selected', this.registeredSketches[layerIndex]);
+      this.$emit('layer_selected', this.RegisteredSketches[layerIndex]);
     },
 
     addNewSketch() {
@@ -54,10 +54,10 @@ export default {
     },
 
     sketchOrderShift(deltaPos) {
-      this.registeredSketches[this.layerSelected];
+      this.RegisteredSketches[this.layerSelected];
 
-      this.registeredSketches = array_move(
-        this.registeredSketches,
+      this.RegisteredSketches = array_move(
+        this.RegisteredSketches,
         this.layerSelected,
         this.layerSelected + deltaPos,
       );
@@ -76,7 +76,7 @@ export default {
   },
 
   mounted() {
-    this.numSketches = this.registeredSketches.length;
+    this.numSketches = this.RegisteredSketches.length;
 
     if (this.layerSelected === null) {
       this.selectLayer(0);
