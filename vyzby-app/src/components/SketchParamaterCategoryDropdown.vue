@@ -13,6 +13,7 @@
           v-for="(category, i) in getPropertyCategories(layerIndex)"
           :key="i"
         )
+
           v-expansion-panel-header.layer-name  {{ category }}
             template( v-slot:actions)
               v-icon expand_more
@@ -33,19 +34,18 @@ export default {
   components: {
     SketchParameterCategoryControls,
   },
-  data: () => ({
-  }),
+  data: () => ({}),
 
   props: {
     sketchIndexSelected: {
+      type: Number,
     },
     RegisteredSketches: {
       type: Array,
     },
   },
 
-  watch: {
-  },
+  watch: {},
 
   methods: {
     getPropertyCategories(layerIndex) {
@@ -63,15 +63,9 @@ export default {
     },
   },
 
-  mounted() {
-  },
+  mounted() {},
 
-  watch: {
-    sketchIndexSelected(newValue, oldValue) {
-      console.log('watch - ')
-      console.log(newValue);
-    }
-  }
+  watch: {},
 };
 </script>
 

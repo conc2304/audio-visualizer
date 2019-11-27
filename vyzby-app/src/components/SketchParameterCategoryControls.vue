@@ -4,9 +4,19 @@
 
     .parameter-wrapper(
       v-for="(parameter, i) in numericAttributes"
-      :key="i"
+      :key="`numeric-${i}`"
     )
       SketchParameterControlNumeric(
+        :sketchIndexSelected="sketchIndexSelected"
+        :RegisteredSketches="RegisteredSketches"
+        :parameter="parameter"
+      )
+
+    .parameter-wrapper(
+      v-for="(parameter, i) in variableAttributes"
+      :key="`variable-${i}`"
+    )
+      SketchParameterControlVariable(
         :sketchIndexSelected="sketchIndexSelected"
         :RegisteredSketches="RegisteredSketches"
         :parameter="parameter"
@@ -16,11 +26,13 @@
 
 <script>
 import SketchParameterControlNumeric from '@/components/SketchParameterControlNumeric.vue';
+import SketchParameterControlVariable from '@/components/SketchParameterControlVariable.vue';
 
 export default {
   data: () => ({
     SketchParameterControlNumeric: '',
     numericAttributes: null,
+    variableAttributes: null,
   }),
 
   props: {
@@ -37,6 +49,7 @@ export default {
 
   components: {
     SketchParameterControlNumeric,
+    SketchParameterControlVariable,
   },
 
   mounted() {
@@ -51,6 +64,7 @@ export default {
       const validPropTypes = ['numeric', 'variable', 'boolean'];
 
       for (let parameter in this.RegisteredSketches[this.sketchIndexSelected]) {
+
         let thisParameter = this.RegisteredSketches[this.sketchIndexSelected][parameter];
 
         if (
