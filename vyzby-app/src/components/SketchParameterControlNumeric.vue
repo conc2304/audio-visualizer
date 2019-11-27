@@ -19,7 +19,6 @@
 
 <script>
 import AudioReactiveControls from '@/components/SketchParameterControlAudio.vue';
-import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
   // Note:
@@ -29,7 +28,6 @@ export default {
     sliderConfig: false,
     sliderValues: false,
     audioEnabled: true,
-    RegisteredSketches,
   }),
 
   components: {
@@ -61,7 +59,6 @@ export default {
 
   mounted() {
     this.getParameterAttributes();
-    console.log(this.RegisteredSketches);
   },
 
   watch: {

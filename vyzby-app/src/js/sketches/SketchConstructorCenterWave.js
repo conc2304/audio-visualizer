@@ -10,11 +10,11 @@ class CenterWave {
     this.origin = 0;
     this.bypass = false;
 
-    this.radius = new NumericProperty('Size', 'Base', 20, -50, 2000, 0.7);
-    this.velocity = new NumericProperty('Velocity', 'Base', 0.025, -1, 1, 0.1);
-    this.amplitude = new NumericProperty('Amplitude', 'Base', 75, -2000, 2000, 0.1);
-    this.period = new NumericProperty('Period', 'Base', 500, -10250, 10250, 0.07);
-    this.xSpacing = new NumericProperty('X Spacing', 'Base', 40, 15, 350, 0.1);
+    this.radius = new NumericProperty('Size', 'Base', 20, 0, 2000, 0.7);
+    this.velocity = new NumericProperty('Velocity', 'Base', 0.025, 0, 1, 0.1);
+    this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 2000, 0.1);
+    this.period = new NumericProperty('Period', 'Base', 500, 0, 10250, 0.07);
+    this.xSpacing = new NumericProperty('X Spacing', 'Base', 40, 0, 350, 0.1);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
     this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1);

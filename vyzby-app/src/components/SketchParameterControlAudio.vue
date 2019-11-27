@@ -44,7 +44,7 @@ import KnobControl from 'vue-knob-control';
 export default {
   data: () => ({
     gain: false,
-    freqRangeSelected: {label: 'Low', ranges: '1 - 140 Hz'},
+    freqRangeSelected: {},
     defaultSelect: {},
 
     frequencies: [
@@ -90,6 +90,12 @@ export default {
     let gain = this.parameter.audio.gain;
     this.gain = gain * 100;
   },
+
+  watche: {
+    gain(newValue, oldValue) {
+
+    }
+  }
 };
 </script>
 
@@ -109,9 +115,11 @@ export default {
     font-size: 10px;
   }
 }
-.knob-wrapper,
-.select-wrapper {
-  // display: inline-block;
-  // vertical-align: middle;
+
+</style>
+
+<style lang="scss">
+.select-wrapper .v-select__slot .v-label{
+  font-size: 12px;
 }
 </style>

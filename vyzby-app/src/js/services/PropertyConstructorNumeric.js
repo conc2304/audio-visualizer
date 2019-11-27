@@ -19,7 +19,8 @@ class NumericProperty {
     this.targetValue = null;
 
     //  this value that can be set/edited by the user
-    const padding = (maxValue - minValue) * 0.05;
+    // const padding = (maxValue - minValue) * 0.05;
+    const padding = 0;
     this.min = minValue + padding;
     this.max = maxValue - padding;
 

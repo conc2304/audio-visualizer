@@ -15,17 +15,17 @@ class ThreeDWave {
 
     this.radius = new NumericProperty('Size', 'Base', 20, 15, 150, 0.7);
     this.elemQty = new NumericProperty('Number of Shapes', 'Base', 1, 1, 20, 0.7);
-    this.xSpacing = new NumericProperty('X Spacing', 'Base', 300, 90, 900, 0.7);
+    this.xSpacing = new NumericProperty('X Spacing', 'Base', 300, 0, 900, 0.7);
     this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 500, 0.7);
-    this.period = new NumericProperty('Period', 'Base', 500, 50, 850, 0.7);
+    this.period = new NumericProperty('Period', 'Base', 500, 0, 850, 0.7);
     this.velocity = new NumericProperty('Velocity', 'Base', 0.01, 0.001, 0.2, 0.7);
 
     this.rotateX = new NumericProperty('Rotate Shape X', 'Rotation', 0, -10, 10, 0.7);
     this.rotateY = new NumericProperty('Rotate Shape Y', 'Rotation', 0, -10, 10, 0.7);
     this.rotateZ = new NumericProperty('Rotate Shape Z', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateX = new NumericProperty('Rotate Shape X', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateY = new NumericProperty('Rotate Shape Y', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateZ = new NumericProperty('Rotate Shape Z', 'Rotation', 0, -10, 10, 0.7);
+    this.waveRotateX = new NumericProperty('Rotate Wave X', 'Rotation', 0, -10, 10, 0.7);
+    this.waveRotateY = new NumericProperty('Rotate Wave Y', 'Rotation', 0, -10, 10, 0.7);
+    this.waveRotateZ = new NumericProperty('Rotate Wave Z', 'Rotation', 0, -10, 10, 0.7);
 
     this.translateX = new NumericProperty('Translate X', 'Position', 0, -900, 900, 0.7);
     this.translateY = new NumericProperty('Translate Y', 'Position', 0, -900, 900, 0.7);
