@@ -3,16 +3,14 @@
 
     v-radio-group(
       v-if="parameter.attrType === 'variable'"
-      v-model="parameterValue"
+      v-model="parameter.currentValue"
       row
       dark
     )
       v-radio(
         v-for="(option, i) in parameter.options"
-        :label="option"
-        :value="option"
-        color="#0e83cd"
-        dark
+        :label="parameter.options[i]"
+        :value="parameter.options[i]"
         :key="i"
       )
 </template>
@@ -20,7 +18,6 @@
 <script>
 export default {
   data: () => ({
-    parameterValue: null,
   }),
 
   props: {
@@ -32,6 +29,9 @@ export default {
   mounted() {
     console.log(this.parameter);
     this.parameterValue = this.parameter.currentValue;
+    for (let options in this.parameter.options) {
+      console.log(options);
+    }
   },
 };
 </script>

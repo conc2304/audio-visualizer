@@ -64,7 +64,6 @@ export default {
       const validPropTypes = ['numeric', 'variable', 'boolean'];
 
       for (let parameter in this.RegisteredSketches[this.sketchIndexSelected]) {
-
         let thisParameter = this.RegisteredSketches[this.sketchIndexSelected][parameter];
 
         if (
@@ -82,7 +81,6 @@ export default {
     },
   },
 
-  watch: {
-  },
+  watch: {},
 };
 </script>
