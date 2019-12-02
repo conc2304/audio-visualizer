@@ -12,6 +12,9 @@
         :label="parameter.options[i]"
         :value="parameter.options[i]"
         :key="i"
+        color="#0eb1ff"
+        on-icon="radio_button_checked"
+        off-icon="radio_button_unchecked"
       )
 </template>
 
@@ -39,4 +42,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+
+.sketch-parameter-control .theme--dark.v-icon {
+  color: $color-primary-blue;
+}
+</style>
