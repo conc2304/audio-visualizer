@@ -1,6 +1,5 @@
-import p5 from 'p5';
 
-const renderPolygon = function (x, y, radius, numPoints) {
+const renderPolygon = function (x, y, radius, numPoints, p5) {
   'use strict';
   const angle = p5.TWO_PI / numPoints;
   p5.beginShape();

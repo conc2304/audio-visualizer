@@ -115,7 +115,7 @@ CenterWave.prototype.renderShape = function(p5, xPos, yPos, radius) {
 
     p5.translate(xPos, yPos);
     p5.rotate(p5.sin(p5.frameCount / 50.0));
-    p5.polygon(0, 0, radius, sides);
+    p5.polygon(0, 0, radius, sides, p5);
     p5.pop();
   } else {
     p5.ellipse(xPos, yPos, radius, radius);

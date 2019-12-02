@@ -2,6 +2,10 @@
 
   #controller-property-categories
 
+    v-radio-group( label="Active?" v-model="active")
+      v-radio( name="active" label="No" :value="0")
+      v-radio( name="active" label="Yes" :value="1")
+
     .layer-wrapper(
       v-for="(layer, layerIndex) in RegisteredSketches"
       v-show="layerIndex === sketchIndexSelected"
@@ -34,7 +38,9 @@ export default {
   components: {
     SketchParameterCategoryControls,
   },
-  data: () => ({}),
+  data: () => ({
+    active: 1
+  }),
 
   props: {
     sketchIndexSelected: {

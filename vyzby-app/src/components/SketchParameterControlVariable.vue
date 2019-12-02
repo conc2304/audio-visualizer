@@ -18,6 +18,7 @@
 <script>
 export default {
   data: () => ({
+    parameterValue: null,
   }),
 
   props: {
@@ -29,8 +30,10 @@ export default {
   mounted() {
     console.log(this.parameter);
     this.parameterValue = this.parameter.currentValue;
-    for (let options in this.parameter.options) {
-      console.log(options);
+    console.log('VALUE');
+    console.log(this.parameterValue);
+    for (let option in this.parameter.options) {
+      console.log(this.parameter.options[option]);
     }
   },
 };

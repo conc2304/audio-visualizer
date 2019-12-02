@@ -140,14 +140,14 @@ OuterWaves.prototype.renderShape = function(xPos, yPos, radius, spacing, p5) {
     p5.strokeWeight(3);
     p5.translate(xPos, yPos + spacing);
     p5.rotate(p5.atan(p5.frameCount / 50.0));
-    p5.polygon(0, 0, radius, sides);
+    p5.polygon(0, 0, radius, sides, p5);
     p5.pop();
 
     p5.push();
     p5.strokeWeight(3);
     p5.translate(xPos, yPos - spacing);
     p5.rotate(p5.atan(p5.frameCount / -50.0));
-    p5.polygon(0, 0, radius, sides);
+    p5.polygon(0, 0, radius, sides, p5);
     p5.pop();
   } else {
     p5.ellipse(xPos, yPos + spacing, radius, radius); // one above and one below
