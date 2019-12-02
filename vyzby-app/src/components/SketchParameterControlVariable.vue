@@ -33,13 +33,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.parameter);
     this.parameterValue = this.parameter.currentValue;
-    console.log('VALUE');
-    console.log(this.parameterValue);
-    for (let option in this.parameter.options) {
-      console.log(this.parameter.options[option]);
-    }
   },
 };
 </script>

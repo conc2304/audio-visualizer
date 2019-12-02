@@ -134,6 +134,60 @@ export default {
 
     randomizeLayerParameters() {
       console.log('randomizeParameters');
+
+      const index = this.sketchIndexSelected;
+      const ctrlElementsArray = [this.RegisteredSketches[index]];
+
+      let rVal;
+      let valueRange;
+      let optLength;
+      let optIndex;
+
+      for (let i in ctrlElementsArray) {
+        if (!ctrlElementsArray.hasOwnProperty(i)) {
+          continue;
+        }
+
+        const ctrlElem = ctrlElementsArray[i];
+
+        for (let prop in ctrlElem) {
+          if (
+            !ctrlElem.hasOwnProperty(prop) ||
+            !ctrlElem[prop].defaultValue ||
+            !ctrlElem[prop].currentValue
+          ) {
+            continue;
+          }
+
+          if (ctrlElem[prop].lockOn === true) {
+            continue;
+          }
+
+          if (ctrlElem[prop].attrType === 'numeric') {
+            rVal =
+              Math.random() *
+              (
+                parseFloat(ctrlElem[prop].max) -
+                parseFloat(ctrlElem[prop].min) +
+                parseFloat(ctrlElem[prop].min)
+              ).toFixed(4);
+            console.log(prop);
+            console.log(rVal);
+            // rVal = getRandomInt(ctrlElem[prop].min, ctrlElem[prop].max);
+          } else if (ctrlElem[prop].attrType === 'variable') {
+            optLength = ctrlElem[prop].options.length;
+            optIndex = getRandomInt(0, optLength - 1);
+            rVal = ctrlElem[prop].options[optIndex];
+
+            if (typeof rVal === 'undefined') {
+              console.log('stop');
+            }
+          }
+
+          this.RegisteredSketches[index][prop].currentValue = rVal;
+          this.RegisteredSketches[index][prop].targetValue = rVal;
+        }
+      }
     },
 
     toggleLayerVisibility() {
@@ -147,11 +201,14 @@ export default {
       console.log('post click');
       console.log(bypassStatus);
 
-      this.layerDashboardActions[0].mdIconText = (bypassStatus)
-        ? 'visibility_off'
-        : 'visibility';
+      this.layerDashboardActions[0].mdIconText = bypassStatus ? 'visibility_off' : 'visibility';
     },
   },
+};
+
+let getRandomInt = (min, max) => {
+  'use strict';
+  return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
 };
 </script>
 

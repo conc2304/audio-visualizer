@@ -14,7 +14,7 @@ class CenterWave {
     this.velocity = new NumericProperty('Velocity', 'Base', 0.025, 0, 1, 0.1);
     this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 2000, 0.1);
     this.period = new NumericProperty('Period', 'Base', 500, 0, 10250, 0.07);
-    this.xSpacing = new NumericProperty('X Spacing', 'Base', 40, 0, 350, 0.1);
+    this.xSpacing = new NumericProperty('X Spacing', 'Base', 40, 1, 350, 0.1);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
     this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1);
@@ -48,6 +48,9 @@ CenterWave.prototype.calcWave = function(p5) {
 
   this.origin += this.velocity.currentValue;
   let x = this.origin;
+
+  this.yPoints = new Array(Math.ceil(this.waveWidth / this.xSpacing.currentValue));
+
   for (let i = 0; i < this.yPoints.length; i++) {
     this.yPoints[i] = Math[this.waveType.currentValue](x) * this.amplitude.currentValue;
     x += dx;
@@ -61,7 +64,7 @@ CenterWave.prototype.render = function(p5) {
   if (this.xSpacing.currentValue <= 0) {
     this.xSpacing.currentValue = this.xSpacing.min / 2;
   }
-  this.yPoints = new Array(Math.floor(this.waveWidth / this.xSpacing.currentValue));
+  this.yPoints = new Array(Math.ceil(this.waveWidth / this.xSpacing.currentValue));
   this.calcWave(p5);
 
   p5.push();
