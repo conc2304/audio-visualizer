@@ -1,26 +1,28 @@
 <template lang="pug">
 
   .parameter-category-group-wrapper
-
-    .parameter-wrapper(
-      v-for="(parameter, i) in numericAttributes"
-      :key="`numeric-${i}`"
-    )
-      SketchParameterControlNumeric(
-        :sketchIndexSelected="sketchIndexSelected"
-        :RegisteredSketches="RegisteredSketches"
-        :parameter="parameter"
+    .numeric-parameters-wrapper
+      .parameter-wrapper(
+        v-for="(parameter, i) in numericAttributes"
+        :key="`numeric-${i}`"
       )
+        SketchParameterControlNumeric(
+          :sketchIndexSelected="sketchIndexSelected"
+          :RegisteredSketches="RegisteredSketches"
+          :parameter="parameter"
+        )
 
-    .parameter-wrapper(
-      v-for="(parameter, i) in variableAttributes"
-      :key="`variable-${i}`"
-    )
-      SketchParameterControlVariable(
-        :sketchIndexSelected="sketchIndexSelected"
-        :RegisteredSketches="RegisteredSketches"
-        :parameter="parameter"
+    v-divider
+    .variable-parameters-wrapper
+      .parameter-wrapper(
+        v-for="(parameter, i) in variableAttributes"
+        :key="`variable-${i}`"
       )
+        SketchParameterControlVariable(
+          :sketchIndexSelected="sketchIndexSelected"
+          :RegisteredSketches="RegisteredSketches"
+          :parameter="parameter"
+        )
 
 </template>
 
@@ -84,3 +86,20 @@ export default {
   watch: {},
 };
 </script>
+
+<style lang="scss">
+p.parameter-title {
+  margin: 25px auto 15px;
+}
+.v-input--radio-group {
+  margin-top: initial;
+
+  .v-input__slot {
+    margin-bottom: 0;
+  }
+}
+
+.noUi-target {
+  margin: 10px 0;
+}
+</style>

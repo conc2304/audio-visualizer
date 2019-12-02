@@ -1,7 +1,7 @@
 <template lang="pug">
   .sketch-parameter-control
 
-    p {{ parameter.displayLabel }}
+    p.parameter-title {{ parameter.displayLabel }}
 
     .controller-wrapper
       v-nus(

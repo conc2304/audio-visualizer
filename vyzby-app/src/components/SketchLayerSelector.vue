@@ -93,7 +93,7 @@ export default {
 
 <style lang="scss" scoped>
 #layer-selector {
-  margin: 45px auto;
+  margin: 15px auto;
 
   p {
     width: auto;

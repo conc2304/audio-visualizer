@@ -1,6 +1,8 @@
 <template lang="pug">
   .sketch-parameter-control
 
+    p.parameter-title {{ parameter.displayLabel }}
+
     v-radio-group(
       v-if="parameter.attrType === 'variable'"
       v-model="parameter.currentValue"
@@ -43,8 +45,9 @@ export default {
 </script>
 
 <style lang="scss">
-
-.sketch-parameter-control .theme--dark.v-icon {
-  color: $color-primary-blue;
+.sketch-parameter-control {
+  .theme--dark.v-icon {
+    color: $color-primary-blue;
+  }
 }
 </style>
