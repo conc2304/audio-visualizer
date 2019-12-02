@@ -15,6 +15,10 @@
 <script>
 export default {
   name: 'IconWithTooltip',
+
+  data: () => ({
+  }),
+
   props: {
     menuItemData: {
       type: Object,

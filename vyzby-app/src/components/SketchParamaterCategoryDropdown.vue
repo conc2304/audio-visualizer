@@ -8,6 +8,10 @@
       :key="layerIndex"
     )
 
+      LayerControlDashboard(
+        :sketchIndexSelected="sketchIndexSelected"
+        :RegisteredSketches="RegisteredSketches"
+      )
       v-expansion-panels( accordion focusable=true)
         v-expansion-panel(
           v-for="(category, i) in getPropertyCategories(layerIndex)"
@@ -28,11 +32,13 @@
 
 <script>
 import SketchParameterCategoryControls from '@/components/SketchParameterCategoryControls.vue';
+import LayerControlDashboard from '@/components/LayerControlDashboard.vue';
 
 export default {
   name: 'LayerControllerCategories',
   components: {
     SketchParameterCategoryControls,
+    LayerControlDashboard,
   },
 
   data: () => ({}),

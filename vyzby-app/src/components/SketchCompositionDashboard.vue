@@ -1,13 +1,16 @@
 <template lang="pug">
-  v-list( dense nav)
-    v-list-item(
-      v-for="menuItemData in masterMenuItems"
-      :key="menuItemData.title"
-      @click=""
-    )
-      IconWithTooltip(
-        :menuItemData='menuItemData'
+  #composition-controls
+    p Global
+
+    v-list( dense nav)
+      v-list-item(
+        v-for="menuItemData in masterMenuItems"
+        :key="menuItemData.title"
+        @click=""
       )
+        IconWithTooltip(
+          :menuItemData='menuItemData'
+        )
 </template>
 
 <script>
@@ -98,5 +101,15 @@ export default {
 #master-controls .icon-wrapper {
   padding: 0 20px;
   text-align: center;
+}
+
+#composition-controls {
+  margin: 15px auto;
+
+  p {
+    width: auto;
+    margin: 0 auto;
+    text-align: center;
+  }
 }
 </style>

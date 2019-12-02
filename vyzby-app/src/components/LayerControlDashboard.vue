@@ -1,0 +1,193 @@
+<template lang="pug">
+  .layer-dashboard
+
+    v-list( dense nav)
+      v-list-item(
+        v-for="menuItemData in layerDashboardActions"
+        :key="menuItemData.title"
+        @click="layerClickHandler(menuItemData.action)"
+      )
+        v-tooltip(
+          bottom
+        )
+          template( v-slot:activator= "{ on }")
+            v-icon.menu-icon(
+              :id='menuItemData.id'
+              v-on="on"
+              class="global-control helper"
+            ) {{ menuItemData.mdIconText }}
+          span.test  {{ menuItemData.title }}
+      </template>
+
+<script>
+import IconWithTooltip from '@/components/IconWithTooltip.vue';
+
+export default {
+  components: {
+    IconWithTooltip,
+  },
+
+  props: {
+    sketchIndexSelected: {
+      type: Number,
+    },
+    RegisteredSketches: {
+      type: Array,
+    },
+  },
+
+  data: () => ({
+    layerDashboardActions: [
+      {
+        mdIconText: 'visibility',
+        tooltipText: 'Toggle Layer Visibility',
+        title: 'Visibility',
+        action: 'toggleLayerVisibility',
+        bypass: false,
+      },
+      {
+        mdIconText: 'waves',
+        tooltipText: 'Randomize Audio Responsiveness',
+        title: 'Randomize Audio Responsiveness',
+        action: 'randomizeAudioResponse',
+      },
+      {
+        mdIconText: 'shuffle',
+        tooltipText: 'Randomizes all values this layer. Excludes audio reactive control',
+        title: 'Randomize Everything',
+        action: 'randomizeLayerParameters',
+      },
+      {
+        mdIconText: 'restore',
+        id: 'reset-settings',
+        tooltipText: 'Reset Layer. Excludes audio reactive control',
+        title: 'Layer Reset',
+        action: 'resetLayer',
+      },
+    ],
+  }),
+
+  methods: {
+    layerClickHandler(functionName) {
+      this[functionName]();
+    },
+
+    resetLayer() {
+      console.log('Reset Layer');
+
+      let index = this.sketchIndexSelected;
+      let ctrlElementsArray = [this.RegisteredSketches[index]];
+
+      // randomizeAudioResponsiveOption(false, true);
+      // randomizeAudioFrequency(false, true);
+
+      let globalReset = true;
+      for (let i in ctrlElementsArray) {
+        if (!ctrlElementsArray.hasOwnProperty(i)) {
+          continue;
+        }
+
+        let ctrlElem = ctrlElementsArray[i];
+
+        for (let prop in ctrlElem) {
+          if (!ctrlElem.hasOwnProperty(prop)) {
+            continue;
+          }
+
+          if (!ctrlElem[prop].defaultValue || !ctrlElem[prop].currentValue) {
+            continue;
+          }
+
+          if (ctrlElem[prop].lockOn === true) {
+            continue;
+          }
+
+          if (ctrlElem[prop].attrType === 'numeric') {
+            this.RegisteredSketches[index][prop].currentValue = this.RegisteredSketches[index][
+              prop
+            ].defaultValue;
+            this.RegisteredSketches[index][prop].targetValue = this.RegisteredSketches[index][
+              prop
+            ].defaultValue;
+            this.RegisteredSketches[index][prop].min = this.RegisteredSketches[index][
+              prop
+            ].defaultMin;
+            this.RegisteredSketches[index][prop].max = this.RegisteredSketches[index][
+              prop
+            ].defaultMax;
+          } else if (ctrlElem[prop].attrType === 'variable') {
+            this.RegisteredSketches[index][prop].currentValue = this.RegisteredSketches[index][
+              prop
+            ].defaultValue;
+          }
+
+          if (globalReset === true) {
+            this.RegisteredSketches[index][prop].lockOn = false;
+          }
+        }
+      }
+    },
+
+    randomizeAudioResponse() {
+      console.log('Randomize Audio');
+    },
+
+    randomizeLayerParameters() {
+      console.log('randomizeParameters');
+    },
+
+    toggleLayerVisibility() {
+      console.log('toggle visibility');
+
+      const index = this.sketchIndexSelected;
+      console.log(this.RegisteredSketches[index].bypass);
+      this.RegisteredSketches[index].bypass = !this.RegisteredSketches[index].bypass;
+
+      const bypassStatus = this.RegisteredSketches[index].bypass;
+      console.log('post click');
+      console.log(bypassStatus);
+
+      this.layerDashboardActions[0].mdIconText = (bypassStatus)
+        ? 'visibility_off'
+        : 'visibility';
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.layer-dashboard {
+  .v-list {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
+  }
+  .v-list-item {
+    flex: none;
+  }
+
+  i.menu-icon {
+    color: $color-primary-blue;
+    cursor: pointer;
+  }
+
+  i.menu-icon.inactive {
+    color: $color-inactive-red-hover;
+  }
+
+  i.menu-icon.inactive:hover {
+    color: $color-inactive-red;
+  }
+
+  i.menu-icon:hover {
+    color: $color-secondary-blue;
+  }
+
+  .v-tooltip__content {
+    background-color: #000;
+    border: 1px solid #555555;
+  }
+}
+</style>
