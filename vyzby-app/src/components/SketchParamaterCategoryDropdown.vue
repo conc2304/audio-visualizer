@@ -11,6 +11,7 @@
       LayerControlDashboard(
         :sketchIndexSelected="sketchIndexSelected"
         :RegisteredSketches="RegisteredSketches"
+        @layer_action_triggered="updateConfigs"
       )
       v-expansion-panels( accordion focusable=true)
         v-expansion-panel(
@@ -55,6 +56,11 @@ export default {
   watch: {},
 
   methods: {
+    updateConfigs() {
+      this.RegisteredSketches = this.RegisteredSketches;
+      console.log('test');
+    },
+
     getPropertyCategories(layerIndex) {
       let categories = [];
 

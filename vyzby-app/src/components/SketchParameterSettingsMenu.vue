@@ -13,7 +13,7 @@
         SketchLayerSelector(
           :RegisteredSketches="RegisteredSketches"
           :menuOpen="menuOpen"
-          v-on:layer_selected="updatesketchIndexSelected"
+          @layer_selected="updatesketchIndexSelected"
         )
         v-divider
         SketchCompositionDashboard

@@ -126,10 +126,14 @@ export default {
           }
         }
       }
+
+      this.$emit('layer_action_triggered');
     },
 
     randomizeAudioResponse() {
       console.log('Randomize Audio');
+
+      this.$emit('layer_action_triggered');
     },
 
     randomizeLayerParameters() {
@@ -171,9 +175,6 @@ export default {
                 parseFloat(ctrlElem[prop].min) +
                 parseFloat(ctrlElem[prop].min)
               ).toFixed(4);
-            console.log(prop);
-            console.log(rVal);
-            // rVal = getRandomInt(ctrlElem[prop].min, ctrlElem[prop].max);
           } else if (ctrlElem[prop].attrType === 'variable') {
             optLength = ctrlElem[prop].options.length;
             optIndex = getRandomInt(0, optLength - 1);
@@ -188,19 +189,14 @@ export default {
           this.RegisteredSketches[index][prop].targetValue = rVal;
         }
       }
+
+      this.$emit('layer_action_triggered');
     },
 
     toggleLayerVisibility() {
-      console.log('toggle visibility');
-
       const index = this.sketchIndexSelected;
-      console.log(this.RegisteredSketches[index].bypass);
-      this.RegisteredSketches[index].bypass = !this.RegisteredSketches[index].bypass;
-
-      const bypassStatus = this.RegisteredSketches[index].bypass;
-      console.log('post click');
-      console.log(bypassStatus);
-
+      const bypassStatus = !this.RegisteredSketches[index].bypass;
+      this.RegisteredSketches[index].bypass = bypassStatus;
       this.layerDashboardActions[0].mdIconText = bypassStatus ? 'visibility_off' : 'visibility';
     },
   },
