@@ -8,11 +8,6 @@
       :key="layerIndex"
     )
 
-      LayerControlDashboard(
-        :sketchIndexSelected="sketchIndexSelected"
-        :RegisteredSketches="RegisteredSketches"
-        @layer_action_triggered="updateConfigs"
-      )
       v-expansion-panels( accordion focusable=true)
         v-expansion-panel(
           v-for="(category, i) in getPropertyCategories(layerIndex)"
@@ -33,13 +28,11 @@
 
 <script>
 import SketchLayerParameterControls from '@/components/SketchLayerParameterControls.vue';
-import LayerControlDashboard from '@/components/LayerControlDashboard.vue';
 
 export default {
   name: 'LayerControllerCategories',
   components: {
     SketchLayerParameterControls,
-    LayerControlDashboard,
   },
 
   data: () => ({}),
@@ -83,8 +76,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// add the slider css here
 #controller-property-categories {
   width: 100%;
+  height: 100vh;
+  padding-bottom: 400px;
+  overflow-y: scroll;
 
   .v-expansion-panels {
     background-color: transparent;

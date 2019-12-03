@@ -13,7 +13,7 @@ class OuterWaves {
     this.shake = false;
     this.shakeGain = 0.009; // should be make this a dial/ controllable by button
 
-    this.numWaves = new NumericProperty('Number of Waves', 'Base', 3, 0, 10, 0.5);
+    this.numWaves = new NumericProperty('Number of Waves', 'Base', 3, 0, 9, 0.5);
     this.radius = new NumericProperty('Size', 'Base', 10, 0, 200, 0.5);
     this.velocity = new NumericProperty('Velocity', 'Base', 0.025, 0.02, 0.5, 0.1);
     this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 500, 0.1);

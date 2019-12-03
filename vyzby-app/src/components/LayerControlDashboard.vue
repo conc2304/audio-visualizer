@@ -58,12 +58,20 @@ export default {
         title: 'Randomize Everything',
         action: 'randomizeLayerParameters',
       },
+
       {
         mdIconText: 'restore',
         id: 'reset-settings',
         tooltipText: 'Reset Layer. Excludes audio reactive control',
         title: 'Layer Reset',
         action: 'resetLayer',
+      },
+
+      {
+        mdIconText: 'bug_report',
+        tooltipText: 'Console.log() the parameters of the current sketch layer',
+        title: 'Log Sketch Parameters',
+        action: 'logSketchItem',
       },
     ],
   }),
@@ -73,23 +81,23 @@ export default {
       this[functionName]();
     },
 
+    logSketchItem() {
+      console.log(this.RegisteredSketches[this.sketchIndexSelected]);
+    },
+
     resetLayer() {
-      console.log('Reset Layer');
       let iString = this.sketchIndexSelected.toString();
       let indices = [iString];
-      BulkUpdateService(indices, 'reset')
+      BulkUpdateService(indices, 'reset');
 
       this.$emit('layer_action_triggered', true);
     },
 
     randomizeAudioResponse() {
-      console.log('Randomize Audio');
-
       this.$emit('layer_action_triggered', true);
     },
 
     randomizeLayerParameters() {
-      console.log('randomizeParameters');
       let iString = this.sketchIndexSelected.toString();
       let indices = [iString];
 
@@ -106,8 +114,6 @@ export default {
     },
   },
 };
-
-
 </script>
 
 <style lang="scss" scoped>

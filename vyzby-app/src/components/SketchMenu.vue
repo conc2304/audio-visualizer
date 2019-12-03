@@ -20,15 +20,25 @@
 
         v-divider
 
-      #layer-controls-container( v-if="menuOpen")
+      #layer-controls-container( v-show="menuOpen")
         .layer-control-header
-          h3 Layer {{ sketchIndexSelected + 1 }} Controls
-          v-list-item.close( @click="closeMenu")
-            v-icon.off-white close
-        SketchLayerCategoryDropdowns(
-          :sketchIndexSelected="sketchIndexSelected"
-          :RegisteredSketches="RegisteredSketches"
-        )
+          .layer-control-title
+            h3 Layer {{ sketchIndexSelected + 1 }} Controls
+            v-list-item.close( @click="closeMenu")
+              v-icon.off-white close
+
+          LayerControlDashboard(
+            :sketchIndexSelected="sketchIndexSelected"
+            :RegisteredSketches="RegisteredSketches"
+            @layer_action_triggered="updateConfigs"
+          )
+
+        .layer-control-contents
+
+          SketchLayerCategoryDropdowns(
+            :sketchIndexSelected="sketchIndexSelected"
+            :RegisteredSketches="RegisteredSketches"
+          )
 
 </template>
 
@@ -36,6 +46,7 @@
 import SketchMenuLayerSelector from '@/components/SketchMenuLayerSelector.vue';
 import SketchMenuCompositionControls from '@/components/SketchMenuCompositionControls.vue';
 import SketchLayerCategoryDropdowns from '@/components/SketchLayerCategoryDropdowns.vue';
+import LayerControlDashboard from '@/components/LayerControlDashboard.vue';
 
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
@@ -44,6 +55,7 @@ export default {
     SketchMenuLayerSelector,
     SketchMenuCompositionControls,
     SketchLayerCategoryDropdowns,
+    LayerControlDashboard,
   },
   data: () => ({
     menuOpen: false,
@@ -125,15 +137,16 @@ i.off-white {
   }
 }
 
-.layer-control-header {
-  position: relative;
+.layer-control-title {
   height: 49px;
   border-bottom: 1px solid $color-std-grey;
+}
+.layer-control-header {
+  position: relative;
 
   .close {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
   }
 }

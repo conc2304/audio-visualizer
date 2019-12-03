@@ -31,8 +31,8 @@ const BulkUpdateService = (indicesToUpdate, operation) => {
     for (let prop in RegisteredSketches[index]) {
       if (
         !RegisteredSketches[index].hasOwnProperty(prop) ||
-        !RegisteredSketches[index][prop].defaultValue ||
-        !RegisteredSketches[index][prop].currentValue
+        !RegisteredSketches[index][prop].hasOwnProperty('defaultValue') ||
+        !RegisteredSketches[index][prop].hasOwnProperty('currentValue')
       ) {
         continue;
       }

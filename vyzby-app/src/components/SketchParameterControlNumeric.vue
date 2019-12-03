@@ -11,6 +11,11 @@
         @update="updateSliderValues($event)"
       )
 
+      ParameterAuxInput(
+        v-if="auxEnabled"
+        :parameter="parameter"
+        :sketchSelected="sketchSelected"
+      )
       AudioReactiveControls(
         v-if="parameter.audio && audioEnabled"
         :parameter="parameter"
@@ -19,6 +24,7 @@
 
 <script>
 import AudioReactiveControls from '@/components/SketchParameterControlAudio.vue';
+import ParameterAuxInput from '@/components/ParameterAuxInput.vue';
 
 export default {
   // Note:
@@ -28,10 +34,12 @@ export default {
     sliderConfig: false,
     sliderValues: false,
     audioEnabled: false, // todo enable when ready
+    auxEnabled: true,   // todo enable when ready
   }),
 
   components: {
     AudioReactiveControls,
+    ParameterAuxInput,
   },
 
   props: {
