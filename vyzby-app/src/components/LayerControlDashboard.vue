@@ -21,7 +21,7 @@
 
 <script>
 import IconWithTooltip from '@/components/IconWithTooltip.vue';
-import BulkUpdaterService from '@/js/services/BulkUpdaterService';
+import BulkUpdateService from '@/js/services/BulkUpdaterService';
 
 export default {
   components: {
@@ -76,7 +76,7 @@ export default {
     resetLayer() {
       console.log('Reset Layer');
       let indices = [this.sketchIndexSelected];
-      BulkUpdaterService.resetParameters(indices)
+      BulkUpdateService(indices, 'reset')
 
       this.$emit('layer_action_triggered', true);
     },
@@ -91,7 +91,7 @@ export default {
       console.log('randomizeParameters');
       let indices = [this.sketchIndexSelected];
 
-      BulkUpdaterService.randomizeParameters(indices);
+      BulkUpdateService(indices, 'randomize');
 
       this.$emit('layer_action_triggered', true);
     },

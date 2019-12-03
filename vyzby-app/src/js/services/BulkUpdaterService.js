@@ -1,51 +1,54 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
-let BulkUpdaterService = {};
 
 /**
+ * Updates the parameter properties for indicated sketch elements.
+ * Can either reset or randomize the parameters.
  *
- * @param {Array} indices
+ * @param {Array} indicesToUpdate
+ * @param {String} operation
+ * @return {Void}
  */
-let resetParameters = indices => {
-  let ctrlElementsArray = [];
-  for (let i in indices) {
-    ctrlElementsArray.push(RegisteredSketches[i]);
+const BulkUpdateService = (indicesToUpdate, operation) => {
+  const globalReset = operation === 'reset' && indicesToUpdate.length === RegisteredSketches.length;
+
+  if (!['reset', 'randomize'].includes(operation)) {
+    throw new Error('Invalid argument received for operation type');
   }
 
-  // randomizeAudioResponsiveOption(false, true);
-  // randomizeAudioFrequency(false, true);
+  if (!Array.isArray(indicesToUpdate)) {
+    throw new Error('Invalid argument. Expected Array and received ' + typeof idicesToUpdate);
+  }
 
-  let globalReset = true;
-  for (let index in ctrlElementsArray) {
-    if (!ctrlElementsArray.hasOwnProperty(index)) {
+  for (let index in RegisteredSketches) {
+    index = Number(index);
+    if (!indicesToUpdate.includes(index)) {
       continue;
     }
 
-    let ctrlElem = ctrlElementsArray[index];
+    if (!RegisteredSketches.hasOwnProperty(index)) {
+      continue;
+    }
 
-    for (let prop in ctrlElem) {
+    for (let prop in RegisteredSketches[index]) {
       if (
-        !ctrlElem.hasOwnProperty(prop) ||
-        !ctrlElem[prop].defaultValue ||
-        !ctrlElem[prop].currentValue
+        !RegisteredSketches[index].hasOwnProperty(prop) ||
+        !RegisteredSketches[index][prop].defaultValue ||
+        !RegisteredSketches[index][prop].currentValue
       ) {
         continue;
       }
 
-      if (ctrlElem[prop].lockOn === true) {
+      if (RegisteredSketches[index][prop].lockOn === true && !globalReset) {
         continue;
       }
 
-      if (ctrlElem[prop].attrType === 'numeric') {
-        RegisteredSketches[index][prop].currentValue = RegisteredSketches[index][prop].defaultValue;
-        RegisteredSketches[index][prop].targetValue = RegisteredSketches[index][prop].defaultValue;
-        RegisteredSketches[index][prop].min = RegisteredSketches[index][prop].defaultMin;
-        RegisteredSketches[index][prop].max = RegisteredSketches[index][prop].defaultMax;
-      } else if (ctrlElem[prop].attrType === 'variable') {
-        RegisteredSketches[index][prop].currentValue = RegisteredSketches[index][prop].defaultValue;
-      }
-
-      if (globalReset === true) {
-        RegisteredSketches[index][prop].lockOn = false;
+      if (operation === 'randomize') {
+        setRandomValue(index, prop);
+      } else if (operation === 'reset') {
+        if (globalReset === true) {
+          RegisteredSketches[index][prop].lockOn = false;
+        }
+        setDefaultValue(index, prop);
       }
     }
   }
@@ -53,69 +56,60 @@ let resetParameters = indices => {
   return;
 };
 
-let randomizeParameters = (indices) => {
-  let ctrlElementsArray = [];
-  for (let i in indices) {
-    ctrlElementsArray.push(RegisteredSketches[i]);
-  }
-
-  let rVal;
-  let valueRange;
-  let optLength;
-  let optIndex;
-
-  for (let index in ctrlElementsArray) {
-    if (!ctrlElementsArray.hasOwnProperty(index)) {
-      continue;
-    }
-
-    const ctrlElem = ctrlElementsArray[index];
-
-    for (let prop in ctrlElem) {
-      if (
-        !ctrlElem.hasOwnProperty(prop) ||
-        !ctrlElem[prop].defaultValue ||
-        !ctrlElem[prop].currentValue
-      ) {
-        continue;
-      }
-
-      if (ctrlElem[prop].lockOn === true) {
-        continue;
-      }
-
-      if (ctrlElem[prop].attrType === 'numeric') {
-        rVal =
-          Math.random() *
-          (
-            parseFloat(ctrlElem[prop].max) -
-            parseFloat(ctrlElem[prop].min) +
-            parseFloat(ctrlElem[prop].min)
-          ).toFixed(4);
-      } else if (ctrlElem[prop].attrType === 'variable') {
-        optLength = ctrlElem[prop].options.length;
-        optIndex = getRandomInt(0, optLength - 1);
-        rVal = ctrlElem[prop].options[optIndex];
-
-        if (typeof rVal === 'undefined') {
-          console.log('stop');
-        }
-      }
-
-      RegisteredSketches[index][prop].currentValue = rVal;
-      RegisteredSketches[index][prop].targetValue = rVal;
-    }
-  }
-
-  return
-};
-
+/**
+ * Returns a random integer between the min and max values.
+ * @param {*} min
+ * @param {*} max
+ * @return {Number}
+ */
 let getRandomInt = (min, max) => {
   'use strict';
   return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
 };
 
-BulkUpdaterService.resetParameters = resetParameters;
-BulkUpdaterService.randomizeParameters = randomizeParameters;
+/**
+ * Sets the target property for a sketch element to a random value
+ * @param {Number} index
+ * @param {String} prop
+ * @return {Void}
+ */
+let setRandomValue = (index, prop) => {
+  let rVal;
+  if (RegisteredSketches[index][prop].attrType === 'numeric') {
+    let min = parseFloat(RegisteredSketches[index][prop].min);
+    let max = parseFloat(RegisteredSketches[index][prop].max);
 
-export default BulkUpdaterService;
+    rVal = Math.random() * (max - min + min).toFixed(4);
+  } else if (RegisteredSketches[index][prop].attrType === 'variable') {
+    const optLength = RegisteredSketches[index][prop].options.length;
+    const optIndex = getRandomInt(0, optLength - 1);
+
+    rVal = RegisteredSketches[index][prop].options[optIndex];
+
+    if (typeof rVal === 'undefined') {
+      throw new Error('rVal was set to undifined');
+    }
+  }
+
+  RegisteredSketches[index][prop].currentValue = rVal;
+  RegisteredSketches[index][prop].targetValue = rVal;
+};
+
+/**
+ * Rest thhe value of the indicated sketch property to its' default settings
+ *
+ * @param {Number} index
+ * @param {String} prop
+ * @return {Void}
+ */
+let setDefaultValue = (index, prop) => {
+  if (RegisteredSketches[index][prop].attrType === 'numeric') {
+    RegisteredSketches[index][prop].min = RegisteredSketches[index][prop].defaultMin;
+    RegisteredSketches[index][prop].max = RegisteredSketches[index][prop].defaultMax;
+  }
+
+  RegisteredSketches[index][prop].currentValue = RegisteredSketches[index][prop].defaultValue;
+  RegisteredSketches[index][prop].targetValue = RegisteredSketches[index][prop].defaultValue;
+};
+
+export default BulkUpdateService;
