@@ -6,7 +6,7 @@
       v-list-item(
         v-for="menuItemData in masterMenuItems"
         :key="menuItemData.title"
-        @click=""
+        @click="clickHandler(menuItemData.action)"
       )
         IconWithTooltip(
           :menuItemData='menuItemData'
@@ -15,11 +15,14 @@
 
 <script>
 import IconWithTooltip from '@/components/IconWithTooltip.vue';
+import BulkUpdateService from '@/js/services/BulkUpdaterService';
+import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
   components: {
     IconWithTooltip,
   },
+
   data: () => ({
     masterMenuItems: [
       // {
@@ -28,7 +31,7 @@ export default {
       //   tooltipText:
       //     'Enable or Disable this help box. The help box will tell you what each intractable element does.',
       //   title: 'Toggle Help',
-      //   function: '',
+      //   action: '',
       // },
       // {
       //   mdIconText: 'keyboard',
@@ -36,7 +39,7 @@ export default {
       //   tooltipText:
       //     'This will show/hide the fields that allow you to map and bind keyboard keys and/or midi controller inputs to control visual properties.',
       //   title: 'Toggle the Input Binders',
-      //   function: '',
+      //   action: '',
       // },
       // {
       //   mdIconText: 'waves',
@@ -44,7 +47,7 @@ export default {
       //   tooltipText:
       //     "Randomizes all of the audio reactive selectors. This will assign each element's properties to respond to one of the frequency ranges.  This will also randomly set the audio reactive mode randomly for each of the elements' properties.",
       //   title: 'Randomize Audio Reactive',
-      //   function: '',
+      //   action: '',
       // },
       {
         mdIconText: 'shuffle',
@@ -52,7 +55,7 @@ export default {
         tooltipText:
           'Randomizes all values for every element and property. Excludes audio reactive control',
         title: 'Randomize Everything',
-        function: '',
+        action: 'randomizeComposition',
       },
       // {
       //   mdIconText: 'wb_iridescent',
@@ -66,10 +69,26 @@ export default {
         id: 'reset-settings',
         tooltipText: 'Reset All Values. Excludes audio reactive control',
         title: 'Master Reset',
-        function: '',
+        action: 'resetComposition',
       },
     ],
   }),
+
+  methods: {
+    clickHandler(functionName) {
+      this[functionName]();
+    },
+
+    randomizeComposition() {
+      let indices = Object.keys(RegisteredSketches);
+      BulkUpdateService(indices, 'randomize');
+    },
+
+    resetComposition() {
+      let indices = Object.keys(RegisteredSketches);
+      BulkUpdateService(indices, 'reset');
+    },
+  },
 };
 </script>
 

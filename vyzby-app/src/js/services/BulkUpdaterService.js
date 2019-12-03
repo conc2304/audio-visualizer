@@ -20,7 +20,7 @@ const BulkUpdateService = (indicesToUpdate, operation) => {
   }
 
   for (let index in RegisteredSketches) {
-    index = Number(index);
+    // index = Number(index);
     if (!indicesToUpdate.includes(index)) {
       continue;
     }

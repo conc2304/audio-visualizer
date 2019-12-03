@@ -75,7 +75,8 @@ export default {
 
     resetLayer() {
       console.log('Reset Layer');
-      let indices = [this.sketchIndexSelected];
+      let iString = this.sketchIndexSelected.toString();
+      let indices = [iString];
       BulkUpdateService(indices, 'reset')
 
       this.$emit('layer_action_triggered', true);
@@ -89,7 +90,8 @@ export default {
 
     randomizeLayerParameters() {
       console.log('randomizeParameters');
-      let indices = [this.sketchIndexSelected];
+      let iString = this.sketchIndexSelected.toString();
+      let indices = [iString];
 
       BulkUpdateService(indices, 'randomize');
 
