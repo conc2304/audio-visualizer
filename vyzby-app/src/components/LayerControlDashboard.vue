@@ -21,6 +21,7 @@
 
 <script>
 import IconWithTooltip from '@/components/IconWithTooltip.vue';
+import BulkUpdaterService from '@/js/services/BulkUpdaterService';
 
 export default {
   components: {
@@ -45,12 +46,12 @@ export default {
         action: 'toggleLayerVisibility',
         bypass: false,
       },
-      {
-        mdIconText: 'waves',
-        tooltipText: 'Randomize Audio Responsiveness',
-        title: 'Randomize Audio Responsiveness',
-        action: 'randomizeAudioResponse',
-      },
+      // {
+      //   mdIconText: 'waves',
+      //   tooltipText: 'Randomize Audio Responsiveness',
+      //   title: 'Randomize Audio Responsiveness',
+      //   action: 'randomizeAudioResponse',
+      // },
       {
         mdIconText: 'shuffle',
         tooltipText: 'Randomizes all values this layer. Excludes audio reactive control',
@@ -74,123 +75,25 @@ export default {
 
     resetLayer() {
       console.log('Reset Layer');
+      let indices = [this.sketchIndexSelected];
+      BulkUpdaterService.resetParameters(indices)
 
-      let index = this.sketchIndexSelected;
-      let ctrlElementsArray = [this.RegisteredSketches[index]];
-
-      // randomizeAudioResponsiveOption(false, true);
-      // randomizeAudioFrequency(false, true);
-
-      let globalReset = true;
-      for (let i in ctrlElementsArray) {
-        if (!ctrlElementsArray.hasOwnProperty(i)) {
-          continue;
-        }
-
-        let ctrlElem = ctrlElementsArray[i];
-
-        for (let prop in ctrlElem) {
-          if (!ctrlElem.hasOwnProperty(prop)) {
-            continue;
-          }
-
-          if (!ctrlElem[prop].defaultValue || !ctrlElem[prop].currentValue) {
-            continue;
-          }
-
-          if (ctrlElem[prop].lockOn === true) {
-            continue;
-          }
-
-          if (ctrlElem[prop].attrType === 'numeric') {
-            this.RegisteredSketches[index][prop].currentValue = this.RegisteredSketches[index][
-              prop
-            ].defaultValue;
-            this.RegisteredSketches[index][prop].targetValue = this.RegisteredSketches[index][
-              prop
-            ].defaultValue;
-            this.RegisteredSketches[index][prop].min = this.RegisteredSketches[index][
-              prop
-            ].defaultMin;
-            this.RegisteredSketches[index][prop].max = this.RegisteredSketches[index][
-              prop
-            ].defaultMax;
-          } else if (ctrlElem[prop].attrType === 'variable') {
-            this.RegisteredSketches[index][prop].currentValue = this.RegisteredSketches[index][
-              prop
-            ].defaultValue;
-          }
-
-          if (globalReset === true) {
-            this.RegisteredSketches[index][prop].lockOn = false;
-          }
-        }
-      }
-
-      this.$emit('layer_action_triggered');
+      this.$emit('layer_action_triggered', true);
     },
 
     randomizeAudioResponse() {
       console.log('Randomize Audio');
 
-      this.$emit('layer_action_triggered');
+      this.$emit('layer_action_triggered', true);
     },
 
     randomizeLayerParameters() {
       console.log('randomizeParameters');
+      let indices = [this.sketchIndexSelected];
 
-      const index = this.sketchIndexSelected;
-      const ctrlElementsArray = [this.RegisteredSketches[index]];
+      BulkUpdaterService.randomizeParameters(indices);
 
-      let rVal;
-      let valueRange;
-      let optLength;
-      let optIndex;
-
-      for (let i in ctrlElementsArray) {
-        if (!ctrlElementsArray.hasOwnProperty(i)) {
-          continue;
-        }
-
-        const ctrlElem = ctrlElementsArray[i];
-
-        for (let prop in ctrlElem) {
-          if (
-            !ctrlElem.hasOwnProperty(prop) ||
-            !ctrlElem[prop].defaultValue ||
-            !ctrlElem[prop].currentValue
-          ) {
-            continue;
-          }
-
-          if (ctrlElem[prop].lockOn === true) {
-            continue;
-          }
-
-          if (ctrlElem[prop].attrType === 'numeric') {
-            rVal =
-              Math.random() *
-              (
-                parseFloat(ctrlElem[prop].max) -
-                parseFloat(ctrlElem[prop].min) +
-                parseFloat(ctrlElem[prop].min)
-              ).toFixed(4);
-          } else if (ctrlElem[prop].attrType === 'variable') {
-            optLength = ctrlElem[prop].options.length;
-            optIndex = getRandomInt(0, optLength - 1);
-            rVal = ctrlElem[prop].options[optIndex];
-
-            if (typeof rVal === 'undefined') {
-              console.log('stop');
-            }
-          }
-
-          this.RegisteredSketches[index][prop].currentValue = rVal;
-          this.RegisteredSketches[index][prop].targetValue = rVal;
-        }
-      }
-
-      this.$emit('layer_action_triggered');
+      this.$emit('layer_action_triggered', true);
     },
 
     toggleLayerVisibility() {
@@ -202,10 +105,7 @@ export default {
   },
 };
 
-let getRandomInt = (min, max) => {
-  'use strict';
-  return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
-};
+
 </script>
 
 <style lang="scss" scoped>

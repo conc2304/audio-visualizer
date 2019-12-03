@@ -8,7 +8,7 @@
         v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
         :config="sliderConfig"
         :value="sliderValues"
-        @update="sliderValues = $event"
+        @update="updateSliderValues($event)"
       )
 
       AudioReactiveControls(
@@ -27,7 +27,7 @@ export default {
   data: () => ({
     sliderConfig: false,
     sliderValues: false,
-    audioEnabled: false,  // todo enable when ready
+    audioEnabled: false, // todo enable when ready
   }),
 
   components: {
@@ -55,6 +55,12 @@ export default {
       };
       this.sliderValues = [this.parameter.min, this.parameter.currentValue, this.parameter.max];
     },
+
+    updateSliderValues(event) {
+      this.parameter.min = event[0];
+      this.parameter.targetValue = event[1];
+      this.parameter.max = event[2];
+    },
   },
 
   mounted() {
@@ -65,12 +71,14 @@ export default {
     sketchSelected(newValue, oldValue) {
       this.getParameterAttributes();
     },
+
     sliderValues(newValue, oldValue) {
       this.parameter.min = newValue[0];
       this.parameter.targetValue = newValue[1];
       this.parameter.max = newValue[2];
     }
   },
+
 };
 </script>
 
@@ -79,3 +87,4 @@ export default {
   margin-left: 15px;
 }
 </style>
+
