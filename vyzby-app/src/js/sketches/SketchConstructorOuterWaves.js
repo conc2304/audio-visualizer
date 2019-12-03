@@ -15,9 +15,9 @@ class OuterWaves {
 
     this.numWaves = new NumericProperty('Number of Waves', 'Base', 3, 0, 10, 0.5);
     this.radius = new NumericProperty('Size', 'Base', 10, 0, 200, 0.5);
-    this.velocity = new NumericProperty('Velocity', 'Base', 0.025, 0.025, 0.5, 0.1);
+    this.velocity = new NumericProperty('Velocity', 'Base', 0.025, 0.02, 0.5, 0.1);
     this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 500, 0.1);
-    this.period = new NumericProperty('Period', 'Base', 0, 50, 2250, 0.07);
+    this.period = new NumericProperty('Period', 'Base', 1000, 0, 2250, 0.07);
     this.xSpacing = new NumericProperty('X Spacing', 'Base', 40, 15, 350, 0.1);
     this.ySpacing = new NumericProperty('Y Spacing', 'Base', 40, 5, 350, 0.1);
     this.waveType = new VariableProperty('Wave Type', 'Base', 'sin', ['sin', 'cos', 'tan']);
