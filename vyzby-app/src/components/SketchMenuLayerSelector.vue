@@ -5,6 +5,7 @@
     v-list( dense nav)
       v-list-item.add-sketch(@click="addNewSketch"  v-if="layerAddEnabled")
         v-icon library_add
+
       v-list-item(
         v-for="(sketch, i) in RegisteredSketches"
         :key="i"
@@ -99,29 +100,6 @@ export default {
     width: auto;
     margin: 0 auto;
     text-align: center;
-  }
-}
-
-i.menu-icon {
-  color: $color-primary-blue;
-  cursor: pointer;
-}
-
-i.menu-icon:hover {
-  color: $color-secondary-blue;
-}
-
-.layer-selected {
-  border: 1px solid $color-secondary-blue;
-}
-
-.layer-inactive {
-  i {
-    color: $color-inactive-red;
-
-    &:hover {
-      color: $color-inactive-red-hover;
-    }
   }
 }
 

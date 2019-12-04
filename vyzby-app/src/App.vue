@@ -5,15 +5,11 @@
 </template>
 
 <script>
-
 export default {
   name: 'App',
-  components: {
-  },
-  data: () => ({
-  }),
-  events: {
-  },
+  components: {},
+  data: () => ({}),
+  events: {},
 };
 </script>
 
@@ -21,4 +17,34 @@ export default {
 html {
   overflow-y: hidden !important ;
 }
+
+#settings-menubar {
+  i.menu-icon {
+    color: $color-primary-blue;
+    cursor: pointer;
+  }
+
+  i.menu-icon:hover {
+    color: $color-secondary-blue;
+  }
+
+  .layer-selected {
+    border: 1px solid $color-secondary-blue;
+  }
+
+  i.menu-icon.inactive {
+    color: $color-inactive-red-hover;
+  }
+
+  .layer-inactive {
+    i {
+      color: $color-inactive-red;
+
+      &:hover {
+        color: $color-inactive-red-hover;
+      }
+    }
+  }
+}
 </style>
+

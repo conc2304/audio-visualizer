@@ -28,22 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-i.menu-icon {
-  color: $color-primary-blue;
-  cursor: pointer;
-}
 
-i.menu-icon.inactive {
-  color: $color-inactive-red-hover;
-}
-
-i.menu-icon.inactive:hover {
-  color: $color-inactive-red
-}
-
-i.menu-icon:hover {
-  color: $color-secondary-blue;
-}
 
 .v-tooltip__content {
   background-color: #000;

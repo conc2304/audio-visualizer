@@ -22,6 +22,14 @@
 
         v-divider
 
+        #audio-player-wrapper
+          v-list( dense nav)
+            v-list-item(
+              :class="{ 'layer-selected': musicPlayerOpen }"
+              @click="musicPlayerOpen = !musicPlayerOpen"
+            )
+        v-icon.menu-icon queue_music
+
       #layer-controls-container( v-show="menuOpen")
         .layer-control-header
           .layer-control-title
