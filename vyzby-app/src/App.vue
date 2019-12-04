@@ -28,7 +28,7 @@ html {
     color: $color-secondary-blue;
   }
 
-  .layer-selected {
+  .active{
     border: 1px solid $color-secondary-blue;
   }
 
@@ -36,7 +36,7 @@ html {
     color: $color-inactive-red-hover;
   }
 
-  .layer-inactive {
+  .inactive {
     i {
       color: $color-inactive-red;
 

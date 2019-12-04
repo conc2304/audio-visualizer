@@ -9,7 +9,7 @@
       v-list-item(
         v-for="(sketch, i) in RegisteredSketches"
         :key="i"
-        :class="{ 'layer-selected': layerSelected === i, 'layer-inactive': sketch.bypass }"
+        :class="{ 'active': layerSelected === i, 'inactive': sketch.bypass }"
         @click="selectLayer(i)"
       )
         v-icon.menu-icon filter_{{ i+1 }}

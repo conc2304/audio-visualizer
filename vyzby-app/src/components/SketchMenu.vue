@@ -26,11 +26,10 @@
           v-divider
           v-list( dense nav)
             v-list-item(
-              :class="{ 'layer-selected': musicPlayerOpen }"
-              @click="musicPlayerOpen = !musicPlayerOpen"
+              :class="{ 'active': audioPlayerOpen }"
+              @click="audioPlayerOpen = !audioPlayerOpen"
             )
               v-icon.menu-icon queue_music
-
 
       #layer-controls-container( v-show="menuOpen")
         .layer-control-header
@@ -52,6 +51,10 @@
             :auxInputVisibible="auxInputVisibible"
           )
 
+    AudioPlayer(
+      v-show="audioPlayerOpen"
+    )
+
 </template>
 
 <script>
@@ -59,6 +62,7 @@ import SketchMenuLayerSelector from '@/components/SketchMenuLayerSelector.vue';
 import SketchMenuCompositionControls from '@/components/SketchMenuCompositionControls.vue';
 import SketchLayerCategoryDropdowns from '@/components/SketchLayerCategoryDropdowns.vue';
 import LayerControlDashboard from '@/components/LayerControlDashboard.vue';
+import AudioPlayer from '@/components/AudioPlayer.vue';
 
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
@@ -68,9 +72,11 @@ export default {
     SketchMenuCompositionControls,
     SketchLayerCategoryDropdowns,
     LayerControlDashboard,
+    AudioPlayer,
   },
   data: () => ({
     menuOpen: false,
+    audioPlayerOpen: false,
     RegisteredSketches,
     sketchIndexSelected: null,
     auxInputVisibible: false,
@@ -95,7 +101,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$subtle-border: rgba(255, 255, 255, 0.12);
 
 #control-panel {
   position: absolute;
