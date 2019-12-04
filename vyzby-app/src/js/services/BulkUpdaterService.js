@@ -12,6 +12,7 @@ const BulkUpdateService = {};
  * @return {Void}
  */
 BulkUpdateService.changeParameterValues = (indicesToUpdate, operation) => {
+  console.log(operation);
   const globalReset = operation === 'reset' && indicesToUpdate.length === RegisteredSketches.length;
 
   if (!['reset', 'randomize'].includes(operation)) {
@@ -90,7 +91,7 @@ let setRandomValue = (index, prop) => {
     let min = parseFloat(RegisteredSketches[index][prop].min);
     let max = parseFloat(RegisteredSketches[index][prop].max);
 
-    rVal = (Math.random() * (max - min + min)).toFixed(4);
+    rVal = Number((Math.random() * (max - min + min)).toFixed(4));
   } else if (RegisteredSketches[index][prop].attrType === 'variable') {
     const optLength = RegisteredSketches[index][prop].options.length;
     const optIndex = Utils.getRandomInt(0, optLength - 1);
