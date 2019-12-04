@@ -46,7 +46,7 @@ export default {
         let min = parseFloat(RegisteredSketches[index][prop].min);
         let max = parseFloat(RegisteredSketches[index][prop].max);
 
-        let rValue = (Math.random() * (max - min + min)).toFixed(4);
+        let rValue = Number((Math.random() * (max - min + min)).toFixed(4));
 
         KeyboardControlsService.setKeyboardControl(keyboardCharacter, rValue, prop, index);
       }
