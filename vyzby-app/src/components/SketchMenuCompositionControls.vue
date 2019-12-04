@@ -92,7 +92,6 @@ export default {
     },
 
     toggleAuxInputFields() {
-      console.log('emit');
       this.auxInputVisible = !this.auxInputVisible;
       this.$emit('toggle_aux_input', true);
     }

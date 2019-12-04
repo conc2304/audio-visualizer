@@ -95,8 +95,6 @@ KeyboardControlsService.setKeyboardControl = (keyboardKey, value, property, sket
   let propValue = value;
 
   if (!Number.isNaN(charCode) && ctrlObjectName !== null && property && propValue) {
-    console.log('setting value');
-    // console.log([inputValue, charCode, ctrlObjectName, property, propValue]);
     // only update the keyboard control if we have a key to control it with
     KCS.keyboardCtrl[charCode] = KCS.keyboardCtrl[charCode] || {};
     KCS.keyboardCtrl[charCode][ctrlObjectName] = KCS.keyboardCtrl[charCode][ctrlObjectName] || {};
