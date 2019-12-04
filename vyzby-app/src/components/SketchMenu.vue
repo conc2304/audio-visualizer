@@ -22,13 +22,15 @@
 
         v-divider
 
-        #audio-player-wrapper
+        #audio-player-toggle-wrapper
+          v-divider
           v-list( dense nav)
             v-list-item(
               :class="{ 'layer-selected': musicPlayerOpen }"
               @click="musicPlayerOpen = !musicPlayerOpen"
             )
-        v-icon.menu-icon queue_music
+              v-icon.menu-icon queue_music
+
 
       #layer-controls-container( v-show="menuOpen")
         .layer-control-header
@@ -164,5 +166,12 @@ i.off-white {
     top: 0;
     left: 0;
   }
+}
+
+#audio-player-toggle-wrapper {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
 }
 </style>
