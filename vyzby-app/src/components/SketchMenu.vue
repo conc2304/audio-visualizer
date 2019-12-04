@@ -29,7 +29,7 @@
               :class="{ 'active': audioPlayerOpen }"
               @click="audioPlayerOpen = !audioPlayerOpen"
             )
-              v-icon.menu-icon queue_music
+              v-icon.menu-icon music_note
 
       #layer-controls-container( v-show="menuOpen")
         .layer-control-header

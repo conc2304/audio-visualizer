@@ -16,12 +16,16 @@
       )
     .audio-controls
       #playback-controls.ctrl-buttons
+        v-btn#open-playlist( text icon)
+          v-icon.menu-icon queue_music
+
         v-btn( text icon)
           v-icon.menu-icon skip_previous
         v-btn( text icon)
           v-icon.menu-icon play_arrow
         v-btn( text icon)
           v-icon.menu-icon skip_next
+
         input( type="file" id="upload-file" name="upload-file")
         label( for="upload-file" id="upload-file-label")
           v-btn( text icon)
@@ -76,9 +80,12 @@ p {
   position: absolute;
   z-index: -1;
 }
-
-#upload-file-icon {
-    position: absolute;
-    left: 0;
+#open-playlist {
+  position: absolute;
+  left: 10px;
+}
+#upload-file-label {
+  position: absolute;
+  right: 10px;
 }
 </style>
