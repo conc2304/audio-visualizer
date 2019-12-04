@@ -630,8 +630,8 @@ let createDomSlider = (ctrlObject, prop, inputWrapper) => {
 
   let ctrlObjectName = ctrlObject.constructor.name;
 
-  // todo make step a property of the elements
-  // todo cont. we can make the sliders non-linear if we want  @see https://refreshless.com/nouislider/slider-values/
+  // TODO make step a property of the elements
+  // TODO cont. we can make the sliders non-linear if we want  @see https://refreshless.com/nouislider/slider-values/
 
   // slider to control the individual property
   let rangeSlider = document.createElement('div');
@@ -652,7 +652,7 @@ let createDomSlider = (ctrlObject, prop, inputWrapper) => {
     range: {
       'min': [ctrlObject[prop].defaultMin],
       'max': [ctrlObject[prop].defaultMax]
-      // todo, there can be custom ranges to maximize certain sections of the slider
+      // TODO, there can be custom ranges to maximize certain sections of the slider
     },
     connect: true,
     // step : [ctrlObject[prop].step,

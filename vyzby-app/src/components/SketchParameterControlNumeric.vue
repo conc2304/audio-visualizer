@@ -14,7 +14,7 @@
       ParameterAuxInput(
         v-if="auxEnabled"
         :parameter="parameter"
-        :sketchSelected="sketchSelected"
+        :sketchIndexSelected="sketchIndexSelected"
       )
       AudioReactiveControls(
         v-if="parameter.audio && audioEnabled"
@@ -33,8 +33,8 @@ export default {
   data: () => ({
     sliderConfig: false,
     sliderValues: false,
-    audioEnabled: false, // todo enable when ready
-    auxEnabled: true,   // todo enable when ready
+    audioEnabled: false, // TODO enable when ready
+    auxEnabled: true,   // TODO enable when ready
   }),
 
   components: {
@@ -43,7 +43,9 @@ export default {
   },
 
   props: {
-    sketchSelected: {},
+    sketchIndexSelected: {
+      type: Number
+    },
     parameter: {
       type: Object,
     },

@@ -1,4 +1,7 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
+import Utils from '@/js/services/Utils';
+
+const BulkUpdateService = {};
 
 /**
  * Updates the parameter properties for indicated sketch elements.
@@ -8,7 +11,7 @@ import RegisteredSketches from '@/js/services/SketchRegistration';
  * @param {String} operation
  * @return {Void}
  */
-const BulkUpdateService = (indicesToUpdate, operation) => {
+BulkUpdateService.changeParameterValues = (indicesToUpdate, operation) => {
   const globalReset = operation === 'reset' && indicesToUpdate.length === RegisteredSketches.length;
 
   if (!['reset', 'randomize'].includes(operation)) {
@@ -56,15 +59,24 @@ const BulkUpdateService = (indicesToUpdate, operation) => {
 };
 
 /**
- * Returns a random integer between the min and max values.
- * @param {*} min
- * @param {*} max
- * @return {Number}
+ * Cycle to the next available option for an attribute
+ * @param ctrlElement   - the instance whose attributes we are changing
+ * @param attr          - the attribute we are changing in the instance
+ * @returns {string}    - the string value that we are setting
  */
-let getRandomInt = (min, max) => {
-  'use strict';
-  return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
+BulkUpdateService.getNextVariableOption = (ctrlElement, attr) => {
+  "use strict";
+  if (!ctrlElement[attr].options) {
+    return;
+  }
+
+  let numOptions = ctrlElement[attr].options.length;
+  let index = ctrlElement[attr].options.indexOf(ctrlElement[attr].currentValue);
+  index = (index + 1) % numOptions;
+
+  return ctrlElement[attr].options[index];
 };
+
 
 /**
  * Sets the target property for a sketch element to a random value
@@ -78,10 +90,10 @@ let setRandomValue = (index, prop) => {
     let min = parseFloat(RegisteredSketches[index][prop].min);
     let max = parseFloat(RegisteredSketches[index][prop].max);
 
-    rVal = Math.random() * (max - min + min).toFixed(4);
+    rVal = (Math.random() * (max - min + min)).toFixed(4);
   } else if (RegisteredSketches[index][prop].attrType === 'variable') {
     const optLength = RegisteredSketches[index][prop].options.length;
-    const optIndex = getRandomInt(0, optLength - 1);
+    const optIndex = Utils.getRandomInt(0, optLength - 1);
 
     rVal = RegisteredSketches[index][prop].options[optIndex];
 

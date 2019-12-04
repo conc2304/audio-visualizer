@@ -1,11 +1,11 @@
 /**
  *
  *    --  HERE ARE MY AMBITIONS - BEHOLD THEIR MULTITUDE!  --
- * todo - make a toggle to spin/rotate the inner and outer waves like the 3D ones
- * todo - make patterns by saving current config and make them triggerable (ie a pattern bank)
- * todo - put controls into an iFrame
- * todo - convert this entire thing into an web app
- * todo - loading animation
+ * TODO - make a toggle to spin/rotate the inner and outer waves like the 3D ones
+ * TODO - make patterns by saving current config and make them triggerable (ie a pattern bank)
+ * TODO - put controls into an iFrame
+ * TODO - convert this entire thing into an web app
+ * TODO - loading animation
  *
  */
 
@@ -16,7 +16,6 @@ import KeyboardControlsService from '@/js/services/KeyboardControlsService';
 
 let audio;
 let bgColor = 0;
-console.log(document.currentScript);
 
 const VisualizerSketch = p5 => {
   'use strict';
@@ -54,7 +53,6 @@ const VisualizerSketch = p5 => {
   };
 
   p5.windowResized = () => {
-    // todo this is taxing on the browser find out how to optimize
     for (let ctrlElement in p5.ctrlElementsArray) {
       if (!p5.ctrlElementsArray.hasOwnProperty(ctrlElement)) {
         continue;

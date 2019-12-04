@@ -30,7 +30,6 @@
           LayerControlDashboard(
             :sketchIndexSelected="sketchIndexSelected"
             :RegisteredSketches="RegisteredSketches"
-            @layer_action_triggered="updateConfigs"
           )
 
         .layer-control-contents

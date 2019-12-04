@@ -283,7 +283,7 @@ let removeNotesHeld = (note) => {
 
 
 /**
- * Run a sequence based on a trigger  // todo
+ * Run a sequence based on a trigger  // TODO
  * @param MIDImessage
  */
 let runSequence = (MIDImessage) => {

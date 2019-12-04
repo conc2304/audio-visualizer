@@ -81,12 +81,12 @@ export default {
 
     randomizeComposition() {
       let indices = Object.keys(RegisteredSketches);
-      BulkUpdateService(indices, 'randomize');
+      BulkUpdateService.changeParameterValues(indices, 'randomize');
     },
 
     resetComposition() {
       let indices = Object.keys(RegisteredSketches);
-      BulkUpdateService(indices, 'reset');
+      BulkUpdateService.changeParameterValues(indices, 'reset');
     },
   },
 };

@@ -7,6 +7,9 @@
 <script>
 import SketchMenu from '@/components/SketchMenu.vue';
 import Visualizer from '@/js/sketches/SketchBaseVisualizer';
+import RegisteredSketches from '@/js/services/SketchRegistration';
+import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import Utils from '@/js/services/Utils';
 
 export default {
   name: 'visualizer',
@@ -20,6 +23,34 @@ export default {
   mounted() {
     const P5 = require('p5');
     new P5(Visualizer, 'sketch-container');
+
+    // alphabet charcodes fo A-Z = [65 - 90]
+    // number 0-1 = [49 - 57]
+
+    // TODO figure out how to have this happen on page load and not component load
+    let randomCharCode;
+    for (let index in RegisteredSketches) {
+      for (let prop in RegisteredSketches[index]) {
+        if (!RegisteredSketches[index][prop].hasOwnProperty('defaultValue')) {
+          continue;
+        }
+
+        let keyboardCharacter;
+        if (Utils.getRandomInt(0, 10) < 4) {
+          keyboardCharacter = Utils.getRandomInt(49, 57);
+        } else {
+          keyboardCharacter = Utils.getRandomInt(65, 90);
+        }
+
+        keyboardCharacter = String.fromCharCode(keyboardCharacter);
+        let min = parseFloat(RegisteredSketches[index][prop].min);
+        let max = parseFloat(RegisteredSketches[index][prop].max);
+
+        let rValue = (Math.random() * (max - min + min)).toFixed(4);
+
+        KeyboardControlsService.setKeyboardControl(keyboardCharacter, rValue, prop, index);
+      }
+    }
   },
 };
 </script>

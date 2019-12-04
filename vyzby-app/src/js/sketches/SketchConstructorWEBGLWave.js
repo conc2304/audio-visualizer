@@ -62,7 +62,6 @@ class ThreeDWave {
   }
 }
 
-
 /**
  * Based on the current wave period and spacing between x points
  * get the location of the y points to be rendered in the wave
@@ -105,19 +104,19 @@ ThreeDWave.prototype.render = function(p5) {
     this.translateZ.currentValue,
   );
 
-  if (
-    !this.shape.currentValue.includes(
-      'lambo',
-      'glock',
-      'shuttle',
-      'shuttle',
-      'ducky',
-      'whale',
-      'dolphin',
-      'satellite',
-      'sword',
-    )
-  ) {
+  let loadedModels = [
+    'lambo',
+    'glock',
+    'shuttle',
+    'shuttle',
+    'ducky',
+    'whale',
+    'dolphin',
+    'satellite',
+    'sword',
+  ];
+
+  if (!loadedModels.includes(this.shape.currentValue)) {
     this.setColor(p5);
   }
 
@@ -169,7 +168,6 @@ ThreeDWave.prototype.setColor = function(p5) {
   }
 };
 
-
 /**
  * Renders the given 3D Primitive Shape
  */
@@ -216,7 +214,6 @@ ThreeDWave.prototype.renderShape = function(p5) {
   }
   p5.pop();
 };
-
 
 ThreeDWave.prototype.easeInto = easeInto;
 

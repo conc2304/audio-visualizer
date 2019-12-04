@@ -76,6 +76,7 @@ export default {
           continue;
         }
 
+        thisParameter.attrName = parameter;
         properties.push(thisParameter);
       }
 

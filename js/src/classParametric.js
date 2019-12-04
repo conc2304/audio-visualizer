@@ -206,11 +206,11 @@ function parametricPipe(shape) {
 
 function parametricTest(shape) {
 
-  // todo control the xy growth of the shape
+  // TODO control the xy growth of the shape
   let bounce = {
     max : 7,
     min : 6,
-    rate : '?todo',
+    rate : '?TODO',
   };
   shape.width = sin(map(shape.q, 0, .51, bounce.min, bounce.max));
   shape.height = sin(map(shape.q, 0, .51, bounce.min, bounce.max));
@@ -242,11 +242,11 @@ function parametricBounceRing(shape) {
 
 function parametricFullScreenStrobeRing() {
 
-  // todo control the xy growth of the shape
+  // TODO control the xy growth of the shape
   let bounce = {
     max : 7,
     min : 6,
-    rate : '?todo',
+    rate : '?TODO',
   };
   shape.width = sin(map(shape.q, 0, .51, bounce.min, bounce.max));
   shape.height = sin(map(shape.q, 0, .51, bounce.min, bounce.max));
@@ -261,11 +261,11 @@ function parametricFullScreenStrobeRing() {
 
 function parametricFullScreenBounce() {
 
-  // todo control the xy growth of the shape
+  // TODO control the xy growth of the shape
   let bounce = {
     max : 7,
     min : 6,
-    rate : '?todo',
+    rate : '?TODO',
   };
   shape.width = sin(map(shape.q, 0, .51, bounce.min, bounce.max));
 
@@ -279,11 +279,11 @@ function parametricFullScreenBounce() {
 
 function parametricSizeBounceTest() {
 
-  // todo control the xy growth of the shape
+  // TODO control the xy growth of the shape
   let bounce = {
     max : 3.5,
     min : 3,
-    rate : '', // todo
+    rate : '', // TODO
   };
   shape.width = map(shape.q, -.5, .51, bounce.min, bounce.max);
   let shapeWidth = windowWidth/shape.width;
@@ -298,7 +298,7 @@ function parametricSizeBounceTest() {
 }
 
 function parametricFullScreenPattern002(shape) {
-  //todo sharpen sensitivity rate
+  //TODO sharpen sensitivity rate
   let m = map(sin(shape.q), .000001, 1000, 10, 500);
 
   return {

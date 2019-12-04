@@ -1,7 +1,7 @@
 // to do make shared object functions into an object
 
-// todo these constants need to go back to MidiControlService.js or be imported
-// todo MidiControlService.js needs to be injected in files  (but also a few others)
+// TODO these constants need to go back to MidiControlService.js or be imported
+// TODO MidiControlService.js needs to be injected in files  (but also a few others)
 const Note_Pressed   = 159;
 const Note_Held      = 175;
 const Note_Off       = 143;

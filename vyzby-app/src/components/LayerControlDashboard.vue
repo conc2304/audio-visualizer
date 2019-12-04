@@ -88,22 +88,17 @@ export default {
     resetLayer() {
       let iString = this.sketchIndexSelected.toString();
       let indices = [iString];
-      BulkUpdateService(indices, 'reset');
-
-      this.$emit('layer_action_triggered', true);
+      BulkUpdateService.changeParameterValues(indices, 'reset');
     },
 
     randomizeAudioResponse() {
-      this.$emit('layer_action_triggered', true);
     },
 
     randomizeLayerParameters() {
       let iString = this.sketchIndexSelected.toString();
       let indices = [iString];
 
-      BulkUpdateService(indices, 'randomize');
-
-      this.$emit('layer_action_triggered', true);
+      BulkUpdateService.changeParameterValues(indices, 'randomize');
     },
 
     toggleLayerVisibility() {
