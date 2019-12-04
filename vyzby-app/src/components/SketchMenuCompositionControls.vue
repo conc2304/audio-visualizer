@@ -6,6 +6,7 @@
       v-list-item(
         v-for="menuItemData in masterMenuItems"
         :key="menuItemData.title"
+        :class="{ 'inactive': auxInputVisible && menuItemData.id === 'toggle-input-assigner' }"
         @click="clickHandler(menuItemData.action)"
       )
         IconWithTooltip(
@@ -24,6 +25,7 @@ export default {
   },
 
   data: () => ({
+    auxInputVisible: true,
     masterMenuItems: [
       // {
       //   mdIconText: 'help',
@@ -33,14 +35,14 @@ export default {
       //   title: 'Toggle Help',
       //   action: '',
       // },
-      // {
-      //   mdIconText: 'keyboard',
-      //   id: 'toggle-input-assigner',
-      //   tooltipText:
-      //     'This will show/hide the fields that allow you to map and bind keyboard keys and/or midi controller inputs to control visual properties.',
-      //   title: 'Toggle the Input Binders',
-      //   action: '',
-      // },
+      {
+        mdIconText: 'keyboard',
+        id: 'toggle-input-assigner',
+        tooltipText:
+          'This will show/hide the fields that allow you to map and bind keyboard keys and/or midi controller inputs to control visual properties.',
+        title: 'Toggle auxilliary input field',
+        action: 'toggleAuxInputFields',
+      },
       // {
       //   mdIconText: 'waves',
       //   id: 'randomize-audio-reactive',
@@ -88,6 +90,12 @@ export default {
       let indices = Object.keys(RegisteredSketches);
       BulkUpdateService.changeParameterValues(indices, 'reset');
     },
+
+    toggleAuxInputFields() {
+      console.log('emit');
+      this.auxInputVisible = !this.auxInputVisible;
+      this.$emit('toggle_aux_input', true);
+    }
   },
 };
 </script>
@@ -130,5 +138,12 @@ export default {
     margin: 0 auto;
     text-align: center;
   }
+}
+
+</style>
+
+<style lang="scss">
+#composition-controls .inactive .v-icon.menu-icon {
+  color: $color-inactive-red;
 }
 </style>

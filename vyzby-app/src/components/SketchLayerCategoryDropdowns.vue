@@ -22,6 +22,7 @@
               :sketchIndexSelected="sketchIndexSelected"
               :RegisteredSketches="RegisteredSketches"
               :category="category"
+              :auxInputVisibible="auxInputVisibible"
             )
 
 </template>
@@ -44,6 +45,10 @@ export default {
     RegisteredSketches: {
       type: Array,
     },
+    auxInputVisibible: {
+      type: Boolean,
+      default: false,
+    }
   },
 
   watch: {},

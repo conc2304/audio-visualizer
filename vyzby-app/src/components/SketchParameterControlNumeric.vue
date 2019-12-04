@@ -12,12 +12,12 @@
       )
 
       ParameterAuxInput(
-        v-if="auxEnabled"
+        v-show="auxInputVisibible"
         :parameter="parameter"
         :sketchIndexSelected="sketchIndexSelected"
       )
       AudioReactiveControls(
-        v-if="parameter.audio && audioEnabled"
+        v-show="parameter.audio && audioEnabled"
         :parameter="parameter"
       )
 </template>
@@ -34,7 +34,7 @@ export default {
     sliderConfig: false,
     sliderValues: false,
     audioEnabled: false, // TODO enable when ready
-    auxEnabled: true,   // TODO enable when ready
+    auxEnabled: true, // TODO enable when ready
   }),
 
   components: {
@@ -44,10 +44,14 @@ export default {
 
   props: {
     sketchIndexSelected: {
-      type: Number
+      type: Number,
     },
     parameter: {
       type: Object,
+    },
+    auxInputVisibible: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -86,9 +90,8 @@ export default {
       this.parameter.min = newValue[0];
       this.parameter.targetValue = newValue[1];
       this.parameter.max = newValue[2];
-    }
+    },
   },
-
 };
 </script>
 
@@ -97,4 +100,3 @@ export default {
   margin-left: 15px;
 }
 </style>
-

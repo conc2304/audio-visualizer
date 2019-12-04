@@ -9,6 +9,7 @@
         SketchParameterControlNumeric(
           :sketchIndexSelected="sketchIndexSelected"
           :RegisteredSketches="RegisteredSketches"
+          :auxInputVisibible="auxInputVisibible"
           :parameter="parameter"
         )
 
@@ -21,6 +22,7 @@
         SketchParameterControlVariable(
           :sketchIndexSelected="sketchIndexSelected"
           :RegisteredSketches="RegisteredSketches"
+          :auxInputVisibible="auxInputVisibible"
           :parameter="parameter"
         )
 
@@ -46,6 +48,10 @@ export default {
     },
     RegisteredSketches: {
       type: Array,
+    },
+    auxInputVisibible: {
+      type: Boolean,
+      default: false,
     },
   },
 

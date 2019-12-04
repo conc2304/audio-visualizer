@@ -16,7 +16,9 @@
           @layer_selected="updatesketchIndexSelected"
         )
         v-divider
-        SketchMenuCompositionControls
+        SketchMenuCompositionControls(
+          v-on:toggle_aux_input="toggleAuxInputFields"
+        )
 
         v-divider
 
@@ -37,6 +39,7 @@
           SketchLayerCategoryDropdowns(
             :sketchIndexSelected="sketchIndexSelected"
             :RegisteredSketches="RegisteredSketches"
+            :auxInputVisibible="auxInputVisibible"
           )
 
 </template>
@@ -60,6 +63,7 @@ export default {
     menuOpen: false,
     RegisteredSketches,
     sketchIndexSelected: null,
+    auxInputVisibible: false,
   }),
 
   methods: {
@@ -71,6 +75,10 @@ export default {
     closeMenu() {
       this.sketchIndexSelected = -1;
       this.menuOpen = false;
+    },
+
+    toggleAuxInputFields() {
+      this.auxInputVisibible = !this.auxInputVisibible;
     },
   },
 };
