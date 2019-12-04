@@ -48,7 +48,7 @@ export default {
     auxInputVisibible: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   watch: {},
@@ -85,7 +85,7 @@ export default {
 #controller-property-categories {
   width: 100%;
   height: 100vh;
-  padding-bottom: 400px;
+  padding-bottom: 150px;
   overflow-y: scroll;
 
   .v-expansion-panels {
@@ -98,6 +98,33 @@ export default {
 
   .v-expansion-panel-header {
     border-radius: 0;
+  }
+}
+</style>
+
+<style lang="scss">
+#controller-property-categories {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #000;
+    border-radius: 10px;
+  }
+
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #000000bd;
+    background-image: -webkit-gradient(
+      linear,
+      40% 0%,
+      75% 84%,
+      from(#000000bd),
+      to(#0c6b98),
+      color-stop(0.9, #0e83cd)
+    );
   }
 }
 </style>
