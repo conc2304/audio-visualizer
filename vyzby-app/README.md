@@ -33,7 +33,7 @@ Production URL [http://vyzby.joseconchello.com/](http://vyzby.joseconchello.com/
   * Ability to control sketch paramters via MIDI input
   
 
-## Anatomy of p5js Sketch Developement
+## Anatomy of p5js Sketch Developement within VYZBY
 New Sketches in p5Js get registered in `'@/js/services/SketchRegistration.js'` and get imported together as an array of objects.
 
 p5JS sketches are found and kept in the `vyzby-app/src/js/sketches/` directory.  An exampple of an existing sketch is `vyzby-app/src/js/sketches/SketchConstructorWEBGLWave.js`
@@ -62,9 +62,12 @@ Numeric and Variable parameters get grouped together in dropdowns based on the c
  * Dependency Injection with Vue js https://codeburst.io/dependency-injection-with-vue-js-f6b44a0dae6d
  * No Ui Slider https://www.npmjs.com/package/vue-nouislider-fork/v/1.0.8
  * Material Icons https://material.io/resources/icons/?style=baseline
+ * p5JS tutorial by Daniel Shiffman https://www.youtube.com/playlist?list=PLRqwX-V7Uu6Zy51Q-x9tMWIv9cueOFTFA 
 
+<br>
+<br>
 
-
+## Getting Started
 To be run from the `/vyzby-app` directory
 ### Project setup
 ```
