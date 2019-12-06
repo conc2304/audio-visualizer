@@ -30,6 +30,7 @@ Production URL [http://vyzby.joseconchello.com/](http://vyzby.joseconchello.com/
   * Ability to add new layer
   * Ability to remove existing layer
   * Ability to shift order of layers
+  * Ability to control sketch paramters via MIDI input
   
 
 ## Anatomy of p5js Sketch Developement
@@ -61,6 +62,8 @@ Numeric and Variable parameters get grouped together in dropdowns based on the c
  * Material Icons https://material.io/resources/icons/?style=baseline
 
 
+
+To be run from the `/vyzby-app` directory
 ### Project setup
 ```
 npm install
