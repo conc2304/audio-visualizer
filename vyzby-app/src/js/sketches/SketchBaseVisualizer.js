@@ -4,7 +4,7 @@
  * TODO - make a toggle to spin/rotate the inner and outer waves like the 3D ones
  * TODO - make patterns by saving current config and make them triggerable (ie a pattern bank)
  * TODO - put controls into an iFrame
- * TODO - convert this entire thing into an web app
+ * TODO - convert this entire thing into an web app (in progress)
  * TODO - loading animation
  *
  */
@@ -23,14 +23,14 @@ const VisualizerSketch = p5 => {
   // keep all 'custom' code here
   p5.preload = () => {
     p5.objects = {};
-    p5.objects.lambo = p5.loadModel('@/assets/3d_obj/lp670.obj', true);
-    p5.objects.glock = p5.loadModel('@/assets/3d_obj/Glock 3d.obj', true);
-    p5.objects.dolphin = p5.loadModel('@/assets/3d_obj/dolphin.obj', true);
-    p5.objects.ducky = p5.loadModel('@/assets/3d_obj/ducky.obj', true);
-    p5.objects.satellite = p5.loadModel('@/assets/3d_obj/satellite.obj', true);
-    p5.objects.sword = p5.loadModel('@/assets/3d_obj/sword.obj', true);
-    p5.objects.whale = p5.loadModel('@/assets/3d_obj/whale.obj', true);
-    p5.objects.shuttle = p5.loadModel('@/assets/3d_obj/shuttle.obj', true);
+    p5.objects.lambo = p5.loadModel('/src/assets/webgl_models/lp670.obj', true);
+    p5.objects.glock = p5.loadModel('/src/assets/webgl_models/Glock 3d.obj', true);
+    p5.objects.dolphin = p5.loadModel('/src/assets/webgl_models/dolphin.obj', true);
+    p5.objects.ducky = p5.loadModel('/src/assets/webgl_models/ducky.obj', true);
+    p5.objects.satellite = p5.loadModel('/src/assets/webgl_models/satellite.obj', true);
+    p5.objects.sword = p5.loadModel('/src/assets/webgl_models/sword.obj', true);
+    p5.objects.whale = p5.loadModel('/src/assets/webgl_models/whale.obj', true);
+    p5.objects.shuttle = p5.loadModel('/src/assets/webgl_models/shuttle.obj', true);
 
     p5.ctrlElementsArray = RegisteredSketches;
   };

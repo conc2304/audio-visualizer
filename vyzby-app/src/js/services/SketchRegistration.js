@@ -1,6 +1,6 @@
 import CenterWave from '@/js/sketches/SketchConstructorCenterWave';
 import WEBGLWave from '@/js/sketches/SketchConstructorWEBGLWave';
-import OuterWaves from '../sketches/SketchConstructorOuterWaves';
+import OuterWaves from '@js/sketches/SketchConstructorOuterWaves';
 
 const registeredSketches = [];
 

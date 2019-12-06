@@ -88,6 +88,8 @@ export default {
   padding-bottom: 150px;
   overflow-y: scroll;
 
+
+
   .v-expansion-panels {
     background-color: transparent;
     width: 100%;
