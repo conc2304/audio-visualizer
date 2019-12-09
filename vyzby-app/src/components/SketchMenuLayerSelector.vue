@@ -3,8 +3,29 @@
     p Layers
 
     v-list( dense nav)
-      v-list-item.add-sketch(@click="addNewSketch"  v-if="layerAddEnabled")
-        v-icon library_add
+
+      .layer-arrangement
+        v-tooltip( right)
+          template( v-slot:activator= "{ on }")
+            v-list-item(
+              @click="removeSketch()"
+              :disabled="layerSelected == null || layerSelected < 0"
+            )
+              v-icon(
+                v-on="on"
+              ) remove
+          span.test  Remove Selected Layer
+
+        v-tooltip( right)
+          template( v-slot:activator= "{ on }")
+            v-list-item(
+              @click="openSketchCatalogue()"
+            )
+              v-icon(
+                v-on="on"
+              ) add
+          span.test  Add New Sketch
+
 
       v-list-item(
         v-for="(sketch, i) in RegisteredSketches"
@@ -13,16 +34,15 @@
         @click="selectLayer(i)"
       )
         v-icon.menu-icon filter_{{ i+1 }}
-      #layer-arrangement
+
+      .layer-arrangement( v-if="false")
         v-list-item(
           @click="sketchOrderShift(1)"
-          v-if="layerAddEnabled"
           :disabled="!layerSelected"
         )
           v-icon keyboard_arrow_up
         v-list-item(
           @click="sketchOrderShift(-1)"
-          v-if="layerAddEnabled"
           :disabled="layerSelected + 1 === 3"
         )
           v-icon keyboard_arrow_down
@@ -76,6 +96,16 @@ export default {
         return arr; // for testing
       }
     },
+
+    removeSketch() {
+      if (this.layerSelected == null || this.layerSelected < 0) {
+        return;
+      }
+
+      delete this.RegisteredSketches[this.layerSelected];
+      this.RegisteredSketches.splice(this.layerSelected, 1);
+      console.log(RegisteredSketches);
+    }
   },
 
   mounted() {
@@ -103,7 +133,7 @@ export default {
   }
 }
 
-#layer-arrangement {
+.layer-arrangement {
   .v-list-item {
     width: 20px;
     height: 10px;
@@ -121,3 +151,4 @@ export default {
   }
 }
 </style>
+``
