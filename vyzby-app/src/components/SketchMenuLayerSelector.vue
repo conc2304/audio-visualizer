@@ -3,7 +3,6 @@
     p Layers
 
     v-list( dense nav)
-
       .layer-arrangement
         v-tooltip( right)
           template( v-slot:activator= "{ on }")
@@ -47,11 +46,14 @@
         )
           v-icon keyboard_arrow_down
 
+
 </template>
 
 <script>
+
 export default {
   data: () => ({
+    dialog: false,
     layerSelected: null,
     layerAddEnabled: true,
     numSketches: 0,

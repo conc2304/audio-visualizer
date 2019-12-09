@@ -55,6 +55,8 @@
       v-show="audioPlayerOpen"
     )
 
+    SketchCatalogueList#sketch-catalogue(v-show="true")
+
 </template>
 
 <script>
@@ -63,6 +65,7 @@ import SketchMenuCompositionControls from '@/components/SketchMenuCompositionCon
 import SketchLayerCategoryDropdowns from '@/components/SketchLayerCategoryDropdowns.vue';
 import LayerControlDashboard from '@/components/LayerControlDashboard.vue';
 import AudioPlayer from '@/components/AudioPlayer.vue';
+import SketchCatalogueList from '@/components/SketchCatalogueList.vue';
 
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
@@ -73,7 +76,9 @@ export default {
     SketchLayerCategoryDropdowns,
     LayerControlDashboard,
     AudioPlayer,
+    SketchCatalogueList,
   },
+
   data: () => ({
     menuOpen: false,
     audioPlayerOpen: false,
@@ -178,5 +183,22 @@ i.off-white {
   bottom: 10px;
   left: 0;
   right: 0;
+}
+
+#sketch-catalogue {
+  // border: 2px solid red;
+  background: $color-transparent-black;
+
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 60px;
+  z-index: 10;
+  // width: 500px;
+  margin: 0 auto;
+  max-height: 600px;
+  overflow: auto;
+  border: 1px solid $subtle-border;
 }
 </style>
