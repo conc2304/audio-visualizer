@@ -11,20 +11,13 @@ const CatalogueEntry = {
   creator: 'clyzby',
   // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
   cpuUsage: 4,
+  gifURI: '',
 };
 
 SketchCatalogue.push(CatalogueEntry);
 
 class WEBGLWave {
   constructor(windowWidth, windowHeight) {
-    this.sketchTitle = 'WEGBL Sine Wave';
-    this.description = 'A parametic sine wave with various 3D shapes as point along the wave.';
-    this.fliterCategories = ['Parametric', 'WEBGL']; // a list of categories to desribe the sketch to filter on
-    this.creator = 'clyzby';
-
-    // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
-    this.cpuUsage = 4;
-
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     this.waveWidth = windowWidth + 200; // have some of it go off the page
