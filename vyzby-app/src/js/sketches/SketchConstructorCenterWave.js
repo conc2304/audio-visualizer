@@ -1,9 +1,15 @@
 import easeInto from '@/js/services/EasingService';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
+import SketchCatalogue from '@/js/services/SketchCatalogue';
 
 class CenterWave {
   constructor(windowWidth, windowHeight, p5) {
+    this.sketchTitle = 'Basic Sine Wave';
+    this.description = 'A simple parametic sine wave with various shapes as point along the wave.';
+    this.fliterCategories = ['Parametric']; // a list of categories to desribe the sketch to filter on
+    this.creator = "clyzby";
+
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     this.waveWidth = windowWidth + 200; // have some of it go off the page
