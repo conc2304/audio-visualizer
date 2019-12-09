@@ -17,7 +17,7 @@
         v-list-item(
           @click="sketchOrderShift(1)"
           v-if="layerAddEnabled"
-          :disabled="layerSelected === 0"
+          :disabled="!layerSelected"
         )
           v-icon keyboard_arrow_up
         v-list-item(
@@ -33,7 +33,7 @@
 export default {
   data: () => ({
     layerSelected: null,
-    layerAddEnabled: false,
+    layerAddEnabled: true,
     numSketches: 0,
   }),
 

@@ -8,7 +8,10 @@ class CenterWave {
     this.sketchTitle = 'Basic Sine Wave';
     this.description = 'A simple parametic sine wave with various shapes as point along the wave.';
     this.fliterCategories = ['Parametric']; // a list of categories to desribe the sketch to filter on
-    this.creator = "clyzby";
+    this.creator = 'clyzby';
+
+    // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
+    this.cpuUsage = 2;
 
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
