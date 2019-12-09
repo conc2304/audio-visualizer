@@ -54,6 +54,13 @@ Sketch parameters that should be interactive/editable can, currently, be either 
 
 Numeric and Variable parameters get grouped together in dropdowns based on the category they are assigned to in the app.
 
+<br>
+<br>
+NOTE: Things to consider if you feel like you are chewing through too much cpu
+* toggling the vsibility of a layer
+* removing a sketch from the registered sketches
+* limit the amount of loops occuring within the draw cycle
+
 
 ## Outside resources
  * Vuetify https://vuetifyjs.com/en/
