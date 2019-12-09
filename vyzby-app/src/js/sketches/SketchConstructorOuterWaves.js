@@ -3,6 +3,18 @@ import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 
+const CatalogueEntry = {
+  constructorName: 'OuterWaves',
+  sketchTitle: 'Basic Sine Wave',
+  description: 'A group of parametic sine waves with various shapes as point along the wave.',
+  filterCategories: ['Parametric'], // a list of categories to desribe the sketch to filter on
+  creator: 'clyzby',
+  // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
+  cpuUsage: 4,
+};
+
+SketchCatalogue.push(CatalogueEntry);
+
 class OuterWaves {
   constructor(windowWidth, windowHeight, p5) {
     this.sketchTitle = 'Multiple Sine Waves';

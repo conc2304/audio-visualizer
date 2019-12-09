@@ -3,7 +3,19 @@ import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 
-class ThreeDWave {
+const CatalogueEntry = {
+  constructorName: 'WEBGLWave',
+  sketchTitle: 'WEGBL Sine Wave',
+  description: 'A parametic sine wave with various 3D shapes as point along the wave.',
+  filterCategories: ['Parametric', 'WEGBL'], // a list of categories to desribe the sketch to filter on
+  creator: 'clyzby',
+  // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
+  cpuUsage: 4,
+};
+
+SketchCatalogue.push(CatalogueEntry);
+
+class WEBGLWave {
   constructor(windowWidth, windowHeight) {
     this.sketchTitle = 'WEGBL Sine Wave';
     this.description = 'A parametic sine wave with various 3D shapes as point along the wave.';
@@ -75,7 +87,7 @@ class ThreeDWave {
  * Based on the current wave period and spacing between x points
  * get the location of the y points to be rendered in the wave
  */
-ThreeDWave.prototype.calcWave = function(p5) {
+WEBGLWave.prototype.calcWave = function(p5) {
   const dx = (p5.TWO_PI / this.period.currentValue) * this.xSpacing.currentValue;
   this.waveType.currentValue = this.waveType.options.includes(this.waveType.currentValue)
     ? this.waveType.currentValue
@@ -91,7 +103,7 @@ ThreeDWave.prototype.calcWave = function(p5) {
 /**
  * Paint the object onto the screen based on the object's attributes.
  */
-ThreeDWave.prototype.render = function(p5) {
+WEBGLWave.prototype.render = function(p5) {
   'use strict';
 
   if (this.xSpacing.currentValue <= 0) {
@@ -144,7 +156,7 @@ ThreeDWave.prototype.render = function(p5) {
 /**
  * Sets the rotational speed along the X, Y, and Z axis of the individual wave.
  */
-ThreeDWave.prototype.rotateWave = function(p5) {
+WEBGLWave.prototype.rotateWave = function(p5) {
   p5.rotateX(p5.frameCount * 0.01 * this.waveRotateX.currentValue);
   p5.rotateY(p5.frameCount * 0.01 * this.waveRotateY.currentValue);
   p5.rotateZ(p5.frameCount * 0.01 * this.waveRotateZ.currentValue);
@@ -153,7 +165,7 @@ ThreeDWave.prototype.rotateWave = function(p5) {
 /**
  * Sets the rotational speed along the X, Y, and Z axis of each shape
  */
-ThreeDWave.prototype.rotateShape = function(p5) {
+WEBGLWave.prototype.rotateShape = function(p5) {
   p5.rotateX(p5.frameCount * 0.01 * this.rotateX.currentValue);
   p5.rotateY(p5.frameCount * 0.01 * this.rotateY.currentValue);
   p5.rotateZ(p5.frameCount * 0.01 * this.rotateZ.currentValue);
@@ -162,7 +174,7 @@ ThreeDWave.prototype.rotateShape = function(p5) {
 /**
  * Based on user toggling, set the color profile for element to be rendered
  */
-ThreeDWave.prototype.setColor = function(p5) {
+WEBGLWave.prototype.setColor = function(p5) {
   switch (this.stroke.currentValue) {
     case 'Outline':
       p5.strokeWeight(1);
@@ -180,7 +192,7 @@ ThreeDWave.prototype.setColor = function(p5) {
 /**
  * Renders the given 3D Primitive Shape
  */
-ThreeDWave.prototype.renderShape = function(p5) {
+WEBGLWave.prototype.renderShape = function(p5) {
   p5.push();
 
   this.rotateShape(p5);
@@ -224,6 +236,6 @@ ThreeDWave.prototype.renderShape = function(p5) {
   p5.pop();
 };
 
-ThreeDWave.prototype.easeInto = easeInto;
+WEBGLWave.prototype.easeInto = easeInto;
 
-export default ThreeDWave;
+export default WEBGLWave;

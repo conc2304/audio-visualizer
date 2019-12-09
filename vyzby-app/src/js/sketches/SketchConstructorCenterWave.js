@@ -3,11 +3,23 @@ import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 
+
+const CatalogueEntry = {
+  sketchTitle: 'Basic Sine Wave',
+  description: 'A simple parametic sine wave with various shapes as point along the wave.',
+  filterCategories: ['Parametric'], // a list of categories to desribe the sketch to filter on
+  creator: 'clyzby',
+  cpuUsage: 2,
+  constructorName: 'CenterWave',
+};
+
+SketchCatalogue.push(CatalogueEntry);
+
 class CenterWave {
   constructor(windowWidth, windowHeight, p5) {
     this.sketchTitle = 'Basic Sine Wave';
     this.description = 'A simple parametic sine wave with various shapes as point along the wave.';
-    this.fliterCategories = ['Parametric']; // a list of categories to desribe the sketch to filter on
+    this.filterCategories = ['Parametric']; // a list of categories to desribe the sketch to filter on
     this.creator = 'clyzby';
 
     // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
