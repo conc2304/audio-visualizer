@@ -26,7 +26,6 @@
               ) add
           span.test  Add New Sketch
 
-
       v-list-item(
         v-for="(sketch, i) in RegisteredSketches"
         :key="i"
@@ -34,6 +33,7 @@
         @click="selectLayer(i)"
       )
         v-icon.menu-icon filter_{{ i+1 }}
+
 
       .layer-arrangement( v-if="false")
         v-list-item(
@@ -102,9 +102,12 @@ export default {
         return;
       }
 
-      delete this.RegisteredSketches[this.layerSelected];
       this.RegisteredSketches.splice(this.layerSelected, 1);
-      console.log(RegisteredSketches);
+      this.selectLayer(0);
+    },
+
+    openSketchCatalogue() {
+      this.$emit('open_sketch_catalogue', true);
     }
   },
 
@@ -112,13 +115,7 @@ export default {
     this.numSketches = this.RegisteredSketches.length;
   },
 
-  watch: {
-      menuOpen(newValue, oldValue) {
-      if (!newValue) {
-        this.layerSelected = -1;
-      }
-    },
-  }
+
 };
 </script>
 
