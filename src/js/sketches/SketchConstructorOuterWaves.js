@@ -9,7 +9,7 @@ class OuterWaves {
   constructor(windowWidth, windowHeight, p5) {
 
     this.catalogueInfo = new CatalogueDataEntry(
-      this.constructor.name,
+      this.constructor,
       'Sine Wave Set',
       'A group of parametic sine waves with various shapes as point along the wave.',
       ['Parametric'],
