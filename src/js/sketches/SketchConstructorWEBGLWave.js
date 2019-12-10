@@ -123,7 +123,7 @@ WEBGLWave.prototype.render = function(p5) {
     this.translateZ.currentValue,
   );
 
-  let loadedModels = [
+  const loadedModels = [
     'lambo',
     'glock',
     'shuttle',

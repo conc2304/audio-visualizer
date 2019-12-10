@@ -62,8 +62,6 @@ export default {
 
   methods: {
     registerNewSketch(catalogueItem) {
-      const dynamicClass = catalogueItem;
-
       this.SketchRegistration.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
     },
 
