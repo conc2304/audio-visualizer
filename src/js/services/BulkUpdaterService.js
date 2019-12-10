@@ -12,7 +12,6 @@ const BulkUpdateService = {};
  * @return {Void}
  */
 BulkUpdateService.changeParameterValues = (indicesToUpdate, operation) => {
-  console.log(operation);
   const globalReset = operation === 'reset' && indicesToUpdate.length === RegisteredSketches.length;
 
   if (!['reset', 'randomize'].includes(operation)) {

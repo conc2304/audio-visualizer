@@ -66,13 +66,6 @@ export default {
         title: 'Layer Reset',
         action: 'resetLayer',
       },
-
-      {
-        mdIconText: 'bug_report',
-        tooltipText: 'Console.log() the parameters of the current sketch layer',
-        title: 'Log Sketch Parameters',
-        action: 'logSketchItem',
-      },
     ],
   }),
 
@@ -82,7 +75,6 @@ export default {
     },
 
     logSketchItem() {
-      console.log(this.RegisteredSketches[this.sketchIndexSelected]);
     },
 
     resetLayer() {

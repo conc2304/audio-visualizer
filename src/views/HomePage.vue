@@ -86,14 +86,11 @@ export default {
   }),
   methods: {
     updateUser(userObj) {
-      console.log('login complete');
-      console.log(userObj);
       this.user.username = userObj.username;
       this.user.loggedIn = userObj.loggedIn;
       this.loginDialog = false;
     },
     userLogout() {
-      console.log('test')
       localStorage.removeItem('user');
       this.user.username = '';
       this.user.loggedIn = false;
@@ -104,8 +101,6 @@ export default {
     new P5(ParticleScript, 'splash-sketch-background');
 
     const userObj = JSON.parse(localStorage.getItem('user'));
-    console.log('userObj');
-    console.log(userObj);
     if (userObj) {
       this.user.username = userObj.username;
       this.user.loggedIn = userObj.loggedIn;

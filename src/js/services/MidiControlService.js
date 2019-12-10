@@ -40,20 +40,14 @@ let notesHeld = [];  // an array of all the notes being held at once
  * @param MIDImessage
  */
 let noteOn = (MIDImessage) => {
-  'use strict';
-  // console.log('NOTE ON');
   setElementAttribute(MIDImessage.data, MIDImessage.timeStamp, Note_Pressed);
 };
 
 let noteHeld = (MIDImessage) => {
-  "use strict";
-  // console.log('Note Held');
   setElementAttribute(MIDImessage.data, MIDImessage.timeStamp, Note_Held);
 };
 
 let noteOff = (MIDImessage) => {
-  "use strict";
-  // console.log('OFF CALLBACK');
   setElementAttribute(MIDImessage.data, MIDImessage.timeStamp, Note_Off);
 };
 
@@ -63,9 +57,6 @@ let noteOff = (MIDImessage) => {
  * @param MIDImessage
  */
 let knobActive = (MIDImessage) => {
-  "use strict";
-  console.log('KNOB ACTIVE');
-  console.log(MIDImessage);
 
   let channel = MIDImessage.data[0];
   let note = MIDImessage.data[1];
@@ -75,8 +66,6 @@ let knobActive = (MIDImessage) => {
 };
 
 let drumHit = (MIDImessage) => {
-  "use strict";
-  // console.log('Drum_Pad_Hit');
   let velocity = (MIDImessage.data.length > 2) ? MIDImessage.data[2] : MIDImessage.data[1]; // a velocity value might not be included with a noteOff command
 
   if (velocity > 0) {
@@ -92,7 +81,6 @@ let drumHit = (MIDImessage) => {
  * @param triggerSource
  */
 let setElementAttribute = (MIDImessageData, timeStamp, triggerSource) => {
-  "use strict";
 
   let channel = MIDImessageData[0];
   let note = MIDImessageData[1];
@@ -108,7 +96,6 @@ let setElementAttribute = (MIDImessageData, timeStamp, triggerSource) => {
     return;
   }
 
-  // console.log(`channel: ${channel}`);
   let configsToSet = (triggerSource === Drum_Pad_Hit) ?
     drumPad[note] :
     midiCtrlMap[note];
@@ -290,7 +277,6 @@ let removeNotesHeld = (note) => {
  */
 let runSequence = (MIDImessage) => {
   "use strict";
-  console.log(MIDImessage);
 };
 
 
