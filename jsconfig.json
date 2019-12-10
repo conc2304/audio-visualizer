@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"lib": ["dom", "es2015"],
+		"module": "es2015",
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"allowJs": true,
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"jsx": "preserve",
+		"jsxFactory": "h"
+	},
+	"include": ["./**/*.ts", "./src/**/*"],
+	"compileOnSave": false
+}

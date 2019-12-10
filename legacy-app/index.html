@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta title="Interactive Audio Visualizer">
+  <title>Interactive Audio Visualizer</title>
+
+  <link rel="shortcut icon" href="/files/images/logo-Favicon.png">
+  <link href="/css/vendor/googleapis-material+icons.css" rel="stylesheet">
+  <link href="/css/vendor/googleapis-Montserrat+Oswald.css" rel="stylesheet">
+  <link href="/css/p5js_wave-sketch.css" rel="stylesheet">
+  <link href="/css/audio-player.css" rel="stylesheet">
+  <link href="/files/vendor/nouislider/nouislider.css" rel="stylesheet">
+
+  <script src="/js/lib/p5.js"></script>
+  <script src="/js/lib/p5.dom.js"></script>
+  <script src="/js/lib/p5.sound.js"></script>
+  <script src="/js/lib/jquery-3.3.1.js"></script>
+  <script src="/js/lib/webmidi.js"></script>
+  <script src="/js/lib/ml5.js"></script>
+  <script src="/js/lib/delaunay.js"></script>
+  <script src="/js/lib/soundcloud_sdk-3.2.1.js"></script>
+  <script src="/files/vendor/nouislider/nouislider.js"></script>
+  <script src="/js/lib/jquery.knob.min.js"></script>
+
+  <script src="/js/src/PropertyConstructorNumeric.js"></script>
+  <script src="/js/src/PropertyConstructorVariable.js"></script>
+  <script src="/js/src/easingService.js"></script>
+
+  <script src="/js/src/classCenterWave.js"></script>
+  <!-- <script src="/js/src/classOuterWaves.js"></script> -->
+  <!-- <script src="/js/src/classThreeDWave.js"></script> -->
+  <script src="/js/src/midiService.js"></script>
+  <script src="/js/src/midiCtrlService.js"></script>
+  <script src="/js/src/audioControlService.js"></script>
+  <script src="/js/src/domControlsBuilder.js"></script>
+  <script src="/js/src/poseNetService.js"></script>
+  <script src="/js/src/keyboardControlsService.js"></script>
+</head>
+
+<body>
+
+  <div id="sketch-container"></div>
+
+  <div id="settings-open" title="Open Menu" data-helper="Open the Master menu" class="helper">☰</div>
+  <div id="settings-menu">
+
+    <div id="sub-menu">
+      <div class="icon-wrapper">
+
+        <h6 class="master-control-heading">Master Controls</h6>
+
+        <i id="toggle-help" class="global-control material-icons md-light helper" title="Toggle Help"
+          data-helper="Enable or Disable this help box. The help box will tell you what each intractable element does.">
+          help
+        </i>
+
+        <i id="toggle-input-assigner" class="global-control material-icons md-light helper"
+          title="Toggle the Input Binders"
+          data-helper="This will show/hide the fields that allow you to map and bind keyboard keys and/or midi controller inputs to control visual properties.">
+          keyboard
+        </i>
+
+        <i id="randomize-audio-reactive" class="global-control material-icons md-light helper"
+          title="Randomize Audio Reactive"
+          data-helper="Randomizes all of the audio reactive selectors. This will assign each element's properties to respond to one of the frequency ranges.  This will also randomly set the audio reactive mode randomly for each of the elements' properties.">
+          waves
+        </i>
+
+        <i id="randomize-settings" class="global-control material-icons md-light helper" title="Randomize Everything"
+          data-helper="Randomizes all values for every element and property. Excludes audio reactive control">
+          shuffle
+        </i>
+
+        <i id="set-background-strobe" class="global-control material-icons md-light helper inactive"
+          title="Enable Beat Strobe" data-helper="Makes the background flash/strobe to the beat">
+          wb_iridescent
+        </i>
+
+        <i id="reset-settings" class="global-control material-icons md-light helper" title="Master Reset"
+          data-helper="Reset All Values. Excludes audio reactive control">
+          restore
+        </i>
+      </div>
+
+      <i id="settings-close" class="material-icons md-light helper" title="Close Menu">
+        close
+      </i>
+
+      <div class="clear"></div>
+    </div>
+
+
+
+    <!-- populated by p5js via domControlsBuilder.js -->
+    <div id="ctrlObject-control-panel"></div>
+    <div id="audio-control-panel">
+      <div id="audio-player">
+        <div class="song-info">
+          <div id="song-name"><img
+              src="https://developers.soundcloud.com/assets/powered_by_white-371bd6967352fcc89673d4c81f7e5661.png"
+              alt="Powered by SoundCloud"></div>
+          <div id="song-time"></div>
+        </div>
+        <div class="progress">
+          <progress id="loadingBar" value="0" max="100"></progress>
+          <progress id="progressBar" value="0" max="100"></progress>
+        </div>
+        <div class="audio-controls">
+          <div id="playback-controls" class="ctrl-bttns">
+            <!-- <label for="upload-file">
+              <i id="upload-file-icon" class="global-control material-icons md-light helper" title ="Upload a local sound file">unarchive</i>
+            </label>
+            <input type="file" id="upload-file" name="upload-file" accept="audio/*"> -->
+            <i id="prev" class="global-control material-icons md-light helper">skip_previous</i>
+            <i id="play" class="global-control material-icons md-light helper">play_arrow</i>
+            <i id="next" class="global-control material-icons md-light helper">skip_next</i>
+            <i id="minimize-playlist" class="global-control material-icons md-light helper"
+              title="Show/Hide Playlist">keyboard_arrow_up</i>
+          </div>
+        </div>
+
+        <form id="soundcloud-link-form">
+          <input id="soundcloud-link-resolver" placeholder="Enter SoundCloud Link" type="text">
+        </form>
+
+        <div id="playlist-wrapper" class="minimized">
+          <h5 id="playlist-title"></h5>
+          <div id="playlist-song-container"></div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- end #settings-menu -->
+
+  <div id="help-section">
+    <div class="help-inner">
+      <p id="help-text">
+      </p>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  Object.size = (obj) => {
+    "use strict";
+
+    let size = 0, key;
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        size++;
+      }
+    }
+    return size;
+  };
+
+  let ucFirst = (string) => {
+    "use strict";
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+</script>
+<script src="/js/src/soundCloudService.js"></script>
+<script src="/js/src/waveDrawer_w_audio.js"></script>
+
+</html>
