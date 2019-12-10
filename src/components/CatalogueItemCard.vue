@@ -31,6 +31,7 @@
 
         v-card-actions
           v-btn(
+            v-show="!maxLayersReached"
             @click="registerNewSketch(catalogueItem)"
             fab
             small
@@ -43,7 +44,10 @@
 import SketchRegistration from '@/js/services/SketchRegistration';
 
 export default {
-  data: () => ({}),
+  data: () => ({
+    maxLayers: 8,
+    SketchRegistration,
+  }),
 
   props: {
     catalogueItem: {
@@ -60,12 +64,19 @@ export default {
     registerNewSketch(catalogueItem) {
       const dynamicClass = catalogueItem;
 
-      SketchRegistration.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
+      this.SketchRegistration.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
     },
 
     getCategoryMatchColor(category) {
       return category.toLowerCase() == this.filter.toLowerCase() ? 'blue' : 'grey';
     },
+  },
+
+  computed: {
+    maxLayersReached() {
+      console.log(this.SketchRegistration.length);
+      return this.SketchRegistration.length > this.maxLayers
+    }
   },
 
   mounted() {
