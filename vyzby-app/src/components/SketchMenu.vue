@@ -14,6 +14,7 @@
         SketchMenuLayerSelector(
           :RegisteredSketches="RegisteredSketches"
           :menuOpen="menuOpen"
+          :sketchIndexSelected="sketchIndexSelected"
           @layer_selected="updatesketchIndexSelected"
           @catalogue_open="setCatalogueStatus"
         )
@@ -38,7 +39,7 @@
           .layer-control-title
             h3 Layer {{ sketchIndexSelected + 1 }} Controls
             v-list-item.close( @click="closeMenu")
-              v-icon.off-white close
+              v-icon close
 
           LayerControlDashboard(
             :sketchIndexSelected="sketchIndexSelected"
@@ -100,7 +101,7 @@ export default {
     },
 
     closeMenu() {
-      this.sketchIndexSelected = -1;
+      this.sketchIndexSelected = null;
       this.menuOpen = false;
     },
 
@@ -109,9 +110,15 @@ export default {
     },
 
     setCatalogueStatus(status) {
-      console.log('set catalogue to')
-      console.log(status)
       this.catalogueOpen = status;
+      if (this.catalogueOpen === true) {
+        this.menuOpen = false;
+        this.audioPlayerOpen = false;
+        return;
+      }
+      if (this.catalogueOpen === false && this.sketchIndexSelected !== null) {
+        this.menuOpen = true;
+      }
     }
   },
 };

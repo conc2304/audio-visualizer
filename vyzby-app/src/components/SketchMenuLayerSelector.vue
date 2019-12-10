@@ -65,6 +65,9 @@ export default {
     },
     menuOpen: {
       type: Boolean
+    },
+    sketchIndexSelected: {
+      default: null,
     }
   },
 
@@ -109,6 +112,12 @@ export default {
       this.selectLayer(0);
     },
 
+  },
+
+  watch: {
+    sketchIndexSelected(newVal, oldVal){
+      this.layerSelected = newVal;
+    }
   },
 
   mounted() {

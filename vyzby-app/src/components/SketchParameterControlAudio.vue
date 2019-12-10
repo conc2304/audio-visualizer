@@ -91,7 +91,7 @@ export default {
     this.gain = gain * 100;
   },
 
-  watche: {
+  watch: {
     gain(newValue, oldValue) {
 
     }
