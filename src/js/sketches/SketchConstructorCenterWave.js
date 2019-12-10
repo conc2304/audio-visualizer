@@ -5,7 +5,6 @@ import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
 
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 
-
 class CenterWave {
   constructor(windowWidth, windowHeight, p5) {
     this.catalogueInfo = new CatalogueDataEntry(
@@ -31,6 +30,10 @@ class CenterWave {
     this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 2000, 0.1);
     this.period = new NumericProperty('Period', 'Base', 500, 0, 10250, 0.07);
     this.xSpacing = new NumericProperty('X Spacing', 'Base', 40, 1, 350, 0.1);
+
+    this.waveRotateX = new NumericProperty('Rotate Wave X', 'Rotation', 0, -10, 10, 0.7);
+    this.waveRotateY = new NumericProperty('Rotate Wave Y', 'Rotation', 0, -10, 10, 0.7);
+    this.waveRotateZ = new NumericProperty('Rotate Wave Z', 'Rotation', 0, -10, 10, 0.7);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
     this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1);
@@ -84,6 +87,7 @@ CenterWave.prototype.render = function(p5) {
   this.calcWave(p5);
 
   p5.push();
+  this.rotateWave(p5);
   this.setColor(p5);
   for (let x = 0; x < this.yPoints.length; x++) {
     let xPos = x * this.xSpacing.currentValue - this.windowWidth / 2;
@@ -99,6 +103,21 @@ CenterWave.prototype.render = function(p5) {
   p5.pop();
 };
 
+CenterWave.prototype.rotateWave = function(p5) {
+  p5.rotateX(p5.frameCount * 0.01 * this.waveRotateX.currentValue);
+  p5.rotateY(p5.frameCount * 0.01 * this.waveRotateY.currentValue);
+  p5.rotateZ(p5.frameCount * 0.01 * this.waveRotateZ.currentValue);
+};
+
+/**
+ * Sets the rotational speed along the X, Y, and Z axis of each shape
+ */
+CenterWave.prototype.rotateShape = function(p5) {
+  p5.rotateX(p5.frameCount * 0.01 * this.rotateX.currentValue);
+  p5.rotateY(p5.frameCount * 0.01 * this.rotateY.currentValue);
+  p5.rotateZ(p5.frameCount * 0.01 * this.rotateZ.currentValue);
+};
+
 /**
  * Renders a given shape along the the passed x and y positions.
  * @param xPos
@@ -108,12 +127,12 @@ CenterWave.prototype.render = function(p5) {
 CenterWave.prototype.renderShape = function(p5, xPos, yPos, radius) {
   const polygons = ['line', 'triangle', 'square', 'pentagon']; // polygons we are allowing for set in the shape attribute
 
+  p5.push();
   if (this.shape.currentValue === 'ellipse') {
     p5.ellipse(xPos, yPos, radius, radius);
   } else if (polygons.includes(this.shape.currentValue)) {
     let sides = 2;
 
-    p5.push();
     p5.strokeWeight(1);
 
     switch (this.shape.currentValue) {
@@ -135,10 +154,10 @@ CenterWave.prototype.renderShape = function(p5, xPos, yPos, radius) {
     p5.translate(xPos, yPos);
     p5.rotate(p5.sin(p5.frameCount / 50.0));
     p5.polygon(0, 0, radius, sides, p5);
-    p5.pop();
   } else {
     p5.ellipse(xPos, yPos, radius, radius);
   }
+  p5.pop();
 };
 
 /**
@@ -159,6 +178,5 @@ CenterWave.prototype.setColor = function(p5) {
 };
 
 CenterWave.prototype.easeInto = easeInto;
-
 
 export default CenterWave;
