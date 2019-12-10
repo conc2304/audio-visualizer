@@ -36,9 +36,9 @@ Production URL [http://vyzby.joseconchello.com/](http://vyzby.joseconchello.com/
   
 
 ## Anatomy of p5js Sketch Developement within VYZBY
-New Sketches in p5Js get registered in `'@/js/services/SketchRegistration.js'` and get imported together as an array of objects.
+New Sketches in p5Js get registered in `'./src/js/services/SketchRegistration.js'` and get imported together as an array of objects.
 
-p5JS sketches are found and kept in the `vyzby-app/src/js/sketches/` directory.  An exampple of an existing sketch is `vyzby-app/src/js/sketches/SketchConstructorWEBGLWave.js`
+p5JS sketches are found and kept in the `./src/js/sketches/` directory.  An exampple of an existing sketch is `vyzby-app/src/js/sketches/SketchConstructorWEBGLWave.js`
 
 Sketches are created as a constructror class
 The constructor must have a `render()` function.  This is what gets called for each registered sketch on the p5js `draw()` cycle.
@@ -87,14 +87,16 @@ NOTE: Things to consider if you feel like you are chewing through too much cpu
 
 
 ## Outside resources
- * Vuetify https://vuetifyjs.com/en/
+ * p5JS tutorial by Daniel Shiffman https://www.youtube.com/playlist?list=PLRqwX-V7Uu6Zy51Q-x9tMWIv9cueOFTFA 
  * p5js https://p5js.org/
+ 
+ * Vuetify https://vuetifyjs.com/en/
  * Vue with p5js https://medium.com/js-dojo/experiment-with-p5-js-on-vue-7ebc05030d33
  * Dependency Injection with Vue js https://codeburst.io/dependency-injection-with-vue-js-f6b44a0dae6d
  * No Ui Slider https://www.npmjs.com/package/vue-nouislider-fork/v/1.0.8
  * Vue Knob Control https://github.com/kramer99/vue-knob-control 
  * Material Icons https://material.io/resources/icons/?style=baseline
- * p5JS tutorial by Daniel Shiffman https://www.youtube.com/playlist?list=PLRqwX-V7Uu6Zy51Q-x9tMWIv9cueOFTFA 
+ 
 
 <br>
 <br>
