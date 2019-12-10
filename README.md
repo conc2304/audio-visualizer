@@ -69,7 +69,7 @@ Required catalogue data:
     * 10 would be a sketch that needs to be run alone because it is taxing on the CPU
 
 
-
+### Interactive Parameters
 Sketch parameters that should be interactive/editable can, currently, be either `Numeric` or `Variable`
 
 * Numeric parameters are those that can take any floating point value as an argument
@@ -81,9 +81,10 @@ Numeric and Variable parameters get grouped together in dropdowns based on the c
 <br>
 <br>
 NOTE: Things to consider if you feel like you are chewing through too much cpu
-* toggling the visibility of taxing layers
-* removing a sketch from the composition
-* limit the amount of loops occuring within the draw cycle
+
+  * toggling the visibility of taxing layers
+  * removing a sketch from the composition
+  * limit the amount of loops occuring within the draw cycle
 
 
 ## Outside resources
