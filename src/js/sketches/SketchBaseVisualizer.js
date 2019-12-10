@@ -100,7 +100,9 @@ const VisualizerSketch = p5 => {
       }
 
       p5.ctrlElementsArray[ctrlElement].easeInto();
+      p5.push();
       p5.ctrlElementsArray[ctrlElement].render(p5);
+      p5.pop();
     }
   };
 };
