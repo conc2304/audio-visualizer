@@ -12,7 +12,7 @@ class WEBGLWave {
   constructor(windowWidth, windowHeight) {
 
     this.catalogueInfo = new CatalogueDataEntry(
-      this.constructor.name,
+      this.constructor,
       'WEGBL Sine Wave',
       'A parametic sine wave with various 3D shapes as point along the wave.',
       ['Parametric', 'WEBGL'],

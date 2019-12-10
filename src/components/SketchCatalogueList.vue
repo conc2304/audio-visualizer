@@ -42,7 +42,6 @@
 <script>
 import CatalogueItemCard from '@/components/CatalogueItemCard.vue';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
-import SketchRegistration from '@/js/services/SketchRegistration';
 
 export default {
   data: () => ({

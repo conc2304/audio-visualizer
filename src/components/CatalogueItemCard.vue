@@ -31,7 +31,7 @@
 
         v-card-actions
           v-btn(
-            @click="registerNewSketch(catalogueItem.constructorName)"
+            @click="registerNewSketch(catalogueItem)"
             fab
             small
             color="blue"
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import SketchRegistration from '@/js/services/SketchRegistration';
+
 export default {
   data: () => ({}),
 
@@ -51,22 +53,24 @@ export default {
     filter: {
       type: String,
       required: false,
-    }
+    },
   },
 
   methods: {
-    registerNewSketch(constructorName) {},
+    registerNewSketch(catalogueItem) {
+      console.log(catalogueItem);
+      const dynamicClass = catalogueItem;
+
+      SketchRegistration.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
+    },
 
     getCategoryMatchColor(category) {
-      console.log(typeof category);
-      console.log(category);
-      console.log(category.toLowerCase());
       return category.toLowerCase() == this.filter.toLowerCase() ? 'blue' : 'grey';
     },
   },
 
   mounted() {
-    console.log(this.catalogueItem);
+    // console.log(catalogueItem);
   },
 };
 </script>

@@ -9,7 +9,7 @@ import SketchCatalogue from '@/js/services/SketchCatalogue';
 class CenterWave {
   constructor(windowWidth, windowHeight, p5) {
     this.catalogueInfo = new CatalogueDataEntry(
-      this.constructor.name,
+      this.constructor,
       'Basic Sine Wave',
       'A simple parametic sine wave with various shapes as point along the wave.',
       ['Parametric', 'Test', 'more', 'another'],
