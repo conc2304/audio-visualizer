@@ -12,7 +12,7 @@ class CenterWave {
       this.constructor.name,
       'Basic Sine Wave',
       'A simple parametic sine wave with various shapes as point along the wave.',
-      ['Parametric'],
+      ['Parametric', 'Test', 'more', 'another'],
       'clyzby',
       './assets/sketch_catalogue_gifs/center-wave_200.gif',
       2,
