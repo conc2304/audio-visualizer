@@ -5,16 +5,17 @@ import SketchCatalogue from '@/js/services/SketchCatalogue';
 
 const CatalogueEntry = {
   constructorName: 'OuterWaves',
-  sketchTitle: 'Basic Sine Wave',
+  title: 'Sine Wave Set',
   description: 'A group of parametic sine waves with various shapes as point along the wave.',
   filterCategories: ['Parametric'], // array of categories to desribe the sketch for selection filtering
   creator: 'clyzby',
   // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
   cpuUsage: 4,
-  gifURI: '',
+  gifURI: '@/assets/sketch_catalogue_gifs/outer-waves_200.gif',
 };
 
-SketchCatalogue.push(CatalogueEntry);
+SketchCatalogue[CatalogueEntry.constructorName] = CatalogueEntry;
+
 
 class OuterWaves {
   constructor(windowWidth, windowHeight, p5) {

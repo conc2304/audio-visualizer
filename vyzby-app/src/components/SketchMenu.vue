@@ -7,7 +7,7 @@
 
       #master-controls-container
         v-list-item( to="/")
-          v-icon.off-white home
+          v-icon home
 
         v-divider
         SketchMenuLayerSelector(

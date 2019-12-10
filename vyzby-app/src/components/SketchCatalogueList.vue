@@ -1,5 +1,3 @@
-
-
 <template lang="pug">
   v-card#sketch-catalogue-list(
     max-width="500"
@@ -15,9 +13,6 @@
 
       v-spacer
 
-      v-btn( icon)
-        v-icon mdi-magnify
-
     v-container
       v-row( dense)
         v-col( cols="12")
@@ -25,46 +20,71 @@
             color="#385F73"
             dark
           )
-            v-card-title.headline Unlimited music now
+            v-card-title.headline Tons of processing sketches to choose from!
 
-            v-card-subtitleListen to your favorite artists and albums whenever and wherever, online and offline.
-
-            v-card-actions
-              v-btn( text) SELECT
+            v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
 
         v-col(
-          v-for="(item, i) in 3"
+          v-for="(sketch, i) in SketchCatalogue"
           :key="i"
           cols="12"
         )
           v-card(
-            :color="item.color"
             dark
           )
             .card-wrapper( class="d-flex flex-no-wrap justify-space-between")
               .card-inner-wrapper
                 v-card-title(
                   class="headline"
-                  v-text='test'
-                )
+                ) {{ sketch.title }}
+                  small.creator by {{ sketch.creator }}
 
-                v-card-subtitle( v-text="subtext")
-              </div>
+                v-card-subtitle() {{ sketch.description }}
+
+                v-chip.category-chip(
+                  v-for="(category, j) in sketch.filterCategories"
+                  :keys="j"
+                  outlined
+                  small
+                  :color="getCategoryMatchColor(category)"
+                ) {{ category }}
+
+                v-card-actions
+                  v-btn(
+                    @click="registerNewSketch(sketch.constructorName)"
+                    fab
+                    small
+                  )
+                    v-icon add
+
 
               v-avatar(
                 class="ma-3"
                 size="125"
                 tile
               )
-                v-img( )
+                v-img( :src="sketch.gifURI" alt='test')
+                p( width="100px") {{ sketch.gifURI }}
 </template>
 
 <script>
+import SketchCatalogue from '@/js/services/SketchCatalogue';
+import SketchRegistration from '@/js/services/SketchRegistration';
 
 export default {
-  components: {
-  }
-}
+  data: () => ({
+    SketchCatalogue,
+    filter: 'WEBGL',
+  }),
+
+  methods: {
+    getCategoryMatchColor(category) {
+      return category.toLowerCase() == this.filter.toLowerCase() ? 'blue' : 'grey';
+    },
+  },
+
+  mounted() {},
+};
 </script>
 
 <style lang="scss" scoped>
@@ -76,4 +96,12 @@ export default {
   right: 0;
 }
 
+.creator {
+  padding-left: 10px;
+  font-style: italic;
+}
+
+.category-chip {
+  margin-left: 1rem;
+}
 </style>
