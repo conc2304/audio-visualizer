@@ -3,6 +3,7 @@
 
     v-card#control-panel(
       dark
+      v-cloak
     )
 
       #master-controls-container

@@ -1,0 +1,83 @@
+<template lang="pug">
+  v-card(
+    dark
+  )
+    .card-wrapper( class="d-flex flex-no-wrap justify-space-between")
+      .card-inner-wrapper
+        v-card-title(
+          class="headline"
+        ) {{ catalogueItem.title }}
+          small.creator by {{ catalogueItem.creator }}
+
+        v-card-subtitle() {{ catalogueItem.description }}
+
+
+
+        v-chip.category-chip(
+          v-for="(category, i) in catalogueItem.filterCategories.slice(0, 5)"
+          :key="`category-${i}`"
+          outlined
+          small
+          :color="getCategoryMatchColor(category)"
+        ) {{ category }}
+
+
+      v-avatar(
+        class="ma-3"
+        size="150"
+        tile
+      )
+        v-img( :src="catalogueItem.gifURI" alt='test')
+
+        v-card-actions
+          v-btn(
+            @click="registerNewSketch(catalogueItem.constructorName)"
+            fab
+            small
+            color="blue"
+          )
+            v-icon() add
+</template>
+
+<script>
+export default {
+  data: () => ({}),
+
+  props: {
+    catalogueItem: {
+      type: Object,
+      required: true,
+    },
+    filter: {
+      type: String,
+      required: false,
+    }
+  },
+
+  methods: {
+    registerNewSketch(constructorName) {},
+
+    getCategoryMatchColor(category) {
+      console.log(typeof category);
+      console.log(category);
+      console.log(category.toLowerCase());
+      return category.toLowerCase() == this.filter.toLowerCase() ? 'blue' : 'grey';
+    },
+  },
+
+  mounted() {
+    console.log(this.catalogueItem);
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.creator {
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+.category-chip {
+  margin: 0 0 0.5rem 0.5rem;
+}
+</style>

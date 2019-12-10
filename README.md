@@ -29,7 +29,6 @@ Production URL [http://vyzby.joseconchello.com/](http://vyzby.joseconchello.com/
   * Audio player
   * Ability for sketch parameters to respond to music
   * Ability to add new layer
-  * Ability to remove existing layer
   * Ability to shift order of layers
   * Ability to control sketch paramters via MIDI input
   * Ability to search for sketches/layers in the Sketch Catalogue via categories and/or creators

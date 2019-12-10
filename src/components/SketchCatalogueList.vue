@@ -29,49 +29,18 @@
             v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
 
         v-col(
-          v-for="(sketch, i) in SketchCatalogue"
+          v-for="(catalogueItem, i) in SketchCatalogue"
           :key="`sketch-${i}`"
           cols="12"
         )
-          v-card(
-            dark
+          CatalogueItemCard(
+            :catalogueItem="catalogueItem"
+            :filter="filter"
           )
-            .card-wrapper( class="d-flex flex-no-wrap justify-space-between")
-              .card-inner-wrapper
-                v-card-title(
-                  class="headline"
-                ) {{ sketch.title }}
-                  small.creator by {{ sketch.creator }}
-
-                v-card-subtitle() {{ sketch.description }}
-
-                v-chip.category-chip(
-                  v-for="(category, i) in sketch.filterCategories"
-                  :key="`category-${i}`"
-                  outlined
-                  small
-                  :color="getCategoryMatchColor(category)"
-                ) {{ category }}
-
-                v-card-actions
-                  v-btn(
-                    @click="registerNewSketch(sketch.constructorName)"
-                    fab
-                    small
-                  )
-                    v-icon(
-                      @click="registerSketch(i)"
-                    ) add
-
-              v-avatar(
-                class="ma-3"
-                size="150"
-                tile
-              )
-                v-img( :src="sketch.gifURI" alt='test')
 </template>
 
 <script>
+import CatalogueItemCard from '@/components/CatalogueItemCard.vue';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 import SketchRegistration from '@/js/services/SketchRegistration';
 
@@ -81,18 +50,17 @@ export default {
     filter: 'WEBGL',
   }),
 
+  components: {
+    CatalogueItemCard,
+  },
+
   methods: {
     registerSketch() {
       console.log(this.SketchCatalogue);
     },
 
-    getCategoryMatchColor(category) {
-      return category.toLowerCase() == this.filter.toLowerCase() ? 'blue' : 'grey';
-    },
-
     closeCatalogue() {
       this.$emit('catalogue_open', false);
-      console.log('status');
     },
   },
 
@@ -103,16 +71,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#sketch-catalogue-list {
-  background-color: red;
-}
-
-.creator {
-  padding-left: 10px;
-  font-style: italic;
-}
-
-.category-chip {
-  margin-left: 1rem;
-}
 </style>
