@@ -6,27 +6,24 @@
 
     v-app-bar(
       dark
-      color="black"
+      color="#424242"
     )
-
       v-toolbar-title Sketch Catalogue
-
       v-spacer
 
     v-container
-      v-row( dense)
+      v-row( dense light)
         v-col( cols="12")
           v-card(
             color="#385F73"
             dark
           )
             v-card-title.headline Tons of processing sketches to choose from!
-
             v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
 
         v-col(
           v-for="(sketch, i) in SketchCatalogue"
-          :key="i"
+          :key="`sketch-${i}`"
           cols="12"
         )
           v-card(
@@ -42,8 +39,8 @@
                 v-card-subtitle() {{ sketch.description }}
 
                 v-chip.category-chip(
-                  v-for="(category, j) in sketch.filterCategories"
-                  :keys="j"
+                  v-for="(category, i) in sketch.filterCategories"
+                  :key="`category-${i}`"
                   outlined
                   small
                   :color="getCategoryMatchColor(category)"
@@ -57,14 +54,12 @@
                   )
                     v-icon add
 
-
               v-avatar(
                 class="ma-3"
-                size="125"
+                size="150"
                 tile
               )
                 v-img( :src="sketch.gifURI" alt='test')
-                p( width="100px") {{ sketch.gifURI }}
 </template>
 
 <script>
@@ -89,11 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 #sketch-catalogue-list {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  background-color: red;
 }
 
 .creator {

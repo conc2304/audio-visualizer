@@ -186,18 +186,14 @@ i.off-white {
 }
 
 #sketch-catalogue {
-  // border: 2px solid red;
   background: $color-transparent-black;
-
   padding: 20px;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 60px;
   z-index: 10;
-  // width: 500px;
   margin: 0 auto;
-  max-height: 600px;
   overflow: auto;
   border: 1px solid $subtle-border;
 }

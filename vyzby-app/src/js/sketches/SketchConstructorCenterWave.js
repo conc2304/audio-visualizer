@@ -12,7 +12,7 @@ const CatalogueEntry = {
     // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
 
   cpuUsage: 2,
-  gifURI: '@/assets/sketch_catalogue_gifs/center-wave_200.gif',
+  gifURI: './assets/sketch_catalogue_gifs/center-wave_200.gif',
 };
 
 SketchCatalogue[CatalogueEntry.constructorName] = CatalogueEntry;
