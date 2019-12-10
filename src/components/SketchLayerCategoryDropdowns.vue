@@ -56,7 +56,6 @@ export default {
   methods: {
     updateConfigs() {
       this.RegisteredSketches = this.RegisteredSketches;
-      console.log('test');
     },
 
     getPropertyCategories(layerIndex) {

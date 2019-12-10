@@ -104,10 +104,8 @@ KeyboardControlsService.setKeyboardControl = (keyboardKey, value, property, sket
     KCS.ctrlElemPropToKeyMap[ctrlObjectName][property] = charCode;
   } else {
 
-    console.log('cleaning ');
     if (KCS.ctrlElemPropToKeyMap[ctrlObjectName] && KCS.ctrlElemPropToKeyMap[ctrlObjectName][property]) {
       let keyToClean = KCS.ctrlElemPropToKeyMap[ctrlObjectName][property];
-      console.log(keyToClean);
 
       delete KCS.keyboardCtrl[keyToClean][ctrlObjectName][property];
       if (Object.size(KCS.keyboardCtrl[keyToClean][ctrlObjectName]) === 0) {
@@ -125,8 +123,6 @@ KeyboardControlsService.setKeyboardControl = (keyboardKey, value, property, sket
     }
   }
 
-  // console.log(KCS.keyboardCtrl);
-  // console.log(KCS.ctrlElemPropToKeyMap);
 };
 
 Object.size = (obj) => {

@@ -79,7 +79,6 @@ export default {
 
     addNewSketch() {
       this.$emit('catalogue_open', true);
-      console.log('open');
     },
 
     sketchOrderShift(deltaPos) {

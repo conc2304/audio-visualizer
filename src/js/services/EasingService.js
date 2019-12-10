@@ -47,7 +47,6 @@ const easeInto = function() {
     // then ease into the target value,
     // once we have hit the target value
     if (triggerIsDrumPad && targetValue === currentValue) {
-      console.log('glitch');
       targetValue = this[attribute].targetValue = resetValue;
       this[attribute].triggerSource = null;  // once we have reached the peak unset the trigger source
     }

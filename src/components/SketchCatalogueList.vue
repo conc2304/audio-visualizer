@@ -54,18 +54,12 @@ export default {
   },
 
   methods: {
-    registerSketch() {
-      console.log(this.SketchCatalogue);
-    },
 
     closeCatalogue() {
       this.$emit('catalogue_open', false);
     },
   },
 
-  mounted() {
-    console.log(this.SketchCatalogue);
-  },
 };
 </script>
 

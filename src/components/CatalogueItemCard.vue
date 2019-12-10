@@ -58,7 +58,6 @@ export default {
 
   methods: {
     registerNewSketch(catalogueItem) {
-      console.log(catalogueItem);
       const dynamicClass = catalogueItem;
 
       SketchRegistration.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
@@ -70,7 +69,6 @@ export default {
   },
 
   mounted() {
-    // console.log(catalogueItem);
   },
 };
 </script>

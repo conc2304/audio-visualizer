@@ -23,8 +23,8 @@ const VisualizerSketch = p5 => {
   // keep all 'custom' code here
   p5.preload = () => {
     p5.objects = {};
-    p5.objects.lambo = p5.loadModel('./assets/webgl_models/lp670.obj', true);
-    p5.objects.glock = p5.loadModel('./assets/webgl_models/Glock 3d.obj', true);
+    p5.objects.lambo = p5.loadModel('./assets/webgl_models/lambo.obj', true);
+    p5.objects.glock = p5.loadModel('./assets/webgl_models/glock.obj', true);
     p5.objects.dolphin = p5.loadModel('./assets/webgl_models/dolphin.obj', true);
     p5.objects.ducky = p5.loadModel('./assets/webgl_models/ducky.obj', true);
     p5.objects.satellite = p5.loadModel('./assets/webgl_models/satellite.obj', true);
