@@ -2,23 +2,24 @@ import easeInto from '@/js/services/EasingService';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
-
-const CatalogueEntry = {
-  constructorName: 'OuterWaves',
-  title: 'Sine Wave Set',
-  description: 'A group of parametic sine waves with various shapes as point along the wave.',
-  filterCategories: ['Parametric'], // array of categories to desribe the sketch for selection filtering
-  creator: 'clyzby',
-  // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
-  cpuUsage: 4,
-  gifURI: './assets/sketch_catalogue_gifs/outer-waves_200.gif',
-};
-
-SketchCatalogue[CatalogueEntry.constructorName] = CatalogueEntry;
+import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
 
 
 class OuterWaves {
   constructor(windowWidth, windowHeight, p5) {
+
+    this.catalogueInfo = new CatalogueDataEntry(
+      this.constructor.name,
+      'Sine Wave Set',
+      'A group of parametic sine waves with various shapes as point along the wave.',
+      ['Parametric'],
+      'clyzby',
+      './assets/sketch_catalogue_gifs/outer-waves_200.gif',
+      4
+    );
+
+    SketchCatalogue[this.constructor.name] = this.catalogueInfo;
+
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     this.waveWidth = windowWidth + 200; // have some of it go off the page

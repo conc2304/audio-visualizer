@@ -59,7 +59,9 @@
                     fab
                     small
                   )
-                    v-icon add
+                    v-icon(
+                      @click="registerSketch(i)"
+                    ) add
 
               v-avatar(
                 class="ma-3"
@@ -80,6 +82,10 @@ export default {
   }),
 
   methods: {
+    registerSketch() {
+      console.log(this.SketchCatalogue);
+    },
+
     getCategoryMatchColor(category) {
       return category.toLowerCase() == this.filter.toLowerCase() ? 'blue' : 'grey';
     },
@@ -90,7 +96,9 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    console.log(this.SketchCatalogue);
+  },
 };
 </script>
 

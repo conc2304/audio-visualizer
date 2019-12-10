@@ -1,24 +1,25 @@
 import easeInto from '@/js/services/EasingService';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
+import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
+
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 
-const CatalogueEntry = {
-  constructorName: 'CenterWave',
-  title: 'Basic Sine Wave',
-  description: 'A simple parametic sine wave with various shapes as point along the wave.',
-  filterCategories: ['Parametric'], // a list of categories to desribe the sketch to filter on
-  creator: 'clyzby',
-    // arbitrarily weighted value of how taxing this sketch is.  scale is 1 to 10  where 10 means it should run by itself.
-
-  cpuUsage: 2,
-  gifURI: './assets/sketch_catalogue_gifs/center-wave_200.gif',
-};
-
-SketchCatalogue[CatalogueEntry.constructorName] = CatalogueEntry;
 
 class CenterWave {
   constructor(windowWidth, windowHeight, p5) {
+    this.catalogueInfo = new CatalogueDataEntry(
+      this.constructor.name,
+      'Basic Sine Wave',
+      'A simple parametic sine wave with various shapes as point along the wave.',
+      ['Parametric'],
+      'clyzby',
+      './assets/sketch_catalogue_gifs/center-wave_200.gif',
+      2,
+    );
+
+    SketchCatalogue[this.constructor.name] = this.catalogueInfo;
+
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     this.waveWidth = windowWidth + 200; // have some of it go off the page
@@ -158,5 +159,6 @@ CenterWave.prototype.setColor = function(p5) {
 };
 
 CenterWave.prototype.easeInto = easeInto;
+
 
 export default CenterWave;
