@@ -14,6 +14,7 @@ Production URL [http://vyzby.joseconchello.com/](http://vyzby.joseconchello.com/
   * Visualizer menu has a layer selector to control individual layers
   * Visualizer menu has control that randomize and reset the parameters of each layer
   * Visualizer menu has a toggle to show/hide form fields for auxilliary input
+  * Visualizer has a 'Layer Library' to select a new layer to the composition
   * Toggling the aux input shows/hides inputs to control layer parameters with keyboard strokes
   * Selecting a layer shows the layer controller menu
   * Layer controller menu is broken up into expansion lists for each parameter category
@@ -31,6 +32,7 @@ Production URL [http://vyzby.joseconchello.com/](http://vyzby.joseconchello.com/
   * Ability to remove existing layer
   * Ability to shift order of layers
   * Ability to control sketch paramters via MIDI input
+  * Ability to search for sketches/layers in the Sketch Catalogue via categories and/or creators
   
 
 ## Anatomy of p5js Sketch Developement within VYZBY
@@ -39,12 +41,34 @@ New Sketches in p5Js get registered in `'@/js/services/SketchRegistration.js'` a
 p5JS sketches are found and kept in the `vyzby-app/src/js/sketches/` directory.  An exampple of an existing sketch is `vyzby-app/src/js/sketches/SketchConstructorWEBGLWave.js`
 
 Sketches are created as a constructror class
-The constructor needs to have a `render()` function.  This is what gets called for each registered sketch on the p5js `draw()` cycle.
+The constructor must have a `render()` function.  This is what gets called for each registered sketch on the p5js `draw()` cycle.
 
-New Sketch files need the following 3 files 
-* import easeInto from '@/js/services/EasingService';
-* import NumericProperty from '@/js/services/PropertyConstructorNumeric';
-* import VariableProperty from '@/js/services/PropertyConstructorVariable';
+New Sketch files need the following files 
+* `import easeInto from '@/js/services/EasingService'`;
+* `import NumericProperty from '@/js/services/PropertyConstructorNumeric'`;
+* `import VariableProperty from '@/js/services/PropertyConstructorVariable'`;
+* `import SketchCatalogue from '@/js/services/SketchCatalogue'`;
+* `import CatalogueDataEntry from '@/js/services/CatalogueDataEntry'`;
+
+### Sketch Catalogue
+URI: `'./js/services/SketchCatalogue.js'`
+The Sketch Catalogue is a central location to register new sketches and layers for users to add to their compositions.
+Processing Sketches are added to the Sketch Catalogue via your sketch class constructor.
+
+Required catalogue data:
+  * Constructor name: name of the constructor to be used to instantiate the sketch in the app 
+  * Title           : the title to appear for this catalogue item
+  * Description     : a short, 1-2 sentence, description of the sketch oyu made
+  * Categories      : array of 1 word descriptors for users to search by
+  * Creator/Author  : who made this sketch ie. you
+  * Avatar          : GIF (preferably) or still image of the sketch as an example
+    * Images should have a 1:1 ratio
+    * Images should be no biger than 250px X 250px and no smaller than 150px X 150px
+    * Path to image should be provided to the catalogue service
+  * CPU Usage       : an arbitrary number from 1 to 10 that describes
+    * 10 would be a sketch that needs to be run alone because it is taxing on the CPU
+
+
 
 Sketch parameters that should be interactive/editable can, currently, be either `Numeric` or `Variable`
 
@@ -57,8 +81,8 @@ Numeric and Variable parameters get grouped together in dropdowns based on the c
 <br>
 <br>
 NOTE: Things to consider if you feel like you are chewing through too much cpu
-* toggling the vsibility of a layer
-* removing a sketch from the registered sketches
+* toggling the visibility of taxing layers
+* removing a sketch from the composition
 * limit the amount of loops occuring within the draw cycle
 
 
@@ -68,6 +92,7 @@ NOTE: Things to consider if you feel like you are chewing through too much cpu
  * Vue with p5js https://medium.com/js-dojo/experiment-with-p5-js-on-vue-7ebc05030d33
  * Dependency Injection with Vue js https://codeburst.io/dependency-injection-with-vue-js-f6b44a0dae6d
  * No Ui Slider https://www.npmjs.com/package/vue-nouislider-fork/v/1.0.8
+ * Vue Knob Control https://github.com/kramer99/vue-knob-control 
  * Material Icons https://material.io/resources/icons/?style=baseline
  * p5JS tutorial by Daniel Shiffman https://www.youtube.com/playlist?list=PLRqwX-V7Uu6Zy51Q-x9tMWIv9cueOFTFA 
 
