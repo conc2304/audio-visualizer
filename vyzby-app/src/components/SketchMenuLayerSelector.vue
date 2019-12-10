@@ -18,7 +18,7 @@
         v-tooltip( right)
           template( v-slot:activator= "{ on }")
             v-list-item(
-              @click="openSketchCatalogue()"
+              @click="addNewSketch()"
             )
               v-icon(
                 v-on="on"
@@ -75,7 +75,8 @@ export default {
     },
 
     addNewSketch() {
-      console.log('show pop up with sketches');
+      this.$emit('catalogue_open', true);
+      console.log('open');
     },
 
     sketchOrderShift(deltaPos) {
@@ -108,9 +109,6 @@ export default {
       this.selectLayer(0);
     },
 
-    openSketchCatalogue() {
-      this.$emit('open_sketch_catalogue', true);
-    }
   },
 
   mounted() {

@@ -10,6 +10,13 @@
     )
       v-toolbar-title Sketch Catalogue
       v-spacer
+      v-btn(
+        @click="closeCatalogue"
+        text
+        fab
+        small
+      )
+        v-icon close
 
     v-container
       v-row( dense light)
@@ -75,6 +82,11 @@ export default {
   methods: {
     getCategoryMatchColor(category) {
       return category.toLowerCase() == this.filter.toLowerCase() ? 'blue' : 'grey';
+    },
+
+    closeCatalogue() {
+      this.$emit('catalogue_open', false);
+      console.log('status');
     },
   },
 

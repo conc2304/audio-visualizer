@@ -9,11 +9,13 @@
         v-list-item( to="/")
           v-icon home
 
+
         v-divider
         SketchMenuLayerSelector(
           :RegisteredSketches="RegisteredSketches"
           :menuOpen="menuOpen"
           @layer_selected="updatesketchIndexSelected"
+          @catalogue_open="setCatalogueStatus"
         )
         v-divider
         SketchMenuCompositionControls(
@@ -55,7 +57,10 @@
       v-show="audioPlayerOpen"
     )
 
-    SketchCatalogueList#sketch-catalogue(v-show="true")
+    SketchCatalogueList#sketch-catalogue(
+      v-show="catalogueOpen"
+      @catalogue_open="setCatalogueStatus"
+    )
 
 </template>
 
@@ -85,6 +90,7 @@ export default {
     RegisteredSketches,
     sketchIndexSelected: null,
     auxInputVisibible: false,
+    catalogueOpen: false,
   }),
 
   methods: {
@@ -101,6 +107,12 @@ export default {
     toggleAuxInputFields() {
       this.auxInputVisibible = !this.auxInputVisibible;
     },
+
+    setCatalogueStatus(status) {
+      console.log('set catalogue to')
+      console.log(status)
+      this.catalogueOpen = status;
+    }
   },
 };
 </script>
