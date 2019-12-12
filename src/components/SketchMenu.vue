@@ -53,7 +53,6 @@
       @catalogue_open="setCatalogueStatus"
     )
 
-
     v-dialog(
       v-model="helpModal"
       max-width="500"
@@ -61,20 +60,32 @@
       scrollable
       dark
     )
-      v-card
-        v-card-title( class="headline") So ummm... how?
+      v-card.help-box
+        v-card-title(class="headline text-center font-weight-bold") How to VYZBY
+        v-divider
 
-        v-card-text All of these knobs and buttons can be a bit overwhelming, let's break it down.
-        v-card-text Ways to interact:
-        v-card-text
+        v-card-text.dialog-content
+          h3( class="headline text-center font-weight-bold") Ways to interact:
           .help-item(
             v-for="(interaction, i) in help.interactions"
+            :key="`interaction${i}`"
           )
-            p.item-title {{ interaction.input }}
+            h4.item-title( class="font-weight-bold") {{ interaction.input }}
             p.item-subtitle {{ interaction.how }}
 
+          br
+          h3( class="headline text-center font-weight-bold") Using Auxiliary Inputs:
 
-
+          p You can show/hide the aux input fields for all of the parameters by pressing the
+            v-icon.example-icon keyboard
+            span icon in the menu.  These fields will appear under each layer's parameter.
+          .help-item(
+            v-for="(auxInput, j) in help.auxInputs"
+            :key="`auxInputs${j}`"
+          )
+            h4.item-title {{ auxInput.method }}
+            p.item-subtitle {{ auxInput.how }}
+          small NOTE : Currently the Audio Player and MIDI interfaces are still in development
 
 </template>
 
@@ -84,7 +95,6 @@ import MenuCompositionControls from '@/components/MenuCompositionControls.vue';
 import LayerControlPanel from '@/components/LayerControlPanel.vue';
 import AudioPlayer from '@/components/AudioPlayer.vue';
 import CatalogueList from '@/components/CatalogueList.vue';
-import HelpDialog from '@/components/HelpDialog.vue';
 
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
@@ -95,7 +105,6 @@ export default {
     LayerControlPanel,
     AudioPlayer,
     CatalogueList,
-    HelpDialog,
   },
 
   data: () => ({
@@ -118,8 +127,26 @@ export default {
           how: 'These let you switch between different layer modes.',
         },
         {
-          input: 'test',
-          how: 'These let you switch between different layer modes.',
+          input: 'Auxiliary Inputs',
+          how:
+            'Vyzby allows you to control and animate your composition with a variety of auxiliary inputs including your Computer Keyboard, Audio, and MIDI. And more to come!',
+        },
+      ],
+      auxInputs: [
+        {
+          method: 'Computer Keyboard',
+          how:
+            "We have already pre-assigned a bunch of random keys to get you started: A-Z and 0-9.  Pressing any of these keys that has been assigned to a parameter will animate the layer's parameter.  You can reassign the keyboard key and the value that the keystroke animates to.",
+        },
+        {
+          method: 'MIDI Controller (in development)',
+          how:
+            'The same way you can assign a keystoke, you can assign a MIDI button by putting your cursor in the text field and pressing the MIDI key that you want to bind it to.',
+        },
+        {
+          method: 'Audio Control',
+          how:
+            "Each of the parameters with a slider have the ability to animate based on the audio playing within VYZBY.  The Gain knob control the 'loudness' of the animation.  Turning the gain down make the parameter animate less to the audio, and vice versa.  The dropdown next to the Gain knob allows you to select a frequency range of the audio that the parameter will animate.  Select 'Low' to animate it to the bass of the song!",
         },
       ],
     },
@@ -207,5 +234,16 @@ i.off-white {
   margin: 0 auto;
   overflow: auto;
   border: 1px solid $subtle-border;
+}
+
+.dialog-content {
+  height: 400px;
+
+  h3 {
+    margin-top: 1.2rem;
+  }
+}
+.example-icon {
+  padding: 0 0.5rem;
 }
 </style>
