@@ -87,7 +87,7 @@ export default {
       {
         mdIconText: 'save',
         id: 'save-settings',
-        title: 'Save to Open Preset Slot',
+        title: 'Save current parameter settings',
         action: 'saveToPreset',
       },
     ],
