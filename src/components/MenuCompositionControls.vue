@@ -40,7 +40,7 @@ export default {
         id: 'toggle-input-assigner',
         tooltipText:
           'This will show/hide the fields that allow you to map and bind keyboard keys and/or midi controller inputs to control visual properties.',
-        title: 'Toggle auxilliary input field',
+        title: 'Toggle auxilliary input fields',
         action: 'toggleAuxInputFields',
       },
       // {

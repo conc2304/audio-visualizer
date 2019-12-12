@@ -6,7 +6,7 @@
         v-for="(parameter, i) in numericAttributes"
         :key="`numeric-${i}`"
       )
-        SketchParameterControlNumeric(
+        ParameterControlNumeric(
           :sketchIndexSelected="sketchIndexSelected"
           :RegisteredSketches="RegisteredSketches"
           :auxInputVisibible="auxInputVisibible"
@@ -19,7 +19,7 @@
         v-for="(parameter, i) in variableAttributes"
         :key="`variable-${i}`"
       )
-        SketchParameterControlVariable(
+        ParameterControlVariable(
           :sketchIndexSelected="sketchIndexSelected"
           :RegisteredSketches="RegisteredSketches"
           :auxInputVisibible="auxInputVisibible"
@@ -29,12 +29,11 @@
 </template>
 
 <script>
-import SketchParameterControlNumeric from '@/components/SketchParameterControlNumeric.vue';
-import SketchParameterControlVariable from '@/components/SketchParameterControlVariable.vue';
+import ParameterControlNumeric from '@/components/ParameterControlNumeric.vue';
+import ParameterControlVariable from '@/components/ParameterControlVariable.vue';
 
 export default {
   data: () => ({
-    SketchParameterControlNumeric: '',
     numericAttributes: null,
     variableAttributes: null,
   }),
@@ -56,8 +55,8 @@ export default {
   },
 
   components: {
-    SketchParameterControlNumeric,
-    SketchParameterControlVariable,
+    ParameterControlNumeric,
+    ParameterControlVariable,
   },
 
   mounted() {
@@ -95,6 +94,10 @@ export default {
 </script>
 
 <style lang="scss">
+.numeric-parameters-wrapper {
+  margin-bottom: 2rem;
+}
+
 p.parameter-title {
   margin: 25px auto 15px;
 }
@@ -109,4 +112,5 @@ p.parameter-title {
 .noUi-target {
   margin: 10px 0;
 }
+
 </style>
