@@ -17,14 +17,15 @@
 
     .preset-wrapper
       p Preset
-      v-list( dense nav)
-        v-list-item(
-          v-for="(preset, i) in presetSlots"
-          :key="i"
-          @click="triggerPreset(i)"
-          :class=" preset.empty ? 'preset-empty' : 'preset-full'"
-        )
-          v-icon() {{ preset.iconText }}
+      .preset-inner-wrapper
+        v-list( dense nav)
+          v-list-item(
+            v-for="(preset, i) in presetSlots"
+            :key="i"
+            @click="triggerPreset(i)"
+            :class=" preset.empty ? 'preset-empty' : 'preset-full'"
+          )
+            v-icon() {{ preset.iconText }}
 
 
 
@@ -187,6 +188,10 @@ export default {
 
 .preset-empty i {
   color: $color-off-white;
+}
+.preset-inner-wrapper {
+  max-height: 150px;
+  overflow-x: scroll;
 }
 </style>
 

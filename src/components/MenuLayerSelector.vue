@@ -25,13 +25,14 @@
               ) add
           span.test  Add New Sketch
 
-      v-list-item(
-        v-for="(sketch, i) in RegisteredSketches"
-        :key="i"
-        :class="{ 'active': layerSelected === i, 'inactive': sketch.bypass }"
-        @click="selectLayer(i)"
-      )
-        v-icon.menu-icon filter_{{ i+1 }}
+      .layer-selector-wrapper
+        v-list-item(
+          v-for="(sketch, i) in RegisteredSketches"
+          :key="i"
+          :class="{ 'active': layerSelected === i, 'inactive': sketch.bypass }"
+          @click="selectLayer(i)"
+        )
+          v-icon.menu-icon filter_{{ i+1 }}
 
 
       .layer-arrangement( v-if="false")
@@ -155,5 +156,8 @@ export default {
     padding-top: 10px;
   }
 }
+.layer-selector-wrapper {
+  max-height: 150px;
+  overflow-x: scroll;
+}
 </style>
-``
