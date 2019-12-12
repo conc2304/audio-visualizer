@@ -22,6 +22,8 @@
         MenuCompositionControls(
           @toggle_aux_input="toggleAuxInputFields"
           @open_help_modal="openHelpModal"
+          @open_preset_snackbar="snackbar = true"
+          :presetSlots="presetSlots"
         )
 
         v-divider
@@ -87,6 +89,31 @@
             p.item-subtitle {{ auxInput.how }}
           small NOTE : Currently the Audio Player and MIDI interfaces are still in development
 
+
+    v-snackbar(
+      v-model="snackbar"
+      left
+      multi-line
+      :timeout=0
+      vertical
+    )
+      p Selecting a full preset slot will override that slot
+      br
+      .preset-selector-wrapper
+        v-list-item(
+          @click="saveToPreset(i)"
+          v-for="(preset, i) in presetSlots"
+          :key="`preset-selector${i}`"
+        )
+          v-icon(
+            :class="{ 'preset-full': preset.empty === false}"
+          ) {{ preset.iconText }}
+        v-list-item(
+          @click="snackbar=false"
+        )
+          v-icon() close
+
+
 </template>
 
 <script>
@@ -114,7 +141,28 @@ export default {
     sketchIndexSelected: null,
     auxInputVisibible: false,
     catalogueOpen: false,
-    helpModal: true,
+    helpModal: false,
+    snackbar: false,
+
+    presetSlots: [
+      {
+        iconText: 'looks_one',
+        empty: false,
+      },
+      {
+        iconText: 'looks_two',
+        empty: false,
+      },
+      {
+        iconText: 'looks_3',
+        empty: true,
+      },
+      {
+        iconText: 'looks_4',
+        empty: true,
+      },
+    ],
+
     help: {
       interactions: [
         {
@@ -182,6 +230,19 @@ export default {
         this.menuOpen = true;
       }
     },
+    iconTextFix(index) {
+      console.log(index);
+      switch (index) {
+        case 1:
+          return 'one';
+
+        case 2:
+          return 'two';
+
+        default:
+          return index;
+      }
+    },
   },
 };
 </script>
@@ -245,5 +306,21 @@ i.off-white {
 }
 .example-icon {
   padding: 0 0.5rem;
+}
+
+.preset-full {
+  color: $color-primary-blue;
+}
+
+</style>
+
+<style lang="scss">
+
+.preset-selector-wrapper {
+  display: flex;
+  justify-content: center;
+  .v-list-item {
+    width: 60px;
+  }
 }
 </style>
