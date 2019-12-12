@@ -97,7 +97,8 @@
       :timeout=0
       vertical
     )
-      p Selecting a full preset slot will override that slot
+      p( class="text-center") Select a slot to save the current compoistion settings to a slot
+      small( class="text-center") Selecting a full preset slot will override the slot
       br
       .preset-selector-wrapper
         v-list-item(
@@ -106,7 +107,7 @@
           :key="`preset-selector${i}`"
         )
           v-icon(
-            :class="{ 'preset-full': preset.empty === false}"
+            :class=" preset.empty ? 'preset-empty' : 'preset-full'"
           ) {{ preset.iconText }}
         v-list-item(
           @click="snackbar=false"
@@ -147,11 +148,11 @@ export default {
     presetSlots: [
       {
         iconText: 'looks_one',
-        empty: false,
+        empty: true,
       },
       {
         iconText: 'looks_two',
-        empty: false,
+        empty: true,
       },
       {
         iconText: 'looks_3',
@@ -230,19 +231,10 @@ export default {
         this.menuOpen = true;
       }
     },
-    iconTextFix(index) {
-      console.log(index);
-      switch (index) {
-        case 1:
-          return 'one';
 
-        case 2:
-          return 'two';
-
-        default:
-          return index;
-      }
-    },
+    saveToPreset(index) {
+      this.presetSlots[index].empty = false;
+    }
   },
 };
 </script>
@@ -312,6 +304,9 @@ i.off-white {
   color: $color-primary-blue;
 }
 
+.preset-empty {
+  color: $color-off-white;
+}
 </style>
 
 <style lang="scss">
