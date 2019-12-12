@@ -1,5 +1,5 @@
 <template lang="pug">
-  .audio-parameter-wrapper
+  .audio-parameter-wrapper( v-show="auxInputVisibible")
 
     .knob-wrapper
       v-tooltip( bottom)
@@ -17,7 +17,7 @@
               v-model="gain"
             )
         span Gain
-    .select-wrapper
+    .freq-select-wrapper
       v-tooltip( bottom)
         template( v-slot:activator="{ on }")
           .tooltip-wrapper( v-on="on")
@@ -84,6 +84,9 @@ export default {
     parameter: {
       type: Object,
     },
+    auxInputVisibible: {
+      type: Boolean,
+    }
   },
 
   mounted() {
@@ -92,10 +95,8 @@ export default {
   },
 
   watch: {
-    gain(newValue, oldValue) {
-
-    }
-  }
+    gain(newValue, oldValue) {},
+  },
 };
 </script>
 
@@ -108,18 +109,20 @@ export default {
   margin-right: 15px;
 }
 
-.select-wrapper {
+.freq-select-wrapper {
   flex-grow: 1;
 
   .v-label {
     font-size: 10px;
   }
 }
-
 </style>
 
 <style lang="scss">
-.select-wrapper .v-select__slot .v-label{
+.select-wrapper .v-select__slot .v-label {
   font-size: 12px;
+}
+.freq-select-wrapper .v-input__control {
+  height: 40px;
 }
 </style>

@@ -11,7 +11,7 @@
         @update="updateSliderValues($event)"
       )
 
-      ParameterAuxInput(
+      ParameterKeyboardInputFields(
         v-show="auxInputVisibible"
         :parameter="parameter"
         :sketchIndexSelected="sketchIndexSelected"
@@ -19,12 +19,13 @@
       AudioReactiveControls(
         v-show="parameter.audio && audioEnabled"
         :parameter="parameter"
+        :auxInputVisibible="auxInputVisibible"
       )
 </template>
 
 <script>
-import AudioReactiveControls from '@/components/SketchParameterControlAudio.vue';
-import ParameterAuxInput from '@/components/ParameterAuxInput.vue';
+import AudioReactiveControls from '@/components/AudioReactiveControls.vue';
+import ParameterKeyboardInputFields from '@/components/ParameterKeyboardInputFields.vue';
 
 export default {
   // Note:
@@ -33,13 +34,12 @@ export default {
   data: () => ({
     sliderConfig: false,
     sliderValues: false,
-    audioEnabled: false, // TODO enable when ready
-    auxEnabled: true, // TODO enable when ready
+    audioEnabled: true, // TODO enable when ready
   }),
 
   components: {
     AudioReactiveControls,
-    ParameterAuxInput,
+    ParameterKeyboardInputFields,
   },
 
   props: {
@@ -97,6 +97,9 @@ export default {
 
 <style lang="scss" scoped>
 .controller-wrapper {
-  margin-left: 15px;
+  margin-left: 1rem;
+  .noUi-target {
+    margin-bottom: 1rem !important;
+  }
 }
 </style>

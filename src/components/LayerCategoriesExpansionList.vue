@@ -18,7 +18,7 @@
             template( v-slot:actions)
               v-icon expand_more
           v-expansion-panel-content
-            SketchLayerParameterControls(
+            LayerParameterControls(
               :sketchIndexSelected="sketchIndexSelected"
               :RegisteredSketches="RegisteredSketches"
               :category="category"
@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import SketchLayerParameterControls from '@/components/SketchLayerParameterControls.vue';
+import LayerParameterControls from '@/components/LayerParameterControls.vue';
 
 export default {
   name: 'LayerControllerCategories',
   components: {
-    SketchLayerParameterControls,
+    LayerParameterControls,
   },
 
   data: () => ({}),

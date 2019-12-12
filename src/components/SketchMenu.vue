@@ -10,9 +10,8 @@
         v-list-item( to="/")
           v-icon home
 
-
         v-divider
-        SketchMenuLayerSelector(
+        MenuLayerSelector(
           :RegisteredSketches="RegisteredSketches"
           :menuOpen="menuOpen"
           :sketchIndexSelected="sketchIndexSelected"
@@ -20,7 +19,7 @@
           @catalogue_open="setCatalogueStatus"
         )
         v-divider
-        SketchMenuCompositionControls(
+        MenuCompositionControls(
           v-on:toggle_aux_input="toggleAuxInputFields"
         )
 
@@ -35,31 +34,20 @@
             )
               v-icon.menu-icon music_note
 
-      #layer-controls-container( v-show="menuOpen")
-        .layer-control-header
-          .layer-control-title
-            h3 Layer {{ sketchIndexSelected + 1 }} Controls
-            v-list-item.close( @click="closeMenu")
-              v-icon close
+      LayerControlPanel(
+        v-show="menuOpen"
+        @menu_closed_event="closeMenu"
+        :sketchIndexSelected="sketchIndexSelected"
+        :RegisteredSketches="RegisteredSketches"
+        :auxInputVisibible="auxInputVisibible"
+      )
 
-          LayerControlDashboard(
-            :sketchIndexSelected="sketchIndexSelected"
-            :RegisteredSketches="RegisteredSketches"
-          )
-
-        .layer-control-contents
-
-          SketchLayerCategoryDropdowns(
-            :sketchIndexSelected="sketchIndexSelected"
-            :RegisteredSketches="RegisteredSketches"
-            :auxInputVisibible="auxInputVisibible"
-          )
 
     AudioPlayer(
       v-show="audioPlayerOpen"
     )
 
-    SketchCatalogueList#sketch-catalogue(
+    CatalogueList#sketch-catalogue(
       v-show="catalogueOpen"
       @catalogue_open="setCatalogueStatus"
     )
@@ -67,23 +55,21 @@
 </template>
 
 <script>
-import SketchMenuLayerSelector from '@/components/SketchMenuLayerSelector.vue';
-import SketchMenuCompositionControls from '@/components/SketchMenuCompositionControls.vue';
-import SketchLayerCategoryDropdowns from '@/components/SketchLayerCategoryDropdowns.vue';
-import LayerControlDashboard from '@/components/LayerControlDashboard.vue';
-import AudioPlayer from '@/components/AudioPlayer.vue';
-import SketchCatalogueList from '@/components/SketchCatalogueList.vue';
+import MenuLayerSelector from '@/components/MenuLayerSelector.vue';
+import MenuCompositionControls from '@/components/MenuCompositionControls.vue';
+import LayerControlPanel from '@/components/LayerControlPanel.vue';
+import AudioPlayer from '@/components/AudioPlayer.vue'
+import CatalogueList from '@/components/CatalogueList.vue';
 
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
   components: {
-    SketchMenuLayerSelector,
-    SketchMenuCompositionControls,
-    SketchLayerCategoryDropdowns,
-    LayerControlDashboard,
+    MenuLayerSelector,
+    MenuCompositionControls,
+    LayerControlPanel,
     AudioPlayer,
-    SketchCatalogueList,
+    CatalogueList,
   },
 
   data: () => ({
@@ -120,13 +106,12 @@ export default {
       if (this.catalogueOpen === false && this.sketchIndexSelected !== null) {
         this.menuOpen = true;
       }
-    }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 #control-panel {
   position: absolute;
   top: 0;
@@ -151,51 +136,9 @@ i.off-white {
   color: $color-off-white;
 }
 
-#master-controls-container,
-#layer-controls-container {
+#master-controls-container {
   display: inline-block;
   vertical-align: top;
-}
-
-#layer-controls-container {
-  width: 300px;
-
-  h3 {
-    text-align: center;
-    line-height: 48px;
-  }
-}
-
-#layer-control-menu {
-  background-color: #000000bd;
-  overflow-y: scroll;
-  border-right: 1px solid $subtle-border;
-}
-
-#toggle-layer-controls-container {
-  position: absolute;
-  top: 0;
-  left: 60px;
-  background-color: $color-std-grey;
-  border-left: 1px solid $subtle-border;
-  border-radius: 0 10px 10px 0;
-  i {
-    color: $color-off-white;
-  }
-}
-
-.layer-control-title {
-  height: 49px;
-  border-bottom: 1px solid $color-std-grey;
-}
-.layer-control-header {
-  position: relative;
-
-  .close {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
 }
 
 #audio-player-toggle-wrapper {
@@ -218,3 +161,5 @@ i.off-white {
   border: 1px solid $subtle-border;
 }
 </style>
+
+
