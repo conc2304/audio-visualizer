@@ -37,7 +37,7 @@ export default {
         mdIconText: 'keyboard',
         id: 'toggle-input-assigner',
 
-        title: 'Toggle auxilliary input fields',
+        title: 'Toggle auxiliary input fields',
         action: 'toggleAuxInputFields',
       },
       // {
