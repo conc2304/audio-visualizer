@@ -27,19 +27,16 @@ export default {
   data: () => ({
     auxInputVisible: true,
     masterMenuItems: [
-      // {
-      //   mdIconText: 'help',
-      //   id: 'toggle-help',
-      //   tooltipText:
-      //     'Enable or Disable this help box. The help box will tell you what each intractable element does.',
-      //   title: 'Toggle Help',
-      //   action: '',
-      // },
+      {
+        mdIconText: 'help_outlined',
+        id: 'toggle-help',
+        title: 'Show Help Box',
+        action: 'openHelpModal',
+      },
       {
         mdIconText: 'keyboard',
         id: 'toggle-input-assigner',
-        tooltipText:
-          'This will show/hide the fields that allow you to map and bind keyboard keys and/or midi controller inputs to control visual properties.',
+
         title: 'Toggle auxilliary input fields',
         action: 'toggleAuxInputFields',
       },
@@ -54,8 +51,6 @@ export default {
       {
         mdIconText: 'shuffle',
         id: 'randomize-settings',
-        tooltipText:
-          'Randomizes all values for every element and property. Excludes audio reactive control',
         title: 'Randomize Everything',
         action: 'randomizeComposition',
       },
@@ -69,8 +64,7 @@ export default {
       {
         mdIconText: 'restore',
         id: 'reset-settings',
-        tooltipText: 'Reset All Values. Excludes audio reactive control',
-        title: 'Master Reset',
+        title: 'Reset Everything',
         action: 'resetComposition',
       },
     ],
@@ -82,12 +76,16 @@ export default {
     },
 
     randomizeComposition() {
-      let indices = Object.keys(RegisteredSketches);
+      const indices = Object.keys(RegisteredSketches);
       BulkUpdateService.changeParameterValues(indices, 'randomize');
     },
 
+    openHelpModal() {
+      this.$emit('open_help_modal', true);
+    },
+
     resetComposition() {
-      let indices = Object.keys(RegisteredSketches);
+      const indices = Object.keys(RegisteredSketches);
       BulkUpdateService.changeParameterValues(indices, 'reset');
     },
 
