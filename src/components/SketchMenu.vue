@@ -20,7 +20,8 @@
         )
         v-divider
         MenuCompositionControls(
-          v-on:toggle_aux_input="toggleAuxInputFields"
+          @toggle_aux_input="toggleAuxInputFields"
+          @open_help_modal="openHelpModal"
         )
 
         v-divider
@@ -52,14 +53,38 @@
       @catalogue_open="setCatalogueStatus"
     )
 
+
+    v-dialog(
+      v-model="helpModal"
+      max-width="500"
+      max-height="500"
+      scrollable
+      dark
+    )
+      v-card
+        v-card-title( class="headline") So ummm... how?
+
+        v-card-text All of these knobs and buttons can be a bit overwhelming, let's break it down.
+        v-card-text Ways to interact:
+        v-card-text
+          .help-item(
+            v-for="(interaction, i) in help.interactions"
+          )
+            p.item-title {{ interaction.input }}
+            p.item-subtitle {{ interaction.how }}
+
+
+
+
 </template>
 
 <script>
 import MenuLayerSelector from '@/components/MenuLayerSelector.vue';
 import MenuCompositionControls from '@/components/MenuCompositionControls.vue';
 import LayerControlPanel from '@/components/LayerControlPanel.vue';
-import AudioPlayer from '@/components/AudioPlayer.vue'
+import AudioPlayer from '@/components/AudioPlayer.vue';
 import CatalogueList from '@/components/CatalogueList.vue';
+import HelpDialog from '@/components/HelpDialog.vue';
 
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
@@ -70,6 +95,7 @@ export default {
     LayerControlPanel,
     AudioPlayer,
     CatalogueList,
+    HelpDialog,
   },
 
   data: () => ({
@@ -79,6 +105,24 @@ export default {
     sketchIndexSelected: null,
     auxInputVisibible: false,
     catalogueOpen: false,
+    helpModal: true,
+    help: {
+      interactions: [
+        {
+          input: 'Parameter Sliders',
+          how:
+            'These have 3 slide-handles that control: Minimum, Current, and Max.  The Minimum and Maximum control the range within which the slider can change via audio input and/or randomizing parameters.',
+        },
+        {
+          input: 'Parameter Radio Buttons',
+          how: 'These let you switch between different layer modes.',
+        },
+        {
+          input: 'test',
+          how: 'These let you switch between different layer modes.',
+        },
+      ],
+    },
   }),
 
   methods: {
@@ -94,6 +138,10 @@ export default {
 
     toggleAuxInputFields() {
       this.auxInputVisibible = !this.auxInputVisibible;
+    },
+
+    openHelpModal() {
+      this.helpModal = true;
     },
 
     setCatalogueStatus(status) {
@@ -161,5 +209,3 @@ i.off-white {
   border: 1px solid $subtle-border;
 }
 </style>
-
-
