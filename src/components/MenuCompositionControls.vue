@@ -12,6 +12,22 @@
         IconWithTooltip(
           :menuItemData='menuItemData'
         )
+
+    v-divider
+
+    .preset-wrapper
+      p Preset
+      v-list( dense nav)
+        v-list-item(
+          v-for="(preset, i) in presetSlots"
+          :key="i"
+          @click="triggerPreset(i)"
+          :class=" preset.empty ? 'preset-empty' : 'preset-full'"
+        )
+          v-icon() {{ preset.iconText }}
+
+
+
 </template>
 
 <script>
@@ -26,6 +42,7 @@ export default {
 
   data: () => ({
     auxInputVisible: true,
+
     masterMenuItems: [
       {
         mdIconText: 'help_outlined',
@@ -67,8 +84,20 @@ export default {
         title: 'Reset Everything',
         action: 'resetComposition',
       },
+      {
+        mdIconText: 'save',
+        id: 'save-settings',
+        title: 'Save to Open Preset Slot',
+        action: 'saveToPreset',
+      },
     ],
   }),
+
+  props: {
+    presetSlots: {
+      type: Array,
+    },
+  },
 
   methods: {
     clickHandler(functionName) {
@@ -92,6 +121,20 @@ export default {
     toggleAuxInputFields() {
       this.auxInputVisible = !this.auxInputVisible;
       this.$emit('toggle_aux_input', true);
+    },
+
+    saveToPreset() {
+      this.$emit('open_preset_snackbar', true);
+    },
+
+    triggerPreset(index) {
+      if (this.presetSlots[index].empty === true) {
+
+        console.log('preset empty');
+        }
+      else {
+        console.log('trigger preset ' + index);
+      }
     }
   },
 };
@@ -127,7 +170,8 @@ export default {
   text-align: center;
 }
 
-#composition-controls {
+#composition-controls,
+.preset-wrapper {
   margin: 15px auto;
 
   p {
@@ -137,6 +181,13 @@ export default {
   }
 }
 
+.preset-full i {
+  color: $color-primary-blue;
+}
+
+.preset-empty i {
+  color: $color-off-white;
+}
 </style>
 
 <style lang="scss">
