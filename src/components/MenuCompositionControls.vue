@@ -23,10 +23,6 @@
             IconWithTooltip(
               :menuItemData='menuItemData'
             )
-
-    v-divider
-
-
 </template>
 
 <script>
@@ -72,7 +68,7 @@ export default {
       {
         mdIconText: 'save',
         id: 'save-settings',
-        title: 'Save current parameter settings',
+        title: 'Save composition to presets',
         action: 'openPresetAssigner',
       },
 

@@ -19,10 +19,10 @@ export default {
   data: () => ({
     title: '',
     subtitle: '',
-    links: ['home', 'visualizer'],
+    links: ['home', 'playground'],
     paths: {
       home: '/',
-      visualizer: '/visualizer',
+      visualizer: '/playground',
     },
   }),
 

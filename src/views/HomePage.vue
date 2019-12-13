@@ -7,11 +7,11 @@
         h2 {{ tagline }}
       .btn-wrapper
         v-btn(
-          to='/visualizer'
+          to='/playground'
           color="#0e83cd"
           x-large
           dark
-        ) Go Play
+        ) To Playground
       .user-wrapper
         .logged-in-wrapper( v-if="user.loggedIn && user.username != ''")
           p.username Welcome {{ user.username }} !
@@ -73,13 +73,13 @@ export default {
     },
     dialogHeadline: 'How to play',
     dialogTagline:
-      "VYZBY is an interactive audio visualizer that let's you interact with in in many ways.",
+      "VYZBY is an interactive audio visualizer that let's you interact with it in many ways in the playground.",
     dialogPoints: [
       'Manually control the parameters of individual layers through the interface.',
       'Use your keyboard as an input and play it like piano,',
       'Customize the parameters to play to whatever key you choose.',
       'Use a MIDI device as your input device and make custom mappings.',
-      'Add music to your sessiong by playing songs from SoundCloud or off your computer.',
+      'Add music to your play time by through streaming services or music off your computer.',
       'Select an audio frequency and automate the animation to the music.',
       'Use your body as a brush via the webcam.  ** Only available on some layers',
     ],
