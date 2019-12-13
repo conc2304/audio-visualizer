@@ -11,6 +11,7 @@
           v-icon home
 
         v-divider
+
         MenuLayerSelector(
           :RegisteredSketches="RegisteredSketches"
           :menuOpen="menuOpen"
@@ -18,6 +19,7 @@
           @layer_selected="updatesketchIndexSelected"
           @catalogue_open="setCatalogueStatus"
         )
+
         v-divider
 
         MenuCompositionControls(
@@ -277,5 +279,25 @@ i {
 
 .preset-empty {
   color: $color-off-white;
+}
+
+#control-panel {
+  .menu-dash-group {
+    margin: 15px auto;
+
+    p {
+      width: auto;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+}
+
+.no-padding {
+  padding: 0;
+}
+
+#composition-controls .inactive .v-icon.menu-icon {
+  color: $color-inactive-red;
 }
 </style>

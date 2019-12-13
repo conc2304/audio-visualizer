@@ -1,18 +1,28 @@
 <template lang="pug">
   #composition-controls
-
-    .master-dashboard-group-wrapper
-      p Global
-      v-list( dense nav)
-        v-list-item(
-          v-for="menuItemData in masterMenuItems"
-          :key="menuItemData.title"
-          :class="{ 'inactive': auxInputVisible && menuItemData.id === 'toggle-input-assigner' }"
-          @click="clickHandler(menuItemData.action)"
-        )
-          IconWithTooltip(
-            :menuItemData='menuItemData'
+    .menu-dash-group
+      v-tooltip( right)
+        template( v-slot:activator= "{ on }")
+          v-list-item.no-padding(
+            @click="globalDashVisible = !globalDashVisible"
           )
+            p(
+              v-on="on"
+            ) Global
+        span {{ globalDashVisible ? 'Hide' : 'Show' }} Global Controls
+      .global-dash-buttons(
+        v-show="globalDashVisible"
+      )
+        v-list( dense nav)
+          v-list-item(
+            v-for="menuItemData in masterMenuItems"
+            :key="menuItemData.title"
+            :class="{ 'inactive': !auxInputVisible && menuItemData.id === 'toggle-input-assigner' }"
+            @click="clickHandler(menuItemData.action)"
+          )
+            IconWithTooltip(
+              :menuItemData='menuItemData'
+            )
 
     v-divider
 
@@ -30,7 +40,8 @@ export default {
   },
 
   data: () => ({
-    auxInputVisible: true,
+    globalDashVisible: true,
+    auxInputVisible: false,
     masterMenuItems: [
       {
         mdIconText: 'help',
@@ -116,58 +127,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-#settings-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-#master-controls {
-  width: 449px;
-  position: fixed;
-  z-index: 10;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 66%, rgba(0, 0, 0, 0) 100%);
-}
-
-#master-controls .master-control-heading {
-  color: #fff;
-  margin: 15px 0 0 0;
-  text-align: center;
-}
-
-#master-controls i.global-control {
-  font-size: 30px;
-}
-
-#master-controls .icon-wrapper {
-  padding: 0 20px;
-  text-align: center;
-}
-
-
-</style>
-
 <style lang="scss">
-#composition-controls .inactive .v-icon.menu-icon {
-  color: $color-inactive-red;
-}
-
-// to offset the lack of scrollbar
-.pad-right {
-  margin-right: 6px;
-}
-
-.master-dashboard-group-wrapper {
-  margin: 15px auto;
-
-  p {
-    width: auto;
-    margin: 0 auto;
-    text-align: center;
-  }
-}
-
-
 </style>

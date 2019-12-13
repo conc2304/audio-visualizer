@@ -1,6 +1,19 @@
 <template lang="pug">
-  .master-dashboard-group-wrapper
-      p Preset
+  .menu-dash-group
+    v-tooltip( right)
+      template( v-slot:activator= "{ on }")
+        v-list-item.no-padding(
+          @click="presetDashVisible = !presetDashVisible"
+        )
+          p(
+            v-on="on"
+          ) Preset
+            br
+            span Slots
+      span {{ presetDashVisible ? 'Hide' : 'Show' }} Preset Slot Selectors
+    #preset-dash-button(
+      v-show="presetDashVisible"
+    )
       v-list( dense nav )
           v-list-item(
             @click="deleteSelectedPreset()"
@@ -23,6 +36,10 @@
 
 <script>
 export default {
+  data: () => ({
+    presetDashVisible: false,
+  }),
+
   props: {
     presetSlots: {
       type: Array,
