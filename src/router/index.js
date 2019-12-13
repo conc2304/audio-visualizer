@@ -18,8 +18,8 @@ const routes = [
     component: About,
   },
   {
-    path: '/visualizer',
-    name: 'visualizer',
+    path: '/playground',
+    name: 'playground',
     component: Visualizer,
   },
 ];
