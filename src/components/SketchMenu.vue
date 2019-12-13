@@ -19,11 +19,14 @@
           @catalogue_open="setCatalogueStatus"
         )
         v-divider
+
         MenuCompositionControls(
           @toggle_aux_input="toggleAuxInputFields"
           @update_help_modal="updateHelpModal"
           @update_snackbar="updateSnackbarStatus"
+          @update_preset_selected="updatePresetSelected"
           :presetSlots="presetSlots"
+          :presetSelectedIndex="presetSelectedIndex"
         )
 
         v-divider
@@ -64,6 +67,7 @@
       :snackbarOpen="snackbarOpen"
       :presetSlots="presetSlots"
       @update_snackbar="updateSnackbarStatus"
+      @update_preset_selected="updatePresetSelected"
     )
 
 </template>
@@ -99,6 +103,7 @@ export default {
     catalogueOpen: false,
     helpModalOpen: false,
     snackbarOpen: false,
+    presetSelectedIndex: -1,
 
     presetSlots: [
       {
@@ -160,6 +165,10 @@ export default {
 
     saveToPreset(index) {
       this.presetSlots[index].empty = false;
+    },
+
+    updatePresetSelected(index) {
+      this.presetSelectedIndex = index;
     },
   },
 };
