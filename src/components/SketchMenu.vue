@@ -24,12 +24,15 @@
           @toggle_aux_input="toggleAuxInputFields"
           @update_help_modal="updateHelpModal"
           @update_snackbar="updateSnackbarStatus"
+        )
+
+        v-divider
+
+        MenuPresetLauncher(
           @update_preset_selected="updatePresetSelected"
           :presetSlots="presetSlots"
           :presetSelectedIndex="presetSelectedIndex"
         )
-
-        v-divider
 
         #audio-player-toggle-wrapper
           v-divider
@@ -75,6 +78,7 @@
 <script>
 import MenuLayerSelector from '@/components/MenuLayerSelector.vue';
 import MenuCompositionControls from '@/components/MenuCompositionControls.vue';
+import MenuPresetLauncher from '@/components/MenuPresetLauncher.vue';
 import LayerControlPanel from '@/components/LayerControlPanel.vue';
 import AudioPlayer from '@/components/AudioPlayer.vue';
 import CatalogueList from '@/components/CatalogueList.vue';
@@ -87,6 +91,7 @@ export default {
   components: {
     MenuLayerSelector,
     MenuCompositionControls,
+    MenuPresetLauncher,
     LayerControlPanel,
     AudioPlayer,
     CatalogueList,
