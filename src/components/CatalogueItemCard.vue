@@ -72,7 +72,6 @@ export default {
 
   computed: {
     maxLayersReached() {
-      console.log(this.SketchRegistration.length);
       return this.SketchRegistration.length > this.maxLayers
     }
   },

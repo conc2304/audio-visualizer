@@ -1,5 +1,5 @@
 <template lang="pug">
-  .control-icon-wrapper()
+  .control-icon-wrapper
     v-tooltip(
       right
     )
@@ -27,7 +27,14 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.control-icon-wrapper {
+  margin: 0 auto;
+}
+</style>
+
+<style lang="scss">
+
 .v-tooltip__content {
   background-color: #000;
   border: 1px solid #555555
