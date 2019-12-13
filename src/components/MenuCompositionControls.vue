@@ -96,7 +96,6 @@ export default {
 
   methods: {
     clickHandler(functionName) {
-      console.log(functionName);
       this[functionName]();
     },
 
@@ -106,7 +105,6 @@ export default {
     },
 
     openHelpModal() {
-      console.log(1);
       this.$emit('update_help_modal', true);
     },
 

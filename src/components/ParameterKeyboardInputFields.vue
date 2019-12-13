@@ -5,14 +5,15 @@
         v-model="keyboardKey"
         autocomplete="off"
         validate-on-blur
-        hint="Keystroke to trigger parameter change"
+        hint="Keystroke to trigger parameter change (A-Z & 0-9)"
         placeholder="Keyboard Key"
         clearable
         clear-icon="close"
         color="blue"
         maxlength="1"
         @change="setKey()"
-        @click:clear="clear"
+        @click:clear="clear('key')"
+        :rules="[val => { return (testKeyStroke(val)) }]"
         outlined
         dark
         dense
@@ -21,14 +22,15 @@
         v-model="parameterValue"
         autocomplete="off"
         validate-on-blur
-        hint="Parameter Value to set on keystroke"
+        :hint="hint()"
         type="number"
         placeholder="Value"
         clearable
         clear-icon="close"
         color="blue"
         @change="setKey()"
-        @click:clear="clear"
+        @click:clear="clear('value')"
+        :rules="[val => { return (testValueMinMax(val, parameter)) }]"
         outlined
         dark
         dense
@@ -71,17 +73,56 @@ export default {
       );
     },
 
-    testMin(value) {
-      return value >= this.parameter.min;
+    testKeyStroke(value) {
+
+      // alphabet charcodes fo A-Z = [65 - 90]
+      // alphabet charcodes fo a-z = [97 - 122]
+      // number 0-9 = [49 - 57]
+      if (!value) {
+        return true;
+      }
+
+      this.keyboardKey = value.toUpperCase();
+      const keyVal = value.toUpperCase().charCodeAt(0);
+      const validKey =
+        between(keyVal, 65, 90) || between(keyVal, 49, 57) || between(keyVal, 97, 122);
+      return validKey || 'Key must be either A-Z, or 0-9';
+
+      function between(x, min, max) {
+        return x >= min && x <= max;
+      }
     },
 
-    setValue(event) {
+    testValueMinMax(value, parameter) {
+      let valid = true;
+      let msg = '';
+
+      if (!parameter) {
+        return true;
+      }
+
+      if (value <= parameter.min) {
+        valid = false;
+        msg = `Value must be more than ${parameter.min}`;
+      } else if (value >= parameter.max) {
+        valid = false;
+        msg = `Value must be less than ${parameter.max}`;
+      }
+
+      return valid || msg;
     },
 
-    clear() {
+    hint() {
+      return `Parameter Value to set on keystroke (${this.parameter.min} - ${this.parameter.max})`;
+    },
+
+    clear(type) {
+      this.setKey();
     },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+
+</style>
