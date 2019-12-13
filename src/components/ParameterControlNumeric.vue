@@ -17,7 +17,7 @@
         :sketchIndexSelected="sketchIndexSelected"
       )
       AudioReactiveControls(
-        v-show="parameter.audio && audioEnabled"
+        v-show="parameter.audio && auxInputVisibible"
         :parameter="parameter"
         :auxInputVisibible="auxInputVisibible"
       )
@@ -34,7 +34,6 @@ export default {
   data: () => ({
     sliderConfig: false,
     sliderValues: false,
-    audioEnabled: true, // TODO enable when ready
   }),
 
   components: {

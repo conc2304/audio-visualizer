@@ -1,5 +1,5 @@
 <template lang="pug">
-  .audio-parameter-wrapper( v-show="auxInputVisibible")
+  .audio-parameter-wrapper()
 
     .knob-wrapper
       v-tooltip( bottom)
@@ -26,8 +26,9 @@
               item-text="label"
               item-value="ranges"
               v-model="freqRangeSelected"
-              label="Select Audio Range"
-              clearable=true
+              label="Audio Range"
+              clearable
+              clear-icon="close"
               color="#0e83cd"
               return-object
               outlined
@@ -84,10 +85,6 @@ export default {
     parameter: {
       type: Object,
     },
-    auxInputVisibible: {
-      type: Boolean,
-      default: false,
-    }
   },
 
   mounted() {
