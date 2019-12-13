@@ -45,7 +45,7 @@ export default {
 
     masterMenuItems: [
       {
-        mdIconText: 'help_outlined',
+        mdIconText: 'help',
         id: 'toggle-help',
         title: 'Show Help Box',
         action: 'openHelpModal',
@@ -103,7 +103,7 @@ export default {
 
   methods: {
     clickHandler(functionName) {
-      console.log(functionName)
+      console.log(functionName);
       this[functionName]();
     },
 
@@ -113,7 +113,7 @@ export default {
     },
 
     openHelpModal() {
-      console.log(1)
+      console.log(1);
       this.$emit('update_help_modal', true);
     },
 
@@ -183,16 +183,17 @@ export default {
   }
 }
 
+.preset-inner-wrapper {
+  max-height: 150px;
+  overflow-x: scroll;
+}
+
 .preset-full i {
   color: $color-primary-blue;
 }
 
 .preset-empty i {
   color: $color-off-white;
-}
-.preset-inner-wrapper {
-  max-height: 150px;
-  overflow-x: scroll;
 }
 </style>
 

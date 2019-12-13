@@ -16,27 +16,30 @@
 export default {
   name: 'IconWithTooltip',
 
-  data: () => ({
-  }),
+  data: () => ({}),
 
   props: {
     menuItemData: {
       type: Object,
     },
   },
-}
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .control-icon-wrapper {
   margin: 0 auto;
+
+  i {
+    width: 24px;
+    height: 24px;
+  }
 }
 </style>
 
 <style lang="scss">
-
 .v-tooltip__content {
   background-color: #000;
-  border: 1px solid #555555
+  border: 1px solid #555555;
 }
 </style>
