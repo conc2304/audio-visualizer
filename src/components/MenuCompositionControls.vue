@@ -21,6 +21,8 @@
       v-list( dense nav )
           v-list-item(
             @click="deleteSelectedPreset()"
+            :disabled="presetSelectedIndex < 0"
+            :class="presetSelectedIndex < 0 ? 'preset-empty' : ''"
           )
             v-icon() delete
 
@@ -30,7 +32,8 @@
             v-for="(preset, i) in presetSlots"
             :key="i"
             @click="triggerPreset(i)"
-            :class="[preset.empty ? 'preset-empty' : 'preset-full', presetIndexSelected === i ? 'active' : '']"
+            :disabled="preset.empty"
+            :class="[preset.empty ? 'preset-empty' : 'preset-full', presetSelectedIndex === i ? 'active' : '']"
           )
             v-icon() {{ preset.iconText }}
 
@@ -48,7 +51,6 @@ export default {
 
   data: () => ({
     auxInputVisible: true,
-    presetIndexSelected: null,
     masterMenuItems: [
       {
         mdIconText: 'help',
@@ -105,6 +107,10 @@ export default {
     presetSlots: {
       type: Array,
     },
+    presetSelectedIndex: {
+      type: Number,
+      default: -1,
+    }
   },
 
   methods: {
@@ -138,13 +144,25 @@ export default {
     },
 
     triggerPreset(index) {
-      this.presetIndexSelected = index;
+      // de-activate the selected preset on reclick
+      if (index === this.presetSelectedIndex) {
+        this.$emit('update_preset_selected', -1);
+      } else {
+        this.$emit('update_preset_selected', index);
+      }
+
+
       if (this.presetSlots[index].empty === true) {
         console.log('preset empty');
       } else {
         console.log('trigger preset ' + index);
       }
     },
+
+    deleteSelectedPreset() {
+      this.presetSlots[this.presetSelectedIndex].empty = true;
+      this.$emit('update_preset_selected', -1);
+    }
   },
 };
 </script>

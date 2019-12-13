@@ -62,6 +62,7 @@ export default {
       for (let i in this.presetSlots) {
         this.presetSlots[i].empty = true;
       }
+      this.$emit('update_preset_selected', -1);
     }
   },
 };
