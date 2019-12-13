@@ -16,15 +16,19 @@
           v-for="(preset, i) in presetSlots"
           :key="`preset-selector${i}`"
           :class=" preset.empty ? 'preset-empty' : 'preset-full'"
+          dark
         )
-          v-icon(
-
-          ) {{ preset.iconText }}
+          v-icon {{ preset.iconText }}
         v-list-item(
           @click="closeSnackBar()"
           dark
         )
           v-icon() close
+        v-list-item(
+          @click="clearPresets()"
+          dark
+        )
+          v-icon( dark) delete
 </template>
 
 <script>
@@ -53,6 +57,12 @@ export default {
     closeSnackBar() {
       this.$emit('update_snackbar', false);
     },
+
+    clearPresets() {
+      for (let i in this.presetSlots) {
+        this.presetSlots[i].empty = true;
+      }
+    }
   },
 };
 </script>

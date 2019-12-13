@@ -86,6 +86,7 @@ export default {
     },
     auxInputVisibible: {
       type: Boolean,
+      default: false,
     }
   },
 
