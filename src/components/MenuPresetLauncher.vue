@@ -19,8 +19,14 @@
             @click="deleteSelectedPreset()"
             :disabled="presetSelectedIndex < 0"
             :class="presetSelectedIndex < 0 ? 'preset-empty' : ''"
+            v-show="anyPresetsFull()"
           )
             v-icon() delete
+      p.empty-sign(
+        small
+        v-show="!anyPresetsFull()"
+        class="text-center"
+      ) Empty
 
       .preset-inner-wrapper( class="custom-thin-scrollbar")
         v-list(dense nav)
@@ -28,7 +34,7 @@
             v-for="(preset, i) in presetSlots"
             :key="i"
             @click="triggerPreset(i)"
-            :disabled="preset.empty"
+            v-show="!preset.empty"
             :class="[preset.empty ? 'preset-empty' : 'preset-full', presetSelectedIndex === i ? 'active' : '']"
           )
             v-icon() {{ preset.iconText }}
@@ -70,7 +76,19 @@ export default {
       this.presetSlots[this.presetSelectedIndex].empty = true;
       this.$emit('update_preset_selected', -1);
     },
+
+    anyPresetsFull() {
+      for (let preset of this.presetSlots) {
+        if (preset.empty === false) {
+          return true;
+        }
+      }
+
+      return false;
+    },
   },
+
+  computed: {},
 };
 </script>
 
@@ -85,5 +103,10 @@ export default {
 
 .preset-empty i {
   color: $color-off-white;
+}
+
+.empty-sign {
+  color: $color-off-white;
+  font-size: 0.8rem;
 }
 </style>
