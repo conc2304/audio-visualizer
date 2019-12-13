@@ -9,15 +9,11 @@
           v-on="on"
           class="global-control helper"
         ) {{ menuItemData.mdIconText }}
-      span.test  {{ menuItemData.title }}
+      span  {{ menuItemData.title }}
 </template>
 
 <script>
 export default {
-  name: 'IconWithTooltip',
-
-  data: () => ({}),
-
   props: {
     menuItemData: {
       type: Object,

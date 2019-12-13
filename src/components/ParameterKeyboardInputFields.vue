@@ -56,12 +56,13 @@ export default {
     },
   },
 
-  mounted() {
-
-  },
+  mounted() {},
 
   methods: {
     setKey() {
+      if (!this.keyboardKey || !this.parameterValue) {
+        return;
+      }
       KeyboardControlsService.setKeyboardControl(
         this.keyboardKey,
         this.parameterValue,
@@ -83,7 +84,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.v-input {
-}
-</style>
+<style lang="scss" scoped></style>

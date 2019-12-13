@@ -233,8 +233,8 @@ i {
     background-color: $color-bkgd;
     background-image: -webkit-gradient(
       linear,
-      40% 0%,
-      75% 80%,
+      0% 20%,
+      50% 80%,
       from($color-bkgd),
       to(#0c6b98),
       color-stop(0.9, #0e83cd)

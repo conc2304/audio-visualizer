@@ -18,13 +18,19 @@
 
     .master-dashboard-group-wrapper
       p Preset
+      v-list( dense nav )
+          v-list-item(
+            @click="deleteSelectedPreset()"
+          )
+            v-icon() delete
+
       .preset-inner-wrapper( class="custom-thin-scrollbar")
-        v-list( dense nav)
+        v-list(dense nav)
           v-list-item(
             v-for="(preset, i) in presetSlots"
             :key="i"
             @click="triggerPreset(i)"
-            :class=" preset.empty ? 'preset-empty' : 'preset-full'"
+            :class="[preset.empty ? 'preset-empty' : 'preset-full', presetIndexSelected === i ? 'active' : '']"
           )
             v-icon() {{ preset.iconText }}
 
@@ -42,7 +48,7 @@ export default {
 
   data: () => ({
     auxInputVisible: true,
-
+    presetIndexSelected: null,
     masterMenuItems: [
       {
         mdIconText: 'help',
@@ -132,6 +138,7 @@ export default {
     },
 
     triggerPreset(index) {
+      this.presetIndexSelected = index;
       if (this.presetSlots[index].empty === true) {
         console.log('preset empty');
       } else {
@@ -183,9 +190,8 @@ export default {
   }
 }
 
-.preset-inner-wrapper {
-  max-height: 150px;
-  overflow-x: scroll;
+.active {
+  border: 1px solid $color-primary-blue;
 }
 
 .preset-full i {
@@ -200,5 +206,10 @@ export default {
 <style lang="scss">
 #composition-controls .inactive .v-icon.menu-icon {
   color: $color-inactive-red;
+}
+
+// to offset the lack of scrollbar
+.pad-right {
+  margin-right: 6px;
 }
 </style>
