@@ -10,11 +10,11 @@
       v-card-title(class="headline text-center font-weight-bold") How to VYZBY
       v-divider
 
-      v-card-text.dialog-content( class="thin-custom-scrollbar")
+      v-card-text.dialog-content( class="custom-thin-scrollbar")
         h3( class="headline text-center font-weight-bold") Ways to interact:
         .help-item(
           v-for="(interaction, i) in help.interactions"
-          :key="`interaction${i}`"
+          :key="`interaction-${i}`"
         )
           h4.item-title( class="font-weight-bold") {{ interaction.input }}
           p.item-subtitle {{ interaction.how }}
@@ -24,13 +24,46 @@
 
         p You can show/hide the aux input fields for all of the parameters by pressing the
           v-icon.example-icon keyboard
-          span icon in the menu.  These fields will appear under each layer's parameter.
+          span button in the Global menu.  These fields will appear under each layer's parameter.
         .help-item(
-          v-for="(auxInput, j) in help.auxInputs"
-          :key="`auxInputs${j}`"
+          v-for="(auxInput, i) in help.auxInputs"
+          :key="`auxInputs-${i}`"
         )
           h4.item-title {{ auxInput.method }}
           p.item-subtitle {{ auxInput.how }}
+
+        h3( class="headline text-center font-weight-bold") Preset Slots (in development)
+        h5( class="text-center font-weight-bold") Save the state of a composition to trigger later!
+
+        .help-item
+          h4.item-title Saving
+          p.item-subtitle Press the
+            v-icon.example-icon save
+            span button in the Global menu.  Then select a slot to save it to.  If a slot is blue, it means its full.  Selecting it will override the current preset in that slot.
+
+        .help-item
+          h4.item-title Triggering
+          p.item-subtitle Open the Preset Slots in the menu and select a previously saved slot.  This will cause all of the current layer settings to change to your preset.
+
+        .help-item
+          h4.item-title Deleting
+          p.item-subtitle You can clear out all of your presets from the presets pop up. Or you can clear out individual slots by selecting a full slot from the presets menu. Then press the
+            v-icon.example-icon delete
+            span button from the Preset Slots menu to clear it out.
+
+        .preset-example-container
+          .slot-example
+            v-icon.example-icon(
+              color="#0e83cd"
+            ) looks_one
+            span Saved/Full Slots
+          .slot-example
+            v-icon.example-icon(
+              color="#b6b6b6"
+            ) looks_one
+            span Empty Slots
+
+
         small NOTE : Currently the Audio Player and MIDI interfaces are still in development
 </template>
 
@@ -55,6 +88,7 @@ export default {
             'Vyzby allows you to control and animate your composition with a variety of auxiliary inputs including your Computer Keyboard, Audio, and MIDI. And more to come!',
         },
       ],
+
       auxInputs: [
         {
           method: 'Computer Keyboard',
@@ -67,7 +101,7 @@ export default {
             'The same way you can assign a keystoke, you can assign a MIDI button by putting your cursor in the text field and pressing the MIDI key that you want to bind it to.',
         },
         {
-          method: 'Audio Control',
+          method: 'Audio Control (in developement)',
           how:
             "Each of the parameters with a slider have the ability to animate based on the audio playing within VYZBY.  The Gain knob control the 'loudness' of the animation.  Turning the gain down make the parameter animate less to the audio, and vice versa.  The dropdown next to the Gain knob allows you to select a frequency range of the audio that the parameter will animate.  Select 'Low' to animate it to the bass of the song!",
         },
@@ -96,6 +130,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.preset-example-container {
+  display: flex;
+  justify-content: space-evenly;
+}
 .dialog-content {
   height: 400px;
 

@@ -160,13 +160,10 @@ export default {
     },
 
     updateSnackbarStatus(isOpen) {
-      console.log('test');
       this.snackbarOpen = isOpen;
     },
 
     updateHelpModal(isOpen) {
-      console.log(' update modal');
-      console.log(isOpen);
       this.helpModalOpen = isOpen;
     },
 

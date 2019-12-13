@@ -24,11 +24,16 @@
           dark
         )
           v-icon() close
-        v-list-item(
-          @click="clearPresets()"
-          dark
-        )
-          v-icon( dark) delete
+        v-tooltip( top)
+          template( v-slot:activator= "{ on }")
+            v-list-item(
+               @click="clearPresets()"
+            )
+              v-icon(
+                v-on="on"
+                dark
+              ) delete
+          span Clear All Presets
 </template>
 
 <script>
