@@ -140,6 +140,7 @@ export default {
 }
 
 .layer-arrangement {
+  text-align: center;
   .v-list-item {
     width: 20px;
     height: 10px;
