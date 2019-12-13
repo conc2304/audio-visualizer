@@ -21,7 +21,9 @@
         v-divider
         MenuCompositionControls(
           @toggle_aux_input="toggleAuxInputFields"
-          @open_help_modal="openHelpModal"
+          @update_help_modal="updateHelpModal"
+          @update_snackbar="updateSnackbarStatus"
+          :presetSlots="presetSlots"
         )
 
         v-divider
@@ -53,28 +55,16 @@
       @catalogue_open="setCatalogueStatus"
     )
 
-
-    v-dialog(
-      v-model="helpModal"
-      max-width="500"
-      max-height="500"
-      scrollable
-      dark
+    HelpDialog(
+      :helpModalOpen="helpModalOpen"
+      @update_help_modal="updateHelpModal"
     )
-      v-card
-        v-card-title( class="headline") So ummm... how?
 
-        v-card-text All of these knobs and buttons can be a bit overwhelming, let's break it down.
-        v-card-text Ways to interact:
-        v-card-text
-          .help-item(
-            v-for="(interaction, i) in help.interactions"
-          )
-            p.item-title {{ interaction.input }}
-            p.item-subtitle {{ interaction.how }}
-
-
-
+    PresetAssignSnackbar(
+      :snackbarOpen="snackbarOpen"
+      :presetSlots="presetSlots"
+      @update_snackbar="updateSnackbarStatus"
+    )
 
 </template>
 
@@ -85,6 +75,7 @@ import LayerControlPanel from '@/components/LayerControlPanel.vue';
 import AudioPlayer from '@/components/AudioPlayer.vue';
 import CatalogueList from '@/components/CatalogueList.vue';
 import HelpDialog from '@/components/HelpDialog.vue';
+import PresetAssignSnackbar from '@/components/PresetAssignSnackbar.vue';
 
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
@@ -96,6 +87,7 @@ export default {
     AudioPlayer,
     CatalogueList,
     HelpDialog,
+    PresetAssignSnackbar,
   },
 
   data: () => ({
@@ -105,24 +97,27 @@ export default {
     sketchIndexSelected: null,
     auxInputVisibible: false,
     catalogueOpen: false,
-    helpModal: true,
-    help: {
-      interactions: [
-        {
-          input: 'Parameter Sliders',
-          how:
-            'These have 3 slide-handles that control: Minimum, Current, and Max.  The Minimum and Maximum control the range within which the slider can change via audio input and/or randomizing parameters.',
-        },
-        {
-          input: 'Parameter Radio Buttons',
-          how: 'These let you switch between different layer modes.',
-        },
-        {
-          input: 'test',
-          how: 'These let you switch between different layer modes.',
-        },
-      ],
-    },
+    helpModalOpen: false,
+    snackbarOpen: false,
+
+    presetSlots: [
+      {
+        iconText: 'looks_one',
+        empty: true,
+      },
+      {
+        iconText: 'looks_two',
+        empty: true,
+      },
+      {
+        iconText: 'looks_3',
+        empty: true,
+      },
+      {
+        iconText: 'looks_4',
+        empty: true,
+      },
+    ],
   }),
 
   methods: {
@@ -140,10 +135,6 @@ export default {
       this.auxInputVisibible = !this.auxInputVisibible;
     },
 
-    openHelpModal() {
-      this.helpModal = true;
-    },
-
     setCatalogueStatus(status) {
       this.catalogueOpen = status;
       if (this.catalogueOpen === true) {
@@ -154,6 +145,21 @@ export default {
       if (this.catalogueOpen === false && this.sketchIndexSelected !== null) {
         this.menuOpen = true;
       }
+    },
+
+    updateSnackbarStatus(isOpen) {
+      console.log('test');
+      this.snackbarOpen = isOpen;
+    },
+
+    updateHelpModal(isOpen) {
+      console.log(' update modal');
+      console.log(isOpen);
+      this.helpModalOpen = isOpen;
+    },
+
+    saveToPreset(index) {
+      this.presetSlots[index].empty = false;
     },
   },
 };
@@ -170,11 +176,11 @@ export default {
   border-right: 1px solid $color-std-grey;
   border-radius: 0;
 }
-
+$master-menu-width: 4.5rem;
 #master-controls-container {
   position: relative;
   background-color: $color-std-grey;
-  width: 60px;
+  width: $master-menu-width;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -202,10 +208,60 @@ i.off-white {
   position: fixed;
   top: 0;
   bottom: 0;
-  left: 60px;
+  left: $master-menu-width;
   z-index: 10;
   margin: 0 auto;
   overflow: auto;
   border: 1px solid $subtle-border;
+}
+</style>
+
+<style lang="scss">
+i {
+  margin: 0 auto;
+  text-align: center;
+}
+.custom-thin-scrollbar {
+  $color-bkgd: $color-std-grey;
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: $color-bkgd;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: $color-bkgd;
+    background-image: -webkit-gradient(
+      linear,
+      40% 0%,
+      75% 80%,
+      from($color-bkgd),
+      to(#0c6b98),
+      color-stop(0.9, #0e83cd)
+    );
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $color-bkgd;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: $color-bkgd;
+  }
+}
+.preset-selector-wrapper {
+  display: flex;
+  justify-content: center;
+  .v-list-item {
+    width: 60px;
+  }
+}
+
+.preset-full {
+  color: $color-primary-blue;
+}
+
+.preset-empty {
+  color: $color-off-white;
 }
 </style>
