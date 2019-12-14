@@ -6,7 +6,7 @@
       v-cloak
     )
 
-      #master-controls-container
+      #master-controls-container( class="custom-thin-scrollbar")
         v-list-item( to="/")
           v-icon home
 
