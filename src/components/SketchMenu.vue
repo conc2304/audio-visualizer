@@ -224,7 +224,7 @@ i.off-white {
   left: $master-menu-width;
   z-index: 10;
   margin: 0 auto;
-  overflow: auto;
+  overflow: hidden;
   border: 1px solid $subtle-border;
 }
 </style>
@@ -236,9 +236,14 @@ i {
 }
 .custom-thin-scrollbar {
   $color-bkgd: $color-std-grey;
+
   &::-webkit-scrollbar {
     width: 5px;
     background-color: $color-bkgd;
+  }
+
+  &.scrollbar__thick::-webkit-scrollbar {
+    width: 8px;
   }
 
   &::-webkit-scrollbar-thumb {

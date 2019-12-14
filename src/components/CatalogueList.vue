@@ -39,8 +39,9 @@
             dense dark
           )
 
+    v-divider
 
-    v-container
+    v-container.catalogue-content( class="custom-thin-scrollbar")
       v-row( dense light)
         v-col( cols="12")
           v-card(
@@ -50,17 +51,16 @@
             v-card-title.headline Tons of processing sketches to choose from!
             v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
 
-        .catalogue-content
-          v-col(
-            v-for="(sketch, i) in filteredSketchCatalogue"
-            :key="`sketch-${i}`"
-            cols="12"
-          )
-            CatalogueItemCard(
-              v-if="sketch.catalogueInfo"
-              :catalogueItem="sketch.catalogueInfo"
-              :search="search"
-          )
+        v-col(
+          v-for="(sketch, i) in filteredSketchCatalogue"
+          :key="`sketch-${i}`"
+          cols="12"
+        )
+          CatalogueItemCard(
+            v-if="sketch.catalogueInfo"
+            :catalogueItem="sketch.catalogueInfo"
+            :search="search"
+        )
 </template>
 
 <script>
@@ -118,4 +118,39 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#sketch-catalogue-list {
+  overflow-y: scroll;
+}
+
+.catalogue-content {
+  width: 100%;
+  height: 100vh;
+  padding-bottom: 350px;
+  overflow-y: scroll;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: $color-transparent-black;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: $color-transparent-black;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: $color-transparent-black;
+    background-image: -webkit-gradient(
+      linear,
+      40% 0%,
+      75% 84%,
+      from($color-transparent-black),
+      to(#0c6b98),
+      color-stop(0.9, #0e83cd)
+    );
+  }
+}
+</style>
