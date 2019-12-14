@@ -14,30 +14,45 @@
           right
         )
           v-icon close
+      .temp( v-if="false")
+        v-row( class="flex-center")
+          v-col( cols="8" sm="8")
+            v-text-field(
+              v-model="search"
+              autocomplete="off"
+              clearable
+              clear-icon="close"
+              :append-icon="'search'"
+              placeholder="Search ..."
+              hint="Search for sketches by title, creator, or by tags"
+              outlined
+              dense dark
+            )
 
-      v-row.search-wrapper
-        v-col( class="d-flex" cols="12" sm="6")
-          v-text-field(
-            v-model="search"
-            autocomplete="off"
-            clearable
-            clear-icon="close"
-            :append-icon="'search'"
-            placeholder="Search ..."
-            hint="Search for sketches by title, creator, or by tags"
-            outlined
-            dense dark
-          )
-        v-col( class="d-flex" cols="12" sm="6")
-          v-select(
-            :items="sortByItems"
-            :append-icon="'expand_more'"
-            clearable
-            clear-icon="close"
-            label="Sort By..."
-            outlined
-            dense dark
-          )
+      .temp( v-if="true")
+        v-row.search-wrapper
+          v-col( class="d-flex" cols="12" sm="6")
+            v-text-field(
+              v-model="search"
+              autocomplete="off"
+              clearable
+              clear-icon="close"
+              :append-icon="'search'"
+              placeholder="Search ..."
+              hint="Search for sketches by title, creator, or by tags"
+              outlined
+              dense dark
+            )
+          v-col( class="d-flex" cols="12" sm="6")
+            v-select(
+              :items="sortByItems"
+              :append-icon="'expand_more'"
+              clearable
+              clear-icon="close"
+              label="Sort By..."
+              outlined
+              dense dark
+            )
 
     v-divider
 
@@ -122,7 +137,9 @@ export default {
 #sketch-catalogue-list {
   overflow-y: scroll;
 }
-
+.flex-center {
+  justify-content: center;
+}
 .catalogue-content {
   width: 100%;
   height: 100vh;
