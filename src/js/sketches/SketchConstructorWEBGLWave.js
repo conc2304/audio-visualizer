@@ -21,8 +21,6 @@ class WEBGLWave {
       4,
     );
 
-    SketchCatalogue[this.constructor.name] = this.catalogueInfo;
-
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     this.waveWidth = windowWidth + 200; // have some of it go off the page
