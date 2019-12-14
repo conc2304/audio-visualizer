@@ -7,19 +7,19 @@
         v-card-title(
           class="headline"
         ) {{ catalogueItem.title }}
+          br
+
+        v-card-subtitle.no-padding
           small.creator by {{ catalogueItem.creator }}
+        v-card-subtitle {{ catalogueItem.description }}
 
-        v-card-subtitle() {{ catalogueItem.description }}
-
-
-
-        v-chip.category-chip(
-          v-for="(category, i) in catalogueItem.filterCategories.slice(0, 5)"
-          :key="`category-${i}`"
+        v-chip.tag-chip(
+          v-for="(tag, i) in catalogueItem.tags.slice(0, 5)"
+          :key="`tag-${i}`"
           outlined
           small
-          :color="getCategoryMatchColor(category)"
-        ) {{ category }}
+          :color="getTagMatchColor(tag)"
+        ) {{ tag }}
 
 
       v-avatar(
@@ -54,7 +54,7 @@ export default {
       type: Object,
       required: true,
     },
-    filter: {
+    search: {
       type: String,
       required: false,
     },
@@ -65,8 +65,9 @@ export default {
       this.SketchRegistration.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
     },
 
-    getCategoryMatchColor(category) {
-      return category.toLowerCase() == this.filter.toLowerCase() ? 'blue' : 'grey';
+    getTagMatchColor(tag) {
+
+      return this.search && tag.toLowerCase() == this.search.toLowerCase() ? 'blue' : 'grey';
     },
   },
 
@@ -87,7 +88,7 @@ export default {
   font-style: italic;
 }
 
-.category-chip {
+.tag-chip {
   margin: 0 0 0.5rem 0.5rem;
 }
 </style>

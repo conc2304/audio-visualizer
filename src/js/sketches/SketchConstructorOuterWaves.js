@@ -11,7 +11,7 @@ class OuterWaves {
     this.catalogueInfo = new CatalogueDataEntry(
       this.constructor,
       'Sine Wave Set',
-      'A group of parametic sine waves with various shapes as point along the wave.',
+      'A group of parametric sine waves with various shapes as point along the wave.',
       ['Parametric'],
       'clyzby',
       './assets/sketch_catalogue_gifs/outer-waves_200.gif',
