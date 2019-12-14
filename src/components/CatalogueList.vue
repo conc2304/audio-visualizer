@@ -29,12 +29,13 @@
             v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
 
         v-col(
-          v-for="(catalogueItem, i) in SketchCatalogue"
+          v-for="(sketch, i) in SketchCatalogue"
           :key="`sketch-${i}`"
           cols="12"
         )
           CatalogueItemCard(
-            :catalogueItem="catalogueItem"
+            v-if="sketch.catalogueInfo"
+            :catalogueItem="sketch.catalogueInfo"
             :filter="filter"
           )
 </template>
@@ -58,6 +59,10 @@ export default {
     closeCatalogue() {
       this.$emit('catalogue_open', false);
     },
+  },
+
+    mounted() {
+    console.log(SketchCatalogue);
   },
 
 };

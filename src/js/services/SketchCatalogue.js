@@ -1,3 +1,3 @@
-const SketchCatalog = {};
+const SketchCatalog = [];
 
 export default SketchCatalog;
