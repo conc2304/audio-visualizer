@@ -46,7 +46,7 @@ import SketchCatalogue from '@/js/services/SketchCatalogue';
 export default {
   data: () => ({
     SketchCatalogue,
-    filter: 'WEBGL',
+    filter: '',
   }),
 
   components: {
