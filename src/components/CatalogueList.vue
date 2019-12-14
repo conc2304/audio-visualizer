@@ -55,18 +55,13 @@ export default {
   },
 
   methods: {
-
     closeCatalogue() {
       this.$emit('catalogue_open', false);
     },
   },
 
-    mounted() {
-    console.log(SketchCatalogue);
-  },
-
+  mounted() {},
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

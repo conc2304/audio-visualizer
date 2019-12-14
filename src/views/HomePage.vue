@@ -42,7 +42,7 @@
           ul
             li( v-for="(point, index) in dialogPoints" :key="index") {{ point }}
           .to-about
-            v-btn( to='/about' dark large color="#0e83cd" outlined) About
+            v-btn( to='/playground' dark large color="#0e83cd" outlined) Go to Playground
 
     v-dialog( v-model="loginDialog" max-width="450")
       v-card( dark color="#000" elevation="10")

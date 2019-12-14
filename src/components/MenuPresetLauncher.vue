@@ -66,9 +66,7 @@ export default {
       }
 
       if (this.presetSlots[index].empty === true) {
-        console.log('preset empty');
       } else {
-        console.log('trigger preset ' + index);
       }
     },
 
