@@ -157,7 +157,7 @@ export default {
 }
 .layer-selector-wrapper {
   max-height: 150px;
-  overflow-x: scroll;
+  overflow-y: scroll;
 }
 
 
