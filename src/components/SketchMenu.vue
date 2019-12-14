@@ -58,7 +58,7 @@
       v-show="audioPlayerOpen"
     )
 
-    CatalogueList#sketch-catalogue(
+    CatalogueList(
       v-show="catalogueOpen"
       @catalogue_open="setCatalogueStatus"
     )
@@ -189,7 +189,6 @@ export default {
   border-right: 1px solid $color-std-grey;
   border-radius: 0;
 }
-$master-menu-width: 4.5rem;
 #master-controls-container {
   position: relative;
   background-color: $color-std-grey;
@@ -215,18 +214,6 @@ i.off-white {
   right: 0;
 }
 
-#sketch-catalogue {
-  background: $color-transparent-black;
-  padding: 20px;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: $master-menu-width;
-  z-index: 10;
-  margin: 0 auto;
-  overflow: hidden;
-  border: 1px solid $subtle-border;
-}
 </style>
 
 <style lang="scss">
