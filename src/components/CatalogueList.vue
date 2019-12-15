@@ -24,7 +24,7 @@
                 autocomplete="off"
                 clearable
                 clear-icon="close"
-                :append-icon="'search'"
+                :prepend-icon="'search'"
                 placeholder="Search ..."
                 hint="Search for sketches by title, creator, or by tags"
                 outlined
@@ -39,7 +39,7 @@
                 autocomplete="off"
                 clearable
                 clear-icon="close"
-                :append-icon="'search'"
+                :prepend-icon="'search'"
                 placeholder="Search ..."
                 hint="Search for sketches by title, creator, or by tags"
                 outlined
@@ -47,11 +47,13 @@
               )
             v-col( class="d-flex" cols="12" sm="6")
               v-select(
-                :items="sortByItems"
+                v-model="sortBy"
+                :items="sortByFields"
                 :append-icon="'expand_more'"
                 clearable
                 clear-icon="close"
                 label="Sort By..."
+                @change="triggerSort()"
                 outlined
                 dense dark
               )
@@ -67,16 +69,21 @@
             )
               v-card-title.headline Tons of processing sketches to choose from!
               v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
+              v-card-subtitle
+                small Got a sketch idea you want to see here? Well now is your chance to contribute!
+                br
+                small Head over to <a href="https://github.com/conc2304/audio-visualizer/" target="_blank"> Github </a> and become a creator!
 
           v-col(
-            v-for="(sketch, i) in filteredSketchCatalogue"
-            :key="`sketch-${i}`"
+            v-for="(sketch, index) in filteredSketchCatalogue"
+            :key="`sketch-${index}`"
             cols="12"
           )
             CatalogueItemCard(
               v-if="sketch.catalogueInfo"
               :catalogueItem="sketch.catalogueInfo"
               :search="search"
+              :catalogueIndex="index"
           )
 </template>
 
@@ -88,7 +95,14 @@ export default {
   data: () => ({
     SketchCatalogue,
     search: '',
-    sortByItems: ['Creator', 'Title'],
+    sortByFields: [
+      { text: 'Creator', value: 'creator' },
+      { text: 'Title', value: 'title' },
+      { text: 'Popularity', value: 'popularity' },
+      { text: 'Complexity', value: 'complexity' },
+    ],
+    sortBy: '',
+    reverseSort: false,
   }),
 
   components: {
@@ -99,19 +113,32 @@ export default {
     closeCatalogue() {
       this.$emit('catalogue_open', false);
     },
-  },
 
-  computed: {
-    filteredSketchCatalogue() {
-      if (this.search === null || !this.search) {
-        return this.SketchCatalogue;
-      }
+    compare(a, b) {
+      let sortBy = this.sortBy.toLowerCase();
+      a = a.catalogueInfo[sortBy];
+      b = b.catalogueInfo[sortBy];
 
-      const search = this.search.toLowerCase();
+      if (a < b) return 1;
+      if (b < a) return -1;
 
+      return 0;
+    },
+
+    triggerSort() {
+      console.log('teste');
+      this.getFilterList();
+    },
+
+    getSortedList(list) {
+      return list.sort(this.compare);
+    },
+
+    getFilterList() {
+      const search = (this.search) ? this.search.toLowerCase() : '';
       return this.SketchCatalogue.filter(sketch => {
         const filterables = ['creator', 'title', 'description'];
-        let match = false;
+
         for (let filterName of filterables) {
           if (sketch.catalogueInfo[filterName].toLowerCase().includes(search)) {
             return true;
@@ -128,6 +155,23 @@ export default {
 
         return false;
       });
+    },
+  },
+
+  computed: {
+    filteredSketchCatalogue() {
+      console.log('computed');
+
+      let filteredList = this.SketchCatalogue
+      if (this.search) {
+        filteredList = this.getFilterList();
+      }
+
+      if (this.sortBy) {
+        filteredList = this.getSortedList(filteredList);
+      }
+
+      return filteredList;
     },
   },
 
@@ -150,7 +194,6 @@ export default {
 }
 
 #sketch-catalogue-list {
-  overflow-y: scroll;
   background-color: $color-transparent-black;
 }
 
@@ -161,9 +204,20 @@ export default {
   width: 100%;
   height: 100vh;
   padding-bottom: 250px;
+  padding-right: 1.5rem;
   overflow-y: scroll;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: $color-transparent-black;
+
+  a {
+    color: #fff;
+
+    &:active,
+    &:visited,
+    &:focus {
+      color: #fff;
+    }
+  }
 
   &::-webkit-scrollbar {
     width: 10px;

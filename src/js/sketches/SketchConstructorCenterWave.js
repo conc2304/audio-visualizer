@@ -14,6 +14,7 @@ class CenterWave {
       ['Parametric', 'Awesome'],
       'NOTNOTclyzby',
       './assets/sketch_catalogue_gifs/center-wave_200.gif',
+      300,
       2,
     );
 
