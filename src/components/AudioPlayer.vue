@@ -26,10 +26,18 @@
         v-btn( text icon)
           v-icon.menu-icon skip_next
 
-        input( type="file" id="upload-file" name="upload-file")
-        label( for="upload-file" id="upload-file-label")
-          v-btn( text icon)
-            v-icon.menu-icon( id="upload-file-icon" title="Upload a local sound file") unarchive
+
+        v-btn#upload-file-button(
+          @click="triggerFileInput"
+          text icon
+        )
+          v-icon.menu-icon unarchive
+        input(
+          v-show="false"
+          type="file"
+          ref="fileInput"
+          accept="audio/*"
+        )
 
 
 
@@ -46,11 +54,16 @@ export default {
   }),
 
   methods: {
+    triggerFileInput() {
+      console.log('trigger');
+      console.log(this.$refs);
+      this.$refs.fileInput.click();
+    },
+
     onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
       console.log(files);
-
     },
   },
 };
@@ -82,19 +95,12 @@ p {
 .song-progress {
   padding: 0 10px 10px;
 }
-#upload-file {
-  // width: 0;
-  // height: 0;
-  // opacity: 0;
-  // overflow: hidden;
-  // position: absolute;
-  // z-index: -1;
-}
+
 #open-playlist {
   position: absolute;
   left: 10px;
 }
-#upload-file-label {
+#upload-file-button {
   position: absolute;
   right: 10px;
 }

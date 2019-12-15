@@ -126,7 +126,6 @@ export default {
     },
 
     triggerSort() {
-      console.log('teste');
       this.getFilterList();
     },
 
@@ -160,7 +159,6 @@ export default {
 
   computed: {
     filteredSketchCatalogue() {
-      console.log('computed');
 
       let filteredList = this.SketchCatalogue
       if (this.search) {
