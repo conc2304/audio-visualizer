@@ -4,10 +4,8 @@ import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
 
-
 class OuterWaves {
   constructor(windowWidth, windowHeight, p5) {
-
     this.catalogueInfo = new CatalogueDataEntry(
       this.constructor,
       'Sine Wave Set',
@@ -15,7 +13,8 @@ class OuterWaves {
       ['Parametric'],
       'clyzby',
       './assets/sketch_catalogue_gifs/outer-waves_200.gif',
-      4
+      202,
+      4,
     );
 
     this.windowWidth = windowWidth;

@@ -2,7 +2,7 @@
   v-card(
     dark
   )
-    .card-wrapper( class="d-flex flex-no-wrap justify-space-between")
+    .card-wrapper( class="d-flex  justify-space-between")
       .card-inner-wrapper
         v-card-title(
           class="headline"
@@ -11,6 +11,10 @@
 
         v-card-subtitle.no-padding
           small.creator by {{ catalogueItem.creator }}
+          br
+          .favorites
+            v-icon.menu-icon favorite_border
+            small.num-favorite {{catalogueItem.popularity}}
         v-card-subtitle {{ catalogueItem.description }}
 
         v-chip.tag-chip(
@@ -21,13 +25,14 @@
           :color="getTagMatchColor(tag)"
         ) {{ tag }}
 
-
       v-avatar(
         class="ma-3"
-        size="150"
+        size="180"
         tile
       )
-        v-img( :src="catalogueItem.gifURI" alt='test')
+        .img-wrap
+          v-img( width="150" :src="catalogueItem.gifURI" alt='test')
+          small.complexity Complexity: {{ catalogueItem.complexity }}/10
 
         v-card-actions
           v-btn(
@@ -37,7 +42,8 @@
             small
             color="blue"
           )
-            v-icon() add
+            v-icon add
+
 </template>
 
 <script>
@@ -47,9 +53,14 @@ export default {
   data: () => ({
     maxLayers: 8,
     SketchRegistration,
+
   }),
 
   props: {
+    catalogueIndex: {
+      type: Number,
+    },
+
     catalogueItem: {
       type: Object,
       required: true,
@@ -62,29 +73,38 @@ export default {
 
   methods: {
     registerNewSketch(catalogueItem) {
-      this.SketchRegistration.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
+      this.SketchRegistration.push(
+        new catalogueItem.classConstructor(window.innerWidth, window.innerHeight),
+      );
     },
 
     getTagMatchColor(tag) {
-
       return this.search && tag.toLowerCase() == this.search.toLowerCase() ? 'blue' : 'grey';
     },
   },
 
   computed: {
     maxLayersReached() {
-      return this.SketchRegistration.length > this.maxLayers
-    }
+      return this.SketchRegistration.length > this.maxLayers;
+    },
+
+
   },
 
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 
 <style lang="scss" scoped>
-.creator {
+.creator,
+.favorites {
   padding-left: 1rem;
+}
+.num-favorite, .complexity {
+  padding-left: 0.5rem;
+}
+
+.creator {
   font-style: italic;
 }
 

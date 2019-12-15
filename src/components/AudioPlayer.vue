@@ -44,20 +44,29 @@ export default {
       time: 'Duration',
     },
   }),
+
+  methods: {
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      console.log(files);
+
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 #audio-control-panel {
   position: absolute;
-  left: 4.5rem;
+  left: $master-menu-width;
   bottom: 0;
   border-left: 1px solid $color-std-grey;
   border-top: 1px solid $subtle-border;
   border-right: 1px solid $subtle-border;
   z-index: 1;
   background-color: #000;
-  width: 300px;
+  width: 350px;
   min-height: 67px;
   text-align: center;
   padding-bottom: 10px;
@@ -74,12 +83,12 @@ p {
   padding: 0 10px 10px;
 }
 #upload-file {
-  width: 0;
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+  // width: 0;
+  // height: 0;
+  // opacity: 0;
+  // overflow: hidden;
+  // position: absolute;
+  // z-index: -1;
 }
 #open-playlist {
   position: absolute;

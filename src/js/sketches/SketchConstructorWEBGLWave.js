@@ -18,6 +18,7 @@ class WEBGLWave {
       ['Parametric', 'WEBGL'],
       'clyzby',
       './assets/sketch_catalogue_gifs/webgl-wave_200.gif',
+      277,
       4,
     );
 
