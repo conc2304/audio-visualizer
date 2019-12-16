@@ -1,13 +1,63 @@
 <template lang="pug">
   v-form( @submit.prevent="submit")
     .form-group(:class="{ 'form-group--error': $v.username.$error }")
-      v-text-field(
-        label="Userame"
-        required
-        :rules="usernameRules"
-        :counter=25
-        v-model.trim="$v.username.$model"
-      )
+      .login-pane( v-if="loginPane === 'userLogin'")
+        v-text-field(
+          label="Userame"
+          required
+          :rules="usernameRules"
+          :counter=25
+          v-model.trim="$v.username.$model"
+        )
+        v-text-field(
+          type="password"
+          label="Password"
+          required
+          v-model.trim="$v.username.$model"
+        )
+
+        h5.text-center Don't Have an Account?
+        h6#account-creation(
+          @click="loginPane = 'createAccount'"
+          class="text-center"
+        ) create account
+
+      #account-creation-pane( v-if="loginPane === 'createAccount'")
+        v-text-field(
+          label="First Name"
+          required
+          :rules="usernameRules"
+          :counter=25
+          v-model.trim="$v.firstName.$model"
+        )
+        v-text-field(
+          label="Last Name"
+          required
+          :rules="usernameRules"
+          :counter=25
+          v-model.trim="$v.lastName.$model"
+        )
+        v-text-field(
+          label="Email"
+          type="email"
+          required
+          :rules="usernameRules"
+          :counter=25
+          v-model.trim="$v.email.$model"
+        )
+        v-text-field(
+          label="Userame"
+          required
+          :rules="usernameRules"
+          :counter=25
+          v-model.trim="$v.password.$model"
+        )
+        v-text-field(
+          type="password"
+          label="Password"
+          required
+          v-model.trim="$v.confirmPassword.$model"
+        )
 
     .submission-wrapper
       v-btn(
@@ -27,11 +77,17 @@ import { required, minLength } from 'vuelidate/lib/validators';
 export default {
   data() {
     return {
+      loginPane: 'userLogin',
+      password: '',
       username: '',
       usernameRules: [
         v => !!v || 'Name is required',
         v => (v && v.length >= 6) || 'Name must be at least 6 characters',
       ],
+      passwordRules: [
+        v => v === 'VYZBY' || 'Password must be "VYZBY"'
+      ],
+
       submitStatus: null,
     };
   },
@@ -78,6 +134,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#account-creation:hover {
+  text-decoration: underline;
+}
 .error {
   text-align: center;
 }

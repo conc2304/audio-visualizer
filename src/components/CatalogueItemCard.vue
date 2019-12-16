@@ -13,7 +13,9 @@
           small.creator by {{ catalogueItem.creator }}
           br
           .favorites
-            v-icon.menu-icon favorite_border
+            v-icon(
+              @click="addFavorite()"
+            ).menu-icon favorite_border
             small.num-favorite {{catalogueItem.popularity}}
         v-card-subtitle {{ catalogueItem.description }}
 
@@ -53,7 +55,6 @@ export default {
   data: () => ({
     maxLayers: 8,
     SketchRegistration,
-
   }),
 
   props: {
@@ -81,13 +82,16 @@ export default {
     getTagMatchColor(tag) {
       return this.search && tag.toLowerCase() == this.search.toLowerCase() ? 'blue' : 'grey';
     },
+
+    addFavorite(){
+      ++ this.catalogueItem.popularity;
+    }
   },
 
   computed: {
     maxLayersReached() {
       return this.SketchRegistration.length > this.maxLayers;
     },
-
 
   },
 
