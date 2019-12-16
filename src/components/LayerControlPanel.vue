@@ -61,7 +61,7 @@ export default {
 }
 
 #layer-controls-container {
-  width: 300px;
+  width: $secondary-menu-width;
 
   h3 {
     text-align: center;
