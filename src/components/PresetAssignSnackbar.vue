@@ -7,7 +7,7 @@
       vertical
       dark
     )
-      p( class="text-center") Select a slot to save the current compoistion settings to a slot
+      p( class="text-center") Select a slot to save the current composition settings to a slot
       small( class="text-center") Selecting a full preset slot will override the slot
       br
       .preset-selector-wrapper
