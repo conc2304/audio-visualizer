@@ -2,8 +2,8 @@
   #audio-control-panel
     #audio-player
       .song-info
-        p#song-name {{ currentSong.name }}
-        p#song-time  {{ currentSong.time }}
+        p#song-name {{ currentSong.title }} - {{ currentSong.artist }}
+        p#song-time  {{ currentSong.duration }}
     .song-progress
       v-progress-linear#loading-bar(
         value="0" max="100"
@@ -16,54 +16,68 @@
       )
     .audio-controls
       #playback-controls.ctrl-buttons
-        v-btn#open-playlist( text icon)
-          v-icon.menu-icon queue_music
-
-        v-btn( text icon)
-          v-icon.menu-icon skip_previous
-        v-btn( text icon)
-          v-icon.menu-icon play_arrow
-        v-btn( text icon)
-          v-icon.menu-icon skip_next
-
-
-        v-btn#upload-file-button(
-          @click="triggerFileInput"
+        v-btn#open-playlist(
+          @click="playlistOpen = !playlistOpen"
           text icon
         )
-          v-icon.menu-icon unarchive
+          v-icon.menu-icon queue_music
+
+        v-btn( @click="" text icon)
+          v-icon.menu-icon skip_previous
+        v-btn( @click="" text icon)
+          v-icon.menu-icon play_arrow
+        v-btn( @click="" text icon)
+          v-icon.menu-icon skip_next
+
+        v-tooltip( right)
+          template( v-slot:activator= "{ on }")
+            v-btn#upload-file-button(
+              @click="triggerFileInput"
+              text icon
+            )
+              v-icon.menu-icon(
+                v-on="on"
+              ) unarchive
+          span  Upload local music
+
         input(
           v-show="false"
           type="file"
           ref="fileInput"
           accept="audio/*"
         )
-
-
+      AudioPlaylist(
+        v-show="playlistOpen"
+        @active_song="setActiveSong"
+      )
 
 
 </template>
 
 <script>
+import AudioPlaylist from '@/components/AudioPlaylist.vue';
+
+
 export default {
   data: () => ({
+    playlistOpen: false,
     currentSong: {
-      name: 'Song Name',
-      time: 'Duration',
+      title: 'Song Name',
+      artist: 'Artist',
+      duration: 'Duration',
     },
   }),
 
+  components: {
+    AudioPlaylist
+  },
+
   methods: {
     triggerFileInput() {
-      console.log('trigger');
-      console.log(this.$refs);
       this.$refs.fileInput.click();
     },
-
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      console.log(files);
+    setActiveSong(songObj) {
+      this.currentSong = songObj;
     },
   },
 };
@@ -79,10 +93,10 @@ export default {
   border-right: 1px solid $subtle-border;
   z-index: 1;
   background-color: #000;
-  width: 350px;
+  width: $secondary-menu-width;
   min-height: 67px;
   text-align: center;
-  padding-bottom: 10px;
+  padding: 10px;
 }
 
 #playback-controls.ctrl-buttons {
