@@ -44,7 +44,7 @@
           .to-about
             v-btn( to='/playground' dark large color="#0e83cd" outlined) Go to Playground
 
-    v-dialog( v-model="loginDialog" max-width="450")
+    v-dialog( v-model="loginDialog" max-width="600")
       v-card( dark color="#000" elevation="10")
         v-card-title.headline Login
         v-card-text
@@ -121,14 +121,15 @@ export default {
   margin: 0;
   overflow: hidden;
   background-color: #000;
-}
 
-.content {
-  z-index: 1;
   *::selection {
     background: rgba(0, 0, 0, 0); /* WebKit/Blink Browsers */
     color: $color-primary-blue;
   }
+}
+
+.content {
+  z-index: 1;
 }
 
 #splash-sketch-background {
@@ -158,7 +159,8 @@ h2 {
   line-height: 1.15em;
 }
 
-.btn-wrapper, .user-wrapper {
+.btn-wrapper,
+.user-wrapper {
   text-align: center;
 }
 
@@ -186,6 +188,6 @@ h2 {
 }
 .username {
   font-size: 24px;
-  color: #fff;
+  color: $color-primary-blue;
 }
 </style>
