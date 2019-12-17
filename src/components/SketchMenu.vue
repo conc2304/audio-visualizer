@@ -133,7 +133,6 @@ export default {
   methods: {
     updatesketchIndexSelected(sketchIndexSelected) {
       this.menuOpen = true;
-      // this.sketchIndexSelected = sketchIndexSelected;
     },
 
     layerMenuToggleEvent(event) {

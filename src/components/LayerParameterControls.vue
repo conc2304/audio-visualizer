@@ -7,8 +7,6 @@
         :key="`numeric-${i}`"
       )
         ParameterControlNumeric(
-
-          :RegisteredSketches="RegisteredSketches"
           :auxInputVisibible="auxInputVisibible"
           :parameter="parameter"
         )
@@ -20,8 +18,6 @@
         :key="`variable-${i}`"
       )
         ParameterControlVariable(
-
-          :RegisteredSketches="RegisteredSketches"
           :auxInputVisibible="auxInputVisibible"
           :parameter="parameter"
         )
