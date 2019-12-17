@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     sketchIndexSelected: -1,
     RegisteredSketches,
+    updatedTimestamp: 0,
   },
   mutations: {
     updateSketchIndexSelected(state, payload){
