@@ -48,10 +48,7 @@
       v-card( dark color="#000" elevation="10")
         v-card-title.headline Login
         v-card-text
-          LoginPane(
-            v-on:user_login_event="updateUser"
-            :userLoggedIn="user.loggedIn"
-          )
+          LoginPane()
 </template>
 
 <script>
