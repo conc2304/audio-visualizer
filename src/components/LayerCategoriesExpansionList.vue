@@ -120,8 +120,8 @@ export default {
       40% 0%,
       75% 84%,
       from(#000000bd),
-      to(#0c6b98),
-      color-stop(0.9, #0e83cd)
+      to($color-secondary-blue),
+      color-stop(0.9, $color-primary-blue)
     );
   }
 }

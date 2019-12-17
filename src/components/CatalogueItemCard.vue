@@ -1,6 +1,5 @@
 <template lang="pug">
   v-card(
-    dark
   )
     .card-wrapper( class="d-flex  justify-space-between")
       .card-inner-wrapper

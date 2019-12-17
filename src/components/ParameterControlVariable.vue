@@ -7,14 +7,14 @@
       v-if="parameter.attrType === 'variable'"
       v-model="parameter.currentValue"
       row
-      dark
+
     )
       v-radio(
         v-for="(option, i) in parameter.options"
         :label="parameter.options[i]"
         :value="parameter.options[i]"
         :key="i"
-        color="#0eb1ff"
+        color="color_secondary_blue"
         on-icon="radio_button_checked"
         off-icon="radio_button_unchecked"
       )
@@ -40,7 +40,7 @@ export default {
 
 <style lang="scss">
 .sketch-parameter-control {
-  .theme--dark.v-icon {
+  .theme--.v-icon {
     color: $color-primary-blue;
   }
 }

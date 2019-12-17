@@ -32,13 +32,13 @@
           v-if="!isLoggedIn"
           type="submit"
           :disabled="submitStatus === 'PENDING'"
-          dark large color="#0e83cd" outlined
+           large color="color_primary_blue" outlined
         ) Submit
 
         v-btn(
           v-else
           to="/playground"
-          dark large color="#0e83cd" outlined
+           large color="color_primary_blue" outlined
         ) Go Play
 
         p.submit-status(v-if="submitStatus === 'OK'") Thanks for your submission!
@@ -97,7 +97,6 @@ export default {
             username: this.username,
           };
           localStorage.setItem('user', JSON.stringify(userObj));
-          // this.$store.commit('updateUserLoggedIn', userObj);
 
           this.$v.$reset();
           this.isLoggedIn = true;
