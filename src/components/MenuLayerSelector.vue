@@ -110,8 +110,6 @@ export default {
 
     removeSketch() {
       let layerSelected = this.sketchIndexSelected;
-      console.log('remove');
-      console.log(layerSelected);
       if (layerSelected == null || layerSelected < 0) {
         return;
       }

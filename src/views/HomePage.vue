@@ -98,6 +98,7 @@ export default {
   },
   mounted() {
     const P5 = require('p5');
+    // load p5 in instance mode
     new P5(ParticleScript, 'splash-sketch-background');
 
     const userObj = JSON.parse(localStorage.getItem('user'));
