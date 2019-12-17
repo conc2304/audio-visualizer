@@ -14,7 +14,7 @@
           :key="i"
         )
 
-          v-expansion-panel-header.layer-name  {{ category }}
+          v-expansion-panel-header.category-name  {{ category }}
             template( v-slot:actions)
               v-icon expand_more
           v-expansion-panel-content
@@ -94,6 +94,10 @@ export default {
   .v-expansion-panel-header {
     border-radius: 0;
   }
+}
+
+.category-name {
+  font-weight: 600;
 }
 </style>
 
