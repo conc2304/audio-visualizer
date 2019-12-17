@@ -8,7 +8,6 @@
         @click="setSong(song, i)"
         cols="12"
         dense
-        dark
       )
         v-col.song-title(md="4") {{ song.title }}
         v-col.artist(md="6") {{ song.artist }}

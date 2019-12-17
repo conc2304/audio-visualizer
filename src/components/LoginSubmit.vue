@@ -3,7 +3,7 @@
     v-btn(
       type="submit"
       :disabled="submitStatus === 'PENDING'"
-      dark large color="#0e83cd" outlined
+       large color="color_primary_blue" outlined
     ) Submit
 
     p.submit-status(v-if="submitStatus === 'OK'") Thanks for your submission!

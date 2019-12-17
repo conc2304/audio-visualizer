@@ -8,44 +8,44 @@
       .btn-wrapper
         v-btn(
           to='/playground'
-          color="#0e83cd"
+          color="color_primary_blue"
           x-large
-          dark
+
         ) To Playground
       .user-wrapper
         .logged-in-wrapper( v-if="user.loggedIn && user.username != ''")
           p.username Welcome {{ user.username }} !
           v-btn(
             @click.stop="userLogout"
-            color="#0e83cd"
+            color="color_primary_blue"
             outlined
             large
-            dark
+
           ) Logout
         .logged-out-wrapper( v-else)
           v-btn(
             @click.stop="loginDialog = true"
-            color="#0e83cd"
+            color="color_primary_blue"
             outlined
             large
-            dark
+
           ) Login
         i#about.material-icons-outlined(
           @click.stop="infoDialog = true"
         ) info
 
     v-dialog( v-model="infoDialog" max-width="450")
-      v-card( dark color="#000" elevation="10")
+      v-card(  color="#000" elevation="10")
         v-card-title.headline {{ dialogHeadline }}
         v-card-text
           p {{ dialogTagline }}
           ul
             li( v-for="(point, index) in dialogPoints" :key="index") {{ point }}
           .to-about
-            v-btn( to='/playground' dark large color="#0e83cd" outlined) Go to Playground
+            v-btn( to='/playground'  large color="color_primary_blue" outlined) Go to Playground
 
     v-dialog( v-model="loginDialog" max-width="600")
-      v-card( dark color="#000" elevation="10")
+      v-card(  color="#000" elevation="10")
         v-card-title.headline Login
         v-card-text
           LoginPane()
@@ -76,7 +76,7 @@ export default {
       'Use your keyboard as an input and play it like piano,',
       'Customize the parameters to play to whatever key you choose.',
       'Use a MIDI device as your input device and make custom mappings.',
-      'Add music to your play time by through streaming services or music off your computer.',
+      'Add music to your play time from SoundCloud or Spotify or music off your computer.',
       'Select an audio frequency and automate the animation to the music.',
       'Use your body as a brush via the webcam.  ** Only available on some layers',
     ],

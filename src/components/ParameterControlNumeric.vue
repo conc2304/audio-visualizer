@@ -54,7 +54,7 @@ export default {
     getParameterAttributes() {
       this.sliderConfig = {
         connect: [false, true, true, false],
-        connectColors: ['#0e83cd', '#0e83cd'],
+        connectColors: ['color_primary_blue', 'color_primary_blue'],
         start: [this.parameter.min, this.parameter.currentValue, this.parameter.max],
         range: {
           min: [this.parameter.defaultMin],

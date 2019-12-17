@@ -2,7 +2,7 @@
   #settings-menubar
 
     v-card#control-panel(
-      dark
+
       v-cloak
     )
 
@@ -237,8 +237,8 @@ i {
       0% 20%,
       50% 80%,
       from($color-bkgd),
-      to(#0c6b98),
-      color-stop(0.9, #0e83cd)
+      to($color-secondary-blue),
+      color-stop(0.9, $color-primary-blue)
     );
   }
 

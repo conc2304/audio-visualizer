@@ -3,7 +3,6 @@
     v-card#sketch-catalogue-list(
       max-width="500"
       class="mx-auto"
-      dark
     )
 
       v-container.catalogue-header
@@ -28,7 +27,7 @@
                 placeholder="Search ..."
                 hint="Search for sketches by title, creator, or by tags"
                 outlined
-                dense dark
+                dense
               )
 
         .temp( v-if="true")
@@ -43,7 +42,7 @@
                 placeholder="Search ..."
                 hint="Search for sketches by title, creator, or by tags"
                 outlined
-                dense dark
+                dense
               )
             v-col( class="d-flex" cols="12" sm="6")
               v-select(
@@ -55,7 +54,7 @@
                 label="Sort By..."
                 @change="triggerSort()"
                 outlined
-                dense dark
+                dense
               )
 
       v-divider
@@ -65,7 +64,7 @@
           v-col( cols="12")
             v-card(
               color="#385F73"
-              dark
+
             )
               v-card-title.headline Tons of processing sketches to choose from!
               v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
@@ -234,8 +233,8 @@ export default {
       40% 0%,
       75% 84%,
       from($color-transparent-black),
-      to(#0c6b98),
-      color-stop(0.9, #0e83cd)
+      to($color-secondary-blue),
+      color-stop(0.9, $color-primary-blue)
     );
   }
 }
