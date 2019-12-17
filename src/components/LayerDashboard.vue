@@ -29,9 +29,9 @@ export default {
   },
 
   props: {
-    sketchIndexSelected: {
-      type: Number,
-    },
+    // sketchIndexSelected: {
+    //   type: Number,
+    // },
     RegisteredSketches: {
       type: Array,
     },
@@ -74,8 +74,7 @@ export default {
       this[functionName]();
     },
 
-    logSketchItem() {
-    },
+    logSketchItem() {},
 
     resetLayer() {
       let iString = this.sketchIndexSelected.toString();
@@ -83,8 +82,7 @@ export default {
       BulkUpdateService.changeParameterValues(indices, 'reset');
     },
 
-    randomizeAudioResponse() {
-    },
+    randomizeAudioResponse() {},
 
     randomizeLayerParameters() {
       let iString = this.sketchIndexSelected.toString();
@@ -98,6 +96,12 @@ export default {
       const bypassStatus = !this.RegisteredSketches[index].bypass;
       this.RegisteredSketches[index].bypass = bypassStatus;
       this.layerDashboardActions[0].mdIconText = bypassStatus ? 'visibility_off' : 'visibility';
+    },
+  },
+
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;
     },
   },
 };
@@ -115,8 +119,6 @@ export default {
   .v-list-item {
     flex: none;
   }
-
-
 
   .v-tooltip__content {
     background-color: #000;

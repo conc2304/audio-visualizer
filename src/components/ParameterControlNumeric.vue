@@ -14,7 +14,6 @@
       ParameterKeyboardInputFields(
         v-show="auxInputVisibible"
         :parameter="parameter"
-        :sketchIndexSelected="sketchIndexSelected"
       )
       AudioReactiveControls(
         v-show="parameter.audio && auxInputVisibible"
@@ -42,9 +41,6 @@ export default {
   },
 
   props: {
-    sketchIndexSelected: {
-      type: Number,
-    },
     parameter: {
       type: Object,
     },

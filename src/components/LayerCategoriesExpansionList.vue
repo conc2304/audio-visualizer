@@ -19,7 +19,6 @@
               v-icon expand_more
           v-expansion-panel-content
             LayerParameterControls(
-              :sketchIndexSelected="sketchIndexSelected"
               :RegisteredSketches="RegisteredSketches"
               :category="category"
               :auxInputVisibible="auxInputVisibible"
@@ -39,9 +38,6 @@ export default {
   data: () => ({}),
 
   props: {
-    sketchIndexSelected: {
-      type: Number,
-    },
     RegisteredSketches: {
       type: Array,
     },
@@ -50,8 +46,6 @@ export default {
       default: false,
     },
   },
-
-  watch: {},
 
   methods: {
     updateConfigs() {
@@ -73,9 +67,11 @@ export default {
     },
   },
 
-  mounted() {},
-
-  watch: {},
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;
+    },
+  },
 };
 </script>
 
@@ -86,8 +82,6 @@ export default {
   height: 100vh;
   padding-bottom: 150px;
   overflow-y: scroll;
-
-
 
   .v-expansion-panels {
     background-color: transparent;
@@ -113,7 +107,6 @@ export default {
     background-color: #000;
     border-radius: 10px;
   }
-
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
