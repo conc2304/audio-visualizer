@@ -15,8 +15,7 @@
         MenuLayerSelector(
           :RegisteredSketches="RegisteredSketches"
           :menuOpen="menuOpen"
-          :sketchIndexSelected="sketchIndexSelected"
-          @layer_selected="updatesketchIndexSelected"
+          @open_layer_menu="layerMenuToggleEvent"
           @catalogue_open="setCatalogueStatus"
         )
 
@@ -47,8 +46,7 @@
 
       LayerControlPanel(
         v-show="menuOpen"
-        @menu_closed_event="closeMenu"
-        :sketchIndexSelected="sketchIndexSelected"
+        @layer_menu_toggle="layerMenuToggleEvent"
         :RegisteredSketches="RegisteredSketches"
         :auxInputVisibible="auxInputVisibible"
       )
@@ -135,12 +133,11 @@ export default {
   methods: {
     updatesketchIndexSelected(sketchIndexSelected) {
       this.menuOpen = true;
-      this.sketchIndexSelected = sketchIndexSelected;
+      // this.sketchIndexSelected = sketchIndexSelected;
     },
 
-    closeMenu() {
-      this.sketchIndexSelected = null;
-      this.menuOpen = false;
+    layerMenuToggleEvent(event) {
+      this.menuOpen = event;
     },
 
     toggleAuxInputFields() {
