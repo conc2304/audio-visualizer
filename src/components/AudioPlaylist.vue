@@ -93,6 +93,10 @@ export default {
     &.active {
       border-color: $color-primary-blue;
     }
+
+    &:active {
+      border-color: $color-secondary-blue;
+    }
   }
 
   .song-details {
