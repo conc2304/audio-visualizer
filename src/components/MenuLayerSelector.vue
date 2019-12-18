@@ -14,6 +14,16 @@
       v-show="layerDashVisible"
     )
       v-list( dense nav)
+
+        .layer-selector-wrapper( class="custom-thin-scrollbar")
+          v-list-item(
+            v-for="(sketch, i) in RegisteredSketches"
+            :key="i"
+            :class="{ 'active': layerSelected === i, 'inactive': sketch.bypass }"
+            @click="selectLayer(i)"
+          )
+            v-icon.menu-icon filter_{{ i+1 }}
+
         .layer-arrangement
           v-tooltip( right)
             template( v-slot:activator= "{ on }")
@@ -35,15 +45,6 @@
                   v-on="on"
                 ) add
             span  Add New Sketch
-
-        .layer-selector-wrapper( class="custom-thin-scrollbar")
-          v-list-item(
-            v-for="(sketch, i) in RegisteredSketches"
-            :key="i"
-            :class="{ 'active': layerSelected === i, 'inactive': sketch.bypass }"
-            @click="selectLayer(i)"
-          )
-            v-icon.menu-icon filter_{{ i+1 }}
 
 
         .layer-arrangement( v-if="false")
