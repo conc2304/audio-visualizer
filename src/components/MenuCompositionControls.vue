@@ -66,7 +66,7 @@ export default {
         action: 'resetComposition',
       },
       {
-        mdIconText: 'save',
+        mdIconText: 'save_alt',
         id: 'save-settings',
         title: 'Save composition to presets',
         action: 'openPresetAssigner',
