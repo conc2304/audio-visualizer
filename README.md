@@ -102,7 +102,7 @@ NOTE: Things to consider if you feel like you are chewing through too much cpu
 <br>
 
 ## Getting Started
-To be run from the `/vyzby-app` directory
+To be run from the root app directory
 ### Project setup
 ```
 npm install
