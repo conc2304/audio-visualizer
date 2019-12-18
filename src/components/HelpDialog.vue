@@ -59,7 +59,7 @@
             span Saved/Full Slots
           .slot-example
             v-icon.example-icon(
-              color="#b6b6b6"
+              color="color_off_white"
             ) looks_one
             span Empty Slots
 

@@ -34,8 +34,8 @@
           @click.stop="infoDialog = true"
         ) info
 
-    v-dialog( v-model="infoDialog" max-width="450")
-      v-card(  color="#000" elevation="10")
+    v-dialog( v-model="infoDialog" max-width="550")
+      v-card.app-info(  color="#000" elevation="10")
         v-card-title.headline {{ dialogHeadline }}
         v-card-text
           p {{ dialogTagline }}
@@ -127,6 +127,10 @@ export default {
 
 .content {
   z-index: 1;
+}
+
+.app-info {
+  padding: 1.5rem;
 }
 
 #splash-sketch-background {
