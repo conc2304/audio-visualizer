@@ -1,4 +1,3 @@
-import { isIterable } from 'core-js';
 
 describe('HomePage', () => {
   beforeEach(() => {
