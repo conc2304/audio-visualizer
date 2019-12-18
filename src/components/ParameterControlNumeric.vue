@@ -4,6 +4,7 @@
     p.parameter-title {{ parameter.displayLabel }}
 
     .controller-wrapper
+      // implementation of vue-nouislider-fork
       v-nus(
         v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
         :config="sliderConfig"
