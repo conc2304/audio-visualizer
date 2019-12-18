@@ -1,20 +1,22 @@
 <template lang="pug">
   #settings-menubar
-
     v-card#control-panel(
-
       v-cloak
     )
 
-      #master-controls-container( class="custom-thin-scrollbar")
-        v-list-item( to="/")
-          v-icon home
+      #master-controls-container(
+        class="custom-thin-scrollbar"
+      )
+        v-list-item(
+          @click="updateMasterMenu"
+        )
+          v-icon close
 
         v-divider
 
         MenuLayerSelector(
           :RegisteredSketches="RegisteredSketches"
-          :menuOpen="menuOpen"
+          :layerMenuOpen="layerMenuOpen"
           @open_layer_menu="layerMenuToggleEvent"
           @catalogue_open="setCatalogueStatus"
         )
@@ -45,7 +47,7 @@
               v-icon.menu-icon music_note
 
       LayerControlPanel(
-        v-show="menuOpen"
+        v-show="layerMenuOpen"
         @layer_menu_toggle="layerMenuToggleEvent"
         :RegisteredSketches="RegisteredSketches"
         :auxInputVisibible="auxInputVisibible"
@@ -100,7 +102,7 @@ export default {
   },
 
   data: () => ({
-    menuOpen: false,
+    layerMenuOpen: false,
     audioPlayerOpen: false,
     RegisteredSketches,
     sketchIndexSelected: null,
@@ -131,12 +133,15 @@ export default {
   }),
 
   methods: {
+    updateMasterMenu() {
+      this.$emit('master_menu_update', false);
+    },
     updatesketchIndexSelected(sketchIndexSelected) {
-      this.menuOpen = true;
+      this.layerMenuOpen = true;
     },
 
     layerMenuToggleEvent(event) {
-      this.menuOpen = event;
+      this.layerMenuOpen = event;
     },
 
     toggleAuxInputFields() {
@@ -146,12 +151,12 @@ export default {
     setCatalogueStatus(status) {
       this.catalogueOpen = status;
       if (this.catalogueOpen === true) {
-        this.menuOpen = false;
+        this.layerMenuOpen = false;
         this.audioPlayerOpen = false;
         return;
       }
       if (this.catalogueOpen === false && this.sketchIndexSelected !== null) {
-        this.menuOpen = true;
+        this.layerMenuOpen = true;
       }
     },
 
