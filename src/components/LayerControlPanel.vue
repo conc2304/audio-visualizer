@@ -7,13 +7,13 @@
           v-icon close
 
       LayerDashboard(
-        :sketchIndexSelected="sketchIndexSelected"
+
         :RegisteredSketches="RegisteredSketches"
       )
 
     .layer-control-contents
       LayerCategoriesExpansionList(
-        :sketchIndexSelected="sketchIndexSelected"
+
         :RegisteredSketches="RegisteredSketches"
         :auxInputVisibible="auxInputVisibible"
       )
@@ -34,9 +34,7 @@ export default {
   },
 
   props: {
-    sketchIndexSelected: {
-      type: Number,
-    },
+
     RegisteredSketches: {
       type: Array,
     },
@@ -48,7 +46,14 @@ export default {
   methods: {
     closeMenu() {
       this.menuOpen = false;
-      this.$emit('menu_closed_event', false);
+      this.$store.commit('updateSketchIndexSelected', null);
+      this.$emit('layer_menu_toggle', false);
+    },
+  },
+
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;
     },
   },
 };
@@ -61,7 +66,7 @@ export default {
 }
 
 #layer-controls-container {
-  width: 300px;
+  width: $secondary-menu-width;
 
   h3 {
     text-align: center;
@@ -85,7 +90,7 @@ export default {
   .close {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
   }
 }
 

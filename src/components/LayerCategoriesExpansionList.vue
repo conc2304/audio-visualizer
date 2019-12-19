@@ -14,12 +14,11 @@
           :key="i"
         )
 
-          v-expansion-panel-header.layer-name  {{ category }}
+          v-expansion-panel-header.category-name  {{ category }}
             template( v-slot:actions)
               v-icon expand_more
           v-expansion-panel-content
             LayerParameterControls(
-              :sketchIndexSelected="sketchIndexSelected"
               :RegisteredSketches="RegisteredSketches"
               :category="category"
               :auxInputVisibible="auxInputVisibible"
@@ -39,9 +38,6 @@ export default {
   data: () => ({}),
 
   props: {
-    sketchIndexSelected: {
-      type: Number,
-    },
     RegisteredSketches: {
       type: Array,
     },
@@ -50,8 +46,6 @@ export default {
       default: false,
     },
   },
-
-  watch: {},
 
   methods: {
     updateConfigs() {
@@ -73,9 +67,11 @@ export default {
     },
   },
 
-  mounted() {},
-
-  watch: {},
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;
+    },
+  },
 };
 </script>
 
@@ -86,8 +82,6 @@ export default {
   height: 100vh;
   padding-bottom: 150px;
   overflow-y: scroll;
-
-
 
   .v-expansion-panels {
     background-color: transparent;
@@ -100,6 +94,10 @@ export default {
   .v-expansion-panel-header {
     border-radius: 0;
   }
+}
+
+.category-name {
+  font-weight: 600;
 }
 </style>
 
@@ -114,7 +112,6 @@ export default {
     border-radius: 10px;
   }
 
-
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #000000bd;
@@ -123,8 +120,8 @@ export default {
       40% 0%,
       75% 84%,
       from(#000000bd),
-      to(#0c6b98),
-      color-stop(0.9, #0e83cd)
+      to($color-secondary-blue),
+      color-stop(0.9, $color-primary-blue)
     );
   }
 }

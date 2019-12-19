@@ -10,10 +10,11 @@ class CenterWave {
     this.catalogueInfo = new CatalogueDataEntry(
       this.constructor,
       'Basic Sine Wave',
-      'A simple parametic sine wave with various shapes as point along the wave.',
-      ['Parametric'],
-      'clyzby',
+      'A simple parametric sine wave with various shapes as point along the wave.',
+      ['Parametric', 'Awesome'],
+      'NOTNOTclyzby',
       './assets/sketch_catalogue_gifs/center-wave_200.gif',
+      300,
       2,
     );
 

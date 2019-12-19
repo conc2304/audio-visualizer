@@ -19,7 +19,7 @@
           v-list-item(
             v-for="(sketch, i) in RegisteredSketches"
             :key="i"
-            :class="{ 'active': layerSelected === i, 'inactive': sketch.bypass }"
+            :class="{ 'active': sketchIndexSelected === i, 'inactive': sketch.bypass }"
             @click="selectLayer(i)"
           )
             v-icon.menu-icon filter_{{ i+1 }}
@@ -29,7 +29,7 @@
             template( v-slot:activator= "{ on }")
               v-list-item(
                 @click="removeSketch()"
-                :disabled="layerSelected == null || layerSelected < 0"
+                :disabled="sketchIndexSelected == null || sketchIndexSelected < 0"
               )
                 v-icon(
                   v-on="on"
@@ -46,16 +46,15 @@
                 ) add
             span  Add New Sketch
 
-
         .layer-arrangement( v-if="false")
           v-list-item(
             @click="sketchOrderShift(1)"
-            :disabled="!layerSelected"
+            :disabled="!sketchIndexSelected"
           )
             v-icon keyboard_arrow_up
           v-list-item(
             @click="sketchOrderShift(-1)"
-            :disabled="layerSelected + 1 === 3"
+            :disabled="sketchIndexSelected + 1 === 3"
           )
             v-icon keyboard_arrow_down
 
@@ -65,10 +64,6 @@
 <script>
 export default {
   data: () => ({
-    dialog: false,
-    layerSelected: null,
-    layerAddEnabled: true,
-    numSketches: 0,
     layerDashVisible: true,
   }),
 
@@ -79,15 +74,13 @@ export default {
     menuOpen: {
       type: Boolean,
     },
-    sketchIndexSelected: {
-      default: null,
-    },
   },
 
   methods: {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
-      this.$emit('layer_selected', layerIndex);
+      this.$emit('open_layer_menu', true);
+      this.$store.commit('updateSketchIndexSelected', layerIndex);
     },
 
     addNewSketch() {
@@ -116,24 +109,27 @@ export default {
     },
 
     removeSketch() {
-      if (this.layerSelected == null || this.layerSelected < 0) {
+      let layerSelected = this.sketchIndexSelected;
+      if (layerSelected == null || layerSelected < 0) {
         return;
       }
 
-      this.RegisteredSketches.splice(this.layerSelected, 1);
+
+      this.RegisteredSketches.splice(layerSelected, 1);
       this.selectLayer(0);
     },
   },
 
   watch: {
-    sketchIndexSelected(newVal, oldVal) {
-      this.layerSelected = newVal;
-    },
   },
 
-  mounted() {
-    this.numSketches = this.RegisteredSketches.length;
+  computed: {
+    sketchIndexSelected() {
+      const temp = this.$store.state.sketchIndexSelected;
+      return temp;
+    }
   },
+
 };
 </script>
 

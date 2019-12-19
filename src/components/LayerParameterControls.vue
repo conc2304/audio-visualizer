@@ -7,8 +7,6 @@
         :key="`numeric-${i}`"
       )
         ParameterControlNumeric(
-          :sketchIndexSelected="sketchIndexSelected"
-          :RegisteredSketches="RegisteredSketches"
           :auxInputVisibible="auxInputVisibible"
           :parameter="parameter"
         )
@@ -20,8 +18,6 @@
         :key="`variable-${i}`"
       )
         ParameterControlVariable(
-          :sketchIndexSelected="sketchIndexSelected"
-          :RegisteredSketches="RegisteredSketches"
           :auxInputVisibible="auxInputVisibible"
           :parameter="parameter"
         )
@@ -39,9 +35,9 @@ export default {
   }),
 
   props: {
-    sketchIndexSelected: {
-      type: Number,
-    },
+    // sketchIndexSelected: {
+    //   type: Number,
+    // },
     category: {
       type: String,
     },
@@ -89,7 +85,11 @@ export default {
     },
   },
 
-  watch: {},
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;
+    },
+  },
 };
 </script>
 
@@ -112,5 +112,4 @@ p.parameter-title {
 .noUi-target {
   margin: 10px 0;
 }
-
 </style>

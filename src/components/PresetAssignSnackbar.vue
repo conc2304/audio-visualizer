@@ -5,9 +5,9 @@
       multi-line
       :timeout=0
       vertical
-      dark
+
     )
-      p( class="text-center") Select a slot to save the current compoistion settings to a slot
+      p( class="text-center") Select a slot to save the current composition settings to a slot
       small( class="text-center") Selecting a full preset slot will override the slot
       br
       .preset-selector-wrapper
@@ -16,12 +16,12 @@
           v-for="(preset, i) in presetSlots"
           :key="`preset-selector${i}`"
           :class=" preset.empty ? 'preset-empty' : 'preset-full'"
-          dark
+
         )
           v-icon {{ preset.iconText }}
         v-list-item(
           @click="closeSnackBar()"
-          dark
+
         )
           v-icon() close
         v-tooltip( top)
@@ -31,7 +31,7 @@
             )
               v-icon(
                 v-on="on"
-                dark
+
               ) delete
           span Clear All Presets
 </template>

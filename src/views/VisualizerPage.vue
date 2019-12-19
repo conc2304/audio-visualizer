@@ -1,11 +1,21 @@
 <template lang="pug">
   div#visualizer-wrapper
     #sketch-container
-    SketchMenu
+    SketchMenu(
+      v-show="masterMenuOpen"
+      @master_menu_update="updateMasterMenu"
+    )
+    v-icon.master-menu-toggle(
+      v-show="!masterMenuOpen"
+      @click="masterMenuOpen = true"
+      dark
+    ) menu
+    AppSettingsMenu
 </template>
 
 <script>
 import SketchMenu from '@/components/SketchMenu.vue';
+import AppSettingsMenu from '@/components/AppSettingsMenu.vue';
 import Visualizer from '@/js/sketches/SketchBaseVisualizer';
 import RegisteredSketches from '@/js/services/SketchRegistration';
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
@@ -14,12 +24,17 @@ import Utils from '@/js/services/Utils';
 export default {
   name: 'visualizer',
   data: () => ({
-    menuOpen: true,
+    masterMenuOpen: false,
   }),
   components: {
+    AppSettingsMenu,
     SketchMenu,
   },
-  methods: {},
+  methods: {
+    updateMasterMenu(status) {
+      this.masterMenuOpen = status;
+    }
+  },
   mounted() {
     const P5 = require('p5');
     new P5(Visualizer, 'sketch-container');
@@ -63,6 +78,22 @@ export default {
   margin: 0;
   overflow: hidden;
   background-color: #000;
+
+  .master-menu-toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 1rem;
+
+    &:hover {
+      color: $color-secondary-blue;
+    }
+
+    &:active {
+      color: $color-primary-blue;
+    }
+  }
 }
 
 * {

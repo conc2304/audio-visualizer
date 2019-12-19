@@ -4,6 +4,7 @@
     p.parameter-title {{ parameter.displayLabel }}
 
     .controller-wrapper
+      // implementation of vue-nouislider-fork
       v-nus(
         v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
         :config="sliderConfig"
@@ -14,7 +15,6 @@
       ParameterKeyboardInputFields(
         v-show="auxInputVisibible"
         :parameter="parameter"
-        :sketchIndexSelected="sketchIndexSelected"
       )
       AudioReactiveControls(
         v-show="parameter.audio && auxInputVisibible"
@@ -42,9 +42,6 @@ export default {
   },
 
   props: {
-    sketchIndexSelected: {
-      type: Number,
-    },
     parameter: {
       type: Object,
     },
@@ -58,7 +55,7 @@ export default {
     getParameterAttributes() {
       this.sliderConfig = {
         connect: [false, true, true, false],
-        connectColors: ['#0e83cd', '#0e83cd'],
+        connectColors: ['color_primary_blue', 'color_primary_blue'],
         start: [this.parameter.min, this.parameter.currentValue, this.parameter.max],
         range: {
           min: [this.parameter.defaultMin],

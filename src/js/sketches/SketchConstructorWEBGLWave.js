@@ -13,11 +13,12 @@ class WEBGLWave {
 
     this.catalogueInfo = new CatalogueDataEntry(
       this.constructor,
-      'WEGBL Sine Wave',
-      'A parametic sine wave with various 3D shapes as point along the wave.',
+      'WEBGL Sine Wave',
+      'A parametric sine wave with various 3D shapes as point along the wave.',
       ['Parametric', 'WEBGL'],
       'clyzby',
       './assets/sketch_catalogue_gifs/webgl-wave_200.gif',
+      277,
       4,
     );
 
