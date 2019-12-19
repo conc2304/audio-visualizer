@@ -1,22 +1,21 @@
 <template lang="pug">
   #settings-menubar
-
     v-card#control-panel(
-      dark
       v-cloak
     )
 
-      #master-controls-container
-        v-list-item( to="/")
-          v-icon home
+      #master-controls-container(
+        class="custom-thin-scrollbar"
+      )
+        v-list-item( @click="updateMasterMenu")
+          v-icon close
 
         v-divider
 
         MenuLayerSelector(
           :RegisteredSketches="RegisteredSketches"
-          :menuOpen="menuOpen"
-          :sketchIndexSelected="sketchIndexSelected"
-          @layer_selected="updatesketchIndexSelected"
+          :layerMenuOpen="layerMenuOpen"
+          @open_layer_menu="layerMenuToggleEvent"
           @catalogue_open="setCatalogueStatus"
         )
 
@@ -46,9 +45,8 @@
               v-icon.menu-icon music_note
 
       LayerControlPanel(
-        v-show="menuOpen"
-        @menu_closed_event="closeMenu"
-        :sketchIndexSelected="sketchIndexSelected"
+        v-show="layerMenuOpen"
+        @layer_menu_toggle="layerMenuToggleEvent"
         :RegisteredSketches="RegisteredSketches"
         :auxInputVisibible="auxInputVisibible"
       )
@@ -58,7 +56,7 @@
       v-show="audioPlayerOpen"
     )
 
-    CatalogueList#sketch-catalogue(
+    CatalogueList(
       v-show="catalogueOpen"
       @catalogue_open="setCatalogueStatus"
     )
@@ -102,7 +100,7 @@ export default {
   },
 
   data: () => ({
-    menuOpen: false,
+    layerMenuOpen: false,
     audioPlayerOpen: false,
     RegisteredSketches,
     sketchIndexSelected: null,
@@ -133,14 +131,15 @@ export default {
   }),
 
   methods: {
+    updateMasterMenu() {
+      this.$emit('master_menu_update', false);
+    },
     updatesketchIndexSelected(sketchIndexSelected) {
-      this.menuOpen = true;
-      this.sketchIndexSelected = sketchIndexSelected;
+      this.layerMenuOpen = true;
     },
 
-    closeMenu() {
-      this.sketchIndexSelected = null;
-      this.menuOpen = false;
+    layerMenuToggleEvent(event) {
+      this.layerMenuOpen = event;
     },
 
     toggleAuxInputFields() {
@@ -150,12 +149,12 @@ export default {
     setCatalogueStatus(status) {
       this.catalogueOpen = status;
       if (this.catalogueOpen === true) {
-        this.menuOpen = false;
+        this.layerMenuOpen = false;
         this.audioPlayerOpen = false;
         return;
       }
       if (this.catalogueOpen === false && this.sketchIndexSelected !== null) {
-        this.menuOpen = true;
+        this.layerMenuOpen = true;
       }
     },
 
@@ -189,7 +188,6 @@ export default {
   border-right: 1px solid $color-std-grey;
   border-radius: 0;
 }
-$master-menu-width: 4.5rem;
 #master-controls-container {
   position: relative;
   background-color: $color-std-grey;
@@ -215,18 +213,6 @@ i.off-white {
   right: 0;
 }
 
-#sketch-catalogue {
-  background: $color-transparent-black;
-  padding: 20px;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: $master-menu-width;
-  z-index: 10;
-  margin: 0 auto;
-  overflow: auto;
-  border: 1px solid $subtle-border;
-}
 </style>
 
 <style lang="scss">
@@ -236,9 +222,14 @@ i {
 }
 .custom-thin-scrollbar {
   $color-bkgd: $color-std-grey;
+
   &::-webkit-scrollbar {
     width: 5px;
     background-color: $color-bkgd;
+  }
+
+  &.scrollbar__thick::-webkit-scrollbar {
+    width: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -249,8 +240,8 @@ i {
       0% 20%,
       50% 80%,
       from($color-bkgd),
-      to(#0c6b98),
-      color-stop(0.9, #0e83cd)
+      to($color-secondary-blue),
+      color-stop(0.9, $color-primary-blue)
     );
   }
 

@@ -14,7 +14,7 @@
         @click:clear="clear('key')"
         :rules="[val => { return (testKeyStroke(val)) }]"
         outlined
-        dark
+
         dense
       )
       v-text-field(
@@ -30,7 +30,7 @@
         @click:clear="clear('value')"
         :rules="[val => { return (testValueMinMax(val, parameter)) }]"
         outlined
-        dark
+
         dense
       )
 </template>

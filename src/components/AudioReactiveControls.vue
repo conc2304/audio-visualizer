@@ -5,6 +5,7 @@
       v-tooltip( bottom)
         template( v-slot:activator="{ on }")
           .tooltip-wrapper( v-on="on")
+            // implementation of vue-knob-control
             KnobControl(
               v-on="on"
               v-if="parameter.audio && gain"

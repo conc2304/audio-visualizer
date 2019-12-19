@@ -4,7 +4,7 @@
     @input="$emit('input')"
     max-width="500"
     scrollable
-    dark
+
   )
     v-card.help-box
       v-card-title(class="headline text-center font-weight-bold") How to VYZBY
@@ -54,12 +54,12 @@
         .preset-example-container
           .slot-example
             v-icon.example-icon(
-              color="#0e83cd"
+              color="color_primary_blue"
             ) looks_one
             span Saved/Full Slots
           .slot-example
             v-icon.example-icon(
-              color="#b6b6b6"
+              color="color_off_white"
             ) looks_one
             span Empty Slots
 

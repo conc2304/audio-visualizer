@@ -1,93 +1,77 @@
 <template lang="pug">
-  v-form( @submit.prevent="submit")
-    .form-group(:class="{ 'form-group--error': $v.username.$error }")
-      v-text-field(
-        label="Userame"
-        required
-        :rules="usernameRules"
-        :counter=25
-        v-model.trim="$v.username.$model"
-      )
+  v-container#login-container
+    LoginUserPane(
+      v-if="loginPane === 'userLogin'"
+      @update_login_pane="updateLoginPane"
+    )
+    LoginRegistrationPane(
+      v-if="loginPane === 'registration'"
+      @update_login_pane="updateLoginPane"
+    )
 
-    .submission-wrapper
-      v-btn(
-        type="submit"
-        :disabled="submitStatus === 'PENDING'"
-        dark large color="#0e83cd" outlined
-      ) Submit
-
-      p.submit-status(v-if="submitStatus === 'OK'") Thanks for your submission!
-      p.submit-status(v-if="submitStatus === 'ERROR'") Please fill the form correctly.
-      p.submit-status(v-if="submitStatus === 'PENDING'") Sending...
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators';
+import LoginUserPane from '@/components/LoginUserPane.vue';
+import LoginRegistrationPane from '@/components/LoginRegistrationPane.vue';
 
 export default {
-  data() {
-    return {
-      username: '',
-      usernameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length >= 6) || 'Name must be at least 6 characters',
-      ],
-      submitStatus: null,
-    };
+  data: () => ({
+    loginPane: 'userLogin',
+  }),
+
+  components: {
+    LoginUserPane,
+    LoginRegistrationPane,
   },
 
-  props: {
-    isLoggedIn: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  validations: {
-    username: {
-      required,
-      minLength: minLength(6),
-    },
-  },
   methods: {
-    submit() {
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.submitStatus = 'ERROR';
-      } else {
-        this.submitStatus = 'PENDING';
-        setTimeout(() => {
-          this.submitStatus = 'OK';
-          const userObj = {
-            loggedIn: true,
-            username: this.username,
-          };
-          localStorage.setItem('user', JSON.stringify(userObj));
-
-          this.$emit('user_login_event', userObj);
-
-          this.$v.$reset();
-          this.submitStatus = null,
-          this.username = '';
-        }, 500);
-
-      }
+    updateLoginPane(paneLocation) {
+      this.loginPane = paneLocation;
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.error {
-  text-align: center;
-}
+<style lang="scss">
+/* Change Autocomplete styles in Chrome*/
 
-.submission-wrapper {
-  margin: 20px auto 0;
-  text-align: center;
-}
+#login-container {
 
-.submit-status {
-  margin-top: 10px;
+  padding: 2rem 4rem;
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  input:-internal-autofill-selected,
+  select:-webkit-autofill:focus {
+    background-color: transparent;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+    -webkit-text-fill-color: #fff;
+  }
+
+  .account-creation {
+      margin: 0 auto;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .error {
+    text-align: center;
+  }
+
+  .submission-wrapper {
+    margin: 2rem auto 0;
+    text-align: center;
+  }
+
+  .submit-status {
+    margin-top: 10px;
+  }
 }
 </style>
