@@ -2,6 +2,7 @@
   #playlist-container.custom-thin-scrollbar
     v-container
       v-row.song-item(
+        v-show="playlist.length"
         v-for="(song, i) in playlist"
         :class="{ 'active': activeSongIndex === i}"
         :key="i"
@@ -17,41 +18,12 @@
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
   data: () => ({
     activeSongIndex: -1,
-    playlist: [
-      {
-        title: 'PlaceHolder Song',
-        artist: 'Tempy',
-        streamUrl: 'https://wwww.temp.com',
-        duration: '10:41',
-      },
-      {
-        title: 'Song 2',
-        artist: 'Alfred',
-        streamUrl: 'https://wwww.temp.com',
-        duration: '3:31',
-      },
-      {
-        title: 'Songs for testing',
-        artist: 'Just for fun',
-        streamUrl: 'https://wwww.temp.com',
-        duration: '3:22',
-      },
-      {
-        title: 'Bananarama',
-        artist: 'Fake Data',
-        streamUrl: 'https://wwww.temp.com',
-        duration: '2:43',
-      },
-      {
-        title: 'Not Ready',
-        artist: 'Temp and the Placeholders',
-        streamUrl: 'https://wwww.temp.com',
-        duration: '3:12',
-      },
-    ],
+    playlist: [],
   }),
 
   methods: {
@@ -59,6 +31,14 @@ export default {
       this.activeSongIndex = index;
       this.$emit('active_song', songObj);
     },
+  },
+
+  mounted() {
+    axios
+      .get('https://my-json-server.typicode.com/conc2304/test-api/db')
+      .then(response => {
+        this.playlist = response.data.playlist ? response.data.playlist : [];
+      });
   },
 };
 </script>
