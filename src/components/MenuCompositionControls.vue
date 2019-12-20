@@ -46,13 +46,6 @@ export default {
         action: 'openHelpModal',
       },
       {
-        mdIconText: 'keyboard',
-        id: 'toggle-input-assigner',
-        title: 'Toggle auxiliary input fields',
-        action: 'toggleAuxInputFields',
-      },
-
-      {
         mdIconText: 'shuffle',
         id: 'randomize-settings',
         title: 'Randomize Everything',
@@ -64,6 +57,12 @@ export default {
         id: 'reset-settings',
         title: 'Reset Everything',
         action: 'resetComposition',
+      },
+      {
+        mdIconText: 'keyboard',
+        id: 'toggle-input-assigner',
+        title: 'Toggle auxiliary input fields',
+        action: 'toggleAuxInputFields',
       },
       {
         mdIconText: 'save_alt',
@@ -121,5 +120,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
