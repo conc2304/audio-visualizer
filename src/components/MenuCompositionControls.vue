@@ -70,22 +70,6 @@ export default {
         title: 'Save composition to presets',
         action: 'openPresetAssigner',
       },
-
-      // {
-      //   mdIconText: 'wb_iridescent',
-      //   id: 'set-background-strobe',
-      //   tooltipText: 'Makes the background flash/strobe to the beat.',
-      //   title: 'Enable Beat Strobe',
-      //   function: '',
-      // },
-      // {
-      //   mdIconText: 'waves',
-      //   id: 'randomize-audio-reactive',
-      //   tooltipText:
-      //     "Randomizes all of the audio reactive selectors. This will assign each element's properties to respond to one of the frequency ranges.  This will also randomly set the audio reactive mode randomly for each of the elements' properties.",
-      //   title: 'Randomize Audio Reactive',
-      //   action: '',
-      // },
     ],
   }),
 
