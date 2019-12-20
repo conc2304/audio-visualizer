@@ -21,7 +21,7 @@
     )
       v-tooltip(
         v-for="(item, i) in preferences"
-        :disabled="item.title === 'Home' || (item.title !== 'Home' && !userIsLoggedIn ) "
+        :disabled="['Home', 'Fullscreen'].includes(item.title) || (['Save Session', 'Open Session'].includes(item.title) && userIsLoggedIn ) "
         :key="i"
         left
       )
@@ -31,17 +31,17 @@
           )
             v-list-item(
               @click="clickHandler(item.action)"
-              :disabled="!userIsLoggedIn && item.title !== 'Home'"
+              :disabled="!userIsLoggedIn && !['Home', 'Fullscreen'].includes(item.title)"
             )
               v-list-item-icon
                 v-icon(
-                  :class="{ 'disabled': !userIsLoggedIn && item.title !== 'Home' }"
-                ) {{ item.icon }}
+                  :class="{ 'disabled': !userIsLoggedIn && !['Home', 'Fullscreen'].includes(item.title) }"
+                ) {{ item.title === "Fullscreen" && fullscreenOn ? item.off_icon : item.icon }}
               v-list-item-content
-                v-list-item-title( v-text="item.title")
+                v-list-item-title {{ item.title === "Fullscreen" && fullscreenOn ? item.off_title : item.title }}
         span {{ item.tooltipText }}
       v-list-item(
-        @click="userIsLoggedIn ? userLogout : loginDialog = true"
+        @click="userIsLoggedIn ? userLogout() : loginDialog = true"
       )
         v-list-item-icon
           v-icon account_box
@@ -63,7 +63,7 @@
                 )
                   v-icon insert_drive_file
                 v-list-item-content
-                  v-list-item-title  session_{{ i }}
+                  v-list-item-title  session_{{ i }}.vyzby
 
 
     v-dialog( v-model="saveSessionDialog" max-width="400")
@@ -106,18 +106,30 @@ export default {
   },
 
   data: () => ({
+    userIsLoggedIn: true,
     settingsOpen: false,
     loginDialog: false,
     openSessionDialog: false,
     saveSessionDialog: false,
     sessionName: '',
     savedSessionName: '',
+    fullscreenOn: false,
 
     preferences: [
       {
         title: 'Home',
         action: 'goToHome',
         icon: 'home',
+        tooltipText: '',
+      },
+      {
+        title: 'Fullscreen',
+        action: 'toggleFullscreen',
+        icon: 'fullscreen',
+        off_title: 'Exit Fullscreen',
+        off_action: 'closeFullscreen',
+        off_icon: 'fullscreen_exit',
+        onState: true,
         tooltipText: '',
       },
       {
@@ -154,10 +166,56 @@ export default {
 
     userLogout() {
       localStorage.removeItem('user');
+      this.userIsLoggedIn = false;
+      console.log('log out');
     },
 
     submit() {
       this.saveSessionDialog = false;
+    },
+
+    toggleFullscreen() {
+      if (this.fullscreenOn) {
+        this.closeFullscreen();
+        this.fullscreenOn = false;
+      } else {
+        this.openFullscreen();
+        this.fullscreenOn = true;
+      }
+    },
+
+    openFullscreen() {
+      const elem = document.documentElement;
+
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
+    },
+
+    closeFullscreen() {
+      this.fullscreenOn = false;
+
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        /* Firefox */
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        /* Chrome, Safari and Opera */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        /* IE/Edge */
+        document.msExitFullscreen();
+      }
     },
   },
 
@@ -166,20 +224,23 @@ export default {
   },
 
   computed: {
-    userIsLoggedIn() {
-      const userObj = JSON.parse(localStorage.getItem('user'));
-      return userObj != null && userObj.loggedIn;
-    },
 
     sessionNameErrors() {
       const errors = [];
       if (!this.$v.sessionName.$dirty) return errors;
       !this.$v.sessionName.required && errors.push('Session Name is required.');
-      !this.$v.sessionName.minLength && errors.push('Session Name must be at least 6 characters long');
+      !this.$v.sessionName.minLength &&
+        errors.push('Session Name must be at least 6 characters long');
       return errors;
     },
   },
-  mounted() {},
+  mounted() {
+    const userObj = JSON.parse(localStorage.getItem('user'));
+
+    console.log('update');
+    console.log(userObj);
+    this.userIsLoggedIn =  userObj != null && userObj.loggedIn;
+  },
 };
 </script>
 
