@@ -167,7 +167,6 @@ export default {
     userLogout() {
       localStorage.removeItem('user');
       this.userIsLoggedIn = false;
-      console.log('log out');
     },
 
     submit() {
@@ -236,9 +235,6 @@ export default {
   },
   mounted() {
     const userObj = JSON.parse(localStorage.getItem('user'));
-
-    console.log('update');
-    console.log(userObj);
     this.userIsLoggedIn =  userObj != null && userObj.loggedIn;
   },
 };
