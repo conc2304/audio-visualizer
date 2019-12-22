@@ -30,7 +30,6 @@
         @click:clear="clear('value')"
         :rules="[val => { return (testValueMinMax(val, parameter)) }]"
         outlined
-
         dense
       )
 </template>
@@ -96,10 +95,10 @@ export default {
       if (!value || !parameter) {
         return true;
       }
-      if (value <= parseFloat(parameter.min)) {
+      if (value < parseFloat(parameter.min)) {
         return `Value must be more than ${parameter.min}`;
       }
-      if (value >= parseFloat(parameter.max)) {
+      if (value > parseFloat(parameter.max)) {
         return `Value must be less than ${parameter.max}`;
       }
 
