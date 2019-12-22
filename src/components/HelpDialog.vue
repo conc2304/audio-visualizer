@@ -38,7 +38,7 @@
         .help-item
           h4.item-title Saving
           p.item-subtitle Press the
-            v-icon.example-icon save
+            v-icon.example-icon save_alt
             span button in the Global menu.  Then select a slot to save it to.  If a slot is blue, it means its full.  Selecting it will override the current preset in that slot.
 
         .help-item
