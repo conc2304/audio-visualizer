@@ -1,10 +1,12 @@
 <template lang="pug">
   .aux-input-wrapper
-    .keyboard-wrapper
+    v-form.keyboard-wrapper(
+      @submit.prevent="submit"
+      lazy-validation
+    )
       v-text-field(
         v-model="keyboardKey"
         autocomplete="off"
-        validate-on-blur
         hint="Keystroke to trigger parameter change (A-Z & 0-9)"
         placeholder="Keyboard Key"
         clearable
@@ -12,15 +14,15 @@
         color="blue"
         maxlength="1"
         @click:clear="clear('key')"
+        @change="updateKeyValue()"
         :rules="[val => { return (testKeyStroke(val)) }]"
+        :prepend-inner-icon="keyboardKeyUpdated ? 'check': ''"
         outlined
-
         dense
       )
       v-text-field(
         v-model="parameterValue"
         autocomplete="off"
-        validate-on-blur
         :hint="hint()"
         type="number"
         placeholder="Value"
@@ -28,8 +30,10 @@
         clear-icon="close"
         color="blue"
         @click:clear="clear('value')"
+        @change="updateParamValue()"
         :rules="[val => { return (testValueMinMax(val, parameter)) }]"
         outlined
+        :prepend-inner-icon="parameterValueUpdated ? 'check': ''"
         dense
       )
 </template>
@@ -42,6 +46,8 @@ export default {
     valid: true,
     keyboardKey: null,
     parameterValue: null,
+    keyboardKeyUpdated: false,
+    parameterValueUpdated: false,
   }),
 
   props: {
@@ -56,6 +62,44 @@ export default {
   mounted() {},
 
   methods: {
+    submit() {
+      console.log('test :');
+
+      const keyvalid = this.keyboardKey && this.testKeyStroke(this.keyboardKey);
+      const paramValid =
+        this.parameterValue && this.testValueMinMax(this.parameterValue, this.parameter);
+
+      this.keyboardKeyUpdated = keyvalid === true;
+      this.parameterValueUpdated = paramValid === true;
+
+      setTimeout(() => {
+        this.keyboardKeyUpdated = false;
+        this.parameterValueUpdated = false;
+      }, 700);
+    },
+
+    updateParamValue() {
+      console.log('update');
+      const paramValid =
+        this.parameterValue && this.testValueMinMax(this.parameterValue, this.parameter);
+
+      this.parameterValueUpdated = paramValid === true;
+
+      setTimeout(() => {
+        this.parameterValueUpdated = false;
+      }, 700);
+    },
+
+    updateKeyValue() {
+      const keyvalid = this.keyboardKey && this.testKeyStroke(this.keyboardKey);
+
+      this.keyboardKeyUpdated = keyvalid === true;
+
+      setTimeout(() => {
+        this.keyboardKeyUpdated = false;
+      }, 700);
+    },
+
     setKey() {
       if (!this.keyboardKey || !this.parameterValue) {
         return;
