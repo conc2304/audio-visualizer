@@ -61,13 +61,13 @@ export default {
       {
         mdIconText: 'keyboard',
         id: 'toggle-input-assigner',
-        title: 'Toggle auxiliary input fields',
+        title: 'Toggle layers\' auxiliary input settings',
         action: 'toggleAuxInputFields',
       },
       {
         mdIconText: 'save_alt',
         id: 'save-settings',
-        title: 'Save composition to presets',
+        title: 'Save composition state to Preset Slot',
         action: 'openPresetAssigner',
       },
     ],

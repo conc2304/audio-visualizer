@@ -46,9 +46,6 @@ export default {
   }),
 
   props: {
-    sketchIndexSelected: {
-      type: Number,
-    },
     parameter: {
       type: Object,
     },
@@ -121,6 +118,12 @@ export default {
 
     clear(type) {
       this.setKey();
+    },
+  },
+
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;
     },
   },
 };

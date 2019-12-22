@@ -22,14 +22,15 @@ import KeyboardControlsService from '@/js/services/KeyboardControlsService';
 import Utils from '@/js/services/Utils';
 
 export default {
-  name: 'visualizer',
   data: () => ({
-    masterMenuOpen: false,
+    masterMenuOpen: true,
   }),
+
   components: {
     AppSettingsMenu,
     SketchMenu,
   },
+
   methods: {
     updateMasterMenu(status) {
       this.masterMenuOpen = status;

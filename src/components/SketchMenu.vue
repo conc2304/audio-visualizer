@@ -237,7 +237,7 @@ i {
     background-color: $color-bkgd;
     background-image: -webkit-gradient(
       linear,
-      0% 20%,
+      40% 0%,
       50% 80%,
       from($color-bkgd),
       to($color-secondary-blue),
