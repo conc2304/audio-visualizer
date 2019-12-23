@@ -17,6 +17,7 @@
         @change="updateKeyValue()"
         :rules="[val => { return (testKeyStroke(val)) }]"
         :prepend-inner-icon="keyboardKeyUpdated ? 'check': ''"
+        :disabled="parameter.lockOn"
         outlined
         dense
       )
@@ -32,8 +33,9 @@
         @click:clear="clear('value')"
         @change="updateParamValue()"
         :rules="[val => { return (testValueMinMax(val, parameter)) }]"
-        outlined
         :prepend-inner-icon="parameterValueUpdated ? 'check': ''"
+        :disabled="parameter.lockOn"
+        outlined
         dense
       )
 </template>

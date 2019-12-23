@@ -2,7 +2,10 @@
   .audio-parameter-wrapper()
 
     .knob-wrapper
-      v-tooltip( bottom)
+      v-tooltip(
+        :disabled="parameter.lockOn"
+        bottom
+      )
         template( v-slot:activator="{ on }")
           .tooltip-wrapper( v-on="on")
             // implementation of vue-knob-control
@@ -16,16 +19,21 @@
               secondary-color="#0e83cd"
               text-color="#FFFFFF"
               v-model="gain"
+              :disabled='parameter.lockOn'
             )
         span Gain
     .freq-select-wrapper
-      v-tooltip( bottom)
+      v-tooltip(
+        :disabled="parameter.lockOn"
+        bottom
+      )
         template( v-slot:activator="{ on }")
           .tooltip-wrapper( v-on="on")
             v-select(
               :items="frequencies"
               item-text="label"
               item-value="ranges"
+              :disabled='parameter.lockOn'
               v-model="freqRangeSelected"
               label="Audio Range"
               clearable

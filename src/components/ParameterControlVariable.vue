@@ -2,12 +2,15 @@
   .sketch-parameter-control
 
     p.parameter-title {{ parameter.displayLabel }}
+      ParameterLockToggle(
+        :parameter="parameter"
+      )
 
     v-radio-group(
       v-if="parameter.attrType === 'variable'"
       v-model="parameter.currentValue"
+      :disabled='parameter.lockOn'
       row
-
     )
       v-radio(
         v-for="(option, i) in parameter.options"
@@ -21,10 +24,16 @@
 </template>
 
 <script>
+import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
+
 export default {
   data: () => ({
     parameterValue: null,
   }),
+
+  components: {
+    ParameterLockToggle,
+  },
 
   props: {
     parameter: {

@@ -2,20 +2,25 @@
   .sketch-parameter-control
 
     p.parameter-title {{ parameter.displayLabel }}
+      ParameterLockToggle(
+        :parameter="parameter"
+      )
 
-    .controller-wrapper
+    .controller-wrapper( class=" ")
       // implementation of vue-nouislider-fork
       v-nus(
         v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
         :config="sliderConfig"
         :value="sliderValues"
         @update="updateSliderValues($event)"
+        :disabled='parameter.lockOn'
       )
 
       ParameterKeyboardInputFields(
         v-show="auxInputVisibible"
         :parameter="parameter"
       )
+
       AudioReactiveControls(
         v-show="parameter.audio && auxInputVisibible"
         :parameter="parameter"
@@ -25,6 +30,7 @@
 
 <script>
 import AudioReactiveControls from '@/components/AudioReactiveControls.vue';
+import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
 import ParameterKeyboardInputFields from '@/components/ParameterKeyboardInputFields.vue';
 
 export default {
@@ -39,6 +45,7 @@ export default {
   components: {
     AudioReactiveControls,
     ParameterKeyboardInputFields,
+    ParameterLockToggle,
   },
 
   props: {
