@@ -31,7 +31,6 @@ export default {
 <style lang="scss" scoped>
 .parameter-lock-toggle {
   float: right;
-  display: inline-block;
   padding: 0 .8rem;
 }
 </style>
