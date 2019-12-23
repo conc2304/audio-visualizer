@@ -63,8 +63,6 @@ export default {
 
   methods: {
     submit() {
-      console.log('test :');
-
       const keyvalid = this.keyboardKey && this.testKeyStroke(this.keyboardKey);
       const paramValid =
         this.parameterValue && this.testValueMinMax(this.parameterValue, this.parameter);
@@ -79,7 +77,6 @@ export default {
     },
 
     updateParamValue() {
-      console.log('update');
       const paramValid =
         this.parameterValue && this.testValueMinMax(this.parameterValue, this.parameter);
 
