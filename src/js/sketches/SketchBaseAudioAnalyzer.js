@@ -2,7 +2,9 @@ import RegisteredSketches from '@/js/services/SketchRegistration';
 import AudioPlayerService from '@/js/services/AudioPlayerService';
 
 const AudioAnalyzer = p5 => {
-  // p5.preload = () => {};
+  p5.preload = () => {
+    console.log('Loading Audio Analyzer');
+  };
   // p5.setup = () => {};
   p5.draw = () => {
     // if (audio && audio.isLoaded() && !audio.isPaused()) {

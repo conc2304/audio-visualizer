@@ -6,13 +6,15 @@
         p#song-name {{ currentSong.title }} - {{ currentSong.artist }}
         p#song-time  {{ currentSong.duration }}
     .song-progress
-      v-progress-linear#loading-bar(
-        value="0" max="100"
+      v-progress-linear#loading-bar.progress(
+        value="0"
+        max="100"
         striped
         rounded
       )
-      v-progress-linear#progress-bar(
-        value="0" max="100"
+      v-progress-linear#progress-bar.progress(
+        :value="songProgress"
+        max="100"
         rounded
       )
     .audio-controls
@@ -30,8 +32,8 @@
 
         v-btn( @click="" text icon)
           v-icon.menu-icon skip_previous
-        v-btn( @click="" text icon)
-          v-icon.menu-icon play_arrow
+        v-btn( @click="toggleAudioState()" text icon)
+          v-icon.menu-icon {{ isPlaying ? 'pause' : 'play_arrow' }}
         v-btn( @click="" text icon)
           v-icon.menu-icon skip_next
 
@@ -49,8 +51,11 @@
         input(
           v-show="false"
           type="file"
-          ref="fileInput"
+          id="file"
+          ref="file"
           accept="audio/*"
+          multiple
+          @change="onFileChange"
         )
       AudioPlaylist(
         v-show="playlistOpen"
@@ -62,6 +67,8 @@
 import AudioPlaylist from '@/components/AudioPlaylist.vue';
 import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
 import AudioPlayerService from '@/js/services/AudioPlayerService';
+import p5 from "p5";
+import "p5/lib/addons/p5.sound";
 
 let p5i;
 
@@ -73,6 +80,8 @@ export default {
       artist: 'Artist',
       duration: 'Duration',
     },
+    isPlaying: AudioPlayerService.isPlaying,
+    tracks: [],
   }),
 
   components: {
@@ -81,22 +90,38 @@ export default {
 
   methods: {
     triggerFileUpload() {
-      this.$refs.fileInput.click();
+      this.$refs.file.click();
     },
+
     setActiveSong(songObj) {
       this.currentSong = songObj;
     },
 
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      console.log(files);
+    onFileChange() {
+      this.tracks = this.$refs.file.files;
+      if (!this.tracks.length) return;
+
+      AudioPlayerService.audioUploaded(this.tracks, p5i);
+      this.isPlaying = AudioPlayerService.isPlaying;
+      console.log('component');
+      console.log(this.isPlaying);
     },
+
+    toggleAudioState() {
+
+      this.isPlaying = AudioPlayerService.toggleAudioState(p5i);
+    }
   },
 
   mounted() {
-    const P5 = require('p5');
-    p5i = new P5(AudioAnalyzer, 'audio-sketch-container ');
+    p5i = new p5(AudioAnalyzer, 'audio-sketch-container ');
+  },
+
+  computed: {
+    songProgress() {
+      console.log('test');
+      return (AudioPlayerService.audio) ? AudioPlayerService.audio.currentTime() : 0;
+    }
   },
 };
 </script>
@@ -115,6 +140,10 @@ export default {
   min-height: 67px;
   text-align: center;
   padding: 10px;
+}
+
+.progress {
+  display: none;
 }
 
 #audio-sketch-container {
