@@ -70,6 +70,7 @@
 import AudioPlaylist from '@/components/AudioPlaylist.vue';
 import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
 import AudioPlayerService from '@/js/services/AudioPlayerService';
+import Utils from '@/js/services/Utils';
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 
@@ -128,34 +129,15 @@ export default {
     },
 
     currentSong() {
-      let sound = this.$store.state.audio.currentSound;
-      let duration = this.$store.state.audio.duration;
-      let currentSound = {};
+      const soundFile = this.$store.state.audio.currentSound;
+      const duration = this.$store.state.audio.duration;
 
-      if (!sound.size) {
-        currentSound = {
-          title: 'Song Name',
-          artist: 'Artist',
-          duration: 'Duration',
-        };
-      } else {
-        if (sound.name) {
-          const filename = sound.name.substring(0, sound.name.lastIndexOf('.'));
+      const formattedFilename = Utils.formatAudioFilename(soundFile);
 
-          currentSound.artist = filename.lastIndexOf('-')
-            ? filename.substring(0, filename.lastIndexOf('-')).trim()
-            : '';
-
-          currentSound.title = filename.indexOf('-')
-            ? filename.substring(filename.indexOf('-') + 1).trim()
-            : filename;
-
-          const seconds = Math.floor(duration % 60);
-          const minutes = Math.floor(duration / 60);
-          const time = ('0' + minutes).substr(-2) + ':' + ('0' + seconds).substr(-2);
-          currentSound.duration = time || 'Duration';
-        }
-      }
+      const currentSound = {};
+      currentSound.title = formattedFilename.title;
+      currentSound.artist = formattedFilename.artist;
+      currentSound.duration = Utils.formatTime(duration) || 'Duration';
 
       return currentSound;
     },

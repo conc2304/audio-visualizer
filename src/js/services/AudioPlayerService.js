@@ -14,9 +14,9 @@ const AudioPlayerService = {
 };
 
 AudioPlayerService.audioUploaded = async (files, p5) => {
-  let APS = AudioPlayerService;
+  const APS = AudioPlayerService;
 
-  let tracks = store.state.audio.tracks || [];
+  const tracks = store.state.audio.tracks || [];
   for (let file of files) {
     tracks.push(file);
   }
@@ -29,7 +29,7 @@ AudioPlayerService.audioUploaded = async (files, p5) => {
 };
 
 AudioPlayerService.setupAudioAnalysis = (audioFile, P5) => {
-  let APS = AudioPlayerService;
+  const APS = AudioPlayerService;
 
   if (APS.audio) {
     console.log('disconnect');
@@ -48,7 +48,7 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, P5) => {
 };
 
 const audioLoadSuccess = () => {
-  let APS = AudioPlayerService;
+  const APS = AudioPlayerService;
 
   console.log('Sound is loaded : ' + APS.audio.isLoaded());
 
@@ -109,7 +109,7 @@ AudioPlayerService.frequencies = [
 ];
 
 const endSong = () => {
-  let APS = AudioPlayerService;
+  const APS = AudioPlayerService;
 
   if (
     !APS.audio.isPaused() &&
@@ -137,7 +137,7 @@ const endSong = () => {
 };
 
 AudioPlayerService.toggleAudioState = () => {
-  let APS = AudioPlayerService;
+  const APS = AudioPlayerService;
 
   if (!APS.audio) return;
 

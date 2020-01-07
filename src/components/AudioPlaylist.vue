@@ -10,20 +10,32 @@
         cols="12"
         dense
       )
-        v-col.song-title(md="4") {{ song.title }}
-        v-col.artist(md="6") {{ song.artist }}
+        v-col.artist(
+          :md="mdArtist(song)"
+        ) {{ song.artist }}
+        v-col.song-title(
+          :md="mdTitle(song)"
+        ) {{ song.title }}
         v-spacer
-        v-col.duration(md="2") {{ song.duration }}
+        v-col.duration(
+          :md="mdDuration(song)"
+          v-show="song.duration"
+        ) {{ song.duration }}
+    v-container( v-show="!playlist.length")
+      v-row
+        v-col( align="center" ) Empty
+      v-row
+        v-col( align="center") Try uploading some songs!
+
 
 </template>
 
 <script>
-const axios = require('axios');
+import Utils from '@/js/services/Utils';
 
 export default {
   data: () => ({
     activeSongIndex: -1,
-    playlist: [],
   }),
 
   methods: {
@@ -31,14 +43,39 @@ export default {
       this.activeSongIndex = index;
       this.$emit('active_song', songObj);
     },
+
+    mdArtist(songData) {
+      let mdArtist = 4;
+
+      return mdArtist;
+    },
+
+    mdTitle(songData) {
+      let mdTitle = 6;
+
+      return mdTitle;
+    },
+
+    mdDuration(songData) {
+      return !songData.duration ? 0 : 2;
+    },
   },
 
-  mounted() {
-    axios
-      .get('https://my-json-server.typicode.com/conc2304/test-api/db')
-      .then(response => {
-        this.playlist = response.data.playlist ? response.data.playlist : [];
-      });
+  computed: {
+    playlist() {
+      const tracks = this.$store.state.audio.tracks;
+      console.log(tracks);
+
+      const playlist = [];
+      for (let file of tracks) {
+        const formattedFilename = Utils.formatAudioFilename(file);
+        playlist.push(formattedFilename);
+      }
+
+      return playlist;
+    },
+
+    // md to equal a total
   },
 };
 </script>
