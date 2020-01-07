@@ -28,7 +28,7 @@
               v-icon.menu-icon(
                 v-on="on"
               ) queue_music
-          span Open Playlist
+          span {{ playlistOpen ? 'Close' : 'Open' }} Playlist
 
         v-btn( @click="" text icon)
           v-icon.menu-icon skip_previous
