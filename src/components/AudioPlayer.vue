@@ -1,5 +1,6 @@
 <template lang="pug">
   #audio-control-panel
+    #audio-sketch-container
     #audio-player
       .song-info
         p#song-name {{ currentSong.title }} - {{ currentSong.artist }}
@@ -16,11 +17,16 @@
       )
     .audio-controls
       #playback-controls.ctrl-buttons
-        v-btn#open-playlist(
-          @click="playlistOpen = !playlistOpen"
-          text icon
-        )
-          v-icon.menu-icon queue_music
+        v-tooltip( right)
+          template( v-slot:activator = "{ on }")
+            v-btn#open-playlist(
+              @click="playlistOpen = !playlistOpen"
+              text icon
+            )
+              v-icon.menu-icon(
+                v-on="on"
+              ) queue_music
+          span Open Playlist
 
         v-btn( @click="" text icon)
           v-icon.menu-icon skip_previous
@@ -32,7 +38,7 @@
         v-tooltip( right)
           template( v-slot:activator= "{ on }")
             v-btn#upload-file-button(
-              @click="triggerFileInput"
+              @click="triggerFileUpload"
               text icon
             )
               v-icon.menu-icon(
@@ -50,13 +56,14 @@
         v-show="playlistOpen"
         @active_song="setActiveSong"
       )
-
-
 </template>
 
 <script>
 import AudioPlaylist from '@/components/AudioPlaylist.vue';
+import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
+import AudioPlayerService from '@/js/services/AudioPlayerService';
 
+let p5i;
 
 export default {
   data: () => ({
@@ -69,16 +76,27 @@ export default {
   }),
 
   components: {
-    AudioPlaylist
+    AudioPlaylist,
   },
 
   methods: {
-    triggerFileInput() {
+    triggerFileUpload() {
       this.$refs.fileInput.click();
     },
     setActiveSong(songObj) {
       this.currentSong = songObj;
     },
+
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      console.log(files);
+    },
+  },
+
+  mounted() {
+    const P5 = require('p5');
+    p5i = new P5(AudioAnalyzer, 'audio-sketch-container ');
   },
 };
 </script>
@@ -97,6 +115,10 @@ export default {
   min-height: 67px;
   text-align: center;
   padding: 10px;
+}
+
+#audio-sketch-container {
+  display: none;
 }
 
 #playback-controls.ctrl-buttons {
