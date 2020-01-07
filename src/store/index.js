@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import RegisteredSketches from '@/js/services/SketchRegistration';
+import AudioPlayerService from '@/js/services/AudioPlayerService';
 
 Vue.use(Vuex);
 
@@ -8,6 +9,14 @@ export default new Vuex.Store({
   state: {
     user: {},
     sketchIndexSelected: -1,
+    audio: {
+      isPlaying: false,
+      currentSound: {},
+      duration: 0,
+      currentTrackIndex: 0,
+      tracks: [],
+      audioIsLoading: false,
+    }
   },
   mutations: {
     updateSketchIndexSelected(state, payload) {
@@ -20,7 +29,31 @@ export default new Vuex.Store({
 
     updateUser(state, payload) {
       state.user = payload;
-    }
+    },
+
+    updateIsPlaying(state, payload) {
+      state.audio.isPlaying = payload;
+    },
+
+    updateCurrentSound(state, payload) {
+      state.audio.currentSound = payload;
+    },
+
+    updateSoundDuration(state, payload) {
+      state.audio.duration = payload;
+    },
+
+    updateCurrentTrackIndex(state, payload) {
+      state.audio.updateCurrentTrackIndex = payload;
+    },
+
+    updateAudioIsLoading(state, payload) {
+      state.audio.audioIsLoading = payload;
+    },
+
+    updateTracks(state, payload) {
+      state.audio.tracks = payload;
+    },
   },
   actions: {},
   modules: {},

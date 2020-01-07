@@ -114,19 +114,15 @@ export default {
         return;
       }
 
-
       this.RegisteredSketches.splice(layerSelected, 1);
       this.selectLayer(0);
     },
   },
 
-  watch: {
-  },
 
   computed: {
     sketchIndexSelected() {
-      const temp = this.$store.state.sketchIndexSelected;
-      return temp;
+      return this.$store.state.sketchIndexSelected;;
     }
   },
 

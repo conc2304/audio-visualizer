@@ -3,12 +3,15 @@
     #audio-sketch-container
     #audio-player
       .song-info
-        p#song-name {{ currentSong.title }} - {{ currentSong.artist }}
+        p#song-artist(
+          v-show="currentSong.artist"
+        ) {{ currentSong.artist }}
+        p#song-name  {{ currentSong.title }}
         p#song-time  {{ currentSong.duration }}
     .song-progress
-      v-progress-linear#loading-bar.progress(
-        value="0"
-        max="100"
+      v-progress-linear#loading-bar(
+        v-show="audioIsLoading"
+        indeterminate
         striped
         rounded
       )
@@ -67,21 +70,14 @@
 import AudioPlaylist from '@/components/AudioPlaylist.vue';
 import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
 import AudioPlayerService from '@/js/services/AudioPlayerService';
-import p5 from "p5";
-import "p5/lib/addons/p5.sound";
+import p5 from 'p5';
+import 'p5/lib/addons/p5.sound';
 
 let p5i;
 
 export default {
   data: () => ({
     playlistOpen: false,
-    currentSong: {
-      title: 'Song Name',
-      artist: 'Artist',
-      duration: 'Duration',
-    },
-    isPlaying: AudioPlayerService.isPlaying,
-    tracks: [],
   }),
 
   components: {
@@ -102,26 +98,67 @@ export default {
       if (!this.tracks.length) return;
 
       AudioPlayerService.audioUploaded(this.tracks, p5i);
-      this.isPlaying = AudioPlayerService.isPlaying;
-      console.log('component');
-      console.log(this.isPlaying);
     },
 
     toggleAudioState() {
-
-      this.isPlaying = AudioPlayerService.toggleAudioState(p5i);
-    }
+      AudioPlayerService.toggleAudioState(p5i);
+    },
   },
 
   mounted() {
     p5i = new p5(AudioAnalyzer, 'audio-sketch-container ');
   },
 
+  watch: {},
+
   computed: {
     songProgress() {
+      return 0;
       console.log('test');
-      return (AudioPlayerService.audio) ? AudioPlayerService.audio.currentTime() : 0;
-    }
+      console.log(AudioPlayerService.audio ? AudioPlayerService.audio.currentTime() : 0);
+      return AudioPlayerService.audio ? AudioPlayerService.audio.currentTime() : 0;
+    },
+
+    isPlaying() {
+      return this.$store.state.audio.isPlaying;
+    },
+
+    audioIsLoading() {
+      return this.$store.state.audio.audioIsLoading;
+    },
+
+    currentSong() {
+      let sound = this.$store.state.audio.currentSound;
+      let duration = this.$store.state.audio.duration;
+      let currentSound = {};
+
+      if (!sound.size) {
+        currentSound = {
+          title: 'Song Name',
+          artist: 'Artist',
+          duration: 'Duration',
+        };
+      } else {
+        if (sound.name) {
+          const filename = sound.name.substring(0, sound.name.lastIndexOf('.'));
+
+          currentSound.artist = filename.lastIndexOf('-')
+            ? filename.substring(0, filename.lastIndexOf('-')).trim()
+            : '';
+
+          currentSound.title = filename.indexOf('-')
+            ? filename.substring(filename.indexOf('-') + 1).trim()
+            : filename;
+
+          const seconds = Math.floor(duration % 60);
+          const minutes = Math.floor(duration / 60);
+          const time = ('0' + minutes).substr(-2) + ':' + ('0' + seconds).substr(-2);
+          currentSound.duration = time || 'Duration';
+        }
+      }
+
+      return currentSound;
+    },
   },
 };
 </script>
@@ -144,6 +181,14 @@ export default {
 
 .progress {
   display: none;
+}
+
+#song-artist {
+  margin-bottom: initial;
+}
+
+#song-name {
+  font-weight: bold;
 }
 
 #audio-sketch-container {

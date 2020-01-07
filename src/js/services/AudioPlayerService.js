@@ -1,42 +1,44 @@
-import RegisteredSketches from '@/js/services/SketchRegistration';
-
-import p5 from "p5";
-import "p5/lib/addons/p5.sound";
-
+import store from '@/store/index.js';
+import p5 from 'p5';
+import 'p5/lib/addons/p5.sound';
 
 const AudioPlayerService = {
   audioIsUploading: false,
-  isPlaying: false,
   autoPlay: false,
   uploadedAudio: null,
   peakDetect: null,
   peakCount: 0,
   fft: null,
-  currentSound: {},
-  tracks: [],
-  currentTrackIndex: 0,
   songProgress: 0,
+  currentSound: {},
 };
 
-AudioPlayerService.audioUploaded = (files, p5) => {
+AudioPlayerService.audioUploaded = async (files, p5) => {
   let APS = AudioPlayerService;
 
+  let tracks = store.state.audio.tracks || [];
   for (let file of files) {
-    APS.tracks.push(file)
+    tracks.push(file);
   }
 
+  store.commit('updateAudioIsLoading', true);
+  store.commit('updateTracks', tracks);
   APS.currentSound = files[0];
-  APS.audioIsUploading = true;
-  APS.setupAudioAnalysis(files[0], p5);
 
-  return APS;
+  APS.setupAudioAnalysis(files[0], p5);
 };
 
 AudioPlayerService.setupAudioAnalysis = (audioFile, P5) => {
   let APS = AudioPlayerService;
 
+  if (APS.audio) {
+    console.log('disconnect');
+    APS.audio.stop();
+    APS.audio.disconnect();
+  }
+
+  console.log(audioFile);
   APS.audio = P5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
-  APS.currentSound = audioFile;
 
   APS.fft = new p5.FFT();
   APS.fft.setInput(APS.audio);
@@ -49,14 +51,26 @@ const audioLoadSuccess = () => {
   let APS = AudioPlayerService;
 
   console.log('Sound is loaded : ' + APS.audio.isLoaded());
+
   APS.audio.playMode('restart');
   APS.audio.play();
-  APS.isPlaying = APS.audio.isPlaying();
-  APS.currentTrackIndex = APS.tracks.indexOf(APS.currentSound);
+
+  const tracks = store.state.audio.tracks || [];
+  const currentSound = APS.currentSound || {};
+  const index = tracks.indexOf(currentSound);
+
+  store.commit('updateCurrentSound', APS.currentSound);
+  store.commit('updateCurrentTrackIndex', index);
+  store.commit('updateAudioIsLoading', false);
+  store.commit('updateIsPlaying', APS.audio.isPlaying());
+  store.commit('updateSoundDuration', APS.audio.duration());
+
   APS.audio.onended(endSong);
 };
 
 const audioLoadError = error => {
+  store.commit('updateAudioIsLoading', false);
+
   console.log(error);
 };
 
@@ -64,7 +78,7 @@ function whileLoading(percent) {
   console.log('test');
   console.log(percent);
   AudioPlayerService.loadingPercent = (percent * 100 + 1).toFixed() + '%';
-};
+}
 
 AudioPlayerService.frequencies = [
   {
@@ -97,8 +111,19 @@ AudioPlayerService.frequencies = [
 const endSong = () => {
   let APS = AudioPlayerService;
 
-  if (!APS.audio.isPaused() && (APS.audio.currentTime() === '0' || APS.audio.currentTime().toString().split(".")[0] === APS.audio.duration().toString().split(".")[0])) {
-    if (APS.currentTrackIndex === (APS.tracks.length - 1)) {
+  if (
+    !APS.audio.isPaused() &&
+    (APS.audio.currentTime() === '0' ||
+      APS.audio
+        .currentTime()
+        .toString()
+        .split('.')[0] ===
+        APS.audio
+          .duration()
+          .toString()
+          .split('.')[0])
+  ) {
+    if (APS.currentTrackIndex === APS.tracks.length - 1) {
       APS.currentTrackIndex = 0;
     } else {
       APS.currentTrackIndex = Math.min(APS.currentTrackIndex + 1, APS.tracks.length - 1);
@@ -109,7 +134,7 @@ const endSong = () => {
     // setSong();
     APS.audio.play();
   }
-}
+};
 
 AudioPlayerService.toggleAudioState = () => {
   let APS = AudioPlayerService;
@@ -125,8 +150,7 @@ AudioPlayerService.toggleAudioState = () => {
     APS.audio.pause();
   }
 
-  APS.isPlaying = APS.audio.isPlaying();
-  return APS.isPlaying;
-}
+  store.commit('updateIsPlaying', APS.audio.isPlaying());
+};
 
 export default AudioPlayerService;
