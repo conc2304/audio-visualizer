@@ -1,23 +1,26 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
-import AudioPlayerService from '@/js/services/AudioPlayerService';
+import APS from '@/js/services/AudioPlayerService';
+import Utils from '@/js/services/Utils';
+import store from '@/store/index.js';
 
 const AudioAnalyzer = p5 => {
-  p5.preload = () => {
+  p5.setup = () => {
     console.log('Loading Audio Analyzer');
   };
   // p5.setup = () => {};
   p5.draw = () => {
-    // if (audio && audio.isLoaded() && !audio.isPaused()) {
-    //   let seconds = Math.floor(audio.currentTime() % 60);
-    //   let minutes = Math.floor(audio.currentTime() / 60);
-    //   let time = ('0' + minutes).substr(-2) + ':' + ('0' + seconds).substr(-2);
-    //   songTime.html(time);
-    //   let downloadProgress = 100 * (audio.currentTime() / audio.duration())
-    //   progressBar.val(downloadProgress);
-    // }
-    // fftAnalysis = getEQEnergy(fft);
-    // applyAudioEnergyValues(fftAnalysis);
+    if (APS.audio && APS.audio.isLoaded() && !APS.audio.isPaused()) {
 
+      if (p5.frameCount % 40 === 0) {
+        const songTime = Utils.formatTime(APS.audio.duration() - APS.audio.currentTime());
+        const songProgress = 100 * (APS.audio.currentTime() / APS.audio.duration());
+
+        store.commit('updateCurrentTrackTime', songTime);
+        store.commit('updateSongProgress', songProgress);
+      }
+      // fftAnalysis = getEQEnergy(APS.fft);
+      // applyAudioEnergyValues(fftAnalysis);
+    }
   };
 };
 

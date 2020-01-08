@@ -7,7 +7,7 @@
           v-show="currentSong.artist"
         ) {{ currentSong.artist }}
         p#song-name  {{ currentSong.title }}
-        p#song-time  {{ currentSong.duration }}
+        p#song-time  {{ currentTrackTime}}
     .song-progress
       v-progress-linear#loading-bar(
         v-show="audioIsLoading"
@@ -15,7 +15,7 @@
         striped
         rounded
       )
-      v-progress-linear#progress-bar.progress(
+      v-progress-linear#song-progress-bar(
         :value="songProgress"
         max="100"
         rounded
@@ -106,17 +106,21 @@ export default {
   },
 
   mounted() {
-    p5i = new p5(AudioAnalyzer, 'audio-sketch-container ');
+    p5i = new p5(AudioAnalyzer, 'audio-sketch-container');
+
+    AudioPlayerService.songTimeElem = document.getElementById('song-time');
+    AudioPlayerService.songProgressElem = document.getElementById('song-progress-bar');
   },
 
   watch: {},
 
   computed: {
     songProgress() {
-      return 0;
-      console.log('test');
-      console.log(AudioPlayerService.audio ? AudioPlayerService.audio.currentTime() : 0);
-      return AudioPlayerService.audio ? AudioPlayerService.audio.currentTime() : 0;
+      return this.$store.state.audio.songProgress;
+    },
+
+    currentTrackTime() {
+      return this.$store.state.audio.currentTrackTime;
     },
 
     isPlaying() {

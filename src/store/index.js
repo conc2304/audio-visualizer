@@ -16,7 +16,9 @@ export default new Vuex.Store({
       currentTrackIndex: 0,
       tracks: [],
       audioIsLoading: false,
-    }
+      currentTrackTime: 'Duration',
+      songProgress: 0,
+    },
   },
   mutations: {
     updateSketchIndexSelected(state, payload) {
@@ -53,6 +55,13 @@ export default new Vuex.Store({
 
     updateTracks(state, payload) {
       state.audio.tracks = payload;
+    },
+
+    updateCurrentTrackTime(state, payload) {
+      state.audio.currentTrackTime = payload;
+    },
+    updateSongProgress(state, payload) {
+      state.audio.songProgress = payload;
     },
   },
   actions: {},
