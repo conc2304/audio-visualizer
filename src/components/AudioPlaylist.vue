@@ -12,15 +12,19 @@
       )
         v-col.artist(
           :md="mdArtist(song)"
-        ) {{ song.artist }}
+        )
+          Trunquee( :text="song.artist" )
         v-col.song-title(
           :md="mdTitle(song)"
         ) {{ song.title }}
-        v-spacer
+        v-spacer(
+          v-show="song.duration"
+        )
         v-col.duration(
           :md="mdDuration(song)"
           v-show="song.duration"
-        ) {{ song.duration }}
+        )
+          Trunquee( :text="song.duration" )
     v-container( v-show="!playlist.length")
       v-row
         v-col( align="center" ) Empty
@@ -31,12 +35,17 @@
 </template>
 
 <script>
+import Trunquee from '@/components/Trunquee.vue';
 import Utils from '@/js/services/Utils';
 
 export default {
   data: () => ({
     activeSongIndex: -1,
   }),
+
+  components: {
+    Trunquee
+  },
 
   methods: {
     setSong(songObj, index) {
@@ -45,12 +54,10 @@ export default {
     },
 
     mdArtist(songData) {
-
       if (!songData.artist) return 0;
 
       let colsLeft = 12;
-      colsLeft -= (!songData.duration) ? 0 : 2;
-
+      colsLeft -= !songData.duration ? 0 : 2;
 
       let mdArtist = 4;
 
@@ -58,10 +65,19 @@ export default {
     },
 
     mdTitle(songData) {
-      const totalCols = 12;
       let mdTitle = 6;
 
-      // if
+      if (!songData.duration && !songData.artist) {
+        return 12;
+      }
+
+      if (!songData.artist && songData.duration) {
+        return 10;
+      }
+      if (!songData.duration && songData.artist) {
+        return 8;
+      }
+
       return mdTitle;
     },
 

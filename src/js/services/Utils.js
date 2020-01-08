@@ -26,11 +26,11 @@ Utils.formatAudioFilename = file => {
     const filename = file.name.substring(0, file.name.lastIndexOf('.'));
 
     currentSound.artist = filename.lastIndexOf('-')
-      ? filename.substring(0, filename.lastIndexOf('-')).trim()
+      ? ucFirst(filename.substring(0, filename.lastIndexOf('-')).trim())
       : null;
 
     currentSound.title = filename.indexOf('-')
-      ? filename.substring(filename.indexOf('-') + 1).trim()
+      ? ucFirst(filename.substring(filename.indexOf('-') + 1).trim())
       : filename;
   }
 
@@ -67,6 +67,10 @@ Utils.sketchPropertyIterator = (registeredSketches, fn) => {
 
     }
   }
+}
+
+const ucFirst = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export default Utils;
