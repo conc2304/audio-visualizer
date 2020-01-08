@@ -45,14 +45,23 @@ export default {
     },
 
     mdArtist(songData) {
+
+      if (!songData.artist) return 0;
+
+      let colsLeft = 12;
+      colsLeft -= (!songData.duration) ? 0 : 2;
+
+
       let mdArtist = 4;
 
       return mdArtist;
     },
 
     mdTitle(songData) {
+      const totalCols = 12;
       let mdTitle = 6;
 
+      // if
       return mdTitle;
     },
 

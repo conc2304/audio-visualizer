@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-const Utils = {};
-=======
 import RegisteredSketches from '@/js/services/SketchRegistration';
-import registeredSketches from './SketchRegistration';
-
->>>>>>> 30fac8a1084ca42a462a87566f2acf6034518b0a
 
 const Utils = {};
 /**
@@ -16,13 +10,6 @@ const Utils = {};
 Utils.getRandomInt = (min, max) => {
   'use strict';
   return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
-};
-
-<<<<<<< HEAD
-Utils.formatTime = (time = 0) => {
-  const seconds = Math.floor(time % 60);
-  const minutes = Math.floor(time / 60);
-  const formattedTime = ('0' + minutes).substr(-2) + ':' + ('0' + seconds).substr(-2);
 };
 
 Utils.formatAudioFilename = file => {
@@ -49,7 +36,7 @@ Utils.formatAudioFilename = file => {
 
   return currentSound;
 };
-=======
+
 Utils.formatTime = time => {
   const seconds = Math.floor(time % 60);
   const minutes = Math.floor(time / 60);
@@ -81,6 +68,5 @@ Utils.sketchPropertyIterator = (registeredSketches, fn) => {
     }
   }
 }
->>>>>>> 30fac8a1084ca42a462a87566f2acf6034518b0a
 
 export default Utils;
