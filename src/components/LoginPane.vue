@@ -51,6 +51,7 @@ export default {
   input:-internal-autofill-selected,
   select:-webkit-autofill:focus {
     background-color: transparent;
+    box-shadow: 0 0 0px 1000px #000 inset;
     -webkit-box-shadow: 0 0 0px 1000px #000 inset;
     -webkit-text-fill-color: #fff;
   }
