@@ -1,5 +1,8 @@
-const Utils = {};
+import RegisteredSketches from '@/js/services/SketchRegistration';
+import registeredSketches from './SketchRegistration';
 
+
+const Utils = {};
 /**
  * Returns a random integer between the min and max values.
  * @param {*} min
@@ -18,5 +21,29 @@ Utils.formatTime = time => {
 
   return formattedTime;
 };
+
+/**
+ *
+ */
+Utils.sketchPropertyIterator = (registeredSketches, fn) => {
+  for (let index in RegisteredSketches) {
+    for (let prop in RegisteredSketches[index]) {
+      if (
+        !RegisteredSketches[index].hasOwnProperty(prop) ||
+        !RegisteredSketches[index][prop].hasOwnProperty('defaultValue') ||
+        !RegisteredSketches[index][prop].hasOwnProperty('currentValue')
+      ) {
+        continue;
+      }
+
+      if (RegisteredSketches[index][prop].lockOn === true && !globalReset) {
+        continue;
+      }
+
+      RegisteredSketches[index][prop] = fn(RegisteredSketches[index][prop]);
+
+    }
+  }
+}
 
 export default Utils;
