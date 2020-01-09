@@ -15,11 +15,15 @@
         striped
         rounded
       )
-      v-progress-linear#song-progress-bar(
-        :value="songProgress"
-        max="100"
-        rounded
+      #progress-click-wrapper(
+        @click="toSongPosition($event)"
       )
+        v-progress-linear#song-progress-bar(
+          v-show="!audioIsLoading"
+          :value="songProgress"
+          max="100"
+          rounded
+        )
     .audio-controls
       #playback-controls.ctrl-buttons
         v-tooltip( right)
@@ -104,6 +108,16 @@ export default {
     toggleAudioState() {
       AudioPlayerService.toggleAudioState(p5i);
     },
+
+    toSongPosition(e) {
+      console.log(e);
+      if (!AudioPlayerService.audio) return;
+
+      const percent = e.offsetX / e.target.offsetWidth;
+      console.log(percent);
+      AudioPlayerService.audio.jump(AudioPlayerService.audio.duration() * percent);
+      // APaudio.onended(endSong);
+    },
   },
 
   mounted() {
@@ -165,10 +179,16 @@ export default {
   padding: 10px;
 }
 
-.progress {
-  display: none;
+#song-progress-bar {
+  margin: 3px 0;
 }
 
+#progress-click-wrapper {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  // border: 1px solid red;
+}
 #song-artist {
   margin-bottom: initial;
 }
