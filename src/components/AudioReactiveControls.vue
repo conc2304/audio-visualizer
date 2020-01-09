@@ -43,6 +43,7 @@
               outlined
               single-line
               dense
+              @change="updateAudioReactiveFreq()"
             )
         span Make parameter react to audio frequency
 
@@ -50,40 +51,14 @@
 
 <script>
 import KnobControl from 'vue-knob-control';
+import APS from '@/js/services/AudioPlayerService';
 
 export default {
   data: () => ({
     gain: false,
     freqRangeSelected: {},
     defaultSelect: {},
-
-    frequencies: [
-      {
-        label: 'Low',
-        rangesData: [[1, 140]],
-        ranges: '1 - 140 Hz',
-      },
-      {
-        label: 'Mid - Low',
-        rangesData: [[140, 400]],
-        ranges: '140 - 400 Hz',
-      },
-      {
-        label: 'Mid',
-        rangesData: [[400, 2600]],
-        ranges: '400 - 2600 Hz',
-      },
-      {
-        label: 'Mid - High',
-        rangesData: [[2600, 5200]],
-        ranges: '2600 - 5200 Hz',
-      },
-      {
-        label: 'High',
-        rangesData: [[5200, 14000]],
-        ranges: '5200 - 14000 Hz',
-      },
-    ],
+    frequencies: APS.frequencies,
   }),
 
   components: {
@@ -96,9 +71,21 @@ export default {
     },
   },
 
+  methods: {
+    updateAudioReactiveFreq() {
+      APS.setAudioReactiveFreq(this.freqRangeSelected, this.parameter.attrName, this.sketchIndexSelected);
+    },
+  },
+
   mounted() {
     let gain = this.parameter.audio.gain;
     this.gain = gain * 100;
+  },
+
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;
+    },
   },
 
   watch: {

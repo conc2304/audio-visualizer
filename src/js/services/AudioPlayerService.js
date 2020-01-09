@@ -14,6 +14,8 @@ const AudioPlayerService = {
   songProgress: 0,
   currentSound: {},
   p5: null,
+  audioCtrl: {},
+  elementPropToFQMap: {},
 };
 
 AudioPlayerService.audioUploaded = async (files, p5) => {
@@ -127,7 +129,11 @@ const endSong = () => {
   let next = current;
 
   // only go to next song if we are just finishing a song that was playing
-  if (APS.audio.isPlaying() && !APS.audio.isPaused() && (APS.audio.currentTime() === '0' || songEnded)) {
+  if (
+    APS.audio.isPlaying() &&
+    !APS.audio.isPaused() &&
+    (APS.audio.currentTime() === '0' || songEnded)
+  ) {
     if (current === tracks.length - 1) {
       next = 0;
     } else {
@@ -155,6 +161,7 @@ AudioPlayerService.toggleAudioState = () => {
   store.commit('updateIsPlaying', APS.audio.isPlaying());
 };
 
+
 AudioPlayerService.analyzeFFT = fft => {
   if (!fft || !AudioPlayerService.frequencies) {
     return;
@@ -163,9 +170,10 @@ AudioPlayerService.analyzeFFT = fft => {
   const fftAnalysis = [];
   fft.analyze();
 
-  for (let frequencies of AudioPlayerService.frequencies) {
-    const rangeData = frequencies.rangesData;
-    fftAnalysis[frequencies.ranges] = fft.getEnergy(rangeData[0], rangeData[1]);
+  // for (let frequencies of AudioPlayerService.frequencies) {
+  for (let index in AudioPlayerService.frequencies) {
+    const rangeData = AudioPlayerService.frequencies[index].rangesData;
+    fftAnalysis[index] = fft.getEnergy(rangeData[0], rangeData[1]);
   }
 
   return fftAnalysis;
@@ -176,38 +184,20 @@ AudioPlayerService.analyzeFFT = fft => {
  * and apply the frequency to the element property.
  * We map the audio frequency value between the minimum and maximum for the property.
  * We then adjust the target value using the reset or target value based on responsiveness type
- * @param energyValues - an array of amplitude readings for each frequency
+ * @param fftAnalysis - an array of amplitude readings for each frequency
  * @returns {boolean}
  */
-let applyAudioEnergyValues = energyValues => {
+let applyAudioEnergyValues = fftAnalysis => {
   'use strict';
 
   if (!energyValues || energyValues.size < 1) {
     return false;
   }
 
-  for (let index in RegisteredSketches) {
-    for (let prop in RegisteredSketches[index]) {
-      if (
-        !RegisteredSketches[index].hasOwnProperty(prop) ||
-        !RegisteredSketches[index][prop].hasOwnProperty('defaultValue') ||
-        !RegisteredSketches[index][prop].hasOwnProperty('currentValue')
-      ) {
-        continue;
-      }
-
-      if (RegisteredSketches[index][prop].lockOn === true && !globalReset) {
-        continue;
-      }
-
-      RegisteredSketches[index][prop] = fn(RegisteredSketches[index][prop]);
-    }
-  }
-
   let controlObject;
   let audioValue;
 
-  let ctrlHandlers = elementPropToFQMap;
+  let ctrlHandlers = APS.elementPropToFQMap;
   // console.log(ctrlHandlers);
   for (let controlElementName in ctrlHandlers) {
     if (!ctrlHandlers.hasOwnProperty(controlElementName)) {
@@ -220,7 +210,7 @@ let applyAudioEnergyValues = energyValues => {
         continue;
       }
 
-      let eqBand = ctrlHandlers[controlElementName][ctrlProp];
+      const eqBand = ctrlHandlers[controlElementName][ctrlProp];
       // the value in eq band will be somewhere between 0 and 255
       // we need to scale that between the upper and lower bounds of the element
       if (energyValues[eqBand] === 0) {
@@ -282,5 +272,55 @@ let applyAudioEnergyValues = energyValues => {
     }
   }
 };
+
+AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchIndexSelected) => {
+  const APS = AudioPlayerService;
+  const ctrlObjectName = sketchIndexSelected;
+  const freqIndex = APS.frequencies.indexOf(frequencyRange);
+  const freqLabel = (frequencyRange) ? frequencyRange.label : false;
+
+
+  if (freqLabel && ctrlObjectName !== null && parameter && frequencyRange) {
+    APS.audioCtrl[freqLabel] = APS.audioCtrl[freqLabel] || {};
+    APS.audioCtrl[freqLabel][ctrlObjectName] = APS.audioCtrl[freqLabel][ctrlObjectName] || {};
+    APS.audioCtrl[freqLabel][ctrlObjectName][parameter] = frequencyRange
+
+    APS.elementPropToFQMap[ctrlObjectName] = APS.elementPropToFQMap[ctrlObjectName] || {};
+    APS.elementPropToFQMap[ctrlObjectName][parameter] = freqLabel;
+  } else {
+    if (APS.elementPropToFQMap[ctrlObjectName] && APS.elementPropToFQMap[ctrlObjectName][parameter]) {
+      const freqToClean = APS.elementPropToFQMap[ctrlObjectName][parameter];
+
+      delete APS.audioCtrl[freqToClean][ctrlObjectName][parameter];
+      if (Object.size(APS.audioCtrl[freqToClean][ctrlObjectName]) === 0) {
+        delete APS.audioCtrl[freqToClean][ctrlObjectName];
+      }
+
+      if (Object.size(APS.audioCtrl[freqToClean]) === 0) {
+        delete APS.audioCtrl[freqToClean];
+      }
+      delete elementPropToFQMap[ctrlObjectName][parameter];
+    }
+
+    if (Object.size(APS.elementPropToFQMap[ctrlObjectName]) === 0) {
+      delete APS.elementPropToFQMap[ctrlObjectName];
+    }
+  }
+
+  console.log(APS.audioCtrl)
+};
+
+
+Object.size = obj => {
+  let size = 0,
+    key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      size++;
+    }
+  }
+  return size;
+};
+
 AudioPlayerService.applyAudioFFT = () => {};
 export default AudioPlayerService;

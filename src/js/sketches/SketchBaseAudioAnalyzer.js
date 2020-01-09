@@ -19,6 +19,8 @@ const AudioAnalyzer = p5 => {
         store.commit('updateSongProgress', songProgress);
       }
       const fftAnalysis = APS.analyzeFFT(APS.fft);
+
+      // console.log(fftAnalysis);
       // applyAudioEnergyValues(fftAnalysis);
     }
   };
