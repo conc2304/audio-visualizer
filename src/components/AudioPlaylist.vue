@@ -4,14 +4,15 @@
       v-row.song-item(
         v-show="playlist.length"
         v-for="(song, i) in playlist"
-        :class="{ 'active': activeSongIndex === i}"
+        :class="{ 'active': currentTrackIndex === i}"
         :key="i"
-        @click="setSong(song, i)"
+        @click="setSong(i)"
         cols="12"
         dense
       )
         v-col.artist(
           :md="mdArtist(song)"
+          v-show="song.artist"
         )
           Trunquee( :text="song.artist" )
         v-col.song-title(
@@ -36,21 +37,28 @@
 
 <script>
 import Trunquee from '@/components/Trunquee.vue';
+import AudioPlayerService from '@/js/services/AudioPlayerService';
 import Utils from '@/js/services/Utils';
 
 export default {
-  data: () => ({
-    activeSongIndex: -1,
-  }),
-
   components: {
-    Trunquee
+    Trunquee,
+  },
+
+  props: {
+    p5: {
+      defualt: null
+    },
   },
 
   methods: {
-    setSong(songObj, index) {
-      this.activeSongIndex = index;
-      this.$emit('active_song', songObj);
+    setSong(index) {
+
+      const selectedSound = this.$store.state.audio.tracks[index];
+      this.$store.commit('updateCurrentTrackIndex', index);
+      this.$store.commit('updateCurrentSound', selectedSound);
+
+      AudioPlayerService.setupAudioAnalysis(selectedSound, this.p5);
     },
 
     mdArtist(songData) {
@@ -87,9 +95,14 @@ export default {
   },
 
   computed: {
+    currentTrackIndex() {
+      console.log('Update playlist active track');
+      console.log(this.$store.state.audio.currentTrackIndex);
+      return this.$store.state.audio.currentTrackIndex;
+    },
+
     playlist() {
       const tracks = this.$store.state.audio.tracks;
-      console.log(tracks);
 
       const playlist = [];
       for (let file of tracks) {
@@ -99,8 +112,6 @@ export default {
 
       return playlist;
     },
-
-    // md to equal a total
   },
 };
 </script>

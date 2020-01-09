@@ -4,9 +4,9 @@
     #audio-player
       .song-info
         p#song-artist(
-          v-show="currentSong.artist"
-        ) {{ currentSong.artist }}
-        p#song-name  {{ currentSong.title }}
+          v-show="currentSound.artist"
+        ) {{ currentSound.artist }}
+        p#song-name  {{ currentSound.title }}
         p#song-time  {{ currentTrackTime}}
     .song-progress
       v-progress-linear#loading-bar(
@@ -66,7 +66,7 @@
         )
       AudioPlaylist(
         v-show="playlistOpen"
-        @active_song="setActiveSong"
+        :p5="p5i"
       )
 </template>
 
@@ -78,11 +78,10 @@ import Utils from '@/js/services/Utils';
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 
-let p5i;
-
 export default {
   data: () => ({
     playlistOpen: false,
+    p5i: null,
   }),
 
   components: {
@@ -94,34 +93,27 @@ export default {
       this.$refs.file.click();
     },
 
-    setActiveSong(songObj) {
-      this.currentSong = songObj;
-    },
-
     onFileChange() {
       this.tracks = this.$refs.file.files;
       if (!this.tracks.length) return;
 
-      AudioPlayerService.audioUploaded(this.tracks, p5i);
+      AudioPlayerService.audioUploaded(this.tracks, this.p5i);
     },
 
     toggleAudioState() {
-      AudioPlayerService.toggleAudioState(p5i);
+      AudioPlayerService.toggleAudioState(this.p5i);
     },
 
     toSongPosition(e) {
-      console.log(e);
       if (!AudioPlayerService.audio) return;
 
       const percent = e.offsetX / e.target.offsetWidth;
-      console.log(percent);
       AudioPlayerService.audio.jump(AudioPlayerService.audio.duration() * percent);
-      // APaudio.onended(endSong);
     },
   },
 
   mounted() {
-    p5i = new p5(AudioAnalyzer, 'audio-sketch-container');
+    this.p5i = new p5(AudioAnalyzer, 'audio-sketch-container');
 
     AudioPlayerService.songTimeElem = document.getElementById('song-time');
     AudioPlayerService.songProgressElem = document.getElementById('song-progress-bar');
@@ -146,10 +138,9 @@ export default {
       return this.$store.state.audio.audioIsLoading;
     },
 
-    currentSong() {
+    currentSound() {
       const soundFile = this.$store.state.audio.currentSound;
       const duration = this.$store.state.audio.duration;
-
       const formattedFilename = Utils.formatAudioFilename(soundFile);
 
       const currentSound = {};
@@ -187,8 +178,8 @@ export default {
   width: 100%;
   height: 10px;
   cursor: pointer;
-  // border: 1px solid red;
 }
+
 #song-artist {
   margin-bottom: initial;
 }

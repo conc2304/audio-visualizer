@@ -13,7 +13,7 @@ export default new Vuex.Store({
       isPlaying: false,
       currentSound: {},
       duration: 0,
-      currentTrackIndex: 0,
+      currentTrackIndex: -1,
       tracks: [],
       audioIsLoading: false,
       currentTrackTime: 'Duration',
@@ -33,6 +33,7 @@ export default new Vuex.Store({
       state.user = payload;
     },
 
+
     updateIsPlaying(state, payload) {
       state.audio.isPlaying = payload;
     },
@@ -46,7 +47,9 @@ export default new Vuex.Store({
     },
 
     updateCurrentTrackIndex(state, payload) {
-      state.audio.updateCurrentTrackIndex = payload;
+      console.log('update track index');
+      console.log(payload);
+      state.audio.currentTrackIndex = payload;
     },
 
     updateAudioIsLoading(state, payload) {

@@ -25,6 +25,8 @@ AudioPlayerService.audioUploaded = async (files, p5) => {
 
   store.commit('updateAudioIsLoading', true);
   store.commit('updateTracks', tracks);
+
+  store.commit('updateCurrentSound', files[0]);
   APS.currentSound = files[0];
 
   APS.setupAudioAnalysis(files[0], p5);
@@ -40,6 +42,7 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, P5) => {
   }
 
   console.log(audioFile);
+  store.commit('updateAudioIsLoading', true);
   APS.audio = P5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
 
   APS.fft = new p5.FFT();
@@ -57,11 +60,15 @@ const audioLoadSuccess = () => {
   APS.audio.playMode('restart');
   APS.audio.play();
 
-  const tracks = store.state.audio.tracks || [];
-  const currentSound = APS.currentSound || {};
+  const tracks = store.state.audio.tracks;
+  const currentSound = store.state.audio.currentSound;
   const index = tracks.indexOf(currentSound);
+  console.log('audioLoadSuccess');
+  console.log(tracks);
+  console.log(currentSound);
+  console.log(index);
 
-  store.commit('updateCurrentSound', APS.currentSound);
+  store.commit('updateCurrentSound', currentSound);
   store.commit('updateCurrentTrackIndex', index);
   store.commit('updateAudioIsLoading', false);
   store.commit('updateIsPlaying', APS.audio.isPlaying());
@@ -72,7 +79,6 @@ const audioLoadSuccess = () => {
 
 const audioLoadError = error => {
   store.commit('updateAudioIsLoading', false);
-
   console.log(error);
 };
 
@@ -125,13 +131,13 @@ const endSong = () => {
           .toString()
           .split('.')[0])
   ) {
-    if (APS.currentTrackIndex === APS.tracks.length - 1) {
-      APS.currentTrackIndex = 0;
+    if (store.state.audio.currentTrackIndex === store.state.audio.tracks.length - 1) {
+      store.state.audio.currentTrackIndex = 0;
     } else {
-      APS.currentTrackIndex = Math.min(APS.currentTrackIndex + 1, APS.tracks.length - 1);
+      store.state.audio.currentTrackIndex = Math.min(store.state.audio.currentTrackIndex + 1, store.state.audio.tracks.length - 1);
     }
 
-    APS.songProgress.val(APS.audio.currentTime());
+    store.state.audio.songProgress = APS.audio.currentTime();
     // setupAudioAnalysis();
     // setSong();
     APS.audio.play();
@@ -144,7 +150,7 @@ AudioPlayerService.toggleAudioState = () => {
   if (!APS.audio) return;
 
   if (!APS.audio.isPlaying() && !APS.audio.isPaused()) {
-    APS.setupAudioAnalysis(APS.currentSound, p5i);
+    APS.setupAudioAnalysis(store.state.audio.currentSound, p5i);
     // setSong();
   } else if (APS.audio.isPaused()) {
     APS.audio.play();
