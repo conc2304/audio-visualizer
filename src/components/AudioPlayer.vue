@@ -37,11 +37,11 @@
               ) queue_music
           span {{ playlistOpen ? 'Close' : 'Open' }} Playlist
 
-        v-btn( @click="" text icon)
+        v-btn( @click="setSong(-1)" text icon)
           v-icon.menu-icon skip_previous
         v-btn( @click="toggleAudioState()" text icon)
           v-icon.menu-icon {{ isPlaying ? 'pause' : 'play_arrow' }}
-        v-btn( @click="" text icon)
+        v-btn( @click="setSong(1)" text icon)
           v-icon.menu-icon skip_next
 
         v-tooltip( right)
@@ -66,7 +66,7 @@
         )
       AudioPlaylist(
         v-show="playlistOpen"
-        :p5="p5i"
+        :p5="p5"
       )
 </template>
 
@@ -81,7 +81,7 @@ import 'p5/lib/addons/p5.sound';
 export default {
   data: () => ({
     playlistOpen: false,
-    p5i: null,
+    p5: null,
   }),
 
   components: {
@@ -97,11 +97,11 @@ export default {
       this.tracks = this.$refs.file.files;
       if (!this.tracks.length) return;
 
-      AudioPlayerService.audioUploaded(this.tracks, this.p5i);
+      AudioPlayerService.audioUploaded(this.tracks, this.p5);
     },
 
     toggleAudioState() {
-      AudioPlayerService.toggleAudioState(this.p5i);
+      AudioPlayerService.toggleAudioState(this.p5);
     },
 
     toSongPosition(e) {
@@ -110,10 +110,23 @@ export default {
       const percent = e.offsetX / e.target.offsetWidth;
       AudioPlayerService.audio.jump(AudioPlayerService.audio.duration() * percent);
     },
+
+    setSong(direction) {
+      const currentIndex = this.$store.state.audio.currentTrackIndex;
+      const tracks = this.$store.state.audio.tracks;
+
+      const nextIndex =
+        direction === 1
+          ? Math.min(currentIndex + 1, tracks.length - 1)
+          : Math.max(currentIndex - 1, 0);
+
+      this.$store.commit('updateCurrentTrackIndex', nextIndex);
+      AudioPlayerService.setupAudioAnalysis(tracks[nextIndex], this.p5);
+    },
   },
 
   mounted() {
-    this.p5i = new p5(AudioAnalyzer, 'audio-sketch-container');
+    this.p5 = new p5(AudioAnalyzer, 'audio-sketch-container');
 
     AudioPlayerService.songTimeElem = document.getElementById('song-time');
     AudioPlayerService.songProgressElem = document.getElementById('song-progress-bar');

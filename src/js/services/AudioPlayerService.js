@@ -13,10 +13,12 @@ const AudioPlayerService = {
   fft: null,
   songProgress: 0,
   currentSound: {},
+  p5: null,
 };
 
 AudioPlayerService.audioUploaded = async (files, p5) => {
   const APS = AudioPlayerService;
+  APS.p5 = p5;
 
   const tracks = store.state.audio.tracks || [];
   for (let file of files) {
@@ -26,9 +28,6 @@ AudioPlayerService.audioUploaded = async (files, p5) => {
   store.commit('updateAudioIsLoading', true);
   store.commit('updateTracks', tracks);
 
-  store.commit('updateCurrentSound', files[0]);
-  APS.currentSound = files[0];
-
   APS.setupAudioAnalysis(files[0], p5);
 };
 
@@ -36,14 +35,13 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, P5) => {
   const APS = AudioPlayerService;
 
   if (APS.audio) {
-    console.log('disconnect');
     APS.audio.stop();
     APS.audio.disconnect();
   }
 
-  console.log(audioFile);
+  store.commit('updateCurrentSound', audioFile);
   store.commit('updateAudioIsLoading', true);
-  APS.audio = P5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
+  APS.audio = APS.p5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
 
   APS.fft = new p5.FFT();
   APS.fft.setInput(APS.audio);
@@ -63,10 +61,6 @@ const audioLoadSuccess = () => {
   const tracks = store.state.audio.tracks;
   const currentSound = store.state.audio.currentSound;
   const index = tracks.indexOf(currentSound);
-  console.log('audioLoadSuccess');
-  console.log(tracks);
-  console.log(currentSound);
-  console.log(index);
 
   store.commit('updateCurrentSound', currentSound);
   store.commit('updateCurrentTrackIndex', index);
@@ -83,8 +77,7 @@ const audioLoadError = error => {
 };
 
 function whileLoading(percent) {
-  console.log('test');
-  console.log(percent);
+  // not firing currently  - not sure why??
   AudioPlayerService.loadingPercent = (percent * 100 + 1).toFixed() + '%';
 }
 
@@ -118,29 +111,31 @@ AudioPlayerService.frequencies = [
 
 const endSong = () => {
   const APS = AudioPlayerService;
+  const currentTime = APS.audio
+    .currentTime()
+    .toString()
+    .split('.')[0];
+  const duration = APS.audio
+    .duration()
+    .toString()
+    .split('.')[0];
 
-  if (
-    !APS.audio.isPaused() &&
-    (APS.audio.currentTime() === '0' ||
-      APS.audio
-        .currentTime()
-        .toString()
-        .split('.')[0] ===
-        APS.audio
-          .duration()
-          .toString()
-          .split('.')[0])
-  ) {
-    if (store.state.audio.currentTrackIndex === store.state.audio.tracks.length - 1) {
-      store.state.audio.currentTrackIndex = 0;
+  const songEnded = currentTime === duration;
+
+  const current = store.state.audio.currentTrackIndex;
+  const tracks = store.state.audio.tracks;
+  let next = current;
+
+  // only go to next song if we are just finishing a song that was playing
+  if (APS.audio.isPlaying() && !APS.audio.isPaused() && (APS.audio.currentTime() === '0' || songEnded)) {
+    if (current === tracks.length - 1) {
+      next = 0;
     } else {
-      store.state.audio.currentTrackIndex = Math.min(store.state.audio.currentTrackIndex + 1, store.state.audio.tracks.length - 1);
+      next = Math.min(current + 1, tracks.length - 1);
     }
 
     store.state.audio.songProgress = APS.audio.currentTime();
-    // setupAudioAnalysis();
-    // setSong();
-    APS.audio.play();
+    APS.setupAudioAnalysis(tracks[next], APS.p5);
   }
 };
 
@@ -151,7 +146,6 @@ AudioPlayerService.toggleAudioState = () => {
 
   if (!APS.audio.isPlaying() && !APS.audio.isPaused()) {
     APS.setupAudioAnalysis(store.state.audio.currentSound, p5i);
-    // setSong();
   } else if (APS.audio.isPaused()) {
     APS.audio.play();
   } else {
@@ -176,7 +170,6 @@ AudioPlayerService.analyzeFFT = fft => {
 
   return fftAnalysis;
 };
-
 
 /**
  * Loop through all of the elements that have audio reactive set,

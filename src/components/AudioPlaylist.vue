@@ -47,17 +47,14 @@ export default {
 
   props: {
     p5: {
-      defualt: null
+      defualt: null,
     },
   },
 
   methods: {
     setSong(index) {
-
       const selectedSound = this.$store.state.audio.tracks[index];
       this.$store.commit('updateCurrentTrackIndex', index);
-      this.$store.commit('updateCurrentSound', selectedSound);
-
       AudioPlayerService.setupAudioAnalysis(selectedSound, this.p5);
     },
 
@@ -96,8 +93,6 @@ export default {
 
   computed: {
     currentTrackIndex() {
-      console.log('Update playlist active track');
-      console.log(this.$store.state.audio.currentTrackIndex);
       return this.$store.state.audio.currentTrackIndex;
     },
 
