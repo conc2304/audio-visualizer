@@ -20,8 +20,8 @@ const AudioAnalyzer = p5 => {
       }
       const fftAnalysis = APS.analyzeFFT(APS.fft);
 
-      // console.log(fftAnalysis);
-      // applyAudioEnergyValues(fftAnalysis);
+      console.log(fftAnalysis);
+      APS.applyAudioEnergyValues(fftAnalysis);
     }
   };
 };

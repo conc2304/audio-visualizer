@@ -187,10 +187,10 @@ AudioPlayerService.analyzeFFT = fft => {
  * @param fftAnalysis - an array of amplitude readings for each frequency
  * @returns {boolean}
  */
-let applyAudioEnergyValues = fftAnalysis => {
-  'use strict';
+AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
+  const APS = AudioPlayerService;
 
-  if (!energyValues || energyValues.size < 1) {
+  if (!fftAnalysis || fftAnalysis.size < 1) {
     return false;
   }
 
@@ -204,7 +204,7 @@ let applyAudioEnergyValues = fftAnalysis => {
       continue;
     }
 
-    controlObject = p5[`get${controlElementName}`]();
+    controlObject = RegisteredSketches[controlElementName];
     for (let ctrlProp in ctrlHandlers[controlElementName]) {
       if (!ctrlHandlers[controlElementName].hasOwnProperty(ctrlProp)) {
         continue;
@@ -213,11 +213,11 @@ let applyAudioEnergyValues = fftAnalysis => {
       const eqBand = ctrlHandlers[controlElementName][ctrlProp];
       // the value in eq band will be somewhere between 0 and 255
       // we need to scale that between the upper and lower bounds of the element
-      if (energyValues[eqBand] === 0) {
+      if (fftAnalysis[eqBand] === 0) {
         continue;
       } else {
-        audioValue = p5.map(
-          energyValues[eqBand],
+        audioValue = APS.p5.map(
+          fftAnalysis[eqBand],
           0,
           255,
           controlObject[ctrlProp].min,
@@ -225,7 +225,7 @@ let applyAudioEnergyValues = fftAnalysis => {
         );
       }
 
-      audioValue = audioValue * controlObject[ctrlProp].audio.gain;
+      audioValue = parseFloat(audioValue) * parseFloat(controlObject[ctrlProp].audio.gain);
 
       let setValue;
       let overBy;
@@ -286,7 +286,7 @@ AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchInde
     APS.audioCtrl[freqLabel][ctrlObjectName][parameter] = frequencyRange
 
     APS.elementPropToFQMap[ctrlObjectName] = APS.elementPropToFQMap[ctrlObjectName] || {};
-    APS.elementPropToFQMap[ctrlObjectName][parameter] = freqLabel;
+    APS.elementPropToFQMap[ctrlObjectName][parameter] = freqIndex;
   } else {
     if (APS.elementPropToFQMap[ctrlObjectName] && APS.elementPropToFQMap[ctrlObjectName][parameter]) {
       const freqToClean = APS.elementPropToFQMap[ctrlObjectName][parameter];
