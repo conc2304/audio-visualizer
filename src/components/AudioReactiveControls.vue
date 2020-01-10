@@ -11,7 +11,7 @@
             // implementation of vue-knob-control
             KnobControl(
               v-on="on"
-              v-if="parameter.audio && gain >= 0"
+              v-if="parameter.audio && gain && gain >= 0"
               :min="0"
               :max="100"
               :size="40"
@@ -93,7 +93,13 @@ export default {
 
   watch: {
     gain(newValue, oldValue) {
-      if (!this.parameter || !this.parameter.audio || this.$store.state.sketchIndexSelected < 0) return;
+      if (
+        newValue === oldValue ||
+        !this.parameter ||
+        !this.parameter.audio ||
+        this.$store.state.sketchIndexSelected < 0
+      )
+        return;
       APS.setPropertyGain(newValue * 0.01, this.parameter.attrName, this.sketchIndexSelected);
     },
   },
