@@ -161,7 +161,6 @@ AudioPlayerService.toggleAudioState = () => {
   store.commit('updateIsPlaying', APS.audio.isPlaying());
 };
 
-
 AudioPlayerService.analyzeFFT = fft => {
   if (!fft || !AudioPlayerService.frequencies) {
     return;
@@ -225,7 +224,7 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
         );
       }
 
-      audioValue = parseFloat(audioValue) * parseFloat(controlObject[ctrlProp].audio.gain);
+      audioValue = 0.6 * parseFloat(audioValue) * parseFloat(controlObject[ctrlProp].audio.gain);
 
       let setValue;
       let overBy;
@@ -273,22 +272,28 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
   }
 };
 
+AudioPlayerService.setPropertyGain = (gainValue, parameterName, sketchIndexSelected) => {
+  RegisteredSketches[sketchIndexSelected][parameterName].audio.gain = gainValue;
+};
+
 AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchIndexSelected) => {
   const APS = AudioPlayerService;
   const ctrlObjectName = sketchIndexSelected;
   const freqIndex = APS.frequencies.indexOf(frequencyRange);
-  const freqLabel = (frequencyRange) ? frequencyRange.label : false;
-
+  const freqLabel = frequencyRange ? frequencyRange.label : false;
 
   if (freqLabel && ctrlObjectName !== null && parameter && frequencyRange) {
     APS.audioCtrl[freqLabel] = APS.audioCtrl[freqLabel] || {};
     APS.audioCtrl[freqLabel][ctrlObjectName] = APS.audioCtrl[freqLabel][ctrlObjectName] || {};
-    APS.audioCtrl[freqLabel][ctrlObjectName][parameter] = frequencyRange
+    APS.audioCtrl[freqLabel][ctrlObjectName][parameter] = frequencyRange;
 
     APS.elementPropToFQMap[ctrlObjectName] = APS.elementPropToFQMap[ctrlObjectName] || {};
     APS.elementPropToFQMap[ctrlObjectName][parameter] = freqIndex;
   } else {
-    if (APS.elementPropToFQMap[ctrlObjectName] && APS.elementPropToFQMap[ctrlObjectName][parameter]) {
+    if (
+      APS.elementPropToFQMap[ctrlObjectName] &&
+      APS.elementPropToFQMap[ctrlObjectName][parameter]
+    ) {
       const freqToClean = APS.elementPropToFQMap[ctrlObjectName][parameter];
 
       delete APS.audioCtrl[freqToClean][ctrlObjectName][parameter];
@@ -306,10 +311,7 @@ AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchInde
       delete APS.elementPropToFQMap[ctrlObjectName];
     }
   }
-
-  console.log(APS.audioCtrl)
 };
-
 
 Object.size = obj => {
   let size = 0,

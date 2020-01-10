@@ -11,7 +11,7 @@
             // implementation of vue-knob-control
             KnobControl(
               v-on="on"
-              v-if="parameter.audio && gain"
+              v-if="parameter.audio && gain >= 0"
               :min="0"
               :max="100"
               :size="40"
@@ -73,13 +73,16 @@ export default {
 
   methods: {
     updateAudioReactiveFreq() {
-      APS.setAudioReactiveFreq(this.freqRangeSelected, this.parameter.attrName, this.sketchIndexSelected);
+      APS.setAudioReactiveFreq(
+        this.freqRangeSelected,
+        this.parameter.attrName,
+        this.sketchIndexSelected,
+      );
     },
   },
 
   mounted() {
-    let gain = this.parameter.audio.gain;
-    this.gain = gain * 100;
+    this.gain = this.parameter.audio.gain * 100;
   },
 
   computed: {
@@ -89,7 +92,10 @@ export default {
   },
 
   watch: {
-    gain(newValue, oldValue) {},
+    gain(newValue, oldValue) {
+      if (!this.parameter || !this.parameter.audio || this.$store.state.sketchIndexSelected < 0) return;
+      APS.setPropertyGain(newValue * 0.01, this.parameter.attrName, this.sketchIndexSelected);
+    },
   },
 };
 </script>
