@@ -71,6 +71,9 @@ export default {
     parameterIndex: {
       type: Number,
     },
+    categoryIndex: {
+      type: Number,
+    },
   },
 
   methods: {
@@ -86,9 +89,8 @@ export default {
   mounted() {
     this.gain = this.parameter.audio.gain * 100;
 
-    if (this.selectedSketchIndex === 0 && this.parameterIndex === 0) {
+    if (this.selectedSketchIndex === 0 && this.categoryIndex === 0 && this.parameterIndex === 0 ) {
       this.freqRangeSelected = APS.frequencies[2];
-      // RegisteredSketches[this.selectedSketchIndex][this.parameterIndex].audio.g
     }
   },
 
@@ -99,12 +101,8 @@ export default {
     },
 
     freqRangeSelected(newValue, oldValue) {
-      APS.setAudioReactiveFreq(
-        newValue,
-        this.parameter.attrName,
-        this.selectedSketchIndex,
-      );
-    }
+      APS.setAudioReactiveFreq(newValue, this.parameter.attrName, this.selectedSketchIndex);
+    },
   },
 
   computed: {

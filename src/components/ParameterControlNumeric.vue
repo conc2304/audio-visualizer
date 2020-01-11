@@ -26,6 +26,7 @@
         :parameter="parameter"
         :auxInputVisibible="auxInputVisibible"
         :parameterIndex="parameterIndex"
+        :categoryIndex="categoryIndex"
       )
 </template>
 
@@ -58,8 +59,11 @@ export default {
       default: false,
     },
     parameterIndex: {
-      type: Number
-    }
+      type: Number,
+    },
+    categoryIndex: {
+      type: Number,
+    },
   },
 
   methods: {

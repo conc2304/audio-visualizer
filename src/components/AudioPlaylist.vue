@@ -132,8 +132,13 @@ export default {
   overflow-y: scroll;
   overflow-x: hidden;
 
-  &.custom-thin-scrollbar::-webkit-scrollbar-track {
-    background-color: #000;
+  &.custom-thin-scrollbar {
+    &.scrollbar__thick::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #000;
+    }
   }
 
   .song-title,

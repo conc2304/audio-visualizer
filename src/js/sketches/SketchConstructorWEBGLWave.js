@@ -1,15 +1,14 @@
 import easeInto from '@/js/services/EasingService';
+import Utils from '@/js/services/Utils';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
 
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 
-
-
-
 class WEBGLWave {
   constructor(windowWidth, windowHeight) {
+    this.sid = Utils.guidGenerator();
 
     this.catalogueInfo = new CatalogueDataEntry(
       this.constructor,

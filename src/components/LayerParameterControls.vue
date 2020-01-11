@@ -10,6 +10,7 @@
           :auxInputVisibible="auxInputVisibible"
           :parameter="parameter"
           :parameterIndex="i"
+          :categoryIndex="categoryIndex"
         )
 
     v-divider
@@ -36,9 +37,6 @@ export default {
   }),
 
   props: {
-    // sketchIndexSelected: {
-    //   type: Number,
-    // },
     category: {
       type: String,
     },
@@ -48,6 +46,9 @@ export default {
     auxInputVisibible: {
       type: Boolean,
       default: false,
+    },
+    categoryIndex: {
+      type: Number,
     },
   },
 

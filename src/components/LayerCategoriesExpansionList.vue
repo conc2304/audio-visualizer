@@ -22,6 +22,7 @@
               :RegisteredSketches="RegisteredSketches"
               :category="category"
               :auxInputVisibible="auxInputVisibible"
+              :categoryIndex="i"
             )
 
 </template>
