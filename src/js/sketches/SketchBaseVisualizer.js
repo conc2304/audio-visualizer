@@ -1,10 +1,8 @@
 /**
  *
  *    --  HERE ARE MY AMBITIONS - BEHOLD THEIR MULTITUDE!  --
- * TODO - make a toggle to spin/rotate the inner and outer waves like the 3D ones
  * TODO - make patterns by saving current config and make them triggerable (ie a pattern bank)
  * TODO - put controls into an iFrame
- * TODO - convert this entire thing into an web app (in progress)
  * TODO - loading animation
  *
  */
@@ -14,13 +12,9 @@ import RegisteredSketches from '@/js/services/SketchRegistration';
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
 
 
-let audio;
-let bgColor = 0;
-
-const VisualizerSketch = p5 => {
-  'use strict';
-
   // keep all 'custom' code here
+const VisualizerSketch = p5 => {
+
   p5.preload = () => {
     p5.objects = {};
     p5.objects.lambo = p5.loadModel('./assets/webgl_models/lambo.obj', true);
@@ -40,15 +34,6 @@ const VisualizerSketch = p5 => {
     p5.polygon = RenderPolygon;
     p5.colorMode(p5.HSB);
 
-    // make a method to retrieve the elements externally by the myp5 namespace
-    for (let ctrlElement in p5.ctrlElementsArray) {
-      if (!p5.ctrlElementsArray.hasOwnProperty(ctrlElement)) {
-        continue;
-      }
-      let ctrlObjectName = p5.ctrlElementsArray[ctrlElement].constructor.name;
-      p5[`get${ctrlObjectName}`] = () => p5.ctrlElementsArray[ctrlElement];
-    }
-
     // p5setupPoseNet(p5);
   };
 
@@ -66,23 +51,9 @@ const VisualizerSketch = p5 => {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
   };
 
-  let fftAnalysis = {};
-  let tempObj;
+
   p5.draw = () => {
-    p5.background(bgColor);
-
-    // if (audio && audio.isLoaded() && !audio.isPaused()) {
-    //   let seconds = Math.floor(audio.currentTime() % 60);
-    //   let minutes = Math.floor(audio.currentTime() / 60);
-
-    //   let time = ('0' + minutes).substr(-2) + ':' + ('0' + seconds).substr(-2);
-    //   songTime.html(time);
-    //   let downloadProgress = 100 * (audio.currentTime() / audio.duration())
-    //   progressBar.val(downloadProgress);
-    // }
-
-    // fftAnalysis = getEQEnergy(fft);
-    // applyAudioEnergyValues(fftAnalysis);
+    p5.background(0);
 
     KeyboardControlsService.playKeyboardKeys(p5);
     p5.keyReleased = () => {

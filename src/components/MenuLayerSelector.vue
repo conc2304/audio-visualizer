@@ -114,12 +114,16 @@ export default {
         return;
       }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> vyzby-app
       this.RegisteredSketches.splice(layerSelected, 1);
       this.selectLayer(0);
     },
   },
 
+<<<<<<< HEAD
   watch: {
   },
 
@@ -127,6 +131,12 @@ export default {
     sketchIndexSelected() {
       const temp = this.$store.state.sketchIndexSelected;
       return temp;
+=======
+
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;;
+>>>>>>> vyzby-app
     }
   },
 

@@ -24,7 +24,6 @@ KeyboardControlsService.playPianoKey = (key, pressed) => {
       continue;
     }
 
-    // controlObject = myp5[`get${controlElementName}`]();
     for (let ctrlProp in ctrlHandlers[controlElementName]) {
       if (!ctrlHandlers[controlElementName].hasOwnProperty(ctrlProp)) {
         continue;
@@ -46,7 +45,10 @@ KeyboardControlsService.playPianoKey = (key, pressed) => {
 
       if (controlObject[ctrlProp].attrType === 'variable') {
         if (pressed) {
-          controlObject[ctrlProp].currentValue = BulkUpdateService.getNextVariableOption(controlObject, ctrlProp);
+          controlObject[ctrlProp].currentValue = BulkUpdateService.getNextVariableOption(
+            controlObject,
+            ctrlProp,
+          );
         } else {
           controlObject[ctrlProp].targetValue = controlObject[ctrlProp].currentValue = Number(
             controlObject[ctrlProp].resetValue,
@@ -63,7 +65,6 @@ KeyboardControlsService.playPianoKey = (key, pressed) => {
  * @returns {boolean}
  */
 KeyboardControlsService.playKeyboardKeys = p5 => {
-
   let KCS = KeyboardControlsService;
 
   if (!KCS.keyboardCtrl) {
@@ -87,7 +88,12 @@ KeyboardControlsService.playKeyboardKeys = p5 => {
  * When the user enters a key into the input
  * save it to a key to controller map
  */
-KeyboardControlsService.setKeyboardControl = (keyboardKey, value, property, sketchIndexSelected) => {
+KeyboardControlsService.setKeyboardControl = (
+  keyboardKey,
+  value,
+  property,
+  sketchIndexSelected,
+) => {
   let KCS = KeyboardControlsService;
 
   let ctrlObjectName = sketchIndexSelected;
@@ -103,8 +109,15 @@ KeyboardControlsService.setKeyboardControl = (keyboardKey, value, property, sket
     KCS.ctrlElemPropToKeyMap[ctrlObjectName] = KCS.ctrlElemPropToKeyMap[ctrlObjectName] || {};
     KCS.ctrlElemPropToKeyMap[ctrlObjectName][property] = charCode;
   } else {
+<<<<<<< HEAD
 
     if (KCS.ctrlElemPropToKeyMap[ctrlObjectName] && KCS.ctrlElemPropToKeyMap[ctrlObjectName][property]) {
+=======
+    if (
+      KCS.ctrlElemPropToKeyMap[ctrlObjectName] &&
+      KCS.ctrlElemPropToKeyMap[ctrlObjectName][property]
+    ) {
+>>>>>>> vyzby-app
       let keyToClean = KCS.ctrlElemPropToKeyMap[ctrlObjectName][property];
 
       delete KCS.keyboardCtrl[keyToClean][ctrlObjectName][property];
@@ -122,13 +135,15 @@ KeyboardControlsService.setKeyboardControl = (keyboardKey, value, property, sket
       delete KCS.ctrlElemPropToKeyMap[ctrlObjectName];
     }
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> vyzby-app
 };
 
-Object.size = (obj) => {
-  "use strict";
-
-  let size = 0, key;
+Object.size = obj => {
+  let size = 0,
+    key;
   for (key in obj) {
     if (obj.hasOwnProperty(key)) {
       size++;

@@ -25,6 +25,10 @@
         v-show="parameter.audio && auxInputVisibible"
         :parameter="parameter"
         :auxInputVisibible="auxInputVisibible"
+<<<<<<< HEAD:src/components/ParameterControlNumeric.vue
+=======
+        :parameterIndex="parameterIndex"
+>>>>>>> vyzby-app:src/components/ParameterControlNumeric.vue
       )
 </template>
 
@@ -56,6 +60,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    parameterIndex: {
+      type: Number
+    }
   },
 
   methods: {

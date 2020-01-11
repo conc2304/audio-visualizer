@@ -4,6 +4,7 @@
       v-row.song-item(
         v-show="playlist.length"
         v-for="(song, i) in playlist"
+<<<<<<< HEAD
         :class="{ 'active': activeSongIndex === i}"
         :key="i"
         @click="setSong(song, i)"
@@ -14,10 +15,48 @@
         v-col.artist(md="6") {{ song.artist }}
         v-spacer
         v-col.duration(md="2") {{ song.duration }}
+=======
+        :class="{ 'active': currentTrackIndex === i}"
+        :key="i"
+        @click="setSong(i)"
+        cols="12"
+        dense
+      )
+
+        v-col.artist(
+          :md="mdArtist(song)"
+          v-show="song.artist"
+        )
+          Trunquee( :text="song.artist" )
+        v-col.song-title(
+          :md="mdTitle(song)"
+        ) {{ song.title }}
+        v-spacer(
+          v-show="song.duration"
+        )
+        v-col.duration(
+          :md="mdDuration(song)"
+          v-show="song.duration"
+        )
+          Trunquee( :text="song.duration" )
+        v-col(
+          md="1"
+        )
+          v-icon.remove-song(
+            @click.stop.prevent="removeSong(i)"
+          ) close
+    v-container( v-show="!playlist.length")
+      v-row
+        v-col( align="center" ) Empty
+      v-row
+        v-col( align="center") Try uploading some songs!
+
+>>>>>>> vyzby-app
 
 </template>
 
 <script>
+<<<<<<< HEAD
 const axios = require('axios');
 
 export default {
@@ -39,6 +78,85 @@ export default {
       .then(response => {
         this.playlist = response.data.playlist ? response.data.playlist : [];
       });
+=======
+import Trunquee from '@/components/Trunquee.vue';
+import AudioPlayerService from '@/js/services/AudioPlayerService';
+import Utils from '@/js/services/Utils';
+
+export default {
+  components: {
+    Trunquee,
+  },
+
+  props: {
+    p5: {
+      defualt: null,
+    },
+  },
+
+  methods: {
+    setSong(index) {
+      const selectedSound = this.$store.state.audio.tracks[index];
+      this.$store.commit('updateCurrentTrackIndex', index);
+      AudioPlayerService.setupAudioAnalysis(selectedSound, true, this.p5);
+    },
+
+    removeSong(index) {
+      const tracks = this.$store.state.audio.tracks;
+      tracks.splice(index, 1);
+      this.$store.commit('updateTracks', tracks);
+
+      if (this.$store.state.audio.currentTrackIndex === index) {
+        if (tracks.length === 0) {
+          this.$store.commit('updateCurrentTrackIndex', -1);
+          AudioPlayerService.audio.stop();
+          AudioPlayerService.audio.disconnect();
+        } else {
+          this.setSong(index);
+        }
+      }
+    },
+
+    mdArtist(songData) {
+      return !songData.artist ? 0 : 4;
+    },
+
+    mdTitle(songData) {
+      if (!songData.duration && !songData.artist) {
+        return 11;
+      }
+      if (!songData.artist && songData.duration) {
+        return 9;
+      }
+      if (!songData.duration && songData.artist) {
+        return 7;
+      }
+
+      return 7;
+    },
+
+    mdDuration(songData) {
+      return !songData.duration ? 0 : 2;
+    },
+  },
+
+  computed: {
+    currentTrackIndex() {
+      return this.$store.state.audio.currentTrackIndex;
+    },
+
+    playlist() {
+      const tracks = this.$store.state.audio.tracks;
+      const playlist = [];
+
+      for (let file of tracks) {
+        const formattedFilename = Utils.formatAudioFilename(file);
+        playlist.push(formattedFilename);
+      }
+
+      return playlist;
+    },
+>>>>>>> vyzby-app
   },
 };
 </script>
@@ -79,6 +197,17 @@ export default {
     }
   }
 
+<<<<<<< HEAD
+=======
+  .remove-song {
+    color: $color-off-white;
+
+    &:hover {
+      color: $color-primary-blue-hover;
+    }
+  }
+
+>>>>>>> vyzby-app
   .song-details {
     padding: 0.3rem;
   }

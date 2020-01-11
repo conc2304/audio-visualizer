@@ -4,6 +4,10 @@
       @submit.prevent="submit"
       lazy-validation
     )
+<<<<<<< HEAD
+=======
+
+>>>>>>> vyzby-app
       v-text-field(
         v-model="keyboardKey"
         autocomplete="off"
@@ -18,9 +22,17 @@
         :rules="[val => { return (testKeyStroke(val)) }]"
         :prepend-inner-icon="keyboardKeyUpdated ? 'check': ''"
         :disabled="parameter.lockOn"
+<<<<<<< HEAD
         outlined
         dense
       )
+=======
+        prepend-icon="keyboard"
+        outlined
+        dense
+      )
+
+>>>>>>> vyzby-app
       v-text-field(
         v-model="parameterValue"
         autocomplete="off"
@@ -35,6 +47,10 @@
         :rules="[val => { return (testValueMinMax(val, parameter)) }]"
         :prepend-inner-icon="parameterValueUpdated ? 'check': ''"
         :disabled="parameter.lockOn"
+<<<<<<< HEAD
+=======
+        prepend-icon="keyboard"
+>>>>>>> vyzby-app
         outlined
         dense
       )
@@ -171,4 +187,12 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style lang="scss"></style>
+=======
+<style lang="scss">
+.aux-input-wrapper .v-input__icon--prepend .v-icon {
+  color: $color-std-grey
+}
+</style>
+>>>>>>> vyzby-app

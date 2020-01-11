@@ -31,7 +31,10 @@ export default {
 <style lang="scss" scoped>
 .parameter-lock-toggle {
   float: right;
+<<<<<<< HEAD
   display: inline-block;
+=======
+>>>>>>> vyzby-app
   padding: 0 .8rem;
 }
 </style>

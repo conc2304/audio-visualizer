@@ -59,7 +59,11 @@ export default {
         action: 'resetComposition',
       },
       {
+<<<<<<< HEAD
         mdIconText: 'keyboard',
+=======
+        mdIconText: 'input',
+>>>>>>> vyzby-app
         id: 'toggle-input-assigner',
         title: 'Toggle layers\' auxiliary input settings',
         action: 'toggleAuxInputFields',
