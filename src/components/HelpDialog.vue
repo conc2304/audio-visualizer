@@ -4,10 +4,6 @@
     @input="$emit('input')"
     max-width="500"
     scrollable
-<<<<<<< HEAD
-
-=======
->>>>>>> vyzby-app
   )
     v-card.help-box
       v-card-title(class="headline text-center font-weight-bold") How to VYZBY
@@ -66,10 +62,6 @@
             ) looks_one
             span Empty Slots
 
-<<<<<<< HEAD
-
-=======
->>>>>>> vyzby-app
         small NOTE : Currently the Audio Player and MIDI interfaces are still in development
 </template>
 

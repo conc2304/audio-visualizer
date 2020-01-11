@@ -109,15 +109,10 @@ KeyboardControlsService.setKeyboardControl = (
     KCS.ctrlElemPropToKeyMap[ctrlObjectName] = KCS.ctrlElemPropToKeyMap[ctrlObjectName] || {};
     KCS.ctrlElemPropToKeyMap[ctrlObjectName][property] = charCode;
   } else {
-<<<<<<< HEAD
-
-    if (KCS.ctrlElemPropToKeyMap[ctrlObjectName] && KCS.ctrlElemPropToKeyMap[ctrlObjectName][property]) {
-=======
     if (
       KCS.ctrlElemPropToKeyMap[ctrlObjectName] &&
       KCS.ctrlElemPropToKeyMap[ctrlObjectName][property]
     ) {
->>>>>>> vyzby-app
       let keyToClean = KCS.ctrlElemPropToKeyMap[ctrlObjectName][property];
 
       delete KCS.keyboardCtrl[keyToClean][ctrlObjectName][property];
@@ -135,10 +130,6 @@ KeyboardControlsService.setKeyboardControl = (
       delete KCS.ctrlElemPropToKeyMap[ctrlObjectName];
     }
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> vyzby-app
 };
 
 Object.size = obj => {

@@ -3,16 +3,11 @@
     #audio-sketch-container
     #audio-player
       .song-info
-<<<<<<< HEAD
-        p#song-name {{ currentSong.title }} - {{ currentSong.artist }}
-        p#song-time  {{ currentSong.duration }}
-=======
         p#song-artist(
           v-show="currentSound.artist"
         ) {{ currentSound.artist }}
         p#song-name  {{ currentSound.title }}
         p#song-time  {{ currentTrackTime}}
->>>>>>> vyzby-app
     .song-progress
       v-progress-linear#loading-bar(
         v-show="audioIsLoading"
@@ -31,19 +26,6 @@
         )
     .audio-controls
       #playback-controls.ctrl-buttons
-<<<<<<< HEAD
-        v-btn#open-playlist(
-          @click="playlistOpen = !playlistOpen"
-          text icon
-        )
-          v-icon.menu-icon queue_music
-
-        v-btn( @click="" text icon)
-          v-icon.menu-icon skip_previous
-        v-btn( @click="" text icon)
-          v-icon.menu-icon play_arrow
-        v-btn( @click="" text icon)
-=======
         v-tooltip( right)
           template( v-slot:activator = "{ on }")
             v-btn#open-playlist(
@@ -60,40 +42,21 @@
         v-btn( @click="toggleAudioState()" text icon)
           v-icon.menu-icon {{ isPlaying ? 'pause' : 'play_arrow' }}
         v-btn( @click="setSong(1)" text icon)
->>>>>>> vyzby-app
           v-icon.menu-icon skip_next
 
         v-tooltip( right)
           template( v-slot:activator= "{ on }")
             v-btn#upload-file-button(
-<<<<<<< HEAD
-              @click="triggerFileInput"
-=======
               @click="uploadAudioDialog = true"
->>>>>>> vyzby-app
               text icon
             )
               v-icon.menu-icon(
                 v-on="on"
               ) unarchive
-<<<<<<< HEAD
-          span  Upload local music
-
-        input(
-          v-show="false"
-          type="file"
-          ref="fileInput"
-          accept="audio/*"
-        )
-      AudioPlaylist(
-        v-show="playlistOpen"
-        @active_song="setActiveSong"
-=======
           span  Upload Music
 
       AudioPlaylist(
         v-show="playlistOpen"
->>>>>>> vyzby-app
       )
 
       v-dialog(
@@ -109,39 +72,16 @@
 
 <script>
 import AudioPlaylist from '@/components/AudioPlaylist.vue';
-<<<<<<< HEAD
-
-=======
 import AudioLocalList from '@/components/AudioLocalList.vue';
 import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
 import AudioPlayerService from '@/js/services/AudioPlayerService';
 import Utils from '@/js/services/Utils';
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
->>>>>>> vyzby-app
 
 export default {
   data: () => ({
     playlistOpen: false,
-<<<<<<< HEAD
-    currentSong: {
-      title: 'Song Name',
-      artist: 'Artist',
-      duration: 'Duration',
-    },
-  }),
-
-  components: {
-    AudioPlaylist
-  },
-
-  methods: {
-    triggerFileInput() {
-      this.$refs.fileInput.click();
-    },
-    setActiveSong(songObj) {
-      this.currentSong = songObj;
-=======
     uploadAudioDialog: false,
   }),
 
@@ -220,7 +160,6 @@ export default {
       currentSound.duration = Utils.formatTime(duration) || 'Duration';
 
       return currentSound;
->>>>>>> vyzby-app
     },
   },
 };
@@ -236,12 +175,6 @@ export default {
   border-right: 1px solid $subtle-border;
   z-index: 1;
   background-color: #000;
-<<<<<<< HEAD
-  width: $secondary-menu-width;
-  min-height: 67px;
-  text-align: center;
-  padding: 10px;
-=======
   width: 450px;
   min-height: 67px;
   text-align: center;
@@ -268,7 +201,6 @@ export default {
 
 #audio-sketch-container {
   display: none;
->>>>>>> vyzby-app
 }
 
 #playback-controls.ctrl-buttons {

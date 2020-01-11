@@ -35,11 +35,7 @@ export default {
   methods: {
     updateMasterMenu(status) {
       this.masterMenuOpen = status;
-<<<<<<< HEAD
-    }
-=======
     },
->>>>>>> vyzby-app
   },
   mounted() {
     const P5 = require('p5');

@@ -4,18 +4,6 @@
       v-row.song-item(
         v-show="playlist.length"
         v-for="(song, i) in playlist"
-<<<<<<< HEAD
-        :class="{ 'active': activeSongIndex === i}"
-        :key="i"
-        @click="setSong(song, i)"
-        cols="12"
-        dense
-      )
-        v-col.song-title(md="4") {{ song.title }}
-        v-col.artist(md="6") {{ song.artist }}
-        v-spacer
-        v-col.duration(md="2") {{ song.duration }}
-=======
         :class="{ 'active': currentTrackIndex === i}"
         :key="i"
         @click="setSong(i)"
@@ -51,34 +39,10 @@
       v-row
         v-col( align="center") Try uploading some songs!
 
->>>>>>> vyzby-app
 
 </template>
 
 <script>
-<<<<<<< HEAD
-const axios = require('axios');
-
-export default {
-  data: () => ({
-    activeSongIndex: -1,
-    playlist: [],
-  }),
-
-  methods: {
-    setSong(songObj, index) {
-      this.activeSongIndex = index;
-      this.$emit('active_song', songObj);
-    },
-  },
-
-  mounted() {
-    axios
-      .get('https://my-json-server.typicode.com/conc2304/test-api/db')
-      .then(response => {
-        this.playlist = response.data.playlist ? response.data.playlist : [];
-      });
-=======
 import Trunquee from '@/components/Trunquee.vue';
 import AudioPlayerService from '@/js/services/AudioPlayerService';
 import Utils from '@/js/services/Utils';
@@ -156,7 +120,6 @@ export default {
 
       return playlist;
     },
->>>>>>> vyzby-app
   },
 };
 </script>
@@ -197,8 +160,6 @@ export default {
     }
   }
 
-<<<<<<< HEAD
-=======
   .remove-song {
     color: $color-off-white;
 
@@ -207,7 +168,6 @@ export default {
     }
   }
 
->>>>>>> vyzby-app
   .song-details {
     padding: 0.3rem;
   }

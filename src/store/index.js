@@ -1,10 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import RegisteredSketches from '@/js/services/SketchRegistration';
-<<<<<<< HEAD
-=======
 import AudioPlayerService from '@/js/services/AudioPlayerService';
->>>>>>> vyzby-app
 
 Vue.use(Vuex);
 
@@ -12,8 +9,6 @@ export default new Vuex.Store({
   state: {
     user: {},
     sketchIndexSelected: -1,
-<<<<<<< HEAD
-=======
     audio: {
       isPlaying: false,
       currentSound: {},
@@ -24,7 +19,6 @@ export default new Vuex.Store({
       currentTrackTime: '--:--',
       songProgress: 0,
     },
->>>>>>> vyzby-app
   },
   mutations: {
     updateSketchIndexSelected(state, payload) {
@@ -37,9 +31,6 @@ export default new Vuex.Store({
 
     updateUser(state, payload) {
       state.user = payload;
-<<<<<<< HEAD
-    }
-=======
     },
 
 
@@ -74,7 +65,6 @@ export default new Vuex.Store({
     updateSongProgress(state, payload) {
       state.audio.songProgress = payload;
     },
->>>>>>> vyzby-app
   },
   actions: {},
   modules: {},
