@@ -305,7 +305,6 @@ const audioLoadSuccess = () => {
 
 const audioLoadError = error => {
   store.commit('updateAudioIsLoading', false);
-  console.log(error);
 };
 
 /**
@@ -314,8 +313,6 @@ const audioLoadError = error => {
  */
 const whileLoading = percent => {
   // not firing currently  - not sure why??
-  console.log('percent');
-  console.log(percent);
   AudioPlayerService.loadingPercent = (percent * 100 + 1).toFixed() + '%';
 };
 

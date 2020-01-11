@@ -5,7 +5,6 @@ import store from '@/store/index.js';
 
 const AudioAnalyzer = p5 => {
   p5.setup = () => {
-    console.log('Loading Audio Analyzer');
 
   };
 
