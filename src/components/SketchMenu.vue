@@ -3,12 +3,21 @@
     v-card#control-panel(
       v-cloak
     )
-
       #master-controls-container(
         class="custom-thin-scrollbar"
       )
         v-list-item( @click="updateMasterMenu")
           v-icon close
+        v-divider
+
+        #audio-player-toggle-wrapper
+          v-divider
+          v-list( dense nav)
+            v-list-item(
+              :class="{ 'active': audioPlayerOpen }"
+              @click="audioPlayerOpen = !audioPlayerOpen"
+            )
+              v-icon.menu-icon music_note
 
         v-divider
 
@@ -35,14 +44,7 @@
           :presetSelectedIndex="presetSelectedIndex"
         )
 
-        #audio-player-toggle-wrapper
-          v-divider
-          v-list( dense nav)
-            v-list-item(
-              :class="{ 'active': audioPlayerOpen }"
-              @click="audioPlayerOpen = !audioPlayerOpen"
-            )
-              v-icon.menu-icon music_note
+
 
       LayerControlPanel(
         v-show="layerMenuOpen"
@@ -54,6 +56,7 @@
 
     AudioPlayer(
       v-show="audioPlayerOpen"
+      @close_audio_player="audioPlayerOpen = false"
     )
 
     CatalogueList(
@@ -206,12 +209,12 @@ i.off-white {
   vertical-align: top;
 }
 
-#audio-player-toggle-wrapper {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-}
+// #audio-player-toggle-wrapper {
+//   position: absolute;
+//   bottom: 10px;
+//   left: 0;
+//   right: 0;
+// }
 
 </style>
 
@@ -271,8 +274,6 @@ i {
 
 #control-panel {
   .menu-dash-group {
-    margin: 15px auto;
-
     p {
       width: auto;
       margin: 0 auto;

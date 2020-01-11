@@ -1,6 +1,13 @@
 <template lang="pug">
   #audio-control-panel
     #audio-sketch-container
+
+    .close-audio-player
+      v-icon(
+        @click="audioPlayerClose"
+      ) close
+
+
     #audio-player
       .song-info
         p#song-artist(
@@ -121,6 +128,10 @@ export default {
       this.$store.commit('updateCurrentTrackIndex', nextIndex);
       AudioPlayerService.setupAudioAnalysis(tracks[nextIndex], true, this.p5);
     },
+
+    audioPlayerClose() {
+      this.$emit('close_audio_player');
+    }
   },
 
   mounted() {
@@ -221,5 +232,11 @@ p {
 #upload-file-button {
   position: absolute;
   right: 10px;
+}
+
+.close-audio-player {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
 }
 </style>
