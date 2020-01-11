@@ -42,7 +42,7 @@ const audioLocalData = [
     title: 'Ganeshav',
   },
   {
-    path: './assets/audio/Minnesota - Hilow (Charlesthefirst Remix).mp3',
+    path: './assets/audio/Minnesota- Hilow (Charlesthefirst Remix).mp3',
     genre: 'Psychedelic Bass',
     artist: 'Minnesota',
     title: 'Hilow (Charlesthefirst Remix)',

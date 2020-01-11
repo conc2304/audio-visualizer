@@ -196,9 +196,9 @@ class PoseDetector {
 }
 
 
-// let poseDetectionInstance = new PoseDetector(window.innerWidth, window.innerHeight);
-// var registeredCtrlElements = registeredCtrlElements || [];
-// registeredCtrlElements.push(poseDetectionInstance);
+let poseDetectionInstance = new PoseDetector(window.innerWidth, window.innerHeight);
+var registeredCtrlElements = registeredCtrlElements || [];
+registeredCtrlElements.push(poseDetectionInstance);
 
 
 

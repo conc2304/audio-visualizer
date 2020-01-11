@@ -1,9 +1,5 @@
-
-
 class ThreeDWave {
   constructor(windowWidth, windowHeight) {
-
-    this.easeInto = require('/js/src/EasingService.js');
 
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
@@ -401,7 +397,7 @@ class ThreeDWave {
       easingMin: 0,
     };
 
-
+    
     this.strokeHue = {
       displayLabel : 'Line Color',
       resetValue : 200,
@@ -518,9 +514,9 @@ class ThreeDWave {
   }
 }
 
-// let threeDWaveInstance = new ThreeDWave(window.innerWidth, window.innerHeight);
-// var registeredCtrlElements = registeredCtrlElements || [];
-// registeredCtrlElements.push(threeDWaveInstance);
+let threeDWaveInstance = new ThreeDWave(window.innerWidth, window.innerHeight);
+var registeredCtrlElements = registeredCtrlElements || [];
+registeredCtrlElements.push(threeDWaveInstance);
 // METHODS
 
 
@@ -617,7 +613,7 @@ ThreeDWave.prototype.setColor = function () {
 /**
  * For each attribute transition from the current value to the target value
  */
-// ThreeDWave.prototype.easeInto = easeInto;
+ThreeDWave.prototype.easeInto = easeInto;
 
 /**
  * Renders the given 3D Primitive Shape
@@ -654,7 +650,7 @@ ThreeDWave.prototype.renderShape = function () {
     case 'dolphin':
     case 'satellite':
     case 'sword':
-
+      
       myp5.normalMaterial();
 
       myp5.scale(this.radius.currentValue * 0.07);

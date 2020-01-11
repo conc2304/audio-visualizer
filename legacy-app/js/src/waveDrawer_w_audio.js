@@ -1,11 +1,11 @@
 /**
  *
  *    --  HERE ARE MY AMBITIONS - BEHOLD THEIR MULTITUDE!  --
- * TODO - make a toggle to spin/rotate the inner and outer waves like the 3D ones
- * TODO - make patterns by saving current config and make them triggerable (ie a pattern bank)
- * TODO - put controls into an iFrame
- * TODO - convert this entire thing into an angular web app #Angular8!
- * TODO - loading animation
+ * todo - make a toggle to spin/rotate the inner and outer waves like the 3D ones
+ * todo - make patterns by saving current config and make them triggerable (ie a pattern bank)
+ * todo - put controls into an iFrame
+ * todo - convert this entire thing into an angular web app #Angular8!
+ * todo - loading animation
  *
  */
 
@@ -64,7 +64,7 @@ let s = (sketch) => {
 
   sketch.windowResized = () => {
 
-    // TODO this is taxing on the browser find out how to optimize
+    // todo this is taxing on the browser find out how to optimize
     for (let ctrlElement in sketch.ctrlElementsArray) {
       if (!sketch.ctrlElementsArray.hasOwnProperty(ctrlElement)) {
         continue;
@@ -82,7 +82,7 @@ let s = (sketch) => {
   let tempObj;
   sketch.draw = () => {
     sketch.background(bgColor);
-
+  
 
     if (audio && audio.isLoaded() && !audio.isPaused()) {
       let seconds = Math.floor(audio.currentTime() % 60);
@@ -122,7 +122,7 @@ let s = (sketch) => {
 
 
 
-// TODO - this probably needs to be moved to a new file
+// todo - this probably needs to be moved to a new file
 let renderPolygon = function (x, y, radius, numPoints) {
   'use strict';
   let angle = myp5.TWO_PI / numPoints;

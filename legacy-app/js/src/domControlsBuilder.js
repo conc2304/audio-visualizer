@@ -70,7 +70,7 @@ $(() => {
         $("#help-text").fadeOut(function () {
           $(this).html(helpText)
             .fadeIn();
-
+          
           $("#help-section").show()
             .css('top', `${offsets.top}px`);;
         });
@@ -149,7 +149,7 @@ let createDOMControls = (ctrlElements) => {
 
 
     for (let prop in ctrlElem) {
-      if (!ctrlElem[prop] || !ctrlElem[prop].attrType) {
+      if (!ctrlElem.hasOwnProperty(prop)) {
         continue;
       }
       if (ctrlElem[prop].attrType === 'numeric') {
@@ -160,7 +160,7 @@ let createDOMControls = (ctrlElements) => {
     // loop through again (so that the radios come last in the group)
     // and create radio for all variable attribute types
     for (let prop in ctrlElem) {
-      if (!ctrlElem[prop] || !ctrlElem[prop].attrType) {
+      if (!ctrlElem.hasOwnProperty(prop)) {
         continue;
       }
       if (ctrlElem[prop].attrType === 'variable') {
@@ -186,7 +186,7 @@ let addMasterElementControls = (ctrlElem, parent) => {
   // parent should be icon wrapper
   let iconWrapper = document.createElement('div');
   console.log(ctrlElemName);
-
+  
   $(iconWrapper).addClass('icon-wrapper')
     .appendTo(parent);
 
@@ -225,7 +225,7 @@ let addMasterElementControls = (ctrlElem, parent) => {
       continue;
     }
 
-
+    
     let icon = document.createElement('i');
     $(icon).addClass('material-icons md-light helper')
       .html(icons[i].htmlIcon)
@@ -538,7 +538,7 @@ let createMidiAssigner = (ctrlObject, prop, parentWrapper) => {
  */
 let createAudioCtrls = () => {
   "use strict";
-  let audioWrapperID = "#playback-controls";
+  let audioWrapperID = "#playback-controls";  
   let labelIcon = `<i id="upload-file-icon" class="global-control material-icons md-light helper" title ="Upload a local sound file">unarchive</i>`;
 
   // we will hide the default file input bc its ugly and use the label
@@ -546,7 +546,7 @@ let createAudioCtrls = () => {
   uploadButton.parent(audioWrapperID)
     .attribute('id', 'upload-file')
     .attribute('name', 'upload-file');
-
+  
   // instead we will see the label for it and labels have the same function as the actual input
   let label = document.createElement('label');
   $(label).html(labelIcon)
@@ -630,8 +630,8 @@ let createDomSlider = (ctrlObject, prop, inputWrapper) => {
 
   let ctrlObjectName = ctrlObject.constructor.name;
 
-  // TODO make step a property of the elements
-  // TODO cont. we can make the sliders non-linear if we want  @see https://refreshless.com/nouislider/slider-values/
+  // todo make step a property of the elements
+  // todo cont. we can make the sliders non-linear if we want  @see https://refreshless.com/nouislider/slider-values/
 
   // slider to control the individual property
   let rangeSlider = document.createElement('div');
@@ -652,7 +652,7 @@ let createDomSlider = (ctrlObject, prop, inputWrapper) => {
     range: {
       'min': [ctrlObject[prop].defaultMin],
       'max': [ctrlObject[prop].defaultMax]
-      // TODO, there can be custom ranges to maximize certain sections of the slider
+      // todo, there can be custom ranges to maximize certain sections of the slider
     },
     connect: true,
     // step : [ctrlObject[prop].step,
