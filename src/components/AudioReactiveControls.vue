@@ -1,6 +1,6 @@
 <template lang="pug">
   .audio-parameter-wrapper()
-
+    v-icon.input-type() music_note
     .knob-wrapper
       v-tooltip(
         :disabled="parameter.lockOn"
@@ -11,7 +11,7 @@
             // implementation of vue-knob-control
             KnobControl(
               v-on="on"
-              v-if="parameter.audio && gain"
+              v-if="parameter.audio && gain >= 0 && gain !== false"
               :min="0"
               :max="100"
               :size="40"
@@ -45,45 +45,19 @@
               dense
             )
         span Make parameter react to audio frequency
-
 </template>
 
 <script>
 import KnobControl from 'vue-knob-control';
+import APS from '@/js/services/AudioPlayerService';
+import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
   data: () => ({
     gain: false,
     freqRangeSelected: {},
     defaultSelect: {},
-
-    frequencies: [
-      {
-        label: 'Low',
-        rangesData: [[1, 140]],
-        ranges: '1 - 140 Hz',
-      },
-      {
-        label: 'Mid - Low',
-        rangesData: [[140, 400]],
-        ranges: '140 - 400 Hz',
-      },
-      {
-        label: 'Mid',
-        rangesData: [[400, 2600]],
-        ranges: '400 - 2600 Hz',
-      },
-      {
-        label: 'Mid - High',
-        rangesData: [[2600, 5200]],
-        ranges: '2600 - 5200 Hz',
-      },
-      {
-        label: 'High',
-        rangesData: [[5200, 14000]],
-        ranges: '5200 - 14000 Hz',
-      },
-    ],
+    frequencies: APS.frequencies,
   }),
 
   components: {
@@ -94,15 +68,49 @@ export default {
     parameter: {
       type: Object,
     },
+    parameterIndex: {
+      type: Number,
+    },
+  },
+
+  methods: {
+    selectAudioFrequency() {
+      APS.setAudioReactiveFreq(
+        this.freqRangeSelected,
+        this.parameter.attrName,
+        this.selectedSketchIndex,
+      );
+    },
   },
 
   mounted() {
-    let gain = this.parameter.audio.gain;
-    this.gain = gain * 100;
+    this.gain = this.parameter.audio.gain * 100;
+
+    if (this.selectedSketchIndex === 0 && this.parameterIndex === 0) {
+      this.freqRangeSelected = APS.frequencies[2];
+      // RegisteredSketches[this.selectedSketchIndex][this.parameterIndex].audio.g
+    }
   },
 
   watch: {
-    gain(newValue, oldValue) {},
+    gain(newValue, oldValue) {
+      RegisteredSketches[this.selectedSketchIndex][this.parameter.attrName].audio.gain =
+        newValue && newValue !== oldValue ? newValue * 0.01 : 0.5;
+    },
+
+    freqRangeSelected(newValue, oldValue) {
+      APS.setAudioReactiveFreq(
+        newValue,
+        this.parameter.attrName,
+        this.selectedSketchIndex,
+      );
+    }
+  },
+
+  computed: {
+    selectedSketchIndex() {
+      return this.$store.state.sketchIndexSelected;
+    },
   },
 };
 </script>
@@ -122,6 +130,10 @@ export default {
   .v-label {
     font-size: 10px;
   }
+}
+.input-type {
+  color: $color-std-grey;
+  margin-right: 8px;
 }
 </style>
 

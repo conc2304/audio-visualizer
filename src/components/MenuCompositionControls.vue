@@ -61,7 +61,7 @@ export default {
       {
         mdIconText: 'input',
         id: 'toggle-input-assigner',
-        title: 'Toggle layers\' auxiliary input settings',
+        title: 'Toggle layers\' auxiliary input settings (set keyboard inputs, audio inputs ...)',
         action: 'toggleAuxInputFields',
       },
       {

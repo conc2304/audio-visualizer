@@ -1,7 +1,7 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
 import store from '@/store/index.js';
-import P5 from 'p5';  // use this one for instanciation of fft, amplitude ...
+import P5 from 'p5'; // use this one for instanciation of fft, amplitude ...
 import 'p5/lib/addons/p5.sound';
 
 const AudioPlayerService = {
@@ -13,7 +13,7 @@ const AudioPlayerService = {
   fft: null,
   songProgress: 0,
   currentSound: {},
-  p5: null,  // use this one fo the rest of p5, not sure why this is the case but it works
+  p5: null, // use this one fo the rest of p5, not sure why this is the case but it works
   audioCtrl: {},
   elementPropToFQMap: {},
 };
@@ -259,7 +259,7 @@ AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchInde
       APS.elementPropToFQMap[ctrlObjectName] &&
       APS.elementPropToFQMap[ctrlObjectName][parameter]
     ) {
-      const freqToClean = APS.elementPropToFQMap[ctrlObjectName][parameter];
+      const freqToClean = APS.frequencies[APS.elementPropToFQMap[ctrlObjectName][parameter]].label;
 
       delete APS.audioCtrl[freqToClean][ctrlObjectName][parameter];
       if (Object.size(APS.audioCtrl[freqToClean][ctrlObjectName]) === 0) {
@@ -269,7 +269,7 @@ AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchInde
       if (Object.size(APS.audioCtrl[freqToClean]) === 0) {
         delete APS.audioCtrl[freqToClean];
       }
-      delete elementPropToFQMap[ctrlObjectName][parameter];
+      delete APS.elementPropToFQMap[ctrlObjectName][parameter];
     }
 
     if (Object.size(APS.elementPropToFQMap[ctrlObjectName]) === 0) {
