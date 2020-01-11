@@ -19,6 +19,9 @@ export default new Vuex.Store({
       currentTrackTime: '--:--',
       songProgress: 0,
     },
+
+    presetSlotsDisabled: true,
+    loginDisabled: true,
   },
   mutations: {
     updateSketchIndexSelected(state, payload) {

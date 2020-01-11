@@ -64,12 +64,12 @@ export default {
         title: 'Toggle layers\' auxiliary input settings (set keyboard inputs, audio inputs ...)',
         action: 'toggleAuxInputFields',
       },
-      {
-        mdIconText: 'save_alt',
-        id: 'save-settings',
-        title: 'Save composition state to Preset Slot',
-        action: 'openPresetAssigner',
-      },
+      // {
+      //   mdIconText: 'save_alt',
+      //   id: 'save-settings',
+      //   title: 'Save composition state to Preset Slot',
+      //   action: 'openPresetAssigner',
+      // },
     ],
   }),
 

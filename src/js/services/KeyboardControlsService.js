@@ -14,9 +14,9 @@ const KeyboardControlsService = {
  * @param pressed
  */
 KeyboardControlsService.playPianoKey = (key, pressed) => {
-  let KCS = KeyboardControlsService;
+  const KCS = KeyboardControlsService;
 
-  let ctrlHandlers = KCS.keyboardCtrl[key];
+  const ctrlHandlers = KCS.keyboardCtrl[key];
   let controlObject;
 
   for (let controlElementName in ctrlHandlers) {

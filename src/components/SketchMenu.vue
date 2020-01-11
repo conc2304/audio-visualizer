@@ -39,6 +39,7 @@
         v-divider
 
         MenuPresetLauncher(
+          v-if="!presetSlotsDisabled"
           @update_preset_selected="updatePresetSelected"
           :presetSlots="presetSlots"
           :presetSelectedIndex="presetSelectedIndex"
@@ -133,6 +134,12 @@ export default {
     ],
   }),
 
+  computed: {
+    presetSlotsDisabled() {
+      return this.$store.state.presetSlotsDisabled;
+    },
+  },
+
   methods: {
     updateMasterMenu() {
       this.$emit('master_menu_update', false);
@@ -215,7 +222,6 @@ i.off-white {
 //   left: 0;
 //   right: 0;
 // }
-
 </style>
 
 <style lang="scss">

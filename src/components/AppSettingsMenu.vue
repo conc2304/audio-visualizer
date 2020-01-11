@@ -42,6 +42,7 @@
         span {{ item.tooltipText }}
       v-list-item(
         @click="userIsLoggedIn ? userLogout() : loginDialog = true"
+        v-if="!loginDisabled"
       )
         v-list-item-icon
           v-icon account_box
@@ -132,18 +133,18 @@ export default {
         onState: true,
         tooltipText: '',
       },
-      {
-        title: 'Save Session',
-        action: 'saveSession',
-        icon: 'save',
-        tooltipText: 'Login to save your session',
-      },
-      {
-        title: 'Open Session',
-        action: 'openSession',
-        icon: 'folder_open',
-        tooltipText: 'Login to open a saved session',
-      },
+      // {
+      //   title: 'Save Session',
+      //   action: 'saveSession',
+      //   icon: 'save',
+      //   tooltipText: 'Login to save your session',
+      // },
+      // {
+      //   title: 'Open Session',
+      //   action: 'openSession',
+      //   icon: 'folder_open',
+      //   tooltipText: 'Login to open a saved session',
+      // },
     ],
   }),
 
@@ -223,6 +224,10 @@ export default {
   },
 
   computed: {
+
+    loginDisabled() {
+      return this.$store.state.loginDisabled;
+    },
 
     sessionNameErrors() {
       const errors = [];

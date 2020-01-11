@@ -12,7 +12,7 @@
           x-large
 
         ) To Playground
-      .user-wrapper
+      .user-wrapper( v-if="!loginDisabled")
         .logged-in-wrapper( v-if="user.loggedIn && user.username != ''")
           p.username Welcome {{ user.username }} !
           v-btn(
@@ -30,9 +30,9 @@
             large
 
           ) Login
-        i#about.material-icons-outlined(
-          @click.stop="infoDialog = true"
-        ) info
+      i#about.material-icons-outlined(
+        @click.stop="infoDialog = true"
+      ) info
 
     v-dialog( v-model="infoDialog" max-width="550")
       v-card.app-info(  color="#000" elevation="10")
@@ -103,6 +103,12 @@ export default {
       this.user.username = userObj.username;
       this.user.loggedIn = userObj.loggedIn;
     }
+  },
+
+  computed: {
+    loginDisabled() {
+      return this.$store.state.loginDisabled;
+    },
   },
 };
 </script>

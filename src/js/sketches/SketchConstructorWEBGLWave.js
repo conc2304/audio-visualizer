@@ -8,6 +8,7 @@ import SketchCatalogue from '@/js/services/SketchCatalogue';
 
 class WEBGLWave {
   constructor(windowWidth, windowHeight) {
+
     this.sid = Utils.guidGenerator();
 
     this.catalogueInfo = new CatalogueDataEntry(
