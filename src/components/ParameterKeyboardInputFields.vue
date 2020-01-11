@@ -4,6 +4,7 @@
       @submit.prevent="submit"
       lazy-validation
     )
+
       v-text-field(
         v-model="keyboardKey"
         autocomplete="off"
@@ -18,9 +19,11 @@
         :rules="[val => { return (testKeyStroke(val)) }]"
         :prepend-inner-icon="keyboardKeyUpdated ? 'check': ''"
         :disabled="parameter.lockOn"
+        prepend-icon="keyboard"
         outlined
         dense
       )
+
       v-text-field(
         v-model="parameterValue"
         autocomplete="off"
@@ -35,6 +38,7 @@
         :rules="[val => { return (testValueMinMax(val, parameter)) }]"
         :prepend-inner-icon="parameterValueUpdated ? 'check': ''"
         :disabled="parameter.lockOn"
+        prepend-icon="keyboard"
         outlined
         dense
       )
@@ -171,4 +175,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.aux-input-wrapper .v-input__icon--prepend .v-icon {
+  color: $color-std-grey
+}
+</style>

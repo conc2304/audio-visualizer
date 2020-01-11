@@ -19,6 +19,7 @@ import AppSettingsMenu from '@/components/AppSettingsMenu.vue';
 import Visualizer from '@/js/sketches/SketchBaseVisualizer';
 import RegisteredSketches from '@/js/services/SketchRegistration';
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import APS from '@/js/services/AudioPlayerService';
 import Utils from '@/js/services/Utils';
 
 export default {
@@ -34,7 +35,7 @@ export default {
   methods: {
     updateMasterMenu(status) {
       this.masterMenuOpen = status;
-    }
+    },
   },
   mounted() {
     const P5 = require('p5');
@@ -42,27 +43,29 @@ export default {
 
     // alphabet charcodes fo A-Z = [65 - 90]
     // number 0-1 = [49 - 57]
-
-    // TODO figure out how to have this happen on page load and not component load
     let randomCharCode;
+    let demoEqSet = false;
     for (let index in RegisteredSketches) {
       for (let prop in RegisteredSketches[index]) {
         if (!RegisteredSketches[index][prop].hasOwnProperty('defaultValue')) {
           continue;
         }
 
-        let keyboardCharacter;
-        if (Utils.getRandomInt(0, 10) < 4) {
-          keyboardCharacter = Utils.getRandomInt(49, 57);
-        } else {
-          keyboardCharacter = Utils.getRandomInt(65, 90);
+        if (!demoEqSet) {
+          APS.setAudioReactiveFreq(APS.frequencies[2], prop, index);
+          demoEqSet = true;
         }
 
-        keyboardCharacter = String.fromCharCode(keyboardCharacter);
-        let min = parseFloat(RegisteredSketches[index][prop].min);
-        let max = parseFloat(RegisteredSketches[index][prop].max);
+        let keyboardCharacter =
+          Utils.getRandomInt(0, 10) < 4
+            ? Utils.getRandomInt(49, 57)
+            : (keyboardCharacter = Utils.getRandomInt(65, 90));
 
-        let rValue = Number((Math.random() * (max - min + min)).toFixed(4));
+        keyboardCharacter = String.fromCharCode(keyboardCharacter);
+        const min = parseFloat(RegisteredSketches[index][prop].min);
+        const max = parseFloat(RegisteredSketches[index][prop].max);
+
+        const rValue = Number((Math.random() * (max - min + min)).toFixed(4));
 
         KeyboardControlsService.setKeyboardControl(keyboardCharacter, rValue, prop, index);
       }

@@ -10,6 +10,7 @@
         cols="12"
         dense
       )
+
         v-col.artist(
           :md="mdArtist(song)"
           v-show="song.artist"
@@ -26,6 +27,12 @@
           v-show="song.duration"
         )
           Trunquee( :text="song.duration" )
+        v-col(
+          md="1"
+        )
+          v-icon.remove-song(
+            @click.stop.prevent="removeSong(i)"
+          ) close
     v-container( v-show="!playlist.length")
       v-row
         v-col( align="center" ) Empty
@@ -55,35 +62,41 @@ export default {
     setSong(index) {
       const selectedSound = this.$store.state.audio.tracks[index];
       this.$store.commit('updateCurrentTrackIndex', index);
-      AudioPlayerService.setupAudioAnalysis(selectedSound, this.p5);
+      AudioPlayerService.setupAudioAnalysis(selectedSound, true, this.p5);
+    },
+
+    removeSong(index) {
+      const tracks = this.$store.state.audio.tracks;
+      tracks.splice(index, 1);
+      this.$store.commit('updateTracks', tracks);
+
+      if (this.$store.state.audio.currentTrackIndex === index) {
+        if (tracks.length === 0) {
+          this.$store.commit('updateCurrentTrackIndex', -1);
+          AudioPlayerService.audio.stop();
+          AudioPlayerService.audio.disconnect();
+        } else {
+          this.setSong(index);
+        }
+      }
     },
 
     mdArtist(songData) {
-      if (!songData.artist) return 0;
-
-      let colsLeft = 12;
-      colsLeft -= !songData.duration ? 0 : 2;
-
-      let mdArtist = 4;
-
-      return mdArtist;
+      return !songData.artist ? 0 : 4;
     },
 
     mdTitle(songData) {
-      let mdTitle = 6;
-
       if (!songData.duration && !songData.artist) {
-        return 12;
+        return 11;
       }
-
       if (!songData.artist && songData.duration) {
-        return 10;
+        return 9;
       }
       if (!songData.duration && songData.artist) {
-        return 8;
+        return 7;
       }
 
-      return mdTitle;
+      return 7;
     },
 
     mdDuration(songData) {
@@ -98,8 +111,8 @@ export default {
 
     playlist() {
       const tracks = this.$store.state.audio.tracks;
-
       const playlist = [];
+
       for (let file of tracks) {
         const formattedFilename = Utils.formatAudioFilename(file);
         playlist.push(formattedFilename);
@@ -144,6 +157,14 @@ export default {
 
     &:active {
       border-color: $color-secondary-blue;
+    }
+  }
+
+  .remove-song {
+    color: $color-off-white;
+
+    &:hover {
+      color: $color-primary-blue-hover;
     }
   }
 

@@ -47,31 +47,32 @@
         v-tooltip( right)
           template( v-slot:activator= "{ on }")
             v-btn#upload-file-button(
-              @click="triggerFileUpload"
+              @click="uploadAudioDialog = true"
               text icon
             )
               v-icon.menu-icon(
                 v-on="on"
               ) unarchive
-          span  Upload local music
+          span  Upload Music
 
-        input(
-          v-show="false"
-          type="file"
-          id="file"
-          ref="file"
-          accept="audio/*"
-          multiple
-          @change="onFileChange"
-        )
       AudioPlaylist(
         v-show="playlistOpen"
-        :p5="p5"
       )
+
+      v-dialog(
+        v-model="uploadAudioDialog"
+        max-width="600"
+        scrollable
+      )
+        AudioLocalList(
+          @close_modal="uploadAudioDialog = false"
+        )
+
 </template>
 
 <script>
 import AudioPlaylist from '@/components/AudioPlaylist.vue';
+import AudioLocalList from '@/components/AudioLocalList.vue';
 import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
 import AudioPlayerService from '@/js/services/AudioPlayerService';
 import Utils from '@/js/services/Utils';
@@ -81,23 +82,17 @@ import 'p5/lib/addons/p5.sound';
 export default {
   data: () => ({
     playlistOpen: false,
-    p5: null,
+    uploadAudioDialog: false,
   }),
 
   components: {
     AudioPlaylist,
+    AudioLocalList,
   },
 
   methods: {
     triggerFileUpload() {
       this.$refs.file.click();
-    },
-
-    onFileChange() {
-      this.tracks = this.$refs.file.files;
-      if (!this.tracks.length) return;
-
-      AudioPlayerService.audioUploaded(this.tracks, this.p5);
     },
 
     toggleAudioState() {
@@ -115,18 +110,21 @@ export default {
       const currentIndex = this.$store.state.audio.currentTrackIndex;
       const tracks = this.$store.state.audio.tracks;
 
+      // if its the last song loop to start of playlist
       const nextIndex =
         direction === 1
-          ? Math.min(currentIndex + 1, tracks.length - 1)
+          ? currentIndex === tracks.length - 1
+            ? 0
+            : Math.min(currentIndex + 1, tracks.length - 1)
           : Math.max(currentIndex - 1, 0);
 
       this.$store.commit('updateCurrentTrackIndex', nextIndex);
-      AudioPlayerService.setupAudioAnalysis(tracks[nextIndex], this.p5);
+      AudioPlayerService.setupAudioAnalysis(tracks[nextIndex], true, this.p5);
     },
   },
 
   mounted() {
-    this.p5 = new p5(AudioAnalyzer, 'audio-sketch-container');
+    AudioPlayerService.p5 = new p5(AudioAnalyzer, 'audio-sketch-container');
 
     AudioPlayerService.songTimeElem = document.getElementById('song-time');
     AudioPlayerService.songProgressElem = document.getElementById('song-progress-bar');
@@ -177,7 +175,7 @@ export default {
   border-right: 1px solid $subtle-border;
   z-index: 1;
   background-color: #000;
-  width: $secondary-menu-width;
+  width: 450px;
   min-height: 67px;
   text-align: center;
   padding: 10px;

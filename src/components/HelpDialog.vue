@@ -4,7 +4,6 @@
     @input="$emit('input')"
     max-width="500"
     scrollable
-
   )
     v-card.help-box
       v-card-title(class="headline text-center font-weight-bold") How to VYZBY
@@ -62,7 +61,6 @@
               color="color_off_white"
             ) looks_one
             span Empty Slots
-
 
         small NOTE : Currently the Audio Player and MIDI interfaces are still in development
 </template>

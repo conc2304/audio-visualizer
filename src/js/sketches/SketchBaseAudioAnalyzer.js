@@ -6,8 +6,9 @@ import store from '@/store/index.js';
 const AudioAnalyzer = p5 => {
   p5.setup = () => {
     console.log('Loading Audio Analyzer');
+
   };
-  // p5.setup = () => {};
+
   p5.draw = () => {
     if (APS.audio && APS.audio.isLoaded() && !APS.audio.isPaused()) {
 
@@ -18,9 +19,8 @@ const AudioAnalyzer = p5 => {
         store.commit('updateCurrentTrackTime', songTime);
         store.commit('updateSongProgress', songProgress);
       }
-      const fftAnalysis = APS.analyzeFFT(APS.fft);
 
-      console.log(fftAnalysis);
+      const fftAnalysis = APS.analyzeFFT(APS.fft);
       APS.applyAudioEnergyValues(fftAnalysis);
     }
   };

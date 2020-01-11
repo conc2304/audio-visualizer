@@ -59,7 +59,7 @@ export default {
         action: 'resetComposition',
       },
       {
-        mdIconText: 'keyboard',
+        mdIconText: 'input',
         id: 'toggle-input-assigner',
         title: 'Toggle layers\' auxiliary input settings',
         action: 'toggleAuxInputFields',

@@ -1,7 +1,7 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
 import store from '@/store/index.js';
-import p5 from 'p5';
+import P5 from 'p5';  // use this one for instanciation of fft, amplitude ...
 import 'p5/lib/addons/p5.sound';
 
 const AudioPlayerService = {
@@ -13,75 +13,10 @@ const AudioPlayerService = {
   fft: null,
   songProgress: 0,
   currentSound: {},
-  p5: null,
+  p5: null,  // use this one fo the rest of p5, not sure why this is the case but it works
   audioCtrl: {},
   elementPropToFQMap: {},
 };
-
-AudioPlayerService.audioUploaded = async (files, p5) => {
-  const APS = AudioPlayerService;
-  APS.p5 = p5;
-
-  const tracks = store.state.audio.tracks || [];
-  for (let file of files) {
-    tracks.push(file);
-  }
-
-  store.commit('updateAudioIsLoading', true);
-  store.commit('updateTracks', tracks);
-
-  APS.setupAudioAnalysis(files[0], p5);
-};
-
-AudioPlayerService.setupAudioAnalysis = (audioFile, P5) => {
-  const APS = AudioPlayerService;
-
-  if (APS.audio) {
-    APS.audio.stop();
-    APS.audio.disconnect();
-  }
-
-  store.commit('updateCurrentSound', audioFile);
-  store.commit('updateAudioIsLoading', true);
-  APS.audio = APS.p5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
-
-  APS.fft = new p5.FFT();
-  APS.fft.setInput(APS.audio);
-  APS.amplitude = new p5.Amplitude();
-  APS.amplitude.setInput(APS.audio);
-  APS.peakDetect = new p5.PeakDetect(1500, 14000, 0.55);
-};
-
-const audioLoadSuccess = () => {
-  const APS = AudioPlayerService;
-
-  console.log('Sound is loaded : ' + APS.audio.isLoaded());
-
-  APS.audio.playMode('restart');
-  APS.audio.play();
-
-  const tracks = store.state.audio.tracks;
-  const currentSound = store.state.audio.currentSound;
-  const index = tracks.indexOf(currentSound);
-
-  store.commit('updateCurrentSound', currentSound);
-  store.commit('updateCurrentTrackIndex', index);
-  store.commit('updateAudioIsLoading', false);
-  store.commit('updateIsPlaying', APS.audio.isPlaying());
-  store.commit('updateSoundDuration', APS.audio.duration());
-
-  APS.audio.onended(endSong);
-};
-
-const audioLoadError = error => {
-  store.commit('updateAudioIsLoading', false);
-  console.log(error);
-};
-
-function whileLoading(percent) {
-  // not firing currently  - not sure why??
-  AudioPlayerService.loadingPercent = (percent * 100 + 1).toFixed() + '%';
-}
 
 AudioPlayerService.frequencies = [
   {
@@ -111,47 +46,70 @@ AudioPlayerService.frequencies = [
   },
 ];
 
-const endSong = () => {
+/**
+ *
+ */
+AudioPlayerService.audioUploaded = files => {
   const APS = AudioPlayerService;
-  const currentTime = APS.audio
-    .currentTime()
-    .toString()
-    .split('.')[0];
-  const duration = APS.audio
-    .duration()
-    .toString()
-    .split('.')[0];
+  // APS.p5 = p5;
 
-  const songEnded = currentTime === duration;
+  const tracks = store.state.audio.tracks || [];
+  let file;
+  if (files.path) {
+    tracks.push(files);
+    file = files;
+  } else {
+    for (let file of files) {
+      tracks.push(file);
+    }
+    file = files[0];
+  }
 
-  const current = store.state.audio.currentTrackIndex;
-  const tracks = store.state.audio.tracks;
-  let next = current;
+  store.commit('updateTracks', tracks);
 
-  // only go to next song if we are just finishing a song that was playing
-  if (
-    APS.audio.isPlaying() &&
-    !APS.audio.isPaused() &&
-    (APS.audio.currentTime() === '0' || songEnded)
-  ) {
-    if (current === tracks.length - 1) {
-      next = 0;
-    } else {
-      next = Math.min(current + 1, tracks.length - 1);
+  APS.currentSound = file;
+  APS.setupAudioAnalysis(file, false);
+};
+
+/**
+ *
+ */
+AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
+  const APS = AudioPlayerService;
+  APS.currentSound = audioFile;
+
+  // only play the newly loaded song if one is not already playing
+  if (changeSong || !APS.audio || !APS.audio.isPlaying() || APS.audio.isPaused()) {
+    if (APS.audio) {
+      APS.audio.stop();
+      APS.audio.disconnect();
     }
 
-    store.state.audio.songProgress = APS.audio.currentTime();
-    APS.setupAudioAnalysis(tracks[next], APS.p5);
+    if (audioFile.path) {
+      audioFile = audioFile.path;
+    }
+
+    store.commit('updateAudioIsLoading', true);
+    APS.audio = APS.p5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
+
+    APS.fft = new P5.FFT();
+    APS.fft.setInput(APS.audio);
+    APS.amplitude = new P5.Amplitude();
+    APS.amplitude.setInput(APS.audio);
+    APS.peakDetect = new P5.PeakDetect(1500, 14000, 0.55);
   }
 };
 
+/**
+ *
+ */
 AudioPlayerService.toggleAudioState = () => {
   const APS = AudioPlayerService;
 
   if (!APS.audio) return;
 
   if (!APS.audio.isPlaying() && !APS.audio.isPaused()) {
-    APS.setupAudioAnalysis(store.state.audio.currentSound, p5i);
+    APS.setupAudioAnalysis(store.state.audio.currentSound, true, APS.p5);
   } else if (APS.audio.isPaused()) {
     APS.audio.play();
   } else {
@@ -161,6 +119,9 @@ AudioPlayerService.toggleAudioState = () => {
   store.commit('updateIsPlaying', APS.audio.isPlaying());
 };
 
+/**
+ *
+ */
 AudioPlayerService.analyzeFFT = fft => {
   if (!fft || !AudioPlayerService.frequencies) {
     return;
@@ -184,7 +145,6 @@ AudioPlayerService.analyzeFFT = fft => {
  * We map the audio frequency value between the minimum and maximum for the property.
  * We then adjust the target value using the reset or target value based on responsiveness type
  * @param fftAnalysis - an array of amplitude readings for each frequency
- * @returns {boolean}
  */
 AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
   const APS = AudioPlayerService;
@@ -197,19 +157,18 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
   let audioValue;
 
   let ctrlHandlers = APS.elementPropToFQMap;
-  // console.log(ctrlHandlers);
-  for (let controlElementName in ctrlHandlers) {
-    if (!ctrlHandlers.hasOwnProperty(controlElementName)) {
+  for (let sketchIndex in ctrlHandlers) {
+    if (!ctrlHandlers.hasOwnProperty(sketchIndex)) {
       continue;
     }
 
-    controlObject = RegisteredSketches[controlElementName];
-    for (let ctrlProp in ctrlHandlers[controlElementName]) {
-      if (!ctrlHandlers[controlElementName].hasOwnProperty(ctrlProp)) {
+    controlObject = RegisteredSketches[sketchIndex];
+    for (let ctrlProp in ctrlHandlers[sketchIndex]) {
+      if (!ctrlHandlers[sketchIndex].hasOwnProperty(ctrlProp)) {
         continue;
       }
 
-      const eqBand = ctrlHandlers[controlElementName][ctrlProp];
+      const eqBand = ctrlHandlers[sketchIndex][ctrlProp];
       // the value in eq band will be somewhere between 0 and 255
       // we need to scale that between the upper and lower bounds of the element
       if (fftAnalysis[eqBand] === 0) {
@@ -224,18 +183,18 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
         );
       }
 
-      audioValue = 0.6 * parseFloat(audioValue) * parseFloat(controlObject[ctrlProp].audio.gain);
+      audioValue = parseFloat(audioValue) * parseFloat(controlObject[ctrlProp].audio.gain) * 0.6;
 
       let setValue;
       let overBy;
       switch (controlObject[ctrlProp].audio.responsiveType) {
         case 'infinite':
-          audioValue = p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
+          audioValue = APS.p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
           audioValue = audioValue * 0.01;
           setValue = controlObject[ctrlProp].targetValue + audioValue;
           break;
         case 'loop up':
-          audioValue = p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
+          audioValue = APS.p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
 
           audioValue = audioValue * 0.01;
           // increase it by how much it went over and then loop from top again
@@ -247,7 +206,7 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
           }
           break;
         case 'loop down':
-          audioValue = p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
+          audioValue = APS.p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
 
           audioValue = audioValue * 0.01;
           // decrease it by how much it went under and then loop from top again
@@ -272,10 +231,16 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
   }
 };
 
+/**
+ *
+ */
 AudioPlayerService.setPropertyGain = (gainValue, parameterName, sketchIndexSelected) => {
   RegisteredSketches[sketchIndexSelected][parameterName].audio.gain = gainValue;
 };
 
+/**
+ *
+ */
 AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchIndexSelected) => {
   const APS = AudioPlayerService;
   const ctrlObjectName = sketchIndexSelected;
@@ -310,6 +275,79 @@ AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchInde
     if (Object.size(APS.elementPropToFQMap[ctrlObjectName]) === 0) {
       delete APS.elementPropToFQMap[ctrlObjectName];
     }
+  }
+};
+
+/**
+ *
+ */
+const audioLoadSuccess = () => {
+  const APS = AudioPlayerService;
+
+  // only play the newly loaded song if one is not already playing
+  if (!APS.audio.isPlaying() || APS.audio.isPaused()) {
+    APS.audio.stop();
+    const index = store.state.audio.tracks.indexOf(APS.currentSound);
+
+    store.commit('updateCurrentSound', APS.currentSound);
+    store.commit('updateCurrentTrackIndex', index);
+    store.commit('updateSoundDuration', APS.audio.duration());
+    store.commit('updateIsPlaying', APS.audio.isPlaying());
+
+    APS.audio.playMode('restart');
+    APS.audio.play();
+  }
+
+  store.commit('updateIsPlaying', APS.audio.isPlaying());
+  store.commit('updateAudioIsLoading', false);
+  APS.audio.onended(endSong);
+};
+
+const audioLoadError = error => {
+  store.commit('updateAudioIsLoading', false);
+  console.log(error);
+};
+
+/**
+ *
+ * @param {Number} percent
+ */
+const whileLoading = percent => {
+  // not firing currently  - not sure why??
+  console.log('percent');
+  console.log(percent);
+  AudioPlayerService.loadingPercent = (percent * 100 + 1).toFixed() + '%';
+};
+
+/**
+ *
+ */
+const endSong = () => {
+  const APS = AudioPlayerService;
+  const currentTime = APS.audio
+    .currentTime()
+    .toString()
+    .split('.')[0];
+  const duration = APS.audio
+    .duration()
+    .toString()
+    .split('.')[0];
+
+  const songEnded = currentTime === duration;
+
+  const current = store.state.audio.currentTrackIndex;
+  const tracks = store.state.audio.tracks;
+  let next = current;
+
+  // only go to next song if we are just finishing a song that was playing
+  if (
+    APS.audio.isPlaying() &&
+    !APS.audio.isPaused() &&
+    (APS.audio.currentTime() === '0' || songEnded)
+  ) {
+    next = current !== tracks.length - 1 ? Math.min(current + 1, tracks.length - 1) : 0;
+    store.state.audio.songProgress = APS.audio.currentTime();
+    APS.setupAudioAnalysis(tracks[next], true, APS.p5);
   }
 };
 

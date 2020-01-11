@@ -9,6 +9,7 @@
         ParameterControlNumeric(
           :auxInputVisibible="auxInputVisibible"
           :parameter="parameter"
+          :parameterIndex="i"
         )
 
     v-divider

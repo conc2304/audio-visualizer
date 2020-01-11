@@ -1,6 +1,6 @@
 <template lang="pug">
   .audio-parameter-wrapper()
-
+    v-icon.input-type music_note
     .knob-wrapper
       v-tooltip(
         :disabled="parameter.lockOn"
@@ -46,7 +46,6 @@
               @change="updateAudioReactiveFreq()"
             )
         span Make parameter react to audio frequency
-
 </template>
 
 <script>
@@ -69,6 +68,9 @@ export default {
     parameter: {
       type: Object,
     },
+    parameterIndex: {
+      type: Number,
+    },
   },
 
   methods: {
@@ -83,6 +85,12 @@ export default {
 
   mounted() {
     this.gain = this.parameter.audio.gain * 100;
+
+    if (this.parameterIndex === 0 && this.parameter.audio && this.sketchIndexSelected === 0) {
+      // populate the first sketches parameter audio reactive move
+      // should match frequency selected in `VisualizerPage.vue` demoEqSet Section
+      this.freqRangeSelected = APS.frequencies[2];
+    }
   },
 
   computed: {
@@ -121,6 +129,10 @@ export default {
   .v-label {
     font-size: 10px;
   }
+}
+
+.input-type {
+  color: $color-std-grey;
 }
 </style>
 

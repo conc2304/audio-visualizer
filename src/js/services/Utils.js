@@ -13,24 +13,30 @@ Utils.getRandomInt = (min, max) => {
 };
 
 Utils.formatAudioFilename = file => {
-  let currentSound = {};
 
-  if (!file.size || !file.name) {
+  // local server file
+  if (file.path) {
+    return file;
+  }
+
+  // uploaded remote file
+  if (!file || !file.size || !file.name) {
     return {
       title: 'Song Name',
       artist: 'Artist',
     };
   }
 
+  let currentSound = {};
   if (file.name) {
     const filename = file.name.substring(0, file.name.lastIndexOf('.'));
 
     currentSound.artist = filename.lastIndexOf('-')
-      ? ucFirst(filename.substring(0, filename.lastIndexOf('-')).trim())
+      ? Utils.ucFirst(filename.substring(0, filename.lastIndexOf('-')).trim())
       : null;
 
     currentSound.title = filename.indexOf('-')
-      ? ucFirst(filename.substring(filename.indexOf('-') + 1).trim())
+      ? Utils.ucFirst(filename.substring(filename.indexOf('-') + 1).trim())
       : filename;
   }
 
@@ -69,8 +75,19 @@ Utils.sketchPropertyIterator = (registeredSketches, fn) => {
   }
 }
 
-const ucFirst = (string) => {
+Utils.ucFirst = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+Object.size = obj => {
+  let size = 0,
+    key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      size++;
+    }
+  }
+  return size;
+};
 
 export default Utils;

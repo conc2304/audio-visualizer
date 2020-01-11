@@ -25,6 +25,7 @@
         v-show="parameter.audio && auxInputVisibible"
         :parameter="parameter"
         :auxInputVisibible="auxInputVisibible"
+        :parameterIndex="parameterIndex"
       )
 </template>
 
@@ -56,6 +57,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    parameterIndex: {
+      type: Number
+    }
   },
 
   methods: {
