@@ -47,8 +47,11 @@ class OuterWaves {
     ]);
 
     this.waveRotateX = new NumericProperty('Rotate Wave X', 'Rotation', 0, -10, 10, 0.7);
+    this.waveRotateXVelocity = new NumericProperty('Rotate Wave X Velocity', 'Rotation', 0, 0, 0.2, 0.7);
     this.waveRotateY = new NumericProperty('Rotate Wave Y', 'Rotation', 0, -10, 10, 0.7);
+    this.waveRotateYVelocity = new NumericProperty('Rotate Wave Y Velocity', 'Rotation', 0, 0, 0.2, 0.7);
     this.waveRotateZ = new NumericProperty('Rotate Wave Z', 'Rotation', 0, -10, 10, 0.7);
+    this.waveRotateZVelocity = new NumericProperty('Rotate Wave Z Velocity', 'Rotation', 0, 0, 0.2, 0.7);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
     this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1);
@@ -117,9 +120,9 @@ OuterWaves.prototype.render = function(p5) {
  * Sets the rotational speed along the X, Y, and Z axis of the individual wave.
  */
 OuterWaves.prototype.rotateWave = function(p5) {
-  p5.rotateX(p5.frameCount * 0.01 * this.waveRotateX.currentValue);
-  p5.rotateY(p5.frameCount * 0.01 * this.waveRotateY.currentValue);
-  p5.rotateZ(p5.frameCount * 0.01 * this.waveRotateZ.currentValue);
+  p5.rotateX(p5.frameCount * this.waveRotateXVelocity.currentValue + this.waveRotateX.currentValue);
+  p5.rotateY(p5.frameCount * this.waveRotateYVelocity.currentValue + this.waveRotateY.currentValue);
+  p5.rotateZ(p5.frameCount * this.waveRotateZVelocity.currentValue + this.waveRotateZ.currentValue);
 };
 
 /**
