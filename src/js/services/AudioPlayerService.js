@@ -171,7 +171,7 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
       const eqBand = ctrlHandlers[sketchIndex][ctrlProp];
       // the value in eq band will be somewhere between 0 and 255
       // we need to scale that between the upper and lower bounds of the element
-      if (fftAnalysis[eqBand] === 0) {
+      if (fftAnalysis[eqBand] === 0 || !controlObject || !controlObject[ctrlProp]) {
         continue;
       } else {
         audioValue = APS.p5.map(

@@ -87,7 +87,7 @@ class Parametric {
       0.7,
     );
 
-    this.equationType = new VariableProperty('Shape Type', 'Base', 'Ring', ['Ring', 'Pipe']);
+    this.equationType = new VariableProperty('Shape Type', 'Base', 'Ring', ['Ring', 'Pipe', 'Triangle']);
   }
 }
 
@@ -129,6 +129,8 @@ Parametric.prototype.getEquation = function() {
       return this.parametricRing;
     case 'Pipe':
       return this.parametricPipe;
+    case 'Triangle':
+      return this.parametric006;
     default:
       return this.parametricRing;
   }
