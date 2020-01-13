@@ -1,6 +1,5 @@
 import easeInto from '@/js/services/EasingService';
 import Utils from '@/js/services/Utils';
-import helper from '@/js/services/p5Helper.js';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
@@ -40,17 +39,11 @@ class WEBGLWave {
     this.velocity = new NumericProperty('Velocity', 'Base', 0.01, 0.001, 0.2, 0.7);
 
     this.rotateX = new NumericProperty('Rotate Shape X', 'Rotation', 0, -10, 10, 0.7);
-    this.rotateXVelocity = new NumericProperty('Rotate Shape X Velocity', 'Rotation', 0, -10, 10, 0.7);
     this.rotateY = new NumericProperty('Rotate Shape Y', 'Rotation', 0, -10, 10, 0.7);
-    this.rotateYVelocity = new NumericProperty('Rotate Shape Y Velocity', 'Rotation', 0, -10, 10, 0.7);
     this.rotateZ = new NumericProperty('Rotate Shape Z', 'Rotation', 0, -10, 10, 0.7);
-    this.rotateZVelocity = new NumericProperty('Rotate Shape Z Velocity', 'Rotation', 0, -10, 10, 0.7);
     this.waveRotateX = new NumericProperty('Rotate Wave X', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateXVelocity = new NumericProperty('Rotate Wave X Velocity', 'Rotation', 0, 0, 0.2, 0.7);
     this.waveRotateY = new NumericProperty('Rotate Wave Y', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateYVelocity = new NumericProperty('Rotate Wave Y Velocity', 'Rotation', 0, 0, 0.2, 0.7);
     this.waveRotateZ = new NumericProperty('Rotate Wave Z', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateZVelocity = new NumericProperty('Rotate Wave Z Velocity', 'Rotation', 0, 0, 0.2, 0.7);
 
     this.translateX = new NumericProperty('Translate X', 'Position', 0, -900, 900, 0.7);
     this.translateY = new NumericProperty('Translate Y', 'Position', 0, -900, 900, 0.7);
@@ -161,13 +154,19 @@ WEBGLWave.prototype.render = function(p5) {
  * Sets the rotational speed along the X, Y, and Z axis of the individual wave.
  */
 WEBGLWave.prototype.rotateWave = function(p5) {
-  p5.rotateX(p5.frameCount * this.waveRotateXVelocity.currentValue + this.waveRotateX.currentValue);
-  p5.rotateY(p5.frameCount * this.waveRotateYVelocity.currentValue + this.waveRotateY.currentValue);
-  p5.rotateZ(p5.frameCount * this.waveRotateZVelocity.currentValue + this.waveRotateZ.currentValue);
+  p5.rotateX(p5.frameCount * 0.01 * this.waveRotateX.currentValue);
+  p5.rotateY(p5.frameCount * 0.01 * this.waveRotateY.currentValue);
+  p5.rotateZ(p5.frameCount * 0.01 * this.waveRotateZ.currentValue);
 };
 
-
-WEBGLWave.prototype.rotateShape = helper.rotateShape;
+/**
+ * Sets the rotational speed along the X, Y, and Z axis of each shape
+ */
+WEBGLWave.prototype.rotateShape = function(p5) {
+  p5.rotateX(p5.frameCount * 0.01 * this.rotateX.currentValue);
+  p5.rotateY(p5.frameCount * 0.01 * this.rotateY.currentValue);
+  p5.rotateZ(p5.frameCount * 0.01 * this.rotateZ.currentValue);
+};
 
 /**
  * Based on user toggling, set the color profile for element to be rendered
