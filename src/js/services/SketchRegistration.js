@@ -7,10 +7,11 @@ import Parametric from '@/js/sketches/SketchConstructorParametric';
 
 const registeredSketches = [];
 
-SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
+
 
 let i = 0;
 // start them with 3 of the sketches
