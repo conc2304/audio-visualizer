@@ -1,5 +1,6 @@
 import easeInto from '@/js/services/EasingService';
 import Utils from '@/js/services/Utils';
+import helper from '@/js/services/p5Helper.js';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
@@ -110,7 +111,8 @@ OuterWaves.prototype.render = function(p5) {
         yPos += p5.noise(yPos) / this.noiseGain;
       }
 
-      this.renderShape(xPos, yPos, r, s, p5);
+      this.renderShape(p5, xPos, yPos + s, r,);
+      this.renderShape(p5, xPos, yPos - s, r,);
     }
   }
   p5.pop();
@@ -125,73 +127,10 @@ OuterWaves.prototype.rotateWave = function(p5) {
   p5.rotateZ(p5.frameCount * this.waveRotateZVelocity.currentValue + this.waveRotateZ.currentValue);
 };
 
-/**
- * Based on user toggling, set the color profile for element to be rendered
- */
-OuterWaves.prototype.setColor = function(p5) {
-  switch (this.stroke.currentValue) {
-    case 'Outline':
-      p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
-      p5.noFill();
-      break;
-    case 'Filled':
-      p5.noStroke();
-      p5.fill(this.hue.currentValue, this.saturation.currentValue, 100);
-      break;
-  }
-};
 
-/**
- * Renders a given shape along the the passed x and y positions.
- * @param xPos
- * @param yPos
- * @param radius
- * @param spacing  - y space between lines
- */
-OuterWaves.prototype.renderShape = function(xPos, yPos, radius, spacing, p5) {
-  const polygons = ['line', 'triangle', 'square', 'pentagon']; // polygons we are allowing for set in the shape attribute
-
-  if (this.shape.currentValue === 'ellipse') {
-    p5.ellipse(xPos, yPos + spacing, radius, radius); // one above and one below
-    p5.ellipse(xPos, yPos - spacing, radius, radius);
-  } else if (polygons.includes(this.shape.currentValue)) {
-    let sides;
-    switch (this.shape.currentValue) {
-      case 'line':
-        sides = 2;
-        break;
-      case 'triangle':
-        sides = 3;
-        break;
-      case 'square':
-        sides = 4;
-        break;
-      case 'pentagon':
-        sides = 5;
-        break;
-    }
-    p5.push();
-    p5.strokeWeight(3);
-    p5.translate(xPos, yPos + spacing);
-    p5.rotate(p5.atan(p5.frameCount / 50.0));
-    p5.polygon(0, 0, radius, sides, p5);
-    p5.pop();
-
-    p5.push();
-    p5.strokeWeight(3);
-    p5.translate(xPos, yPos - spacing);
-    p5.rotate(p5.atan(p5.frameCount / -50.0));
-    p5.polygon(0, 0, radius, sides, p5);
-    p5.pop();
-  } else {
-    p5.ellipse(xPos, yPos + spacing, radius, radius); // one above and one below
-    p5.ellipse(xPos, yPos - spacing, radius, radius);
-  }
-};
-
-/**
- * For each attribute transition from the current value to the target value
- */
+OuterWaves.prototype.rotateShape = helper.rotateShape;
+OuterWaves.prototype.setColor = helper.setColor;
+OuterWaves.prototype.renderShape = helper.renderShape;
 OuterWaves.prototype.easeInto = easeInto;
 
 export default OuterWaves;

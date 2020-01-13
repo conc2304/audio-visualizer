@@ -1,5 +1,6 @@
 import easeInto from '@/js/services/EasingService';
 import Utils from '@/js/services/Utils';
+import helper from '@/js/services/p5Helper.js';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
@@ -165,14 +166,8 @@ WEBGLWave.prototype.rotateWave = function(p5) {
   p5.rotateZ(p5.frameCount * this.waveRotateZVelocity.currentValue + this.waveRotateZ.currentValue);
 };
 
-/**
- * Sets the rotational speed along the X, Y, and Z axis of each shape
- */
-WEBGLWave.prototype.rotateShape = function(p5) {
-  p5.rotateX(p5.frameCount * this.rotateXVelocity.currentValue + this.rotateX.currentValue);
-  p5.rotateY(p5.frameCount * this.rotateYVelocity.currentValue + this.rotateY.currentValue);
-  p5.rotateZ(p5.frameCount * this.rotateZVelocity.currentValue + this.rotateZ.currentValue);
-};
+
+WEBGLWave.prototype.rotateShape = helper.rotateShape;
 
 /**
  * Based on user toggling, set the color profile for element to be rendered
