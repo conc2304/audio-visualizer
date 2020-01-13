@@ -3,9 +3,11 @@ import SketchCatalogue from '@/js/services/SketchCatalogue';
 import CenterWave from '@/js/sketches/SketchConstructorCenterWave';
 import WEBGLWave from  '@/js/sketches/SketchConstructorWEBGLWave';
 import OuterWaves from '@/js/sketches/SketchConstructorOuterWaves';
+import Parametric from '@/js/sketches/SketchConstructorParametric';
 
 const registeredSketches = [];
 
+SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
@@ -17,6 +19,5 @@ while (i < 3) {
   registeredSketches.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
   i++;
 }
-
 
 export default registeredSketches;
