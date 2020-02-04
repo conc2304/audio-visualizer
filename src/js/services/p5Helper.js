@@ -16,7 +16,6 @@ p5Helper.renderShape = function(p5, xPos, yPos, radius) {
   } else if (polygons.includes(this.shape.currentValue)) {
     let sides = 2;
 
-    p5.strokeWeight(1);
 
     switch (this.shape.currentValue) {
       case 'line':

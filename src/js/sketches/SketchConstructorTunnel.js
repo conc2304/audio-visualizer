@@ -29,6 +29,7 @@ class Tunnel {
     this.bypass = false;
 
     this.radius = new NumericProperty('Size', 'Base', 20, 0, 2000, 0.7);
+    this.strokeWeight = new NumericProperty('Line Width', 'Base', 2, 2, 200, 0.7);
 
     this.iterations = new NumericProperty('Number of Objects', 'Base', 3, 0, 40, 0.5);
     this.spacing = new NumericProperty('Z Spacing', 'Base', 3, -100, 500, 0.5);
@@ -50,45 +51,50 @@ class Tunnel {
   }
 }
 
+const zMax = 900;
+const zMin = -6000;
+const zDist = zMax - zMin;
+
 Tunnel.prototype.render = function(p5) {
   p5.push();
 
-  let xPos = 0;
-  let yPos = 0;
-
-  p5.strokeWeight(2);
-  // p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
-  // p5.fill(360, 180, 10);
+  const tunnelSpeed = 10;
+  const frame = p5.frameCount;
+  const tunnelPos = (frame * tunnelSpeed) % zDist;
+  console.log(`tunnelPos : ${tunnelPos}`);
 
   p5.noFill();
 
   let i = 0;
-  while (i < this.iterations.currentValue) {
+  while (i < 20) {
     p5.push();
 
-    const depth = i * this.spacing.currentValue;
-    const movement = -p5.sin(p5.frameCount * 0.001) * 500;
-    const radius = this.radius.currentValue;
-    const test = p5.map(p5.sin(p5.frameCount * 0.005 + i), 0, 1, 0, 360);
+    const zStep = zDist / this.iterations.currentValue;
+    const zPos = tunnelPos < zDist ? zMin + tunnelPos + i * zStep : zMin;
+    console.log(`zPoz : ${zPos}`);
 
     p5.translate(
       this.translateX.currentValue,
       this.translateY.currentValue,
-      this.translateZ.currentValue + 200 - i * this.spacing.currentValue + movement,
+      zPos
     );
 
+    p5.strokeWeight(this.strokeWeight.currentValue);
+    p5.strokeWeight(2);
 
     if (i === 0) {
       p5.stroke(360, this.saturation.currentValue, 100);
     } else {
-      const calc = p5.sin(p5.noise((p5.frameCount + ( 2.5 * i) ) * 0.1 ));
+      const calc = p5.sin(p5.noise((frame + 2.5 * i) * 0.1));
       const wave = p5.map(calc, 0, 1, 0, 100);
       const hue = p5.map(calc, 0, 1, Number(this.hue.min), Number(this.hue.max));
-      console.log(hue);
-      p5.stroke(hue, this.saturation.currentValue, wave);
+      const saturation = p5.map(calc, 0, 1, Number(this.hue.min), Number(this.hue.max));
+      // p5.stroke(hue, this.saturation.currentValue, wave);
+
+      p5.stroke(hue, 0, wave);
     }
 
-    this.renderShape(p5, xPos, yPos, radius);
+    this.renderShape(p5, 0, 0, this.radius.currentValue);
     p5.pop();
 
     i++;
