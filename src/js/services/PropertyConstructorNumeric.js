@@ -15,7 +15,7 @@ class NumericProperty {
 
     this.resetValue = defaultValue;
     this.defaultValue = defaultValue;
-    this.currentValue = defaultValue;
+    this.currentValue = (minValue + maxValue) * 0.5;
     this.targetValue = null;
 
     //  this value that can be set/edited by the user
