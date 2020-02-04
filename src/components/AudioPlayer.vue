@@ -9,12 +9,17 @@
 
 
     #audio-player
-      .song-info
+      .song-info( v-if="currentSound !== false")
         p#song-artist(
           v-show="currentSound.artist"
         ) {{ currentSound.artist }}
         p#song-name  {{ currentSound.title }}
         p#song-time  {{ currentTrackTime}}
+      .upload-btn-wrapper( v-else)
+        v-btn(
+          @click="uploadAudioDialog = true"
+          large color="color_primary_blue"
+        ) Upload Music
     .song-progress
       v-progress-linear#loading-bar(
         v-show="audioIsLoading"
@@ -165,6 +170,10 @@ export default {
       const duration = this.$store.state.audio.duration;
       const formattedFilename = Utils.formatAudioFilename(soundFile);
 
+      if (formattedFilename === false) {
+        return false;
+      }
+
       const currentSound = {};
       currentSound.title = formattedFilename.title;
       currentSound.artist = formattedFilename.artist;
@@ -190,6 +199,10 @@ export default {
   min-height: 67px;
   text-align: center;
   padding: 10px;
+}
+
+.upload-btn-wrapper {
+  margin: 1rem auto;
 }
 
 #song-progress-bar {
