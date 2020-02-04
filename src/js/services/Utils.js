@@ -21,10 +21,7 @@ Utils.formatAudioFilename = file => {
 
   // uploaded remote file
   if (!file || !file.size || !file.name) {
-    return {
-      title: 'Song Name',
-      artist: 'Artist',
-    };
+    return false;
   }
 
   let currentSound = {};
