@@ -24,16 +24,21 @@ class Tunnel {
 
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
-
     this.origin = 0;
     this.bypass = false;
+
+    this.zMax = 900;
+    this.zMin = -6000;
+    this.zDist = this.zMax - this.zMin;
+    this.zPos = this.zMin;
 
     this.radius = new NumericProperty('Size', 'Base', 20, 0, 2000, 0.7);
     this.strokeWeight = new NumericProperty('Line Width', 'Base', 2, 2, 200, 0.7);
 
     this.iterations = new NumericProperty('Number of Objects', 'Base', 3, 0, 40, 0.5);
     this.spacing = new NumericProperty('Z Spacing', 'Base', 3, -100, 500, 0.5);
-
+    this.tunnelSpeed = new NumericProperty('Speed', 'Base', 3, -50, 100, 0.5);
+    // this.secondaryColorSpeed = new NumericProperty('Tunnel Color Speed', 'Color', 2, -3, 4, 0.7);
     this.shape = new VariableProperty('Shape', 'Base', 'square', [
       'line',
       'triangle',
@@ -51,55 +56,41 @@ class Tunnel {
   }
 }
 
-const zMax = 900;
-const zMin = -6000;
-const zDist = zMax - zMin;
+let tunnelPos;
 
 Tunnel.prototype.render = function(p5) {
   p5.push();
 
-  const tunnelSpeed = 10;
   const frame = p5.frameCount;
-  const tunnelPos = (frame * tunnelSpeed) % zDist;
-  console.log(`tunnelPos : ${tunnelPos}`);
+  const zStep = this.zDist / this.iterations.currentValue;
+  const tunnelPos = (frame * this.tunnelSpeed.currentValue) % this.zDist;
 
   p5.noFill();
 
-  let i = 0;
-  while (i < 20) {
+  for (let i = 0; i < this.iterations.currentValue; i++) {
     p5.push();
 
-    const zStep = zDist / this.iterations.currentValue;
-    const zPos = tunnelPos < zDist ? zMin + tunnelPos + i * zStep : zMin;
-    console.log(`zPoz : ${zPos}`);
+    // make it restart from the minimum on loop
+    const zToSet = this.zMin + tunnelPos + i * zStep;
+    this.zPos = zToSet > this.zMax ? zToSet - this.zDist : zToSet;
 
-    p5.translate(
-      this.translateX.currentValue,
-      this.translateY.currentValue,
-      zPos
-    );
+    p5.translate(this.translateX.currentValue, this.translateY.currentValue, this.zPos);
 
     p5.strokeWeight(this.strokeWeight.currentValue);
-    p5.strokeWeight(2);
+    const calc = p5.sin(p5.noise((frame + 2.5 * i) * 0.01));
+    const wave = p5.map(calc, 0, 1, 0, 100);
+    const hue = p5.map(calc, 0, 1, Number(this.hue.min), Number(this.hue.max));
+    const saturation = p5.map(calc, 0, 1, Number(this.saturation.min), Number(this.saturation.max));
 
-    if (i === 0) {
-      p5.stroke(360, this.saturation.currentValue, 100);
+    if (i % 7 == 0) {
+      p5.stroke(360 - this.hue.currentValue, saturation, 100);
     } else {
-      const calc = p5.sin(p5.noise((frame + 2.5 * i) * 0.1));
-      const wave = p5.map(calc, 0, 1, 0, 100);
-      const hue = p5.map(calc, 0, 1, Number(this.hue.min), Number(this.hue.max));
-      const saturation = p5.map(calc, 0, 1, Number(this.hue.min), Number(this.hue.max));
-      // p5.stroke(hue, this.saturation.currentValue, wave);
-
-      p5.stroke(hue, 0, wave);
+      p5.stroke(hue, this.saturation.currentValue, wave);
     }
 
     this.renderShape(p5, 0, 0, this.radius.currentValue);
     p5.pop();
-
-    i++;
   }
-
   p5.pop();
 };
 
