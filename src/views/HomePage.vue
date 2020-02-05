@@ -1,5 +1,7 @@
 <template lang="pug">
   #splash-container
+    AppSettingsMenu
+
     #splash-sketch-background
     .content
       .title-bar
@@ -54,9 +56,11 @@
 <script>
 import ParticleScript from '@/js/sketches/SketchBaseHomePage';
 import LoginPane from '@/components/LoginPane.vue';
+import AppSettingsMenu from '@/components/AppSettingsMenu.vue';
 
 export default {
   components: {
+    AppSettingsMenu,
     LoginPane,
   },
   data: () => ({

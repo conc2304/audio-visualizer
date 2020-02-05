@@ -34,7 +34,7 @@
 
         v-list-item( @click="redirectToMain()")
           v-list-item-icon
-            v-icon web
+            v-icon computer
           v-list-item-content
             v-list-item-title Back To Main Site
 
@@ -112,37 +112,6 @@ export default {
     sessionName: '',
     savedSessionName: '',
     fullscreenOn: false,
-
-    preferences: [
-      {
-        title: 'Home',
-        action: 'goToHome',
-        icon: 'home',
-        tooltipText: '',
-      },
-      {
-        title: 'Fullscreen',
-        action: 'toggleFullscreen',
-        icon: 'fullscreen',
-        off_title: 'Exit Fullscreen',
-        off_action: 'closeFullscreen',
-        off_icon: 'fullscreen_exit',
-        onState: true,
-        tooltipText: '',
-      },
-      // {
-      //   title: 'Save Session',
-      //   action: 'saveSession',
-      //   icon: 'save',
-      //   tooltipText: 'Login to save your session',
-      // },
-      // {
-      //   title: 'Open Session',
-      //   action: 'openSession',
-      //   icon: 'folder_open',
-      //   tooltipText: 'Login to open a saved session',
-      // },
-    ],
   }),
 
   methods: {
