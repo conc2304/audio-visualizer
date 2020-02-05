@@ -17,9 +17,9 @@ class Tunnel {
       'A generative never ending tunnel ',
       ['Generative', 'Tunnel', 'Loop'],
       'StillClyzby',
-      './assets/sketch_catalogue_gifs/center-wave_200.gif',
-      300,
-      2,
+      './assets/sketch_catalogue_gifs/tunnel_200.gif',
+      202,
+      1,
     );
 
     this.windowWidth = windowWidth;
@@ -36,7 +36,7 @@ class Tunnel {
     this.strokeWeight = new NumericProperty('Line Width', 'Base', 2, 2, 200, 0.7);
 
     this.iterations = new NumericProperty('Number of Objects', 'Base', 3, 0, 40, 0.5);
-    this.spacing = new NumericProperty('Z Spacing', 'Base', 3, -100, 500, 0.5);
+    // this.spacing = new NumericProperty('Z Spacing', 'Base', 3, -100, 500, 0.5);
     this.tunnelSpeed = new NumericProperty('Speed', 'Base', 3, -50, 100, 0.5);
     // this.secondaryColorSpeed = new NumericProperty('Tunnel Color Speed', 'Color', 2, -3, 4, 0.7);
     this.shape = new VariableProperty('Shape', 'Base', 'square', [
@@ -49,7 +49,7 @@ class Tunnel {
 
     this.translateX = new NumericProperty('Translate X', 'Position', 0, -900, 900, 0.7);
     this.translateY = new NumericProperty('Translate Y', 'Position', 0, -900, 900, 0.7);
-    this.translateZ = new NumericProperty('Translate Z', 'Position', 0, -900, 900, 0.7);
+    // this.translateZ = new NumericProperty('Translate Z', 'Position', 0, -900, 900, 0.7);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
     this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1);
@@ -87,6 +87,15 @@ Tunnel.prototype.render = function(p5) {
     } else {
       p5.stroke(hue, this.saturation.currentValue, wave);
     }
+
+    let noiseXAmplitude = 1;
+    let noiseYAmplitude = 1;
+    let noiseXSpeed = 0.001;
+    let noiseYSpeed = 0.001;
+
+    const noiseX = p5.map(p5.noise((frame + i) * 0.01) * noiseXAmplitude, 0, 1, -this.windowWidth / 2, this.windowWidth / 2 );
+    const noiseY = p5.map(p5.noise(frame * noiseYSpeed * i) * noiseYAmplitude, 0, 1, -this.windowHeight / 2, this.windowHeight / 2 );
+    // p5.translate(noiseX,  noiseY, 0);
 
     this.renderShape(p5, 0, 0, this.radius.currentValue);
     p5.pop();
