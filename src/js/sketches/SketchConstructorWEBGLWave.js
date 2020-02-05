@@ -36,7 +36,7 @@ class WEBGLWave {
     this.xSpacing = new NumericProperty('X Spacing', 'Base', 300, 0, 900, 0.7);
     this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 500, 0.7);
     this.period = new NumericProperty('Period', 'Base', 500, 0, 850, 0.7);
-    this.velocity = new NumericProperty('Velocity', 'Base', 0.01, 0.001, 0.2, 0.7);
+    this.velocity = new NumericProperty('Velocity', 'Base', -0.001, 0.005, 0.2, 0.7);
 
     this.rotateX = new NumericProperty('Rotate Shape X', 'Rotation', 0, -10, 10, 0.7);
     this.rotateY = new NumericProperty('Rotate Shape Y', 'Rotation', 0, -10, 10, 0.7);

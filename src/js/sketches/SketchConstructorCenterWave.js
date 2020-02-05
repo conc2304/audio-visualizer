@@ -29,18 +29,18 @@ class CenterWave {
     this.bypass = false;
     this.waveWidth = windowWidth + 200; // have some of it go off the page
 
-    this.radius = new NumericProperty('Size', 'Base', 20, 0, 2000, 0.7);
-    this.velocity = new NumericProperty('Velocity', 'Base', 0.025, 0, 1, 0.1);
-    this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 2000, 0.1);
+    this.radius = new NumericProperty('Size', 'Base', 20, -1000, 2000, 0.7);
+    this.velocity = new NumericProperty('Velocity', 'Base', 0.025, -1, 1.1, 0.1);
+    this.amplitude = new NumericProperty('Amplitude', 'Base', 75, -1500, 2000, 0.1);
     this.period = new NumericProperty('Period', 'Base', 500, 0, 10250, 0.07);
     this.xSpacing = new NumericProperty('X Spacing', 'Base', 40, 1, 350, 0.1);
 
     this.waveRotateX = new NumericProperty('Rotate Wave X', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateXVelocity = new NumericProperty('Rotate Wave X Velocity', 'Rotation', 0, 0, 0.2, 0.7);
+    this.waveRotateXVelocity = new NumericProperty('Rotate Wave X Velocity', 'Rotation', 0, -0.2, 0.2, 0.7);
     this.waveRotateY = new NumericProperty('Rotate Wave Y', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateYVelocity = new NumericProperty('Rotate Wave Y Velocity', 'Rotation', 0, 0, 0.2, 0.7);
+    this.waveRotateYVelocity = new NumericProperty('Rotate Wave Y Velocity', 'Rotation', 0, -0.2, 0.2, 0.7);
     this.waveRotateZ = new NumericProperty('Rotate Wave Z', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateZVelocity = new NumericProperty('Rotate Wave Z Velocity', 'Rotation', 0, 0, 0.2, 0.7);
+    this.waveRotateZVelocity = new NumericProperty('Rotate Wave Z Velocity', 'Rotation', 0, -0.2, 0.2, 0.7);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
     this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1);

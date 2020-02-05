@@ -8,19 +8,18 @@ import Tunnel from '@/js/sketches/SketchConstructorTunnel';
 
 const registeredSketches = [];
 
+SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
 
 
 let i = 0;
 // start them with 3 of the sketches
 while (i < 3) {
   if (!SketchCatalogue[i]) {
-    i = 4;
-    continue;
+    break;
   }
 
   let catalogueItem = SketchCatalogue[i].catalogueInfo;

@@ -13,10 +13,10 @@ class Tunnel {
 
     this.catalogueInfo = new CatalogueDataEntry(
       this.constructor,
-      'Tunnel',
-      'TEST',
-      ['Parametric', 'Awesome'],
-      'NOTNOTclyzby',
+      'Infinite Tunnel',
+      'A generative never ending tunnel ',
+      ['Generative', 'Tunnel', 'Loop'],
+      'StillClyzby',
       './assets/sketch_catalogue_gifs/center-wave_200.gif',
       300,
       2,

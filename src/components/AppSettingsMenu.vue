@@ -1,98 +1,95 @@
 <template lang="pug">
-  #app-settings-menu
-
-    v-dialog( v-model="loginDialog" max-width="600")
-      v-card(  color="#000" elevation="10")
-        v-card-title.headline Login
-        v-card-text
-          LoginPane()
-
-    v-tooltip( left)
-      template( v-slot:activator= "{ on }")
-        v-icon.settings-btn(
-          v-on="on"
-          @click="settingsOpen = !settingsOpen"
-        ) settings
-      span  Preferences
-
-    v-list.preferences-menu(
+  #app-preferences-wrapper
+    .preferences-overlay(
       v-show="settingsOpen"
-      dense dark
+      @click="settingsOpen = false"
     )
-      v-tooltip(
-        v-for="(item, i) in preferences"
-        :disabled="['Home', 'Fullscreen'].includes(item.title) || (['Save Session', 'Open Session'].includes(item.title) && userIsLoggedIn ) "
-        :key="i"
-        left
-      )
+
+    #app-settings-menu
+      v-dialog( v-model="loginDialog" max-width="600")
+        v-card(  color="#000" elevation="10")
+          v-card-title.headline Login
+          v-card-text
+            LoginPane()
+
+      v-tooltip( left)
         template( v-slot:activator= "{ on }")
-          .hover-wrapper(
+          v-icon.settings-btn(
             v-on="on"
-          )
-            v-list-item(
-              @click="clickHandler(item.action)"
-              :disabled="!userIsLoggedIn && !['Home', 'Fullscreen'].includes(item.title)"
-            )
-              v-list-item-icon
-                v-icon(
-                  :class="{ 'disabled': !userIsLoggedIn && !['Home', 'Fullscreen'].includes(item.title) }"
-                ) {{ item.title === "Fullscreen" && fullscreenOn ? item.off_icon : item.icon }}
-              v-list-item-content
-                v-list-item-title {{ item.title === "Fullscreen" && fullscreenOn ? item.off_title : item.title }}
-        span {{ item.tooltipText }}
-      v-list-item(
-        @click="userIsLoggedIn ? userLogout() : loginDialog = true"
-        v-if="!loginDisabled"
+            @click="settingsOpen = !settingsOpen"
+          ) settings
+        span  Preferences
+
+
+
+      v-list.preferences-menu(
+        v-show="settingsOpen"
+        dense dark
       )
-        v-list-item-icon
-          v-icon account_box
-        v-list-item-content
-          v-list-item-title {{ userIsLoggedIn ? 'Logout' : 'Login'}}
+        v-list-item( @click="goToHome()")
+          v-list-item-icon
+            v-icon home
+          v-list-item-content
+            v-list-item-title Home
+
+        v-list-item( @click="redirectToMain()")
+          v-list-item-icon
+            v-icon web
+          v-list-item-content
+            v-list-item-title Back To Main Site
+
+        v-list-item( @click="toggleFullscreen()" )
+          v-list-item-icon
+            v-icon(
+            ) {{ fullscreenOn ? 'fullscreen' : 'fullscreen_exit' }}
+          v-list-item-content
+            v-list-item-title {{ fullscreenOn ? 'Exit Fullscreen' : 'Fullscreen' }}
 
 
-    v-dialog( v-model="openSessionDialog" max-width="300")
-      v-card(  color="#000" elevation="10")
-        v-card-title.headline Open existing session
-          v-card-text
-            v-list()
-              v-list-item(
-                v-for="(session, i) in 5"
-                :key="i"
-              )
-                v-list-item-icon(
-                  @click="openSessionDialog = false"
+
+      v-dialog( v-model="openSessionDialog" max-width="300")
+        v-card(  color="#000" elevation="10")
+          v-card-title.headline Open existing session
+            v-card-text
+              v-list()
+                v-list-item(
+                  v-for="(session, i) in 5"
+                  :key="i"
                 )
-                  v-icon insert_drive_file
-                v-list-item-content
-                  v-list-item-title  session_{{ i }}.vyzby
-
-
-    v-dialog( v-model="saveSessionDialog" max-width="400")
-      v-card(  color="#000" elevation="10")
-        v-card-title.headline Save Session
-          v-card-text
-            v-form(
-              @submit.prevent="submit"
-              class="ma-2"
-            )
-              v-row
-                v-col(md="12")
-                  v-text-field(
-                    label="Save Your Current Session"
-                    prepend-inner-icon="attach_file"
-                    v-model.trim="sessionName"
-                    :error-messages="sessionNameErrors"
-                    @input="$v.sessionName.$touch()"
-                    @blur="$v.sessionName.$touch()"
-                    required
+                  v-list-item-icon(
+                    @click="openSessionDialog = false"
                   )
-              v-row
-                v-col( class="mx-auto" md="4")
-                  v-btn(
-                    type="submit"
-                    required
-                    large color="color_primary_blue" outlined
-                  ) Save
+                    v-icon insert_drive_file
+                  v-list-item-content
+                    v-list-item-title  session_{{ i }}.vyzby
+
+
+      v-dialog( v-model="saveSessionDialog" max-width="400")
+        v-card(  color="#000" elevation="10")
+          v-card-title.headline Save Session
+            v-card-text
+              v-form(
+                @submit.prevent="submit"
+                class="ma-2"
+              )
+                v-row
+                  v-col(md="12")
+                    v-text-field(
+                      label="Save Your Current Session"
+                      prepend-inner-icon="attach_file"
+                      v-model.trim="sessionName"
+                      :error-messages="sessionNameErrors"
+                      @input="$v.sessionName.$touch()"
+                      @blur="$v.sessionName.$touch()"
+                      required
+                    )
+                v-row
+                  v-col( class="mx-auto" md="4")
+                    v-btn(
+                      type="submit"
+                      required
+                      large color="color_primary_blue" outlined
+                    ) Save
 
 
 </template>
@@ -184,6 +181,10 @@ export default {
       }
     },
 
+    redirectToMain() {
+      window.location = 'http://www.joseconchello.com/';
+    },
+
     openFullscreen() {
       const elem = document.documentElement;
 
@@ -224,7 +225,6 @@ export default {
   },
 
   computed: {
-
     loginDisabled() {
       return this.$store.state.loginDisabled;
     },
@@ -240,21 +240,33 @@ export default {
   },
   mounted() {
     const userObj = JSON.parse(localStorage.getItem('user'));
-    this.userIsLoggedIn =  userObj != null && userObj.loggedIn;
+    this.userIsLoggedIn = userObj != null && userObj.loggedIn;
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.preferences-overlay {
+  z-index: 5;
+  position: fixed;
+  background-color: #000;
+  opacity: 0.33;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
 #app-settings-menu {
   position: absolute;
-  z-index: 1;
+  z-index: 6;
   top: 0;
   right: 0;
 
   .settings-btn {
     float: right;
     padding: 1rem;
+
     &:hover {
       color: $color-secondary-blue;
     }
