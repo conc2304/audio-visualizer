@@ -144,7 +144,16 @@ export default {
   }
 }
 .parameter-icon-wrapper {
-float: right;
+  float: right;
+}
+
+.parameter-title-bar {
+  margin: 2rem 0 1.2rem;
+
+  p {
+    margin-bottom: 0;
+    display: inline-block;
+  }
 }
 
 .aux-input-toggler {
@@ -154,9 +163,6 @@ float: right;
   }
 }
 
-p {
-  display: inline-block;
-}
 .off {
   color: $color-std-grey;
 }
