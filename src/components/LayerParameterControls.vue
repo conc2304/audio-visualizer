@@ -7,7 +7,7 @@
         :key="`numeric-${i}`"
       )
         ParameterControlNumeric(
-          :auxInputVisibible="auxInputVisibible"
+          :auxInputVisible="auxInputVisible"
           :parameter="parameter"
           :parameterIndex="i"
           :categoryIndex="categoryIndex"
@@ -20,7 +20,7 @@
         :key="`variable-${i}`"
       )
         ParameterControlVariable(
-          :auxInputVisibible="auxInputVisibible"
+          :auxInputVisible="auxInputVisible"
           :parameter="parameter"
         )
 
@@ -43,7 +43,7 @@ export default {
     RegisteredSketches: {
       type: Array,
     },
-    auxInputVisibible: {
+    auxInputVisible: {
       type: Boolean,
       default: false,
     },

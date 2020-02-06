@@ -61,6 +61,10 @@ const ParticleScript = function(p5) {
       bodies[i].render();
     }
   };
+
+  p5.windowResized = () => {
+    p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+  };
 };
 
 export default ParticleScript;

@@ -1,12 +1,32 @@
 <template lang="pug">
   .sketch-parameter-control
 
-    p.parameter-title {{ parameter.displayLabel }}
-      ParameterLockToggle(
-        :parameter="parameter"
-      )
+    .parameter-title-bar
+      p {{ parameter.displayLabel }}
+      .parameter-icon-wrapper
+        .aux-input-toggler
+          v-tooltip( right)
+              template( v-slot:activator = "{ on }")
+                v-icon.menu-icon(
+                  @click="KeyboardInputVisible = !KeyboardInputVisible"
+                  v-on="on"
+                  :class="{ 'off': !KeyboardInputVisible }"
+                ) keyboard
+              span {{ KeyboardInputVisible ? 'Hide' : 'Show' }} Keyboard Controller
 
-    .controller-wrapper( class=" ")
+          v-tooltip( right)
+              template( v-slot:activator = "{ on }")
+                v-icon.menu-icon(
+                  @click="AudioInputVisible = !AudioInputVisible"
+                  v-on="on"
+                  :class="{ 'off': !AudioInputVisible }"
+                ) music_note
+              span {{ AudioInputVisible ? 'Hide' : 'Show' }} Audio controller
+        ParameterLockToggle(
+          :parameter="parameter"
+        )
+
+    .controller-wrapper
       // implementation of vue-nouislider-fork
       v-nus(
         v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
@@ -16,15 +36,17 @@
         :disabled='parameter.lockOn'
       )
 
+
+
       ParameterKeyboardInputFields(
-        v-show="auxInputVisibible"
+        v-show="auxInputVisible || KeyboardInputVisible"
         :parameter="parameter"
       )
 
       AudioReactiveControls(
-        v-show="parameter.audio && auxInputVisibible"
+        v-show="parameter.audio && (auxInputVisible || AudioInputVisible)"
         :parameter="parameter"
-        :auxInputVisibible="auxInputVisibible"
+        :auxInputVisible="auxInputVisible"
         :parameterIndex="parameterIndex"
         :categoryIndex="categoryIndex"
       )
@@ -34,6 +56,7 @@
 import AudioReactiveControls from '@/components/AudioReactiveControls.vue';
 import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
 import ParameterKeyboardInputFields from '@/components/ParameterKeyboardInputFields.vue';
+// import ParameterAuxFieldShortCuts from '@/components/ParameterAuxFieldShortCuts.vue';
 
 export default {
   // Note:
@@ -48,13 +71,14 @@ export default {
     AudioReactiveControls,
     ParameterKeyboardInputFields,
     ParameterLockToggle,
+    // ParameterAuxFieldShortCuts,
   },
 
   props: {
     parameter: {
       type: Object,
     },
-    auxInputVisibible: {
+    auxInputVisible: {
       type: Boolean,
       default: false,
     },
@@ -63,6 +87,12 @@ export default {
     },
     categoryIndex: {
       type: Number,
+    },
+    AudioInputVisible: {
+      type: Boolean,
+    },
+    KeyboardInputVisible: {
+      type: Boolean,
     },
   },
 
@@ -112,5 +142,22 @@ export default {
   .noUi-target {
     margin-bottom: 1rem !important;
   }
+}
+.parameter-icon-wrapper {
+float: right;
+}
+
+.aux-input-toggler {
+  display: inline;
+  i {
+    padding-right: 0.4rem;
+  }
+}
+
+p {
+  display: inline-block;
+}
+.off {
+  color: $color-std-grey;
 }
 </style>

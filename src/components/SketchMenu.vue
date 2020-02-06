@@ -51,7 +51,7 @@
         v-show="layerMenuOpen"
         @layer_menu_toggle="layerMenuToggleEvent"
         :RegisteredSketches="RegisteredSketches"
-        :auxInputVisibible="auxInputVisibible"
+        :auxInputVisible="auxInputVisible"
       )
 
 
@@ -108,7 +108,7 @@ export default {
     audioPlayerOpen: false,
     RegisteredSketches,
     sketchIndexSelected: null,
-    auxInputVisibible: false,
+    auxInputVisible: false,
     catalogueOpen: false,
     helpModalOpen: false,
     snackbarOpen: false,
@@ -153,7 +153,7 @@ export default {
     },
 
     toggleAuxInputFields() {
-      this.auxInputVisibible = !this.auxInputVisibible;
+      this.auxInputVisible = !this.auxInputVisible;
     },
 
     setCatalogueStatus(status) {

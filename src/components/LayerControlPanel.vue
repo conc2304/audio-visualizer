@@ -15,7 +15,7 @@
       LayerCategoriesExpansionList(
 
         :RegisteredSketches="RegisteredSketches"
-        :auxInputVisibible="auxInputVisibible"
+        :auxInputVisible="auxInputVisible"
       )
 </template>
 
@@ -38,7 +38,7 @@ export default {
     RegisteredSketches: {
       type: Array,
     },
-    auxInputVisibible: {
+    auxInputVisible: {
       type: Boolean,
     },
   },

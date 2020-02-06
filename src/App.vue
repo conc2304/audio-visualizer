@@ -22,6 +22,10 @@ html {
   i.menu-icon {
     color: $color-primary-blue;
     cursor: pointer;
+
+    &.off {
+      color: $color-std-grey;
+    }
   }
 
   i.menu-icon:hover {

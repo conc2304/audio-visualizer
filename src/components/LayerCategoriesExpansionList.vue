@@ -21,7 +21,7 @@
             LayerParameterControls(
               :RegisteredSketches="RegisteredSketches"
               :category="category"
-              :auxInputVisibible="auxInputVisibible"
+              :auxInputVisible="auxInputVisible"
               :categoryIndex="i"
             )
 
@@ -42,7 +42,7 @@ export default {
     RegisteredSketches: {
       type: Array,
     },
-    auxInputVisibible: {
+    auxInputVisible: {
       type: Boolean,
       default: false,
     },
