@@ -28,15 +28,14 @@
 
     .controller-wrapper
       // implementation of vue-nouislider-fork
-      v-nus(
-        v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
-        :config="sliderConfig"
-        :value="sliderValues"
-        @update="updateSliderValues($event)"
-        :disabled='parameter.lockOn'
-      )
-
-
+      .slider-wrapper
+        v-nus(
+          v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
+          :config="sliderConfig"
+          :value="sliderValues"
+          @update="updateSliderValues($event)"
+          :disabled='parameter.lockOn'
+        )
 
       ParameterKeyboardInputFields(
         v-show="auxInputVisible || KeyboardInputVisible"
@@ -148,14 +147,16 @@ export default {
 }
 
 .parameter-title-bar {
-  margin: 2rem 0 1.2rem;
+  margin: 2rem 0 0;
 
   p {
     margin-bottom: 0;
     display: inline-block;
   }
 }
-
+.slider-wrapper {
+  margin-bottom: 40px;  // hight of the tooltip
+}
 .aux-input-toggler {
   display: inline;
   i {

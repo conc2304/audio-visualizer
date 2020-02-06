@@ -32,7 +32,7 @@ html {
     color: $color-secondary-blue;
   }
 
-  .active{
+  .active {
     border: 1px solid $color-secondary-blue;
   }
 
@@ -50,5 +50,18 @@ html {
     }
   }
 }
-</style>
 
+.slider-wrapper {
+  .noUi-tooltip {
+    border-radius: 0 50% 50%;
+  }
+  .noUi-horizontal .noUi-tooltip {
+    bottom: initial;
+    top: 32px;
+  }
+
+  .noUi-handle-draggable-tooltip-overlay {
+    top: 22px;
+  }
+}
+</style>
