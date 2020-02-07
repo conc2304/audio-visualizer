@@ -157,7 +157,7 @@ export default {
   }
 }
 .slider-wrapper {
-  margin-bottom: 40px;  // hight of the tooltip
+  margin-bottom: 40px; // hight of the tooltip
 }
 .aux-input-toggler {
   display: inline;
@@ -168,5 +168,71 @@ export default {
 
 .off {
   color: $color-std-grey;
+}
+</style>
+
+<style lang="scss">
+.slider-wrapper {
+  .noUi-tooltip {
+    border-radius: 0 50% 50%;
+  }
+  .noUi-horizontal .noUi-tooltip {
+    bottom: initial;
+    top: 32px;
+
+    &::after {
+      background-color: black;
+      position: absolute;
+      bottom: 37px;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      right: 33px;
+      font-size: 0.9rem;
+      padding: 2px 5px;
+      border-radius: 2px;
+    }
+  }
+
+  .noUi-base :nth-child(2) .noUi-tooltip::after {
+    content: 'min';
+  }
+
+  .noUi-base :nth-child(4) .noUi-tooltip::after {
+    content: 'max';
+  }
+
+  .noUi-handle-draggable-tooltip-overlay {
+    top: 22px;
+  }
+
+  &.color-slider .noUi-connects::after {
+    content: '';
+    background: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      lime,
+      cyan,
+      cyan,
+      blue,
+      indigo,
+      magenta,
+      red
+    );
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    z-index: 2;
+  }
+
+  &.saturation-slider .noUi-connects::after {
+    content: '';
+    background: linear-gradient(to right, white, $color-primary-blue);
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    z-index: 2;
+  }
 }
 </style>
