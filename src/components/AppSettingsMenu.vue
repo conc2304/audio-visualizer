@@ -26,6 +26,7 @@
         v-show="settingsOpen"
         dense dark
       )
+
         v-list-item( @click="goToHome()")
           v-list-item-icon
             v-icon home
@@ -36,7 +37,18 @@
           v-list-item-icon
             v-icon computer
           v-list-item-content
-            v-list-item-title Back To Main Site
+            v-list-item-title JoseConchello.com
+
+        v-list-item( @click="toGithub()" )
+          v-list-item-icon
+            v-img.custom-icon(
+              src="/assets/icons/GitHub-Mark-Light-32px.png"
+              contain
+              height="24px"
+              width="24px"
+            )
+          v-list-item-content
+            v-list-item-title Visit Github Repo
 
         v-list-item( @click="toggleFullscreen()" )
           v-list-item-icon
@@ -44,7 +56,6 @@
             ) {{ fullscreenOn ? 'fullscreen' : 'fullscreen_exit' }}
           v-list-item-content
             v-list-item-title {{ fullscreenOn ? 'Exit Fullscreen' : 'Fullscreen' }}
-
 
 
       v-dialog( v-model="openSessionDialog" max-width="300")
@@ -148,6 +159,10 @@ export default {
         this.openFullscreen();
         this.fullscreenOn = true;
       }
+    },
+
+    toGithub() {
+      window.open('https://github.com/conc2304/audio-visualizer');
     },
 
     redirectToMain() {
