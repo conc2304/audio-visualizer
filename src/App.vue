@@ -58,6 +58,26 @@ html {
   .noUi-horizontal .noUi-tooltip {
     bottom: initial;
     top: 32px;
+
+    &::after {
+      background-color: black;
+      position: absolute;
+      top: 21px;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      right: -23px;
+      font-size: 0.9rem;
+      padding: 2px 5px;
+      border-radius: 2px;
+    }
+  }
+
+  .noUi-base :nth-child(2) .noUi-tooltip::after {
+    content: 'min';
+  }
+
+  .noUi-base :nth-child(4) .noUi-tooltip::after {
+    content: 'max';
   }
 
   .noUi-handle-draggable-tooltip-overlay {
