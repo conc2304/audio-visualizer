@@ -82,11 +82,13 @@ export default {
       this.$store.commit('updateSketchIndexSelected', layerIndex);
       this.$store.commit('updateLayerMenuOpen', true);
       this.$store.commit('updateCatalogueOpen', false);
+      this.$store.commit('updateAudioPlayerOpen', false);
     },
 
     addNewSketch() {
       this.$store.commit('updateCatalogueOpen', true);
       this.$store.commit('updateLayerMenuOpen', false);
+      this.$store.commit('updateAudioPlayerOpen', false);
       this.$store.commit('updateSketchIndexSelected', -1);
     },
 

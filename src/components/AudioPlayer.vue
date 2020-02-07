@@ -135,7 +135,7 @@ export default {
     },
 
     audioPlayerClose() {
-      this.$emit('close_audio_player');
+      this.$store.commit('updateAudioPlayerOpen', false);
     }
   },
 

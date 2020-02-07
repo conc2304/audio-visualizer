@@ -15,7 +15,7 @@
           v-list( dense nav)
             v-list-item(
               :class="{ 'active': audioPlayerOpen }"
-              @click="audioPlayerOpen = !audioPlayerOpen"
+              @click="updateAudioPlayerOpen(!audioPlayerOpen)"
             )
               v-icon.menu-icon music_note
 
@@ -159,6 +159,16 @@ export default {
       this.$store.commit('updateLayerMenuOpen', status);
       if (status === true) {
         this.$store.commit('updateCatalogueOpen', false);
+        this.$store.commit('updateAudioPlayerOpen', false);
+      }
+    },
+
+    updateAudioPlayerOpen(status) {
+      this.$store.commit('updateAudioPlayerOpen', status);
+      if (status === true) {
+        this.$store.commit('updateCatalogueOpen', false);
+        this.$store.commit('updateLayerMenuOpen', false);
+        this.$store.commit('updateSketchIndexSelected', -1);
       }
     },
 
