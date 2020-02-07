@@ -60,6 +60,18 @@ const audioLocalData = [
     title: 'The SHROOMS (Stakma-Seeded)',
   },
   {
+    path: './assets/audio/Whipped Cream - Blood.mp3',
+    genre: 'Dubstep',
+    artist: 'Whipped Cream',
+    title: 'Blood',
+  },
+  {
+    path: './assets/audio/Bagsss - THX.mp3',
+    genre: 'Experimental Bass',
+    artist: 'Bagsss',
+    title: 'THX',
+  },
+  {
     path: './assets/audio/Tsuruda x Huxley Anne - PUFF.mp3',
     genre: 'Experimental Bass',
     artist: 'Tsuruda x Huxley Anne',
