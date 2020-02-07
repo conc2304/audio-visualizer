@@ -110,7 +110,7 @@ export default {
 
   methods: {
     closeCatalogue() {
-      this.$emit('catalogue_open', false);
+      this.$store.commit('updateCatalogueOpen', false);
     },
 
     compare(a, b) {
@@ -133,7 +133,7 @@ export default {
     },
 
     getFilterList() {
-      const search = (this.search) ? this.search.toLowerCase() : '';
+      const search = this.search ? this.search.toLowerCase() : '';
       return this.SketchCatalogue.filter(sketch => {
         const filterables = ['creator', 'title', 'description'];
 
@@ -158,8 +158,7 @@ export default {
 
   computed: {
     filteredSketchCatalogue() {
-
-      let filteredList = this.SketchCatalogue
+      let filteredList = this.SketchCatalogue;
       if (this.search) {
         filteredList = this.getFilterList();
       }

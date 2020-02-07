@@ -24,8 +24,6 @@
         MenuLayerSelector(
           :RegisteredSketches="RegisteredSketches"
           :layerMenuOpen="layerMenuOpen"
-          @open_layer_menu="layerMenuToggleEvent"
-          @catalogue_open="setCatalogueStatus"
         )
 
         v-divider
@@ -44,7 +42,6 @@
           :presetSlots="presetSlots"
           :presetSelectedIndex="presetSelectedIndex"
         )
-
 
 
       LayerControlPanel(
@@ -104,12 +101,12 @@ export default {
   },
 
   data: () => ({
-    layerMenuOpen: false,
-    audioPlayerOpen: false,
+    // layerMenuOpen: false,
+    // audioPlayerOpen: false,
     RegisteredSketches,
     sketchIndexSelected: null,
     auxInputVisible: false,
-    catalogueOpen: false,
+    // catalogueOpen: false,
     helpModalOpen: false,
     snackbarOpen: false,
     presetSelectedIndex: -1,
@@ -138,18 +135,31 @@ export default {
     presetSlotsDisabled() {
       return this.$store.state.presetSlotsDisabled;
     },
+
+    layerMenuOpen() {
+      return this.$store.state.layerMenuOpen;
+    },
+
+    catalogueOpen() {
+      return this.$store.state.catalogueOpen;
+    },
+
+    audioPlayerOpen() {
+      return this.$store.state.audioPlayerOpen;
+    },
   },
 
   methods: {
     updateMasterMenu() {
-      this.$emit('master_menu_update', false);
-    },
-    updatesketchIndexSelected(sketchIndexSelected) {
-      this.layerMenuOpen = true;
+      this.$store.commit('updateMasterMenuOpen', false);
     },
 
-    layerMenuToggleEvent(event) {
-      this.layerMenuOpen = event;
+    layerMenuToggleEvent(status) {
+      this.layerMenuOpen = status;
+      this.$store.commit('updateLayerMenuOpen', status);
+      if (status === true) {
+        this.$store.commit('updateCatalogueOpen', false);
+      }
     },
 
     toggleAuxInputFields() {

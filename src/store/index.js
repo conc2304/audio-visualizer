@@ -20,12 +20,33 @@ export default new Vuex.Store({
       songProgress: 0,
     },
 
+    masterMenuOpen: true,
+    layerMenuOpen: false,
+    catalogueOpen: false,
+    audioPlayerOpen: false,
+
     presetSlotsDisabled: true,
     loginDisabled: true,
   },
   mutations: {
     updateSketchIndexSelected(state, payload) {
       state.sketchIndexSelected = payload;
+    },
+
+    updateLayerMenuOpen(state, payload) {
+      state.layerMenuOpen = payload;
+    },
+
+    updateMasterMenuOpen(state, payload) {
+      state.masterMenuOpen = payload;
+    },
+
+    updateCatalogueOpen(state, payload) {
+      state.catalogueOpen = payload;
+    },
+
+    updateAudioPlayerOpen(state, payload) {
+      state.audioPlayerOpen = payload;
     },
 
     updateUserLoggedIn(state, payload) {
@@ -35,7 +56,6 @@ export default new Vuex.Store({
     updateUser(state, payload) {
       state.user = payload;
     },
-
 
     updateIsPlaying(state, payload) {
       state.audio.isPlaying = payload;

@@ -3,11 +3,10 @@
     #sketch-container
     SketchMenu(
       v-show="masterMenuOpen"
-      @master_menu_update="updateMasterMenu"
     )
     v-icon.master-menu-toggle(
       v-show="!masterMenuOpen"
-      @click="masterMenuOpen = true"
+      @click="updateMasterMenu(true)"
       dark
     ) &#9776;
     AppSettingsMenu
@@ -23,9 +22,7 @@ import APS from '@/js/services/AudioPlayerService';
 import Utils from '@/js/services/Utils';
 
 export default {
-  data: () => ({
-    masterMenuOpen: true,
-  }),
+  data: () => ({}),
 
   components: {
     AppSettingsMenu,
@@ -34,7 +31,13 @@ export default {
 
   methods: {
     updateMasterMenu(status) {
-      this.masterMenuOpen = status;
+      this.$store.commit('updateMasterMenuOpen', status);
+    },
+  },
+
+  computed: {
+    masterMenuOpen() {
+      return this.$store.state.masterMenuOpen;
     },
   },
   mounted() {

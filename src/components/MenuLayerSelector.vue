@@ -79,12 +79,15 @@ export default {
   methods: {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
-      this.$emit('open_layer_menu', true);
       this.$store.commit('updateSketchIndexSelected', layerIndex);
+      this.$store.commit('updateLayerMenuOpen', true);
+      this.$store.commit('updateCatalogueOpen', false);
     },
 
     addNewSketch() {
-      this.$emit('catalogue_open', true);
+      this.$store.commit('updateCatalogueOpen', true);
+      this.$store.commit('updateLayerMenuOpen', false);
+      this.$store.commit('updateSketchIndexSelected', -1);
     },
 
     sketchOrderShift(deltaPos) {
@@ -119,13 +122,11 @@ export default {
     },
   },
 
-
   computed: {
     sketchIndexSelected() {
-      return this.$store.state.sketchIndexSelected;;
-    }
+      return this.$store.state.sketchIndexSelected;
+    },
   },
-
 };
 </script>
 
@@ -152,6 +153,4 @@ export default {
   max-height: 150px;
   overflow-y: scroll;
 }
-
-
 </style>
