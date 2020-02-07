@@ -6,6 +6,12 @@ const audioLocalData = [
     title: 'Olson (Midland ReEdit)',
   },
   {
+    path: './assets/audio/Montoya - Mantra.mp3',
+    genre: 'Modern Classical',
+    artist: 'Montoya',
+    title: 'Mantra',
+  },
+  {
     path: './assets/audio/Flume & Chet Faker - Drop The Game (CloZee Remix).mp3',
     genre: 'Deep House',
     artist: 'Flume & Chet Faker',
@@ -46,12 +52,6 @@ const audioLocalData = [
     genre: 'Psychedelic Bass',
     artist: 'Minnesota',
     title: 'Hilow (Charlesthefirst Remix)',
-  },
-  {
-    path: './assets/audio/Montoya - Mantra.mp3',
-    genre: 'Modern Classical',
-    artist: 'Montoya',
-    title: 'Mantra',
   },
   {
     path: './assets/audio/Seeded Vision - The SHROOMS (Stakma-Seeded).mp3',

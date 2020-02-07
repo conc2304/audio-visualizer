@@ -28,7 +28,9 @@
 
     .controller-wrapper
       // implementation of vue-nouislider-fork
-      .slider-wrapper
+      .slider-wrapper(
+        :class="{ 'color-slider' : parameter.displayLabel.includes('Color'), 'saturation-slider' : parameter.displayLabel.includes('Saturation') }"
+      )
         v-nus(
           v-if="parameter.attrType === 'numeric' && sliderConfig && sliderValues"
           :config="sliderConfig"

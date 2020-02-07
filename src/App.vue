@@ -83,5 +83,39 @@ html {
   .noUi-handle-draggable-tooltip-overlay {
     top: 22px;
   }
+
+  &.color-slider .noUi-connects::after {
+    content: '';
+    background: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      lime,
+      cyan,
+      cyan,
+      blue,
+      indigo,
+      magenta,
+      red
+    );
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    z-index: 2;
+  }
+
+  &.saturation-slider .noUi-connects::after {
+    content: '';
+    background: linear-gradient(
+      to right,
+      white,
+      $color-primary-blue
+    );
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    z-index: 2;
+  }
 }
 </style>

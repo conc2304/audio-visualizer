@@ -81,16 +81,26 @@ export default {
 
   &.custom-thin-scrollbar {
     &::-webkit-scrollbar-thumb {
-      background-color: #000;
-    }
+    border-radius: 3px;
+    background-color: #000000;
+    background-image: -webkit-gradient(
+      linear,
+      40% 0%,
+      50% 80%,
+      from(#000000),
+      to($color-secondary-blue),
+      color-stop(0.9, $color-primary-blue)
+    );
+  }
     &::-webkit-scrollbar {
-      width: 8px;
+      width: 10px;
     }
     &::-webkit-scrollbar-track {
       border-radius: 3px;
       background-color: #000;
     }
   }
+
 }
 
 .song-item {
