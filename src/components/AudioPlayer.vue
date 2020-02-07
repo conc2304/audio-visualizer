@@ -189,9 +189,9 @@ export default {
 #audio-control-panel {
   position: absolute;
   left: $master-menu-width;
-  bottom: 0;
+  top: 0;
   border-left: 1px solid $color-std-grey;
-  border-top: 1px solid $subtle-border;
+  border-bottom: 1px solid $subtle-border;
   border-right: 1px solid $subtle-border;
   z-index: 1;
   background-color: #000;

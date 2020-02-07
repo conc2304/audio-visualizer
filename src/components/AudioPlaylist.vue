@@ -37,7 +37,7 @@
       v-row
         v-col( align="center" ) Empty
       v-row
-        v-col( align="center") Try uploading some songs!
+        v-col( align="center") Try uploading some music!
 
 
 </template>
