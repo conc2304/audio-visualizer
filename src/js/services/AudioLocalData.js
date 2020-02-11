@@ -39,7 +39,7 @@ const audioLocalData = [
     path: './assets/audio/Little Dragon - Little Man (Tycho Remix Final).mp3',
     genre: 'Chill House',
     artist: 'Little Dragon',
-    title: 'Little Man (Tycho Remix Final)',
+    title: 'Little Man (Tycho Remix)',
   },
   {
     path: './assets/audio/MartyParty - Ganeshav.mp3',
@@ -58,18 +58,6 @@ const audioLocalData = [
     genre: 'Psychedelic Bass',
     artist: 'Seeded Vision',
     title: 'The SHROOMS (Stakma-Seeded)',
-  },
-  {
-    path: './assets/audio/Whipped Cream - Blood.mp3',
-    genre: 'Dubstep',
-    artist: 'Whipped Cream',
-    title: 'Blood',
-  },
-  {
-    path: './assets/audio/Bagsss - THX.mp3',
-    genre: 'Experimental Bass',
-    artist: 'Bagsss',
-    title: 'THX',
   },
   {
     path: './assets/audio/Tsuruda x Huxley Anne - PUFF.mp3',
