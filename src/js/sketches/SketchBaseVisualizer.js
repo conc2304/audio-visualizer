@@ -10,11 +10,10 @@
 import RenderPolygon from '@/js/services/RenderPolygon';
 import RegisteredSketches from '@/js/services/SketchRegistration';
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import PoseNetService from '@/js/services/PoseNetService';
 
-
-  // keep all 'custom' code here
+// keep all 'custom' code here
 const VisualizerSketch = p5 => {
-
   p5.preload = () => {
     p5.objects = {};
     p5.objects.lambo = p5.loadModel('./assets/webgl_models/lambo.obj', true);
@@ -29,12 +28,13 @@ const VisualizerSketch = p5 => {
     p5.ctrlElementsArray = RegisteredSketches;
   };
 
+  let video;
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.polygon = RenderPolygon;
     p5.colorMode(p5.HSB);
 
-    // p5setupPoseNet(p5);
+    PoseNetService.initializeNet(p5);
   };
 
   p5.windowResized = () => {
@@ -51,9 +51,17 @@ const VisualizerSketch = p5 => {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
   };
 
-
   p5.draw = () => {
     p5.background(0);
+
+    if (PoseNetService.imageSource !== null) {
+      p5.image(PoseNetService.imageSource, 0, 0, p5.windowWidth, p5.windowHeight);
+    }
+    if (p5.mouseIsPressed) {
+      PoseNetService.imageSource = null;
+      console.log('click');
+    }
+    PoseNetService.getPose();
 
     KeyboardControlsService.playKeyboardKeys(p5);
     p5.keyReleased = () => {
@@ -79,5 +87,3 @@ const VisualizerSketch = p5 => {
 };
 
 export default VisualizerSketch;
-
-

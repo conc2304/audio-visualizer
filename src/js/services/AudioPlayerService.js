@@ -1,7 +1,7 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
 import store from '@/store/index.js';
-import P5 from 'p5'; // use this one for instanciation of fft, amplitude ...
+import P5 from 'p5'; // use this one for instantiation of fft, amplitude ...
 import 'p5/lib/addons/p5.sound';
 
 const AudioPlayerService = {
@@ -13,7 +13,7 @@ const AudioPlayerService = {
   fft: null,
   songProgress: 0,
   currentSound: {},
-  p5: null, // use this one fo the rest of p5, not sure why this is the case but it works
+  p5: null, // use this one for the rest of p5, not sure why this is the case but it works
   audioCtrl: {},
   elementPropToFQMap: {},
 };
