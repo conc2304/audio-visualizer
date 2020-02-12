@@ -26,7 +26,7 @@ async function getPose(p5) {
         flipHorizontal: false,
       },
     );
-    console.log(PoseNetService.poseCoords);
+    // console.log(PoseNetService.poseCoords);
   }
 }
 
