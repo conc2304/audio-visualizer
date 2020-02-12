@@ -54,14 +54,11 @@ const VisualizerSketch = p5 => {
   p5.draw = () => {
     p5.background(0);
 
-    if (PoseNetService.imageSource !== null) {
-      p5.image(PoseNetService.imageSource, 0, 0, p5.windowWidth, p5.windowHeight);
+    if (PoseNetService.imageSource !== null && PoseNetService.imageSource.elt.readyState === 4) {
+      // p5.image(PoseNetService.imageSource, 0, 0, p5.windowWidth, p5.windowHeight);
+      PoseNetService.getPose(p5);
     }
-    if (p5.mouseIsPressed) {
-      PoseNetService.imageSource = null;
-      console.log('click');
-    }
-    PoseNetService.getPose();
+
 
     KeyboardControlsService.playKeyboardKeys(p5);
     p5.keyReleased = () => {
