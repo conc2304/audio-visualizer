@@ -1,4 +1,4 @@
-// import * as posenet from '@tensorflow-models/posenet';
+import * as posenet from '@tensorflow-models/posenet';
 
 const PoseNetService = {
   // PROPERTIES
