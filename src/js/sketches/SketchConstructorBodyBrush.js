@@ -126,6 +126,8 @@ BodyBrush.prototype.renderSkeleton = function(p5, pose) {
   }
 };
 
+
+
 BodyBrush.prototype.drawTrailers = function(p5) {
   this.history = this.history.slice(0, this.trailLength.currentValue);
   const historyLength = this.history.length;
