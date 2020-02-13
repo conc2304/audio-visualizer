@@ -5,14 +5,16 @@ import WEBGLWave from  '@/js/sketches/SketchConstructorWEBGLWave';
 import OuterWaves from '@/js/sketches/SketchConstructorOuterWaves';
 import Parametric from '@/js/sketches/SketchConstructorParametric';
 import Tunnel from '@/js/sketches/SketchConstructorTunnel';
+import BodyBrush from '@/js/sketches/SketchConstructorBodyBrush';
 
 const registeredSketches = [];
 
-SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new BodyBrush(window.innerWidth, window.innerHeight));
 
 
 let i = 0;
@@ -22,7 +24,7 @@ while (i < 3) {
     break;
   }
 
-  let catalogueItem = SketchCatalogue[i].catalogueInfo;
+  const catalogueItem = SketchCatalogue[i].catalogueInfo;
   registeredSketches.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
   i++;
 }
