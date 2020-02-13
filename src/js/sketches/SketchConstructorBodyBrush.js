@@ -67,9 +67,7 @@ BodyBrush.prototype.drawKeyPoints = function(p5) {
   // multiple poses
   if (typeof poses === 'array') {
     for (let i = 0; i < poses.length; i++) {
-      // For each pose detected, loop through all the keypoints
       const pose = poses[i].pose;
-
       this.renderPose(p5, pose);
     }
   }
@@ -84,37 +82,47 @@ BodyBrush.prototype.renderPose = function(p5, pose) {
   p5.strokeWeight(3);
   p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
 
+  console.log(pose);
+
   if (!pose.keypoints) return;
+  this.renderPosePoints(p5, pose);
+
+  // NOTE this version doesnt seem to have skeleton points
+  // if (this.renderSkeleton.currentValue === true) {
+  //   this.renderSkeleton(p5, pose);
+  // }
+};
+
+
+BodyBrush.prototype.renderPosePoints = function(p5, pose) {
   for (let i = 0; i < pose.keypoints.length; i++) {
-    // A keypoint is an object describing a body part (like rightArm or leftShoulder)
-    let keypoint = pose.keypoints[i];
-    if (keypoint.score > 0.2) {
+    // A keyPoint is an object describing a body part (like rightArm or leftShoulder)
+    let keyPoint = pose.keypoints[i];
+    if (keyPoint.score > 0.2) {
       this.renderShape(
         p5,
-        keypoint.position.x - this.windowWidth / 4,
-        keypoint.position.y - this.windowHeight / 4,
+        keyPoint.position.x - this.windowWidth / 4,
+        keyPoint.position.y - this.windowHeight / 4,
         this.radius.currentValue,
       );
     }
   }
-};
+}
 
-BodyBrush.prototype.drawSkeleton = function(p5) {
+
+BodyBrush.prototype.renderSkeleton = function(p5, pose) {
   // Loop through all the skeletons detected
-  if (!poses) {
+  if (!poses || !pose.skeleton) {
     return;
   }
-  for (let i = 0; i < poses.length; i++) {
-    const skeleton = poses[i].skeleton;
-    // For every skeleton, loop through all body connections
-    for (let j = 0; j < skeleton.length; j++) {
-      const partA = skeleton[j][0];
-      const partB = skeleton[j][1];
-      p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
-      p5.stroke(0, this.saturation.currentValue, 100);
-      p5.strokeWeight(8);
-      p5.line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
-    }
+
+  for (let j = 0; j < skeleton.length; j++) {
+    const partA = skeleton[j][0];
+    const partB = skeleton[j][1];
+    p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
+    p5.stroke(0, this.saturation.currentValue, 100);
+    p5.strokeWeight(8);
+    p5.line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
   }
 };
 

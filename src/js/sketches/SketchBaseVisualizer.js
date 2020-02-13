@@ -56,7 +56,7 @@ const VisualizerSketch = p5 => {
 
     if (PoseNetService.imageSource !== null && PoseNetService.imageSource.elt.readyState === 4) {
       if (PoseNetService.flipHorizontal === false) p5.scale(-1.0, 1.0); // flip x-axis backwards
-      p5.image(PoseNetService.imageSource, 0, 0, p5.windowWidth, p5.windowHeight);
+      // p5.image(PoseNetService.imageSource, 0, 0, p5.windowWidth, p5.windowHeight);
       PoseNetService.getPose(p5);
     }
 
