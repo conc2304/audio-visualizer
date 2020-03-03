@@ -1,5 +1,5 @@
-const thold = 3;
-const gravity = 1.15;
+const tHold = 500;
+const gravity = 3.15;
 const drag = 0.001;
 let mX = 0;
 let mY = 0;
@@ -13,7 +13,7 @@ class Particle {
 
     this.X = p5.random(0, p5.windowWidth);
     this.Y = p5.random(0, p5.windowHeight);
-    this.w = p5.random(1 / thold, thold);
+    this.w = p5.random(1 / tHold, tHold);
 
     this.render = function () {
       if (!p5.mouseIsPressed) {
@@ -53,7 +53,7 @@ const ParticleScript = function(p5) {
   };
 
   p5.draw = () => {
-    p5.background(0, 0, 0, 10);
+    p5.background(0, 0, 0, 30);
     mX += 0.3 * (p5.mouseX - mX);
     mY += 0.3 * (p5.mouseY - mY);
 
