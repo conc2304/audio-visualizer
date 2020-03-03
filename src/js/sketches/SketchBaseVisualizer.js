@@ -26,6 +26,8 @@ const VisualizerSketch = p5 => {
     p5.objects.shuttle = p5.loadModel('./assets/webgl_models/shuttle.obj', true);
 
     p5.ctrlElementsArray = RegisteredSketches;
+
+
   };
 
   let video;
@@ -33,6 +35,7 @@ const VisualizerSketch = p5 => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.polygon = RenderPolygon;
     p5.colorMode(p5.HSB);
+    p5.imageMode(p5.CENTER);
 
     PoseNetService.initializeNet(p5);
   };
@@ -56,7 +59,8 @@ const VisualizerSketch = p5 => {
 
     if (PoseNetService.imageSource !== null && PoseNetService.imageSource.elt.readyState === 4) {
       if (PoseNetService.flipHorizontal === false) p5.scale(-1.0, 1.0); // flip x-axis backwards
-      // p5.image(PoseNetService.imageSource, 0, 0, p5.windowWidth, p5.windowHeight);
+      p5.image(PoseNetService.imageSource, 0, 0);
+      // p5.image(PoseNetService.imageSource, 0, 0, PoseNetService.appWidth, PoseNetService.appHeight);
       PoseNetService.getPose(p5);
     }
 

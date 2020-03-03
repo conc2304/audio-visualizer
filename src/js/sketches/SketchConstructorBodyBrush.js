@@ -28,6 +28,9 @@ class BodyBrush {
     this.history = [];
     this.bypass = false;
 
+    this.shiftX = windowWidth * 0.5;
+    this.shiftY = windowHeight * 0.5;
+
     this.radius = new NumericProperty('Size', 'Base', 20, -1000, 2000, 0.7);
 
     this.shape = new VariableProperty('Shape', 'Base', 'ellipse', [
@@ -56,6 +59,8 @@ BodyBrush.prototype.render = function(p5) {
   this.drawKeyPoints(p5);
 };
 
+
+
 BodyBrush.prototype.drawKeyPoints = function(p5) {
   // Loop through all the poses detected
   if (!PoseNetService.poseCoords) {
@@ -77,7 +82,9 @@ BodyBrush.prototype.drawKeyPoints = function(p5) {
   }
 };
 
+
 BodyBrush.prototype.renderPose = function(p5, pose) {
+
   p5.noFill();
   p5.strokeWeight(3);
   p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
@@ -95,14 +102,15 @@ BodyBrush.prototype.renderPose = function(p5, pose) {
 
 
 BodyBrush.prototype.renderPosePoints = function(p5, pose) {
+
   for (let i = 0; i < pose.keypoints.length; i++) {
     // A keyPoint is an object describing a body part (like rightArm or leftShoulder)
     let keyPoint = pose.keypoints[i];
     if (keyPoint.score > 0.2) {
       this.renderShape(
         p5,
-        keyPoint.position.x - this.windowWidth / 4,
-        keyPoint.position.y - this.windowHeight / 4,
+        keyPoint.position.x - this.windowWidth / 2,
+        keyPoint.position.y - this.windowHeight / 2,
         this.radius.currentValue,
       );
     }

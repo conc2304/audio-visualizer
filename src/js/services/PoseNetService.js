@@ -33,7 +33,8 @@ async function initializeNet(p5) {
   PoseNetService.net = await posenet.load({
   });
   PoseNetService.imageSource = p5.createCapture(p5.VIDEO);
-  p5.imageMode(p5.CENTER);
+  PoseNetService.imageSource.size(PoseNetService.appWidth, PoseNetService.appHeight);
+  // PoseNetService.imageSource.size(1000, 100);
 }
 
 export default PoseNetService;
