@@ -43,8 +43,7 @@ const ParticleScript = function(p5) {
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
     p5.strokeWeight(1);
-    p5.fill(255, 255, 255);
-    p5.stroke(255, 255, 255, 100);
+    // p5.fill(100, 0, 0);
     p5.background(0, 0, 0);
     p5.smooth();
     for (let i = 0; i < numParticles; i++) {
@@ -54,6 +53,10 @@ const ParticleScript = function(p5) {
 
   p5.draw = () => {
     p5.background(0, 0, 0, 30);
+
+    const red = p5.map(p5.sin(p5.frameCount * 0.05), 0, 1, 0, 255);
+    p5.stroke(red, 255, 255, 100);
+
     mX += 0.3 * (p5.mouseX - mX);
     mY += 0.3 * (p5.mouseY - mY);
 
