@@ -47,8 +47,16 @@ const VisualizerSketch = p5 => {
       }
 
       p5.ctrlElementsArray[ctrlElement].windowWidth = p5.windowWidth;
-      p5.ctrlElementsArray[ctrlElement].waveWidth = p5.windowWidth + 200;
       p5.ctrlElementsArray[ctrlElement].windowHeight = p5.windowHeight;
+      if (p5.ctrlElementsArray[ctrlElement].waveWidth) {
+        p5.ctrlElementsArray[ctrlElement].waveWidth = p5.windowWidth + 200;
+      }
+    }
+
+    if (PoseNetService.isInitialized) {
+      PoseNetService.appWidth = p5.windowWidth;
+      PoseNetService.appHeight = p5.windowHeight;
+      PoseNetService.imageSource.size(PoseNetService.appWidth, PoseNetService.appHeight);
     }
 
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
@@ -59,8 +67,7 @@ const VisualizerSketch = p5 => {
 
     if (PoseNetService.imageSource !== null && PoseNetService.imageSource.elt.readyState === 4) {
       if (PoseNetService.flipHorizontal === false) p5.scale(-1.0, 1.0); // flip x-axis backwards
-      p5.image(PoseNetService.imageSource, 0, 0);
-      // p5.image(PoseNetService.imageSource, 0, 0, PoseNetService.appWidth, PoseNetService.appHeight);
+      // p5.image(PoseNetService.imageSource, 0, 0, 100, 100);
       PoseNetService.getPose(p5);
     }
 

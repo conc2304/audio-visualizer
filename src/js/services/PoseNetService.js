@@ -10,6 +10,7 @@ const PoseNetService = {
   net: null,
   history: [],
   flipHorizontal: false,
+  isInitialized: false,
 
   // METHODS
   getPose,
@@ -34,7 +35,7 @@ async function initializeNet(p5) {
   });
   PoseNetService.imageSource = p5.createCapture(p5.VIDEO);
   PoseNetService.imageSource.size(PoseNetService.appWidth, PoseNetService.appHeight);
-  // PoseNetService.imageSource.size(1000, 100);
+  PoseNetService.isInitialized = true;
 }
 
 export default PoseNetService;
