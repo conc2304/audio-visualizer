@@ -43,7 +43,6 @@ const ParticleScript = function(p5) {
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
     p5.strokeWeight(1);
-    // p5.fill(100, 0, 0);
     p5.background(0, 0, 0);
     p5.smooth();
     for (let i = 0; i < numParticles; i++) {
