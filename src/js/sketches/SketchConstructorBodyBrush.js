@@ -58,8 +58,8 @@ BodyBrush.prototype.render = function(p5) {
     return;
   }
 
-  // this.history.unshift(pose);
-  // this.history = this.history.slice(0, 30);
+  this.history.unshift(pose);
+  this.history = this.history.slice(0, 30);
 
   this.drawKeyPoints(p5);
 };
@@ -210,8 +210,20 @@ BodyBrush.prototype.drawTrailers = function(p5) {
   }
 };
 
+// calculate the average of each saved pose by body part
 BodyBrush.prototype.calculateAverage = function() {
-  this.history.unshift(pose);
+
+  // add them all up
+  let avgKeyPoints = {};
+  for( let pose of this.history) {
+    for (let kP of pose) {
+      if (!avgPosePart[hPose.part]) {
+        avgKeyPoints[hPose.part] = {}
+      }
+
+    }
+
+  }
 };
 
 BodyBrush.prototype.setColor = helper.setColor;
