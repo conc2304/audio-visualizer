@@ -1,5 +1,5 @@
 class Particle {
-  constructor(p5) {
+  constructor(p5, targetPartName = null) {
     this.bypass = false;
 
     // this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
@@ -7,22 +7,24 @@ class Particle {
 
     this.mX = 0;
     this.mY = 0;
-    this.tHold = 400;
-    this.drag = 0.005;
-    this.gravity = 3.15;
-    this.gravityOn = false;
 
-    this.velocityX = p5.random(0, p5.windowWidth);
-    this.velocityY = p5.random(0, p5.windowHeight);
-    this.pX = p5.random(0, p5.windowWidth);
-    this.pY = p5.random(0, p5.windowHeight);
+    this.tHold = 5;
+    this.drag = 0.00005;
+    this.gravity =  3.15;
+    this.gravityOn = true;
+    this.targetPartName = targetPartName;
 
-    this.X = p5.random(0, p5.windowWidth);
-    this.Y = p5.random(0, p5.windowHeight);
+    this.velocityX = p5.random(0, 200);
+    this.velocityY = p5.random(0, 2);
+    this.pX = p5.random(-p5.windowWidth * 0.3, p5.windowWidth * 0.3);
+    this.pY = p5.random(-p5.windowHeight * 0.3, p5.windowHeight * 0.3);
+
+    this.X = p5.random(-p5.windowWidth * 0.1, p5.windowWidth * 0.1);
+    this.Y = p5.random(-p5.windowHeight * 0.1, p5.windowHeight * 0.1);
     this.w = p5.random(1 / this.tHold, this.tHold);
 
     this.render = function(x, y) {
-      if (true || p5.mouseIsPressed || this.gravityOn) {
+      if (!this.gravityOn) {
         this.velocityX /= this.gravity;
         this.velocityY /= this.gravity;
       }
@@ -30,13 +32,9 @@ class Particle {
       this.velocityY += this.drag * (this.mY - this.Y) * this.w;
       this.X += this.velocityX;
       this.Y += this.velocityY;
-      // console.log(this.X, this.Y);
-      if (Number.isNaN(this.X)) {
-        console.log(`this.velocityX : ${this.velocityX}`);
-        console.log(`this.w : ${this.w}`);
-      }
+
       p5.line(this.X, this.Y, this.pX, this.pY);
-      p5.ellipse(this.X, this.Y, 2, 2);
+      // p5.ellipse(this.X, this.Y, 5, 5);
       this.pX = this.X;
       this.pY = this.Y;
 

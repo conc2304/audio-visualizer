@@ -27,10 +27,14 @@ class BodyBrush {
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     this.easeInto = easeInto;
-    this.history = [];
+
+    // this.limbsToTrack = ['rightWrist', 'leftWrist', 'rightAnkle', 'leftAnkle', 'nose'];
+    this.limbsToTrack = ['rightWrist', 'leftWrist', 'nose'];
+    // this.limbsToTrack = ['rightWrist', 'leftWrist'];
+
     this.bypass = false;
 
-    this.particleQty = 50;
+    this.particleQty = 300;
     this.particleBodies = [];
 
     this.shiftX = windowWidth * 0.5;
@@ -38,7 +42,13 @@ class BodyBrush {
 
     this.radius = new NumericProperty('Size', 'Base', 20, -1000, 2000, 0.7);
 
-    this.shape = new VariableProperty('Shape', 'Base', 'ellipse', [
+    this.gravity = new NumericProperty('Gravity', 'Base', 50, 0.1, 10, 0.7);
+    this.drag = new NumericProperty('Drag', 'Base', 50, 1, 100, 0.7);
+    this.tHold = new NumericProperty('T Hold?', 'Base', 50, 1, 100, 0.7);
+    this.gravityOn = new VariableProperty('Gravity On', 'Base', 'off', ['on', 'off']);
+
+    this.shape = new VariableProperty('Show Key Point', 'Base', 'ellipse', [
+      'off',
       'line',
       'triangle',
       'square',
@@ -58,9 +68,6 @@ BodyBrush.prototype.render = function(p5) {
     return;
   }
 
-  this.history.unshift(pose);
-  this.history = this.history.slice(0, 30);
-
   this.drawKeyPoints(p5);
 };
 
@@ -75,8 +82,6 @@ const partsToTrack = [
   'leftHip',
   'rightHip',
 ];
-// const limbsToTrack = ['rightWrist', 'leftWrist', 'rightAnkle', 'leftAnkle'];
-const limbsToTrack = ['rightWrist', 'leftWrist', 'nose'];
 
 BodyBrush.prototype.drawKeyPoints = function(p5) {
   // Loop through all the poses detected
@@ -107,10 +112,12 @@ BodyBrush.prototype.renderPose = function(p5, pose) {
   // console.log(pose);
 
   if (!pose.keypoints) return;
-  this.renderPosePoints(p5, pose);
+  if (this.shape !== 'off') {
+    this.renderPosePoints(p5, pose);
+  }
 
   p5.strokeWeight(1);
-  p5.stroke(255, this.saturation.currentValue, 100);
+  p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
   this.renderParticleBrush(p5, pose);
 
   // NOTE this version doesn't seem to have skeleton points
@@ -125,34 +132,36 @@ BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
   // p5.stroke(255, 255, 255, 100);
 
   if (this.particleBodies.length < this.particleQty) {
-    while (this.particleBodies.length < this.particleQty) {
-      this.particleBodies.push(new Particle(p5));
-      // console.log(`${this.particleBodies.length} vs ${this.particleQty}`);
+    let groupSize = this.particleQty / this.limbsToTrack.length;
+
+    for (let partIndex = 0; partIndex < this.limbsToTrack.length; partIndex++) {
+      let targetPartName = this.limbsToTrack[partIndex];
+      let temp = [];
+      while (temp.length < groupSize) {
+        temp.push(new Particle(p5, targetPartName));
+      }
+
+      this.particleBodies = [...temp, ...this.particleBodies];
     }
   }
 
-  for (let bodyI = 1; bodyI < this.particleBodies.length + 1; bodyI++) {
+  for (let particleI = 1; particleI < this.particleBodies.length + 1; particleI++) {
+    let particle = this.particleBodies[particleI - 1];
     for (let i = 0; i < pose.keypoints.length; i++) {
-      // A keyPoint is an object describing a body part (like rightArm or leftShoulder)
       let keyPoint = pose.keypoints[i];
 
-      if (!limbsToTrack.includes(keyPoint.part) || keyPoint.score < 0.1) continue;
-      // console.log(keyPoint);
+      if (particle.targetPartName === keyPoint.part) {
+        // console.log(particle.gravity, 'gravity');
 
-      for (let partIndex = 1; partIndex < limbsToTrack.length + 1; partIndex++) {
-        // console.log(partIndex);
-        // console.log(bodyI % partIndex);
-        if (keyPoint.part === 'nose') {
-          this.particleBodies[bodyI - 1].gravityOn = true;
-        }
-        if (limbsToTrack.indexOf(keyPoint.part) === partIndex && bodyI % partIndex === 0) {
-          // console.log('draw');
-          this.particleBodies[bodyI - 1].render(
-            keyPoint.position.x - this.windowWidth / 2,
-            keyPoint.position.y - this.windowHeight / 2,
-          );
-          // this.particleBodies[bodyI - 1].upd(keyPoint.position.x, keyPoint.position.y);
-        }
+        particle.gravity = p5.map(this.gravity.currentValue, this.gravity.defaultMin, this.gravity.defaultMax, 1, 100000);
+        particle.drag = p5.map(this.drag.currentValue, this.drag.defaultMin, this.drag.defaultMax, 0.00005, 0.01);
+        // particle.w = p5.map(this.tHold.currentValue, this.tHold.defaultMin, this.tHold.defaultMax, 1, 50);
+        particle.gravityOn = (this.gravityOn.currentValue === 'on') ? true :false;
+
+        particle.render(
+          keyPoint.position.x - this.windowWidth / 2,
+          keyPoint.position.y - this.windowHeight / 2,
+        );
       }
     }
   }
@@ -163,8 +172,8 @@ BodyBrush.prototype.renderPosePoints = function(p5, pose) {
     // A keyPoint is an object describing a body part (like rightArm or leftShoulder)
     let keyPoint = pose.keypoints[i];
 
-    if (!limbsToTrack.includes(keyPoint.part)) continue;
-    if (keyPoint.score > 0.3) {
+    if (!this.limbsToTrack.includes(keyPoint.part)) continue;
+    if (keyPoint.score > 0.1) {
       this.renderShape(
         p5,
         keyPoint.position.x - this.windowWidth / 2,
@@ -212,17 +221,14 @@ BodyBrush.prototype.drawTrailers = function(p5) {
 
 // calculate the average of each saved pose by body part
 BodyBrush.prototype.calculateAverage = function() {
-
   // add them all up
   let avgKeyPoints = {};
-  for( let pose of this.history) {
+  for (let pose of this.history) {
     for (let kP of pose) {
       if (!avgPosePart[hPose.part]) {
-        avgKeyPoints[hPose.part] = {}
+        avgKeyPoints[hPose.part] = {};
       }
-
     }
-
   }
 };
 
