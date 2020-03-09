@@ -8,7 +8,7 @@ class Particle {
     this.mX = 0;
     this.mY = 0;
 
-    this.tHold = 5;
+    this.tHold = 200;
     this.drag = 0.00005;
     this.gravity =  3.15;
     this.gravityOn = true;
@@ -21,10 +21,10 @@ class Particle {
 
     this.X = p5.random(-p5.windowWidth * 0.1, p5.windowWidth * 0.1);
     this.Y = p5.random(-p5.windowHeight * 0.1, p5.windowHeight * 0.1);
-    this.w = p5.random(1 / this.tHold, this.tHold);
+    this.w = p5.random(1, this.tHold);
 
     this.render = function(x, y) {
-      if (!this.gravityOn) {
+      if (!this.gravityOn || p5.mouseIsPressed) {
         this.velocityX /= this.gravity;
         this.velocityY /= this.gravity;
       }
@@ -34,7 +34,7 @@ class Particle {
       this.Y += this.velocityY;
 
       p5.line(this.X, this.Y, this.pX, this.pY);
-      // p5.ellipse(this.X, this.Y, 5, 5);
+
       this.pX = this.X;
       this.pY = this.Y;
 

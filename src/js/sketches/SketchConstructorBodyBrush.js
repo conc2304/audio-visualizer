@@ -29,12 +29,23 @@ class BodyBrush {
     this.easeInto = easeInto;
 
     // this.limbsToTrack = ['rightWrist', 'leftWrist', 'rightAnkle', 'leftAnkle', 'nose'];
-    this.limbsToTrack = ['rightWrist', 'leftWrist', 'nose'];
+    this.limbsToTrack = [
+      'nose',
+      'rightWrist',
+      'rightElbow',
+      'leftElbow',
+      'leftWrist',
+      'rightAnkle',
+      'leftAnkle',
+      'leftHip',
+      'rightHip',
+    ];
+    // this.limbsToTrack = ['rightWrist', 'leftWrist', 'nose'];
     // this.limbsToTrack = ['rightWrist', 'leftWrist'];
 
     this.bypass = false;
 
-    this.particleQty = 300;
+    this.particleQty = 500;
     this.particleBodies = [];
 
     this.shiftX = windowWidth * 0.5;
@@ -47,14 +58,7 @@ class BodyBrush {
     this.tHold = new NumericProperty('T Hold?', 'Base', 50, 1, 100, 0.7);
     this.gravityOn = new VariableProperty('Gravity On', 'Base', 'off', ['on', 'off']);
 
-    this.shape = new VariableProperty('Show Key Point', 'Base', 'ellipse', [
-      'off',
-      'line',
-      'triangle',
-      'square',
-      'pentagon',
-      'ellipse',
-    ]);
+    this.shape = new VariableProperty('Show Key Point', 'Base', 'ellipse', ['off', 'ellipse']);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
     this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1);
@@ -70,18 +74,6 @@ BodyBrush.prototype.render = function(p5) {
 
   this.drawKeyPoints(p5);
 };
-
-const partsToTrack = [
-  'nose',
-  'rightWrist',
-  'rightElbow',
-  'leftElbow',
-  'leftWrist',
-  'rightAnkle',
-  'leftAnkle',
-  'leftHip',
-  'rightHip',
-];
 
 BodyBrush.prototype.drawKeyPoints = function(p5) {
   // Loop through all the poses detected
@@ -153,15 +145,34 @@ BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
       if (particle.targetPartName === keyPoint.part) {
         // console.log(particle.gravity, 'gravity');
 
-        particle.gravity = p5.map(this.gravity.currentValue, this.gravity.defaultMin, this.gravity.defaultMax, 1, 100000);
-        particle.drag = p5.map(this.drag.currentValue, this.drag.defaultMin, this.drag.defaultMax, 0.00005, 0.01);
+        particle.gravity = p5.map(
+          this.gravity.currentValue,
+          this.gravity.defaultMin,
+          this.gravity.defaultMax,
+          1,
+          100000,
+        );
+        particle.drag = p5.map(
+          this.drag.currentValue,
+          this.drag.defaultMin,
+          this.drag.defaultMax,
+          0.00005,
+          0.01,
+        );
         // particle.w = p5.map(this.tHold.currentValue, this.tHold.defaultMin, this.tHold.defaultMax, 1, 50);
-        particle.gravityOn = (this.gravityOn.currentValue === 'on') ? true :false;
+        particle.gravityOn = this.gravityOn.currentValue === 'on' ? true : false;
 
+        if (particle.targetPartName === 'nose') {
+          // particle.gravityOn = true;
+          // particle.gravity = 1000;
+        }
         particle.render(
           keyPoint.position.x - this.windowWidth / 2,
           keyPoint.position.y - this.windowHeight / 2,
         );
+
+        p5.fill(this.hue.currentValue, this.saturation.currentValue, 100)
+        p5.ellipse(keyPoint.position.x - this.windowWidth / 2, keyPoint.position.y - this.windowHeight / 2, 4, 4);
       }
     }
   }
