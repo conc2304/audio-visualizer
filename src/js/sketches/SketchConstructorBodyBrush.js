@@ -28,7 +28,6 @@ class BodyBrush {
     this.windowHeight = windowHeight;
     this.easeInto = easeInto;
 
-    // this.limbsToTrack = ['rightWrist', 'leftWrist', 'rightAnkle', 'leftAnkle', 'nose'];
     this.limbsToTrack = [
       'nose',
       'rightWrist',
@@ -40,6 +39,7 @@ class BodyBrush {
       'leftHip',
       'rightHip',
     ];
+    // this.limbsToTrack = ['rightWrist', 'leftWrist', 'rightAnkle', 'leftAnkle', 'nose'];
     // this.limbsToTrack = ['rightWrist', 'leftWrist', 'nose'];
     // this.limbsToTrack = ['rightWrist', 'leftWrist'];
 
@@ -66,7 +66,25 @@ class BodyBrush {
 }
 
 BodyBrush.prototype.render = function(p5) {
-  // We can call both functions to draw all keypoints and the skeletons
+  // post app init posenet initialization
+  if (!PoseNetService.isInitialized) {
+    PoseNetService.initializeNet(p5);
+  }
+
+  if (this.particleBodies.length === 0) {
+    let groupSize = this.particleQty / this.limbsToTrack.length;
+
+    for (let partIndex = 0; partIndex < this.limbsToTrack.length; partIndex++) {
+      let targetPartName = this.limbsToTrack[partIndex];
+      let temp = [];
+      while (temp.length < groupSize) {
+        temp.push(new Particle(p5, targetPartName));
+      }
+
+      this.particleBodies = [...temp, ...this.particleBodies];
+    }
+  }
+  // end posenet init
 
   if (PoseNetService.imageSource === null || PoseNetService.imageSource.elt.readyState !== 4) {
     return;
@@ -85,10 +103,13 @@ BodyBrush.prototype.drawKeyPoints = function(p5) {
 
   // multiple poses
   if (typeof poses === 'array') {
-    for (let i = 0; i < poses.length; i++) {
-      const pose = poses[i].pose;
-      this.renderPose(p5, pose);
-    }
+    // just do one pose for now
+    this.renderPose(p5, poses);
+
+    // for (let i = 0; i < poses.length; i++) {
+    //   const pose = poses[i].pose;
+    //   this.renderPose(p5, pose);
+    // }
   }
   // single pose
   else if (typeof poses === 'object') {
@@ -123,28 +144,12 @@ BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
   // p5.strokeWeight(1);
   // p5.stroke(255, 255, 255, 100);
 
-  if (this.particleBodies.length < this.particleQty) {
-    let groupSize = this.particleQty / this.limbsToTrack.length;
-
-    for (let partIndex = 0; partIndex < this.limbsToTrack.length; partIndex++) {
-      let targetPartName = this.limbsToTrack[partIndex];
-      let temp = [];
-      while (temp.length < groupSize) {
-        temp.push(new Particle(p5, targetPartName));
-      }
-
-      this.particleBodies = [...temp, ...this.particleBodies];
-    }
-  }
-
   for (let particleI = 1; particleI < this.particleBodies.length + 1; particleI++) {
     let particle = this.particleBodies[particleI - 1];
     for (let i = 0; i < pose.keypoints.length; i++) {
       let keyPoint = pose.keypoints[i];
 
       if (particle.targetPartName === keyPoint.part) {
-        // console.log(particle.gravity, 'gravity');
-
         particle.gravity = p5.map(
           this.gravity.currentValue,
           this.gravity.defaultMin,
@@ -166,13 +171,19 @@ BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
           // particle.gravityOn = true;
           // particle.gravity = 1000;
         }
+
         particle.render(
           keyPoint.position.x - this.windowWidth / 2,
           keyPoint.position.y - this.windowHeight / 2,
         );
 
-        p5.fill(this.hue.currentValue, this.saturation.currentValue, 100)
-        p5.ellipse(keyPoint.position.x - this.windowWidth / 2, keyPoint.position.y - this.windowHeight / 2, 4, 4);
+        p5.fill(this.hue.currentValue, this.saturation.currentValue, 100);
+        p5.ellipse(
+          keyPoint.position.x - this.windowWidth / 2,
+          keyPoint.position.y - this.windowHeight / 2,
+          4,
+          4,
+        );
       }
     }
   }
