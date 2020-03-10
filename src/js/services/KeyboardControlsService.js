@@ -25,11 +25,15 @@ KeyboardControlsService.playPianoKey = (key, pressed) => {
     }
 
     for (let ctrlProp in ctrlHandlers[controlElementName]) {
-      if (!ctrlHandlers[controlElementName].hasOwnProperty(ctrlProp)) {
+      controlObject = RegisteredSketches[controlElementName];
+      if (
+        !ctrlHandlers[controlElementName].hasOwnProperty(ctrlProp) ||
+        !RegisteredSketches[controlElementName] ||
+        typeof RegisteredSketches[controlElementName] === 'undefined' ||
+        typeof controlObject[ctrlProp] === 'undefined'
+      ) {
         continue;
       }
-
-      controlObject = RegisteredSketches[controlElementName];
 
       if (controlObject[ctrlProp].attrType === 'numeric') {
         if (pressed) {
