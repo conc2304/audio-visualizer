@@ -149,6 +149,11 @@ export default {
     },
   },
 
+  created() {
+    console.log(typeof this.RegisteredSketches);
+    console.log(this.RegisteredSketches);
+  },
+
   methods: {
     updateMasterMenu() {
       this.$store.commit('updateMasterMenuOpen', false);

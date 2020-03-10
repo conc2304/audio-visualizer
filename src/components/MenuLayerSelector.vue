@@ -17,10 +17,9 @@
 
         .layer-selector-wrapper( class="custom-thin-scrollbar")
           v-list-item(
-            v-for="(sketch, i) in RegisteredSketches"
-            :key="i"
-            :class="{ 'active': sketchIndexSelected === i, 'inactive': sketch.bypass }"
-            @click="selectLayer(i)"
+            v-for="(sketch, key, index) in RegisteredSketches"
+            :class="{ 'active': sketchIndexSelected === key, 'inactive': sketch.bypass }"
+            @click="selectLayer(key)"
           )
             v-icon.menu-icon filter_{{ i+1 }}
 
@@ -73,7 +72,7 @@ export default {
 
   props: {
     RegisteredSketches: {
-      type: Array,
+      type: Object,
     },
     menuOpen: {
       type: Boolean,
@@ -96,26 +95,6 @@ export default {
       this.$store.commit('updateSketchIndexSelected', -1);
     },
 
-    sketchOrderShift(deltaPos) {
-      this.RegisteredSketches[this.layerSelected];
-
-      this.RegisteredSketches = array_move(
-        this.RegisteredSketches,
-        this.layerSelected,
-        this.layerSelected + deltaPos,
-      );
-
-      function array_move(arr, old_index, new_index) {
-        if (new_index >= arr.length) {
-          var k = new_index - arr.length + 1;
-          while (k--) {
-            arr.push(undefined);
-          }
-        }
-        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-        return arr; // for testing
-      }
-    },
 
     removeSketch() {
       let layerSelected = this.sketchIndexSelected;
@@ -130,6 +109,10 @@ export default {
       this.RegisteredSketches.splice(layerSelected, 1);
       this.selectLayer(0);
     },
+  },
+
+  created() {
+    console.log(typeof this.RegisteredSketches);
   },
 
   computed: {
