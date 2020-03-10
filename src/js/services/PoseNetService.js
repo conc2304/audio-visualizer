@@ -10,7 +10,6 @@ const PoseNetService = {
   net: null,
   history: [],
   flipHorizontal: false,
-  // isInitialized: false,
   status: 'uninitialized',
 
   // METHODS

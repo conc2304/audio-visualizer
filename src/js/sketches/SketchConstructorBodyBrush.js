@@ -61,7 +61,7 @@ class BodyBrush {
     this.wDelta = new NumericProperty('T Hold?', 'Base', 50, 1, 100, 0.7);
     this.gravityOn = new VariableProperty('Gravity On', 'Base', 'off', ['on', 'off']);
 
-    this.shape = new VariableProperty('Show Key Point', 'Base', 'ellipse', ['off', 'ellipse']);
+    this.shape = new VariableProperty('Show Key Point', 'Base', 'off', ['off', 'ellipse']);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.7);
     this.strokeWeight = new NumericProperty('Line Width', 'Base', 1, 1, 50, 0.7);
