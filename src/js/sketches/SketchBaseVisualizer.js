@@ -35,9 +35,8 @@ const VisualizerSketch = p5 => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.polygon = RenderPolygon;
     p5.colorMode(p5.HSB);
-    // p5.imageMode(p5.CENTER);
 
-    PoseNetService.initializeNet(p5);
+    // PoseNetService.initializeNet(p5);
   };
 
   p5.windowResized = () => {
@@ -53,7 +52,7 @@ const VisualizerSketch = p5 => {
       }
     }
 
-    if (PoseNetService.isInitialized) {
+    if (PoseNetService.status === 'ready' ) {
       PoseNetService.appWidth = p5.windowWidth;
       PoseNetService.appHeight = p5.windowHeight;
       PoseNetService.imageSource.size(PoseNetService.appWidth, PoseNetService.appHeight);
