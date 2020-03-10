@@ -136,6 +136,20 @@ KeyboardControlsService.setKeyboardControl = (
   }
 };
 
+KeyboardControlsService.deleteLayerMapping = (layerSid) => {
+
+  console.log(layerSid)
+
+  for (let keyChar in KeyboardControlsService.keyboardCtrl) {
+    console.log(keyChar);
+
+    delete KeyboardControlsService.keyboardCtrl[keyChar][layerSid];
+  }
+
+  delete KeyboardControlsService.ctrlElemPropToKeyMap[layerSid];
+}
+
+
 Object.size = obj => {
   let size = 0,
     key;

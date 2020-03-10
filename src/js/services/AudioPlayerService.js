@@ -278,6 +278,15 @@ AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchInde
   }
 };
 
+AudioPlayerService.deleteLayerMapping = layerSid => {
+
+  for (let keyChar in AudioPlayerService.audioCtrl) {
+    delete AudioPlayerService.audioCtrl[keyChar][layerSid];
+  }
+
+  delete AudioPlayerService.elementPropToFQMap[layerSid];
+};
+
 /**
  *
  */

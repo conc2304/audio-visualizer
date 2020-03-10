@@ -25,8 +25,13 @@ while (i < 3) {
   }
 
   const catalogueItem = SketchCatalogue[i].catalogueInfo;
-  registeredSketches.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
+  const sketch = new catalogueItem.classConstructor(window.innerWidth, window.innerHeight);
+  registeredSketches[sketch.sid] = sketch;
   i++;
 }
+
+
+console.log(registeredSketches);
+console.log(registeredSketches.length);
 
 export default registeredSketches;

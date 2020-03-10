@@ -62,6 +62,10 @@
 </template>
 
 <script>
+import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import AudioPlayerService from '@/js/services/AudioPlayerService';
+
+
 export default {
   data: () => ({
     layerDashVisible: true,
@@ -118,6 +122,10 @@ export default {
       if (layerSelected == null || layerSelected < 0) {
         return;
       }
+
+
+      KeyboardControlsService.deleteLayerMapping(this.RegisteredSketches[layerSelected].sid);
+      AudioPlayerService.deleteLayerMapping(this.RegisteredSketches[layerSelected].sid);
 
       this.RegisteredSketches.splice(layerSelected, 1);
       this.selectLayer(0);

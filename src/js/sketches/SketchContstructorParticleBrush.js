@@ -1,5 +1,8 @@
 class Particle {
   constructor(p5, targetPartName = null) {
+    this.sid = Utils.guidGenerator();
+
+
     this.bypass = false;
 
     // this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
