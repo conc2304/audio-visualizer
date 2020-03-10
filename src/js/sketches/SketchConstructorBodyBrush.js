@@ -18,7 +18,7 @@ class BodyBrush {
       this.constructor,
       'Body Brush',
       'Kinetic art meets your computer, dance around and become a digital brush',
-      ['Body Tracking', 'Web Cam', 'Interactive'],
+      ['Body Tracking', 'Web Cam', 'Interactive', 'Particle System'],
       'NOTNOTclyzby',
       './assets/sketch_catalogue_gifs/center-wave_200.gif',
       300,
@@ -28,6 +28,8 @@ class BodyBrush {
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
     this.easeInto = easeInto;
+
+    this.historicPoint = {};
 
     this.limbsToTrack = [
       'nose',
@@ -146,38 +148,43 @@ BodyBrush.prototype.renderPose = function(p5, pose) {
   // }
 };
 
+const thresholdPercent = 0.3;
+const threshold = {
+  x: PoseNetService.appWidth * thresholdPercent,
+  y: PoseNetService.appHeight * thresholdPercent,
+};
 BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
-  // create particles to reach max if not there (ie initialization after setup)
-  // p5.strokeWeight(1);
-  // p5.stroke(255, 255, 255, 100);
-
   for (let particleI = 1; particleI < this.particleBodies.length + 1; particleI++) {
     let particle = this.particleBodies[particleI - 1];
     for (let i = 0; i < pose.keypoints.length; i++) {
       let keyPoint = pose.keypoints[i];
 
       if (particle.targetPartName === keyPoint.part) {
-        particle.gravity = p5.map(
-          this.gravity.currentValue,
-          this.gravity.defaultMin,
-          this.gravity.defaultMax,
-          1,
-          100000,
-        );
-        particle.drag = p5.map(
-          this.drag.currentValue,
-          this.drag.defaultMin,
-          this.drag.defaultMax,
-          0.00005,
-          0.005,
-        );
-        particle.wDelta = p5.map(
-          this.wDelta.currentValue,
-          this.wDelta.defaultMin,
-          this.wDelta.defaultMax,
-          0,
-          1000,
-        );
+        this.applyControllerValues(p5, particle);
+
+        // // to avoid the glitchy bouncing/flickering of position points
+        // // if position x or y is more than our threshold away in distance
+        // // then use the last know location
+        // THIS DIDNT WORK
+        // if (this.historicPoint[keyPoint.part]) {
+        //   let distance = pointDistance(
+        //     keyPoint.position.x,
+        //     keyPoint.position.y,
+        //     this.historicPoint[keyPoint.part].x,
+        //     this.historicPoint[keyPoint.part].y,
+        //   );
+
+        //   // console.log(distance, threshold.x, threshold.y);
+
+        //   if (distance > threshold.x || distance > threshold.y) {
+        //     console.warn('threshold reached');
+        //     keyPoint.position = {
+        //       x: this.historicPoint[keyPoint.part].x,
+        //       y: this.historicPoint[keyPoint.part].y,
+        //     };
+        //   }
+        // }
+
         particle.gravityOn = this.gravityOn.currentValue === 'on' ? true : false;
 
         if (particle.targetPartName === 'nose') {
@@ -196,6 +203,8 @@ BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
           4,
           4,
         );
+
+        this.historicPoint[keyPoint.part] = keyPoint.position;
       }
     }
   }
@@ -216,6 +225,30 @@ BodyBrush.prototype.renderPosePoints = function(p5, pose) {
       );
     }
   }
+};
+
+BodyBrush.prototype.applyControllerValues = function(p5, particle) {
+  particle.gravity = p5.map(
+    this.gravity.currentValue,
+    this.gravity.defaultMin,
+    this.gravity.defaultMax,
+    1,
+    100000,
+  );
+  particle.drag = p5.map(
+    this.drag.currentValue,
+    this.drag.defaultMin,
+    this.drag.defaultMax,
+    0.00005,
+    0.005,
+  );
+  particle.wDelta = p5.map(
+    this.wDelta.currentValue,
+    this.wDelta.defaultMin,
+    this.wDelta.defaultMax,
+    -100,
+    200,
+  );
 };
 
 BodyBrush.prototype.renderSkeleton = function(p5, pose) {
@@ -265,6 +298,29 @@ BodyBrush.prototype.calculateAverage = function() {
     }
   }
 };
+
+/**
+ * Calculate Euclidean distance between points
+ * @param {Number} x1
+ * @param {Number} y1
+ * @param {Number} x2
+ * @param {Number} y2
+ * @param {Number} z1
+ * @param {Number} z2
+ */
+function pointDistance(x1, y1, x2, y2, z1 = 0, z2 = 0) {
+  const a = x2 - x1;
+  const b = y2 - y1;
+  const c = z2 - z1;
+
+  const distance = Math.sqrt(a * a + b * b + c * c);
+
+  return distance;
+  // let v1 = p5.createVector(x1, y1, z1);
+  // let v2 = p5.createVector(x2, y2, z2);
+
+  // return (distance = p5.Vector.dist(v1, v2));
+}
 
 BodyBrush.prototype.setColor = helper.setColor;
 BodyBrush.prototype.renderShape = helper.renderShape;
