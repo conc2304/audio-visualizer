@@ -22,14 +22,15 @@ class Particle {
     this.X = p5.random(-p5.windowWidth * 0.1, p5.windowWidth * 0.1);
     this.Y = p5.random(-p5.windowHeight * 0.1, p5.windowHeight * 0.1);
     this.w = p5.random(1, this.tHold);
+    this.wDelta = 0;
 
     this.render = function(x, y) {
       if (!this.gravityOn || p5.mouseIsPressed) {
         this.velocityX /= this.gravity;
         this.velocityY /= this.gravity;
       }
-      this.velocityX += this.drag * (this.mX - this.X) * this.w;
-      this.velocityY += this.drag * (this.mY - this.Y) * this.w;
+      this.velocityX += this.drag * (this.mX - this.X) * (this.w + this.wDelta);
+      this.velocityY += this.drag * (this.mY - this.Y) * (this.w + this.wDelta);
       this.X += this.velocityX;
       this.Y += this.velocityY;
 
@@ -45,13 +46,10 @@ class Particle {
 }
 
 Particle.prototype.draw = function(p5, x, y) {
-  // const red = p5.map(p5.sin(p5.frameCount * 0.05), 0, 1, 0, 255);
 
   this.mX += 0.3 * (x - this.mX);
   this.mY += 0.3 * (y - this.mY);
 
-  console.log(`${mX}, ${mY}`);
-  console.log(`${x}, ${y}`);
 
   for (let i = 0; i < numParticles; i++) {
     bodies[i].render();

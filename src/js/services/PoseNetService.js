@@ -10,7 +10,8 @@ const PoseNetService = {
   net: null,
   history: [],
   flipHorizontal: false,
-  isInitialized: false,
+  // isInitialized: false,
+  status: 'uninitialized',
 
   // METHODS
   getPose,
@@ -20,7 +21,7 @@ const PoseNetService = {
 // gets called on draw
 async function getPose(p5) {
   // load the posenet model from a checkpoint
-  if (PoseNetService.net !== null && PoseNetService.imageSource && PoseNetService.imageSource.elt) {
+  if (PoseNetService.net !== null && typeof PoseNetService.net !== 'undefined' && PoseNetService.imageSource && PoseNetService.imageSource.elt) {
     PoseNetService.poseCoords = await PoseNetService.net.estimateSinglePose(
       PoseNetService.imageSource.elt,
       {
@@ -31,11 +32,13 @@ async function getPose(p5) {
 }
 
 async function initializeNet(p5) {
-  PoseNetService.net = await posenet.load({
-  });
+  PoseNetService.status = 'pending';
+  PoseNetService.net = await posenet
+    .load({});
   PoseNetService.imageSource = p5.createCapture(p5.VIDEO);
   PoseNetService.imageSource.size(PoseNetService.appWidth, PoseNetService.appHeight);
-  PoseNetService.isInitialized = true;
+  PoseNetService.status = 'ready';
+
 }
 
 export default PoseNetService;

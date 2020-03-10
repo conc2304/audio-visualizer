@@ -8,6 +8,7 @@ import PoseNetService from '@/js/services/PoseNetService.js';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 
 import Particle from '@/js/sketches/SketchContstructorParticleBrush.js';
+import { PoseNet } from '@tensorflow-models/posenet';
 
 class BodyBrush {
   constructor(windowWidth, windowHeight, p5) {
@@ -45,7 +46,7 @@ class BodyBrush {
 
     this.bypass = false;
 
-    this.particleQty = 500;
+    this.particleQty = 1000;
     this.particleBodies = [];
 
     this.shiftX = windowWidth * 0.5;
@@ -55,19 +56,20 @@ class BodyBrush {
 
     this.gravity = new NumericProperty('Gravity', 'Base', 50, 0.1, 10, 0.7);
     this.drag = new NumericProperty('Drag', 'Base', 50, 1, 100, 0.7);
-    this.tHold = new NumericProperty('T Hold?', 'Base', 50, 1, 100, 0.7);
+    this.wDelta = new NumericProperty('T Hold?', 'Base', 50, 1, 100, 0.7);
     this.gravityOn = new VariableProperty('Gravity On', 'Base', 'off', ['on', 'off']);
 
     this.shape = new VariableProperty('Show Key Point', 'Base', 'ellipse', ['off', 'ellipse']);
 
-    this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1);
-    this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1);
+    this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.7);
+    this.strokeWeight = new NumericProperty('Line Width', 'Base', 1, 1, 50, 0.7);
+    this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.17);
   }
 }
 
 BodyBrush.prototype.render = function(p5) {
   // post app init posenet initialization
-  if (!PoseNetService.isInitialized) {
+  if (PoseNetService.status === 'uninitialized') {
     PoseNetService.initializeNet(p5);
   }
 
@@ -86,7 +88,11 @@ BodyBrush.prototype.render = function(p5) {
   }
   // end posenet init
 
-  if (PoseNetService.imageSource === null || PoseNetService.imageSource.elt.readyState !== 4) {
+  if (
+    PoseNetService.imageSource === null ||
+    PoseNetService.imageSource.elt.readyState !== 4 ||
+    PoseNetService.status !== 'ready'
+  ) {
     return;
   }
 
@@ -104,7 +110,7 @@ BodyBrush.prototype.drawKeyPoints = function(p5) {
   // multiple poses
   if (typeof poses === 'array') {
     // just do one pose for now
-    this.renderPose(p5, poses);
+    this.renderPose(p5, poses[0]);
 
     // for (let i = 0; i < poses.length; i++) {
     //   const pose = poses[i].pose;
@@ -118,20 +124,21 @@ BodyBrush.prototype.drawKeyPoints = function(p5) {
 };
 
 BodyBrush.prototype.renderPose = function(p5, pose) {
-  p5.noFill();
-  p5.strokeWeight(3);
-  p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
-
   // console.log(pose);
 
   if (!pose.keypoints) return;
-  if (this.shape !== 'off') {
+  if (this.shape.currentValue !== 'off') {
+    p5.noFill();
+    p5.strokeWeight(3);
+    p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
     this.renderPosePoints(p5, pose);
   }
 
-  p5.strokeWeight(1);
+  p5.strokeWeight(this.strokeWeight.currentValue);
   p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
+  p5.fill(this.hue.currentValue, this.saturation.currentValue, 100);
   this.renderParticleBrush(p5, pose);
+  p5.noFill();
 
   // NOTE this version doesn't seem to have skeleton points
   // if (this.renderSkeleton.currentValue === true) {
@@ -162,9 +169,15 @@ BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
           this.drag.defaultMin,
           this.drag.defaultMax,
           0.00005,
-          0.01,
+          0.005,
         );
-        // particle.w = p5.map(this.tHold.currentValue, this.tHold.defaultMin, this.tHold.defaultMax, 1, 50);
+        particle.wDelta = p5.map(
+          this.wDelta.currentValue,
+          this.wDelta.defaultMin,
+          this.wDelta.defaultMax,
+          0,
+          1000,
+        );
         particle.gravityOn = this.gravityOn.currentValue === 'on' ? true : false;
 
         if (particle.targetPartName === 'nose') {
@@ -177,7 +190,6 @@ BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
           keyPoint.position.y - this.windowHeight / 2,
         );
 
-        p5.fill(this.hue.currentValue, this.saturation.currentValue, 100);
         p5.ellipse(
           keyPoint.position.x - this.windowWidth / 2,
           keyPoint.position.y - this.windowHeight / 2,
