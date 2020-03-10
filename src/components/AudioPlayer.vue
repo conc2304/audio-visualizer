@@ -19,7 +19,7 @@
         v-btn(
           @click="uploadAudioDialog = true"
           large color="color_primary_blue"
-        ) Upload Music
+        ) Choose Music
     .song-progress
       v-progress-linear#loading-bar(
         v-show="audioIsLoading"
@@ -65,7 +65,7 @@
               v-icon.menu-icon(
                 v-on="on"
               ) unarchive
-          span  Upload Music
+          span  Choose Music
 
       AudioPlaylist(
         v-show="playlistOpen"
