@@ -7,7 +7,7 @@ import Parametric from '@/js/sketches/SketchConstructorParametric';
 import Tunnel from '@/js/sketches/SketchConstructorTunnel';
 import BodyBrush from '@/js/sketches/SketchConstructorBodyBrush';
 
-const registeredSketches = {};
+const RegisteredSketches = {};
 
 SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
@@ -26,12 +26,8 @@ while (i < 3) {
 
   const catalogueItem = SketchCatalogue[i].catalogueInfo;
   const sketch = new catalogueItem.classConstructor(window.innerWidth, window.innerHeight);
-  registeredSketches[sketch.sid] = sketch;
+  RegisteredSketches[sketch.sid] = sketch;
   i++;
 }
 
-
-console.log(registeredSketches);
-console.log(registeredSketches.length);
-
-export default registeredSketches;
+export default RegisteredSketches;

@@ -40,7 +40,7 @@ export default {
 
   props: {
     RegisteredSketches: {
-      type: Array,
+      type: Object,
     },
     auxInputVisible: {
       type: Boolean,

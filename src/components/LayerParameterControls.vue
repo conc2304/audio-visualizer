@@ -41,7 +41,7 @@ export default {
       type: String,
     },
     RegisteredSketches: {
-      type: Array,
+      type: Object,
     },
     auxInputVisible: {
       type: Boolean,

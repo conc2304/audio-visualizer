@@ -29,11 +29,8 @@ export default {
   },
 
   props: {
-    // sketchIndexSelected: {
-    //   type: Number,
-    // },
     RegisteredSketches: {
-      type: Array,
+      type: Object,
     },
   },
 

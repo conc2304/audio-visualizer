@@ -2,7 +2,7 @@
   #layer-controls-container( v-show="menuOpen")
     .layer-control-header
       .layer-control-title
-        h3 Layer {{ sketchIndexSelected + 1 }} Controls
+        h3 {{ sketchTitle }}
         v-list-item.close( @click="closeMenu")
           v-icon close
 
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+// import
 import LayerDashboard from '@/components/LayerDashboard.vue';
 import LayerCategoriesExpansionList from '@/components/LayerCategoriesExpansionList.vue';
 
@@ -34,9 +35,8 @@ export default {
   },
 
   props: {
-
     RegisteredSketches: {
-      type: Array,
+      type: Object,
     },
     auxInputVisible: {
       type: Boolean,
@@ -52,6 +52,15 @@ export default {
   },
 
   computed: {
+    sketchTitle() {
+      const sid = this.$store.state.sketchIndexSelected;
+      console.log('layer control panel sid:', sid);
+      console.log(sid > 0);
+      return sid && this.RegisteredSketches[sid]
+        ? this.RegisteredSketches[sid].catalogueInfo.title
+        : 'No Layer Selected/Active'
+    },
+
     sketchIndexSelected() {
       return this.$store.state.sketchIndexSelected;
     },

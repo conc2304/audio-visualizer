@@ -48,12 +48,12 @@
 </template>
 
 <script>
-import SketchRegistration from '@/js/services/SketchRegistration';
+import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
   data: () => ({
     maxLayers: 8,
-    SketchRegistration,
+    RegisteredSketches,
   }),
 
   props: {
@@ -73,25 +73,35 @@ export default {
 
   methods: {
     registerNewSketch(catalogueItem) {
-      this.SketchRegistration.push(
-        new catalogueItem.classConstructor(window.innerWidth, window.innerHeight),
-      );
+      console.log(catalogueItem);
+      const sketch = new catalogueItem.classConstructor(window.innerWidth, window.innerHeight);
+      console.log(sketch);
+
+      this.RegisteredSketches[sketch.sid] = sketch;
+
+      console.log(this.RegisteredSketches);
     },
 
     getTagMatchColor(tag) {
       return this.search && tag.toLowerCase() == this.search.toLowerCase() ? 'blue' : 'grey';
     },
 
-    addFavorite(){
-      ++ this.catalogueItem.popularity;
-    }
+    addFavorite() {
+      ++this.catalogueItem.popularity;
+    },
   },
 
   computed: {
     maxLayersReached() {
-      return this.SketchRegistration.length > this.maxLayers;
-    },
+      let size = 0;
+      for (let key in this.RegisteredSketches) {
+        if (this.RegisteredSketches.hasOwnProperty(key)) {
+          size++;
+        }
+      }
 
+      return size > this.maxLayers;
+    },
   },
 
   mounted() {},
@@ -103,7 +113,8 @@ export default {
 .favorites {
   padding-left: 1rem;
 }
-.num-favorite, .complexity {
+.num-favorite,
+.complexity {
   padding-left: 0.5rem;
 }
 

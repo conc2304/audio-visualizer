@@ -137,12 +137,7 @@ KeyboardControlsService.setKeyboardControl = (
 };
 
 KeyboardControlsService.deleteLayerMapping = (layerSid) => {
-
-  console.log(layerSid)
-
   for (let keyChar in KeyboardControlsService.keyboardCtrl) {
-    console.log(keyChar);
-
     delete KeyboardControlsService.keyboardCtrl[keyChar][layerSid];
   }
 

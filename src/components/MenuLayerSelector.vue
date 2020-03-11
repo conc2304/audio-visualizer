@@ -18,10 +18,11 @@
         .layer-selector-wrapper( class="custom-thin-scrollbar")
           v-list-item(
             v-for="(sketch, key, index) in RegisteredSketches"
+            :key="index"
             :class="{ 'active': sketchIndexSelected === key, 'inactive': sketch.bypass }"
             @click="selectLayer(key)"
           )
-            v-icon.menu-icon filter_{{ i+1 }}
+            v-icon.menu-icon filter_{{ index + 1 }}
 
         .layer-arrangement
           v-tooltip( right)
@@ -64,7 +65,6 @@
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
 import AudioPlayerService from '@/js/services/AudioPlayerService';
 
-
 export default {
   data: () => ({
     layerDashVisible: true,
@@ -95,19 +95,22 @@ export default {
       this.$store.commit('updateSketchIndexSelected', -1);
     },
 
-
     removeSketch() {
       let layerSelected = this.sketchIndexSelected;
       if (layerSelected == null || layerSelected < 0) {
         return;
       }
 
-
       KeyboardControlsService.deleteLayerMapping(this.RegisteredSketches[layerSelected].sid);
       AudioPlayerService.deleteLayerMapping(this.RegisteredSketches[layerSelected].sid);
 
-      this.RegisteredSketches.splice(layerSelected, 1);
-      this.selectLayer(0);
+      delete this.RegisteredSketches[layerSelected];
+      if (!Object.keys(this.RegisteredSketches)[0]) {
+        this.$store.commit('updateLayerMenuOpen', false);
+        this.$store.commit('updateSketchIndexSelected', -1);
+      } else {
+        this.selectLayer(Object.keys(this.RegisteredSketches)[0]);
+      }
     },
   },
 
@@ -143,7 +146,7 @@ export default {
   }
 }
 .layer-selector-wrapper {
-  max-height: 150px;
+  max-height: 50%;
   overflow-y: scroll;
 }
 </style>
