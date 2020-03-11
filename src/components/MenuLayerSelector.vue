@@ -115,11 +115,12 @@ export default {
   },
 
   created() {
-    console.log(typeof this.RegisteredSketches);
   },
 
   computed: {
     sketchIndexSelected() {
+      console.log('updated sketch');
+      this.$forceUpdate();
       return this.$store.state.sketchIndexSelected;
     },
   },

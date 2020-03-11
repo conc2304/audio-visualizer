@@ -15,47 +15,33 @@
             right
           )
             v-icon close
-        .temp( v-if="false")
-          v-row( class="flex-center")
-            v-col( cols="8" sm="8")
-              v-text-field(
-                v-model="search"
-                autocomplete="off"
-                clearable
-                clear-icon="close"
-                :prepend-icon="'search'"
-                placeholder="Search ..."
-                hint="Search for sketches by title, creator, or by tags"
-                outlined
-                dense
-              )
 
-        .temp( v-if="true")
-          v-row.search-wrapper
-            v-col( class="d-flex" cols="12" sm="6")
-              v-text-field(
-                v-model="search"
-                autocomplete="off"
-                clearable
-                clear-icon="close"
-                :prepend-icon="'search'"
-                placeholder="Search ..."
-                hint="Search for sketches by title, creator, or by tags"
-                outlined
-                dense
-              )
-            v-col( class="d-flex" cols="12" sm="6")
-              v-select(
-                v-model="sortBy"
-                :items="sortByFields"
-                :append-icon="'expand_more'"
-                clearable
-                clear-icon="close"
-                label="Sort By..."
-                @change="triggerSort()"
-                outlined
-                dense
-              )
+
+        v-row.search-wrapper
+          v-col( class="d-flex" cols="12" sm="6")
+            v-text-field(
+              v-model="search"
+              autocomplete="off"
+              clearable
+              clear-icon="close"
+              :prepend-icon="'search'"
+              placeholder="Search ..."
+              hint="Search for sketches by title, creator, or by tags"
+              outlined
+              dense
+            )
+          v-col( class="d-flex" cols="12" sm="6")
+            v-select(
+              v-model="sortBy"
+              :items="sortByFields"
+              :append-icon="'expand_more'"
+              clearable
+              clear-icon="close"
+              label="Sort By..."
+              @change="triggerSort()"
+              outlined
+              dense
+            )
 
       v-divider
 
@@ -111,6 +97,7 @@ export default {
   methods: {
     closeCatalogue() {
       this.$store.commit('updateCatalogueOpen', false);
+      this.$store.commit('updateLayerMenuOpen', Boolean(this.$store.state.sketchIndexSelected));
     },
 
     compare(a, b) {

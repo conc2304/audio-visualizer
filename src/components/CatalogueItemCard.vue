@@ -73,13 +73,9 @@ export default {
 
   methods: {
     registerNewSketch(catalogueItem) {
-      console.log(catalogueItem);
       const sketch = new catalogueItem.classConstructor(window.innerWidth, window.innerHeight);
-      console.log(sketch);
-
       this.RegisteredSketches[sketch.sid] = sketch;
-
-      console.log(this.RegisteredSketches);
+      this.$store.commit('updateSketchIndexSelected', sketch.sid);
     },
 
     getTagMatchColor(tag) {
