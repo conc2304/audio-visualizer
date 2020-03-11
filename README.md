@@ -23,16 +23,14 @@ Production URL [http://vyzby.joseconchello.com/](http://vyzby.joseconchello.com/
   * Only one expansion list is able to open at a time
   * Expansion list contains sliders and radio buttons to control elements
   * Setting menu has audio player toggle to show/hide audio player
+  * Audio player
+  * Ability for sketch parameters to respond to music
+  * Use Webcam to track body and use body parts as a brush
     
     
   In progress
-  * Audio player
-  * Ability for sketch parameters to respond to music
-  * Ability to add new layer
-  * Ability to shift order of layers
-  * Ability to control sketch paramters via MIDI input
-  * Ability to search for sketches/layers in the Sketch Catalogue via categories and/or creators
-  
+  * Ability to control sketch parameters via MIDI input/controllers
+  * Ability to control sketch parameters via webcam body position detection
 
 ## Anatomy of p5js Sketch Developement within VYZBY
 New Sketches in p5Js get registered in `'./src/js/services/SketchRegistration.js'` and get imported together as an array of objects.
@@ -96,6 +94,7 @@ NOTE: Things to consider if you feel like you are chewing through too much cpu
  * No Ui Slider https://www.npmjs.com/package/vue-nouislider-fork/v/1.0.8
  * Vue Knob Control https://github.com/kramer99/vue-knob-control 
  * Material Icons https://material.io/resources/icons/?style=baseline
+ * Pose Detection in the Browser: PoseNet Model https://www.npmjs.com/package/@tensorflow-models/posenet
  
 
 <br>
