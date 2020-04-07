@@ -18,6 +18,7 @@
     "nouislider": "^14.1.1",
     "p5": "^0.10.2",
     "save": "^2.4.0",
+    "three": "^0.115.0",
     "vue": "^2.6.11",
     "vue-knob-control": "^1.6.0",
     "vue-nouislider-fork": "^1.0.28",
