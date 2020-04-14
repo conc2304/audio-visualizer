@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import SplashScreen from '@/views/HomePage.vue';
-import ThreePage from '@/views/Three.vue';
+import ThreePage from '@/views/threejs/Three.vue';
 import Visualizer from '@/views/VisualizerPage.vue';
-import DonutRain from '@/views/DonutRain.vue';
-import Saturn from '@/views/Saturn.vue';
+import DonutRain from '@/views/threejs/DonutRain.vue';
+import Saturn from '@/views/threejs/Saturn.vue';
+import CustomGeo from '@/views/threejs/CustomGeo.vue';
+import TextGeometry from '@/views/threejs/TextGeometry.vue';
 
 Vue.use(VueRouter);
 
@@ -15,17 +17,17 @@ const routes = [
     component: SplashScreen,
   },
   {
-    path: '/three',
-    name: 'Three',
+    path: '/threejs/basic-geometry',
+    name: 'Basic Geometry',
     component: ThreePage,
   },
   {
-    path: '/donut-rain',
+    path: '/threejs/donut-rain',
     name: 'Donut Rain',
     component: DonutRain,
   },
   {
-    path: '/saturn',
+    path: '/threejs/saturn',
     name: 'Saturn',
     component: Saturn,
   },
@@ -34,6 +36,19 @@ const routes = [
     name: 'Playground',
     component: Visualizer,
   },
+
+  {
+    path: '/threejs/custom-geo',
+    name: 'Custom Geometry',
+    component: CustomGeo,
+  },
+
+  {
+    path: '/threejs/text-geo',
+    name: 'Text Geometry',
+    component: TextGeometry,
+  },
+
 ];
 
 const router = new VueRouter({
