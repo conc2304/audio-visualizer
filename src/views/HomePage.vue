@@ -50,18 +50,18 @@
       v-card(  color="#000" elevation="10")
         v-card-title.headline Login
         v-card-text
-          //- LoginPane()
+          LoginPane()
 </template>
 
 <script>
 import ParticleScript from "@/js/sketches/SketchBaseHomePage";
-// import LoginPane from "@/components/LoginPane.vue";
+import LoginPane from "@/components/LoginPane.vue";
 import AppSettingsMenu from "@/components/AppSettingsMenu.vue";
 
 export default {
   components: {
-    // AppSettingsMenu,
-    // LoginPane,
+    AppSettingsMenu,
+    LoginPane,
   },
   data: () => ({
     title: "VYZBY",

@@ -86,10 +86,10 @@
 import AudioPlaylist from '@/components/AudioPlaylist.vue';
 import AudioLocalList from '@/components/AudioLocalList.vue';
 import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
-import AudioPlayerService from '@/js/services/AudioPlayerService';
+// import APS from '@/js/services/AudioPlayerService';
 import Utils from '@/js/services/Utils';
 import p5 from 'p5';
-import 'p5/lib/addons/p5.sound';
+// import 'p5/lib/addons/p5.sound';
 
 export default {
   data: () => ({
@@ -108,14 +108,14 @@ export default {
     },
 
     toggleAudioState() {
-      AudioPlayerService.toggleAudioState(this.p5);
+      // APS.toggleAudioState(this.p5);
     },
 
     toSongPosition(e) {
-      if (!AudioPlayerService.audio) return;
+      // if (!APS.audio) return;
 
       const percent = e.offsetX / e.target.offsetWidth;
-      AudioPlayerService.audio.jump(AudioPlayerService.audio.duration() * percent);
+      // APS.audio.jump(APS.audio.duration() * percent);
     },
 
     setSong(direction) {
@@ -131,7 +131,7 @@ export default {
           : Math.max(currentIndex - 1, 0);
 
       this.$store.commit('updateCurrentTrackIndex', nextIndex);
-      AudioPlayerService.setupAudioAnalysis(tracks[nextIndex], true, this.p5);
+      // APS.setupAudioAnalysis(tracks[nextIndex], true, this.p5);
     },
 
     audioPlayerClose() {
@@ -140,10 +140,10 @@ export default {
   },
 
   mounted() {
-    AudioPlayerService.p5 = new p5(AudioAnalyzer, 'audio-sketch-container');
+    // APS.p5 = new p5(AudioAnalyzer, 'audio-sketch-container');
 
-    AudioPlayerService.songTimeElem = document.getElementById('song-time');
-    AudioPlayerService.songProgressElem = document.getElementById('song-progress-bar');
+    // APS.songTimeElem = document.getElementById('song-time');
+    // APS.songProgressElem = document.getElementById('song-progress-bar');
   },
 
   watch: {},

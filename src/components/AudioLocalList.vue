@@ -38,7 +38,7 @@
 
 <script>
 import AudioLocalData from '@/js/services/AudioLocalData';
-import AudioPlayerService from '@/js/services/AudioPlayerService';
+// import APS from '@/js/services/AudioPlayerService';
 
 export default {
   data: () => ({
@@ -52,7 +52,7 @@ export default {
     },
 
     uploadServerFile(track) {
-      AudioPlayerService.audioUploaded(track);
+      // APS.audioUploaded(track);
       this.$emit('close_modal');
     },
 
@@ -60,7 +60,7 @@ export default {
       this.tracks = this.$refs.file.files;
       if (!this.tracks.length) return;
 
-      AudioPlayerService.audioUploaded(this.tracks);
+      // APS.audioUploaded(this.tracks);
     },
   },
 };

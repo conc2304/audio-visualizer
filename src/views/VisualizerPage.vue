@@ -19,8 +19,8 @@ import Visualizer from "@/js/sketches/SketchBaseVisualizer";
 import RegisteredSketches from "@/js/services/SketchRegistration";
 import KeyboardControlsService from "@/js/services/KeyboardControlsService";
 import P5 from "p5"; // use this one for instantiation of fft, amplitude ...
-import "p5/lib/addons/p5.sound";
-import APS from "@/js/services/AudioPlayerService";
+// import "p5/lib/addons/p5.sound";
+// import APS from "@/js/services/AudioPlayerService";
 import Utils from "@/js/services/Utils";
 
 export default {
@@ -58,7 +58,7 @@ export default {
         }
 
         if (!demoEqSet) {
-          APS.setAudioReactiveFreq(APS.frequencies[2], prop, index);
+          // APS.setAudioReactiveFreq(APS.frequencies[2], prop, index);
           demoEqSet = true;
         }
 

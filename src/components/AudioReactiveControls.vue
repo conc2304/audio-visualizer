@@ -49,7 +49,7 @@
 
 <script>
 import KnobControl from 'vue-knob-control';
-import APS from '@/js/services/AudioPlayerService';
+// import APS from '@/js/services/AudioPlayerService';
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
 export default {
@@ -57,7 +57,14 @@ export default {
     gain: false,
     freqRangeSelected: {},
     defaultSelect: {},
-    frequencies: APS.frequencies,
+    // frequencies: APS.frequencies,
+    frequencies : [
+      {
+      label: "Low",
+      rangesData: [1, 140],
+      ranges: "1 - 140 Hz",
+      },
+    ]
   }),
 
   components: {
@@ -78,11 +85,11 @@ export default {
 
   methods: {
     selectAudioFrequency() {
-      APS.setAudioReactiveFreq(
-        this.freqRangeSelected,
-        this.parameter.attrName,
-        this.selectedSketchIndex,
-      );
+      // APS.setAudioReactiveFreq(
+      //   this.freqRangeSelected,
+      //   this.parameter.attrName,
+      //   this.selectedSketchIndex,
+      // );
     },
   },
 
@@ -90,7 +97,7 @@ export default {
     this.gain = this.parameter.audio.gain * 100;
 
     if (this.selectedSketchIndex === 0 && this.categoryIndex === 0 && this.parameterIndex === 0 ) {
-      this.freqRangeSelected = APS.frequencies[2];
+      // this.freqRangeSelected = APS.frequencies[2];
     }
   },
 
@@ -101,7 +108,7 @@ export default {
     },
 
     freqRangeSelected(newValue, oldValue) {
-      APS.setAudioReactiveFreq(newValue, this.parameter.attrName, this.selectedSketchIndex);
+      // APS.setAudioReactiveFreq(newValue, this.parameter.attrName, this.selectedSketchIndex);
     },
   },
 

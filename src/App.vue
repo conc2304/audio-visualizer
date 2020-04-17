@@ -1,7 +1,9 @@
 <template lang="pug">
-  #app
-    router-view
+  v-app#app
+    v-content
+      router-view
 </template>
+
 <style lang="scss">
 html {
   overflow-y: hidden !important ;

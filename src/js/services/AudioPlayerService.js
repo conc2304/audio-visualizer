@@ -2,7 +2,7 @@ import RegisteredSketches from "@/js/services/SketchRegistration";
 
 import store from "@/store";
 import P5 from "p5"; // use this one for instantiation of fft, amplitude ...
-import "p5/lib/addons/p5.sound";
+// import "p5/lib/addons/p5.sound";
 
 const AudioPlayerService = {
   audioIsUploading: false,
