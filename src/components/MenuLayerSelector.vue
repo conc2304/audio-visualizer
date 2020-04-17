@@ -93,8 +93,6 @@ export default {
     },
 
     sketchOrderShift(deltaPos) {
-      this.RegisteredSketches[this.layerSelected];
-
       this.RegisteredSketches = array_move(
         this.RegisteredSketches,
         this.layerSelected,
@@ -103,7 +101,7 @@ export default {
 
       function array_move(arr, old_index, new_index) {
         if (new_index >= arr.length) {
-          var k = new_index - arr.length + 1;
+          let k = new_index - arr.length + 1;
           while (k--) {
             arr.push(undefined);
           }
@@ -114,7 +112,7 @@ export default {
     },
 
     removeSketch() {
-      let layerSelected = this.sketchIndexSelected;
+      const layerSelected = this.sketchIndexSelected;
       if (layerSelected == null || layerSelected < 0) {
         return;
       }

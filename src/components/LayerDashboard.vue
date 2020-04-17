@@ -77,16 +77,16 @@ export default {
     logSketchItem() {},
 
     resetLayer() {
-      let iString = this.sketchIndexSelected.toString();
-      let indices = [iString];
+      const iString = this.sketchIndexSelected.toString();
+      const indices = [iString];
       BulkUpdateService.changeParameterValues(indices, 'reset');
     },
 
     randomizeAudioResponse() {},
 
     randomizeLayerParameters() {
-      let iString = this.sketchIndexSelected.toString();
-      let indices = [iString];
+      const iString = this.sketchIndexSelected.toString();
+      const indices = [iString];
 
       BulkUpdateService.changeParameterValues(indices, 'randomize');
     },

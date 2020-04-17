@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import SketchRegistration from '@/js/services/SketchRegistration';
+import SketchRegistration from "@/js/services/SketchRegistration";
 
 export default {
   data: () => ({
@@ -74,24 +74,28 @@ export default {
   methods: {
     registerNewSketch(catalogueItem) {
       this.SketchRegistration.push(
-        new catalogueItem.classConstructor(window.innerWidth, window.innerHeight),
+        new catalogueItem.classConstructor(
+          window.innerWidth,
+          window.innerHeight
+        )
       );
     },
 
     getTagMatchColor(tag) {
-      return this.search && tag.toLowerCase() == this.search.toLowerCase() ? 'blue' : 'grey';
+      return this.search && tag.toLowerCase() === this.search.toLowerCase()
+        ? "blue"
+        : "grey";
     },
 
-    addFavorite(){
-      ++ this.catalogueItem.popularity;
-    }
+    addFavorite() {
+      ++this.catalogueItem.popularity;
+    },
   },
 
   computed: {
     maxLayersReached() {
       return this.SketchRegistration.length > this.maxLayers;
     },
-
   },
 
   mounted() {},
@@ -103,7 +107,8 @@ export default {
 .favorites {
   padding-left: 1rem;
 }
-.num-favorite, .complexity {
+.num-favorite,
+.complexity {
   padding-left: 0.5rem;
 }
 

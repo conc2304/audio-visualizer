@@ -216,8 +216,8 @@ export default {
     sessionNameErrors() {
       const errors = [];
       if (!this.$v.sessionName.$dirty) return errors;
-      !this.$v.sessionName.required && errors.push('Session Name is required.');
-      !this.$v.sessionName.minLength &&
+      const requiredValid = !this.$v.sessionName.required && errors.push('Session Name is required.');
+      const minLengthValid = !this.$v.sessionName.minLength &&
         errors.push('Session Name must be at least 6 characters long');
       return errors;
     },

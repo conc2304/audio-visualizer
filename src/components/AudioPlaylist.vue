@@ -113,7 +113,7 @@ export default {
       const tracks = this.$store.state.audio.tracks;
       const playlist = [];
 
-      for (let file of tracks) {
+      for (const file of tracks) {
         const formattedFilename = Utils.formatAudioFilename(file);
         playlist.push(formattedFilename);
       }

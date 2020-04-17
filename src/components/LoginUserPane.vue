@@ -48,20 +48,18 @@
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators';
-
+import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
-
   validations: {
     username: { required, minLength: minLength(6) },
     password: { required },
   },
 
   data: () => ({
-    username: '',
-    password: '',
-    submitStatus: '',
+    username: "",
+    password: "",
+    submitStatus: "",
     isLoggedIn: false,
   }),
 
@@ -69,16 +67,22 @@ export default {
     usernameErrors() {
       const errors = [];
       if (!this.$v.username.$dirty) return errors;
-      !this.$v.username.minLength && errors.push('Name must be at least 6 characters long');
-      !this.$v.username.required && errors.push('Name is required.');
+      const minLengthValid =
+        !this.$v.username.minLength &&
+        errors.push("Name must be at least 6 characters long");
+      const requiredValid =
+        !this.$v.username.required && errors.push("Name is required.");
       return errors;
     },
 
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
-      !this.$v.password.required && errors.push('Password is required.');
-      this.password !== "VYZBY" && errors.push('TESTING Password must be "VYZBY".');
+      const requiredValid =
+        !this.$v.password.required && errors.push("Password is required.");
+      const passwordValid =
+        this.password !== "VYZBY" &&
+        errors.push('TESTING Password must be "VYZBY".');
       return errors;
     },
   },
@@ -87,37 +91,35 @@ export default {
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
-        this.submitStatus = 'ERROR';
+        this.submitStatus = "ERROR";
       } else {
-        this.submitStatus = 'PENDING';
+        this.submitStatus = "PENDING";
         setTimeout(() => {
-          this.submitStatus = 'OK';
+          this.submitStatus = "OK";
           const userObj = {
             loggedIn: true,
             username: this.username,
           };
-          localStorage.setItem('user', JSON.stringify(userObj));
+          localStorage.setItem("user", JSON.stringify(userObj));
 
           this.$v.$reset();
           this.isLoggedIn = true;
-          (this.submitStatus = null), (this.username = '');
+          (this.submitStatus = null), (this.username = "");
         }, 500);
       }
     },
 
     updateLoginPane(toLocation) {
-      this.$emit('update_login_pane', toLocation);
+      this.$emit("update_login_pane", toLocation);
     },
 
     clear() {
       this.$v.$reset();
-      this.username = '';
-      this.email = '';
+      this.username = "";
+      this.email = "";
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

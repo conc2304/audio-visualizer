@@ -64,7 +64,10 @@ export default {
     },
 
     clearPresets() {
-      for (let i in this.presetSlots) {
+      for (const i in this.presetSlots) {
+        if (!this.presetSlots.hasOwnProperty(i)) {
+          continue;
+        }
         this.presetSlots[i].empty = true;
       }
       this.$emit('update_preset_selected', -1);
