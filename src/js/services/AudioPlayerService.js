@@ -95,6 +95,7 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
     }
 
     store.commit("updateAudioIsLoading", true);
+    console.log(APS.p5);
     APS.audio = APS.p5.loadSound(
       audioFile,
       audioLoadSuccess,

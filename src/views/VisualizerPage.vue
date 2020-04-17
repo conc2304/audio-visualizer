@@ -18,6 +18,8 @@ import AppSettingsMenu from "@/components/AppSettingsMenu.vue";
 import Visualizer from "@/js/sketches/SketchBaseVisualizer";
 import RegisteredSketches from "@/js/services/SketchRegistration";
 import KeyboardControlsService from "@/js/services/KeyboardControlsService";
+import P5 from "p5"; // use this one for instantiation of fft, amplitude ...
+import "p5/lib/addons/p5.sound";
 import APS from "@/js/services/AudioPlayerService";
 import Utils from "@/js/services/Utils";
 
@@ -41,7 +43,7 @@ export default {
     },
   },
   mounted() {
-    const P5 = require("p5");
+    // const P5 = require("p5");
     const sketch = new P5(Visualizer, "sketch-container");
 
     // alphabet charcodes fo A-Z = [65 - 90]

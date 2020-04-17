@@ -1,4 +1,3 @@
-import RegisteredSketches from "@/js/services/SketchRegistration";
 import APS from "@/js/services/AudioPlayerService";
 import Utils from "@/js/services/Utils";
 import store from "@/store";
