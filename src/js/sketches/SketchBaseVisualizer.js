@@ -14,7 +14,6 @@ import PoseNetService from "@/js/services/PoseNetService";
 
 // keep all 'custom' code here
 const VisualizerSketch = (p5) => {
-  console.log("START");
   p5.preload = () => {
     p5.objects = {};
     p5.objects.lambo = p5.loadModel("./assets/webgl_models/lambo.obj", true);

@@ -140,7 +140,7 @@ export default {
     padding: 0;
   }
 
-  .v-list-item--disabled i {
+  .v-list-item--disabled i, .v-list-item--disabled i .v-icon {
     color: #777;
   }
 

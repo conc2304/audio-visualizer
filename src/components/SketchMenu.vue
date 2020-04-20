@@ -245,7 +245,7 @@ i.off-white {
 </style>
 
 <style lang="scss">
-i {
+i, .v-icon {
   margin: 0 auto;
   text-align: center;
 }

@@ -98,11 +98,11 @@ export default {
   border: 1px solid $color-primary-blue;
 }
 
-.preset-full i {
+.preset-full i, .preset-full .v-icon {
   color: $color-primary-blue;
 }
 
-.preset-empty i {
+.preset-empty i, .preset-empty .v-icon {
   color: $color-off-white;
 }
 

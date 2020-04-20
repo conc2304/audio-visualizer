@@ -76,7 +76,7 @@
 
 
       v-dialog( v-model="saveSessionDialog" max-width="400")
-        v-card(  color="#000" elevation="10")
+        v-card( color="#000" elevation="10")
           v-card-title.headline Save Session
             v-card-text
               v-form(
