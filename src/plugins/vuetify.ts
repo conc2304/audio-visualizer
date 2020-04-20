@@ -21,7 +21,7 @@ export default new Vuetify({
         color_active_green: "#0ecd78",
 
         color_off_white: "#b6b6b6",
-        color_std_grey: "#424242",
+        color_std_grey: "#1E1E1E",
         color__grey: "#242424",
 
       },
