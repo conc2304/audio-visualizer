@@ -57,7 +57,6 @@
 import AudioReactiveControls from "@/components/AudioReactiveControls.vue";
 import ParameterLockToggle from "@/components/ParameterLockToggle.vue";
 import ParameterKeyboardInputFields from "@/components/ParameterKeyboardInputFields.vue";
-// import ParameterAuxFieldShortCuts from '@/components/ParameterAuxFieldShortCuts.vue';
 
 export default {
   // Note:
@@ -72,7 +71,6 @@ export default {
     AudioReactiveControls,
     ParameterKeyboardInputFields,
     ParameterLockToggle,
-    // ParameterAuxFieldShortCuts,
   },
 
   props: {
