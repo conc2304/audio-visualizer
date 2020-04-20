@@ -43,9 +43,9 @@
 </template>
 
 <script>
-import Trunquee from '@/components/Trunquee.vue';
+import Trunquee from "@/components/Trunquee.vue";
 // import AudioPlayerService from '@/js/services/AudioPlayerService';
-import Utils from '@/js/services/Utils';
+import Utils from "@/js/services/Utils";
 
 export default {
   components: {
@@ -61,18 +61,18 @@ export default {
   methods: {
     setSong(index) {
       const selectedSound = this.$store.state.audio.tracks[index];
-      this.$store.commit('updateCurrentTrackIndex', index);
+      this.$store.commit("updateCurrentTrackIndex", index);
       // AudioPlayerService.setupAudioAnalysis(selectedSound, true, this.p5);
     },
 
     removeSong(index) {
       const tracks = this.$store.state.audio.tracks;
       tracks.splice(index, 1);
-      this.$store.commit('updateTracks', tracks);
+      this.$store.commit("updateTracks", tracks);
 
       if (this.$store.state.audio.currentTrackIndex === index) {
         if (tracks.length === 0) {
-          this.$store.commit('updateCurrentTrackIndex', -1);
+          this.$store.commit("updateCurrentTrackIndex", -1);
           // AudioPlayerService.audio.stop();
           // AudioPlayerService.audio.disconnect();
         } else {

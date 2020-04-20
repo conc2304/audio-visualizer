@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import AudioLocalData from '@/js/services/AudioLocalData';
+import AudioLocalData from "@/js/services/AudioLocalData";
 // import APS from '@/js/services/AudioPlayerService';
 
 export default {
@@ -47,13 +47,13 @@ export default {
 
   methods: {
     triggerFileUpload() {
-      this.$emit('close_modal');
+      this.$emit("close_modal");
       this.$refs.file.click();
     },
 
     uploadServerFile(track) {
       // APS.audioUploaded(track);
-      this.$emit('close_modal');
+      this.$emit("close_modal");
     },
 
     onFileChange() {
@@ -81,17 +81,17 @@ export default {
 
   &.custom-thin-scrollbar {
     &::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: #000000;
-    background-image: -webkit-gradient(
-      linear,
-      40% 0%,
-      50% 80%,
-      from(#000000),
-      to($color-secondary-blue),
-      color-stop(0.9, $color-primary-blue)
-    );
-  }
+      border-radius: 3px;
+      background-color: #000000;
+      background-image: -webkit-gradient(
+        linear,
+        40% 0%,
+        50% 80%,
+        from(#000000),
+        to($color-secondary-blue),
+        color-stop(0.9, $color-primary-blue)
+      );
+    }
     &::-webkit-scrollbar {
       width: 10px;
     }
@@ -100,7 +100,6 @@ export default {
       background-color: #000;
     }
   }
-
 }
 
 .song-item {

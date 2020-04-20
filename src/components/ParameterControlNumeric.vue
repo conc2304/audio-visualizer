@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import AudioReactiveControls from '@/components/AudioReactiveControls.vue';
-import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
-import ParameterKeyboardInputFields from '@/components/ParameterKeyboardInputFields.vue';
+import AudioReactiveControls from "@/components/AudioReactiveControls.vue";
+import ParameterLockToggle from "@/components/ParameterLockToggle.vue";
+import ParameterKeyboardInputFields from "@/components/ParameterKeyboardInputFields.vue";
 // import ParameterAuxFieldShortCuts from '@/components/ParameterAuxFieldShortCuts.vue';
 
 export default {
@@ -101,15 +101,23 @@ export default {
     getParameterAttributes() {
       this.sliderConfig = {
         connect: [false, true, true, false],
-        connectColors: ['color_primary_blue', 'color_primary_blue'],
-        start: [this.parameter.min, this.parameter.currentValue, this.parameter.max],
+        connectColors: ["color_primary_blue", "color_primary_blue"],
+        start: [
+          this.parameter.min,
+          this.parameter.currentValue,
+          this.parameter.max,
+        ],
         range: {
           min: [this.parameter.defaultMin],
           max: [this.parameter.defaultMax],
         },
         tooltips: true,
       };
-      this.sliderValues = [this.parameter.min, this.parameter.currentValue, this.parameter.max];
+      this.sliderValues = [
+        this.parameter.min,
+        this.parameter.currentValue,
+        this.parameter.max,
+      ];
     },
 
     updateSliderValues(event) {
@@ -194,11 +202,11 @@ export default {
   }
 
   .noUi-base :nth-child(2) .noUi-tooltip::after {
-    content: 'min';
+    content: "min";
   }
 
   .noUi-base :nth-child(4) .noUi-tooltip::after {
-    content: 'max';
+    content: "max";
   }
 
   .noUi-handle-draggable-tooltip-overlay {
@@ -206,7 +214,7 @@ export default {
   }
 
   &.color-slider .noUi-connects::after {
-    content: '';
+    content: "";
     background: linear-gradient(
       to right,
       red,
@@ -227,7 +235,7 @@ export default {
   }
 
   &.saturation-slider .noUi-connects::after {
-    content: '';
+    content: "";
     background: linear-gradient(to right, white, $color-primary-blue);
     width: 100%;
     height: 2px;

@@ -83,12 +83,12 @@
 </template>
 
 <script>
-import AudioPlaylist from '@/components/AudioPlaylist.vue';
-import AudioLocalList from '@/components/AudioLocalList.vue';
-import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
+import AudioPlaylist from "@/components/AudioPlaylist.vue";
+import AudioLocalList from "@/components/AudioLocalList.vue";
+import AudioAnalyzer from "@/js/sketches/SketchBaseAudioAnalyzer";
 // import APS from '@/js/services/AudioPlayerService';
-import Utils from '@/js/services/Utils';
-import p5 from 'p5';
+import Utils from "@/js/services/Utils";
+import p5 from "p5";
 // import 'p5/lib/addons/p5.sound';
 
 export default {
@@ -130,18 +130,17 @@ export default {
             : Math.min(currentIndex + 1, tracks.length - 1)
           : Math.max(currentIndex - 1, 0);
 
-      this.$store.commit('updateCurrentTrackIndex', nextIndex);
+      this.$store.commit("updateCurrentTrackIndex", nextIndex);
       // APS.setupAudioAnalysis(tracks[nextIndex], true, this.p5);
     },
 
     audioPlayerClose() {
-      this.$store.commit('updateAudioPlayerOpen', false);
-    }
+      this.$store.commit("updateAudioPlayerOpen", false);
+    },
   },
 
   mounted() {
     // APS.p5 = new p5(AudioAnalyzer, 'audio-sketch-container');
-
     // APS.songTimeElem = document.getElementById('song-time');
     // APS.songProgressElem = document.getElementById('song-progress-bar');
   },
@@ -177,7 +176,7 @@ export default {
       const currentSound = {};
       currentSound.title = formattedFilename.title;
       currentSound.artist = formattedFilename.artist;
-      currentSound.duration = Utils.formatTime(duration) || 'Duration';
+      currentSound.duration = Utils.formatTime(duration) || "Duration";
 
       return currentSound;
     },

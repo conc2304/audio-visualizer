@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import LoginUserPane from '@/components/LoginUserPane.vue';
-import LoginRegistrationPane from '@/components/LoginRegistrationPane.vue';
+import LoginUserPane from "@/components/LoginUserPane.vue";
+import LoginRegistrationPane from "@/components/LoginRegistrationPane.vue";
 
 export default {
   data: () => ({
-    loginPane: 'userLogin',
+    loginPane: "userLogin",
   }),
 
   components: {
@@ -37,7 +37,6 @@ export default {
 /* Change Autocomplete styles in Chrome*/
 
 #login-container {
-
   padding: 2rem 4rem;
 
   input:-webkit-autofill,
@@ -57,7 +56,7 @@ export default {
   }
 
   .account-creation {
-      margin: 0 auto;
+    margin: 0 auto;
     &:hover {
       text-decoration: underline;
     }

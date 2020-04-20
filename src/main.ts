@@ -4,7 +4,7 @@ import router from "./router";
 import store from "./store";
 
 import "babel-polyfill";
-import Vuelidate from "vuelidate";
+// import Vuelidate from "vuelidate";
 import vuetify from "./plugins/vuetify";
 // import "vuetify/dist/vuetify.min.css";
 // import VNus from "vue-nouislider-fork";
@@ -13,7 +13,7 @@ import vuetify from "./plugins/vuetify";
 
 
 Vue.config.productionTip = false;
-Vue.use(Vuelidate);
+// Vue.use(Vuelidate);
 Vue.use(vuetify);
 
 new Vue({

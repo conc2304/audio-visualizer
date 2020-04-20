@@ -168,7 +168,7 @@ export default {
       const requiredValid =
         !this.$v.password.required && errors.push("Password is required.");
       const passwordValid =
-        this.password !== "VYZBY" && errors.push('Password must be "VYZBY".');
+        this.password !== "VYZBY" && errors.push("Password must be \"VYZBY\".");
       return errors;
     },
 

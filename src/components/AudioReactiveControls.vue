@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import KnobControl from 'vue-knob-control';
+import KnobControl from "vue-knob-control";
 // import APS from '@/js/services/AudioPlayerService';
-import RegisteredSketches from '@/js/services/SketchRegistration';
+import RegisteredSketches from "@/js/services/SketchRegistration";
 
 export default {
   data: () => ({
@@ -108,7 +108,7 @@ export default {
     },
 
     freqRangeSelected(newValue, oldValue) {
-      // APS.setAudioReactiveFreq(newValue, this.parameter.attrName, this.selectedSketchIndex);
+      APS.setAudioReactiveFreq(newValue, this.parameter.attrName, this.selectedSketchIndex);
     },
   },
 

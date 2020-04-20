@@ -22,8 +22,8 @@ const routes: RouteConfig[] = [
   // },
 
   {
-    path: '/playground',
-    name: 'playground',
+    path: "/playground",
+    name: "playground",
     component: Visualizer,
   },
   {
@@ -42,7 +42,7 @@ const routes: RouteConfig[] = [
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes,
 });

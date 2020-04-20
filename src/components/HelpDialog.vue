@@ -73,36 +73,36 @@ export default {
     help: {
       interactions: [
         {
-          input: 'Parameter Sliders',
+          input: "Parameter Sliders",
           how:
-            'These have 3 slide-handles that control: Minimum, Current, and Max.  The Minimum and Maximum control the range within which the slider can change via audio input and/or randomizing parameters.',
+            "These have 3 slide-handles that control: Minimum, Current, and Max.  The Minimum and Maximum control the range within which the slider can change via audio input and/or randomizing parameters.",
         },
         {
-          input: 'Parameter Radio Buttons',
-          how: 'These let you switch between different layer modes.',
+          input: "Parameter Radio Buttons",
+          how: "These let you switch between different layer modes.",
         },
         {
-          input: 'Auxiliary Inputs',
+          input: "Auxiliary Inputs",
           how:
-            'Vyzby allows you to control and animate your composition with a variety of auxiliary inputs including your Computer Keyboard, Audio, and MIDI. And more to come!',
+            "Vyzby allows you to control and animate your composition with a variety of auxiliary inputs including your Computer Keyboard, Audio, and MIDI. And more to come!",
         },
       ],
 
       auxInputs: [
         {
-          method: 'Audio Control',
+          method: "Audio Control",
           how:
             "Each of the parameters with a slider have the ability to animate based on the audio playing within VYZBY.  The Gain knob control the 'loudness' of the animation.  Turning the gain down make the parameter animate less to the audio, and vice versa.  The dropdown next to the Gain knob allows you to select a frequency range of the audio that the parameter will animate.  Select 'Low' to animate it to the bass of the song!",
         },
         {
-          method: 'Computer Keyboard',
+          method: "Computer Keyboard",
           how:
             "We have already pre-assigned a bunch of random keys to get you started: A-Z and 0-9.  Pressing any of these keys that has been assigned to a parameter will animate the layer's parameter.  You can reassign the keyboard key and the value that the keystroke animates to.",
         },
         {
-          method: 'MIDI Controller (in development)',
+          method: "MIDI Controller (in development)",
           how:
-            'The same way you can assign a keystoke, you can assign a MIDI button by putting your cursor in the text field and pressing the MIDI key that you want to bind it to.',
+            "The same way you can assign a keystoke, you can assign a MIDI button by putting your cursor in the text field and pressing the MIDI key that you want to bind it to.",
         },
       ],
     },
@@ -122,15 +122,15 @@ export default {
 
     modalOpen(newVal, oldVal) {
       this.modalOpen = newVal;
-      this.$emit('update_help_modal', newVal);
+      this.$emit("update_help_modal", newVal);
     },
   },
 
   computed: {
     presetSlotsDisabled() {
       return this.$store.state.presetSlotsDisabled;
-    }
-  }
+    },
+  },
 };
 </script>
 

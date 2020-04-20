@@ -20,8 +20,8 @@
       </template>
 
 <script>
-import IconWithTooltip from '@/components/IconWithTooltip.vue';
-import BulkUpdateService from '@/js/services/BulkUpdaterService';
+import IconWithTooltip from "@/components/IconWithTooltip.vue";
+import BulkUpdateService from "@/js/services/BulkUpdaterService";
 
 export default {
   components: {
@@ -40,10 +40,10 @@ export default {
   data: () => ({
     layerDashboardActions: [
       {
-        mdIconText: 'visibility',
-        tooltipText: 'Toggle Layer Visibility',
-        title: 'Visibility',
-        action: 'toggleLayerVisibility',
+        mdIconText: "visibility",
+        tooltipText: "Toggle Layer Visibility",
+        title: "Visibility",
+        action: "toggleLayerVisibility",
         bypass: false,
       },
       // {
@@ -53,18 +53,19 @@ export default {
       //   action: 'randomizeAudioResponse',
       // },
       {
-        mdIconText: 'shuffle',
-        tooltipText: 'Randomizes all values this layer. Excludes audio reactive control',
-        title: 'Randomize Everything',
-        action: 'randomizeLayerParameters',
+        mdIconText: "shuffle",
+        tooltipText:
+          "Randomizes all values this layer. Excludes audio reactive control",
+        title: "Randomize Everything",
+        action: "randomizeLayerParameters",
       },
 
       {
-        mdIconText: 'restore',
-        id: 'reset-settings',
-        tooltipText: 'Reset Layer. Excludes audio reactive control',
-        title: 'Layer Reset',
-        action: 'resetLayer',
+        mdIconText: "restore",
+        id: "reset-settings",
+        tooltipText: "Reset Layer. Excludes audio reactive control",
+        title: "Layer Reset",
+        action: "resetLayer",
       },
     ],
   }),
@@ -79,7 +80,7 @@ export default {
     resetLayer() {
       const iString = this.sketchIndexSelected.toString();
       const indices = [iString];
-      BulkUpdateService.changeParameterValues(indices, 'reset');
+      BulkUpdateService.changeParameterValues(indices, "reset");
     },
 
     randomizeAudioResponse() {},
@@ -88,14 +89,16 @@ export default {
       const iString = this.sketchIndexSelected.toString();
       const indices = [iString];
 
-      BulkUpdateService.changeParameterValues(indices, 'randomize');
+      BulkUpdateService.changeParameterValues(indices, "randomize");
     },
 
     toggleLayerVisibility() {
       const index = this.sketchIndexSelected;
       const bypassStatus = !this.RegisteredSketches[index].bypass;
       this.RegisteredSketches[index].bypass = bypassStatus;
-      this.layerDashboardActions[0].mdIconText = bypassStatus ? 'visibility_off' : 'visibility';
+      this.layerDashboardActions[0].mdIconText = bypassStatus
+        ? "visibility_off"
+        : "visibility";
     },
   },
 

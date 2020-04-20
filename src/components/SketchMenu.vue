@@ -77,16 +77,16 @@
 </template>
 
 <script>
-import MenuLayerSelector from '@/components/MenuLayerSelector.vue';
-import MenuCompositionControls from '@/components/MenuCompositionControls.vue';
-import MenuPresetLauncher from '@/components/MenuPresetLauncher.vue';
-import LayerControlPanel from '@/components/LayerControlPanel.vue';
-import AudioPlayer from '@/components/AudioPlayer.vue';
-import CatalogueList from '@/components/CatalogueList.vue';
-import HelpDialog from '@/components/HelpDialog.vue';
-import PresetAssignSnackbar from '@/components/PresetAssignSnackbar.vue';
+import MenuLayerSelector from "@/components/MenuLayerSelector.vue";
+import MenuCompositionControls from "@/components/MenuCompositionControls.vue";
+import MenuPresetLauncher from "@/components/MenuPresetLauncher.vue";
+import LayerControlPanel from "@/components/LayerControlPanel.vue";
+import AudioPlayer from "@/components/AudioPlayer.vue";
+import CatalogueList from "@/components/CatalogueList.vue";
+import HelpDialog from "@/components/HelpDialog.vue";
+import PresetAssignSnackbar from "@/components/PresetAssignSnackbar.vue";
 
-import RegisteredSketches from '@/js/services/SketchRegistration';
+import RegisteredSketches from "@/js/services/SketchRegistration";
 
 export default {
   components: {
@@ -113,19 +113,19 @@ export default {
 
     presetSlots: [
       {
-        iconText: 'looks_one',
+        iconText: "looks_one",
         empty: true,
       },
       {
-        iconText: 'looks_two',
+        iconText: "looks_two",
         empty: true,
       },
       {
-        iconText: 'looks_3',
+        iconText: "looks_3",
         empty: true,
       },
       {
-        iconText: 'looks_4',
+        iconText: "looks_4",
         empty: true,
       },
     ],
@@ -151,24 +151,24 @@ export default {
 
   methods: {
     updateMasterMenu() {
-      this.$store.commit('updateMasterMenuOpen', false);
+      this.$store.commit("updateMasterMenuOpen", false);
     },
 
     layerMenuToggleEvent(status) {
       this.layerMenuOpen = status;
-      this.$store.commit('updateLayerMenuOpen', status);
+      this.$store.commit("updateLayerMenuOpen", status);
       if (status === true) {
-        this.$store.commit('updateCatalogueOpen', false);
-        this.$store.commit('updateAudioPlayerOpen', false);
+        this.$store.commit("updateCatalogueOpen", false);
+        this.$store.commit("updateAudioPlayerOpen", false);
       }
     },
 
     updateAudioPlayerOpen(status) {
-      this.$store.commit('updateAudioPlayerOpen', status);
+      this.$store.commit("updateAudioPlayerOpen", status);
       if (status === true) {
-        this.$store.commit('updateCatalogueOpen', false);
-        this.$store.commit('updateLayerMenuOpen', false);
-        this.$store.commit('updateSketchIndexSelected', -1);
+        this.$store.commit("updateCatalogueOpen", false);
+        this.$store.commit("updateLayerMenuOpen", false);
+        this.$store.commit("updateSketchIndexSelected", -1);
       }
     },
 

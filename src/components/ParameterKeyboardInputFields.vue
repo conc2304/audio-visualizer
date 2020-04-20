@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import KeyboardControlsService from "@/js/services/KeyboardControlsService";
 
 export default {
   data: () => ({
@@ -70,7 +70,8 @@ export default {
     submit() {
       const keyvalid = this.keyboardKey && this.testKeyStroke(this.keyboardKey);
       const paramValid =
-        this.parameterValue && this.testValueMinMax(this.parameterValue, this.parameter);
+        this.parameterValue &&
+        this.testValueMinMax(this.parameterValue, this.parameter);
 
       this.keyboardKeyUpdated = keyvalid === true;
       this.parameterValueUpdated = paramValid === true;
@@ -83,7 +84,8 @@ export default {
 
     updateParamValue() {
       const paramValid =
-        this.parameterValue && this.testValueMinMax(this.parameterValue, this.parameter);
+        this.parameterValue &&
+        this.testValueMinMax(this.parameterValue, this.parameter);
 
       this.parameterValueUpdated = paramValid === true;
 
@@ -110,7 +112,7 @@ export default {
         this.keyboardKey,
         this.parameterValue,
         this.parameter.attrName,
-        this.sketchIndexSelected,
+        this.sketchIndexSelected
       );
     },
 
@@ -133,7 +135,7 @@ export default {
         this.setKey();
         return true;
       } else {
-        return 'Key must be either A-Z, or 0-9';
+        return "Key must be either A-Z, or 0-9";
       }
     },
 
@@ -176,6 +178,6 @@ export default {
 
 <style lang="scss">
 .aux-input-wrapper .v-input__icon--prepend .v-icon {
-  color: $color-std-grey
+  color: $color-std-grey;
 }
 </style>

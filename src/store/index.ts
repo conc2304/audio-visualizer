@@ -15,7 +15,7 @@ export default new Vuex.Store({
       currentTrackIndex: -1,
       tracks: [],
       audioIsLoading: false,
-      currentTrackTime: '--:--',
+      currentTrackTime: "--:--",
       songProgress: 0,
     },
     userLoggedIn: false,
@@ -74,7 +74,7 @@ export default new Vuex.Store({
     },
 
     updateAudioIsLoading(state, payload) {
-      state.audio.currentTrackTime = '--:--';
+      state.audio.currentTrackTime = "--:--";
       state.audio.audioIsLoading = payload;
     },
 
