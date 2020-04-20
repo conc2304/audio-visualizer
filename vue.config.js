@@ -21,7 +21,7 @@ module.exports = {
       scss: {
         // Here we can use the newer SCSS flavor of Sass.
         // Note that there *is* a semicolon at the end of the below line
-        prependData: `@import "@/scss/_variables.scss";`
+        prependData: `@import "@/scss/_variables.scss"; $test: red;`
       }
     },
   },

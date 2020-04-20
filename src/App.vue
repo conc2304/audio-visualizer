@@ -14,7 +14,7 @@ body {
 }
 
 #settings-menubar {
-  i.menu-icon {
+  i.menu-icon, .v-icon.menu-icon {
     color: $color-primary-blue;
     cursor: pointer;
 
@@ -23,7 +23,7 @@ body {
     }
   }
 
-  i.menu-icon:hover {
+  i.menu-icon:hover, .v-icon.menu-icon:hover  {
     color: $color-secondary-blue;
   }
 
@@ -31,12 +31,12 @@ body {
     border: 1px solid $color-secondary-blue;
   }
 
-  i.menu-icon.inactive {
+  i.menu-icon.inactive, .v-icon.menu-icon.inactive {
     color: $color-inactive-red-hover;
   }
 
   .inactive {
-    i {
+    i, .v-icon{
       color: $color-inactive-red;
 
       &:hover {
