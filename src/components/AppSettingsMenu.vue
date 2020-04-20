@@ -101,8 +101,6 @@
                       required
                       large color="color_primary_blue" outlined
                     ) Save
-
-
 </template>
 
 <script>
