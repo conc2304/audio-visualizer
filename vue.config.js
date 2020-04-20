@@ -1,4 +1,4 @@
-
+const path = require('path');
 
 module.exports = {
   configureWebpack: (config) => {
@@ -9,4 +9,21 @@ module.exports = {
     }
   },
   transpileDependencies: ["vuetify"],
+  css: {
+    loaderOptions: {
+      // sass: {
+      //   sassOptions: {
+      //     includePaths: [path.resolve(__dirname, "src/core/")],
+      //     indentedSyntax: true,
+      //   },
+      //   prependData: `@import "~@/scss/_variables.sass";`,
+      // },
+      scss: {
+        // Here we can use the newer SCSS flavor of Sass.
+        // Note that there *is* a semicolon at the end of the below line
+        prependData: `@import "@/scss/_variables.scss";`
+      }
+    },
+  },
+  assetsDir: "@/scss/",
 };
