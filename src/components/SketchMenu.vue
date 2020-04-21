@@ -101,12 +101,9 @@ export default {
   },
 
   data: () => ({
-    // layerMenuOpen: false,
-    // audioPlayerOpen: false,
     RegisteredSketches,
     sketchIndexSelected: null,
     auxInputVisible: false,
-    // catalogueOpen: false,
     helpModalOpen: false,
     snackbarOpen: false,
     presetSelectedIndex: -1,
@@ -155,7 +152,7 @@ export default {
     },
 
     layerMenuToggleEvent(status) {
-      this.layerMenuOpen = status;
+      // this.layerMenuOpen = status;
       this.$store.commit("updateLayerMenuOpen", status);
       if (status === true) {
         this.$store.commit("updateCatalogueOpen", false);
@@ -179,12 +176,12 @@ export default {
     setCatalogueStatus(status) {
       this.catalogueOpen = status;
       if (this.catalogueOpen === true) {
-        this.layerMenuOpen = false;
-        this.audioPlayerOpen = false;
+        this.$store.commit("updateLayerMenuOpen", false);
+      this.$store.commit("updateAudioPlayerOpen", status);
         return;
       }
       if (this.catalogueOpen === false && this.sketchIndexSelected !== null) {
-        this.layerMenuOpen = true;
+        this.$store.commit("updateLayerMenuOpen", true);
       }
     },
 

@@ -19,7 +19,7 @@ body {
     cursor: pointer;
 
     &.off {
-      color: $color-std-grey;
+      color: $color-off-white;
     }
   }
 
