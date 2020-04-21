@@ -4,11 +4,15 @@
       right
     )
       template( v-slot:activator= "{ on }")
-        v-icon.menu-icon(
+        v-btn(
           @click="toggleParameterLock()"
-          v-on="on"
-          :class="{ 'inactive': parameter.lockOn }"
-        ) {{ parameter.lockOn ? 'lock' : 'lock_open' }}
+          text
+          icon
+        )
+          v-icon.menu-icon(
+            v-on="on"
+            :class="{ 'inactive': parameter.lockOn }"
+          ) {{ parameter.lockOn ? 'lock' : 'lock_open' }}
       span {{ parameter.lockOn ? 'Unlock' : 'Lock' }} parameter from being changed
 </template>
 

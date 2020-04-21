@@ -7,20 +7,28 @@
         .aux-input-toggler
           v-tooltip( right)
               template( v-slot:activator = "{ on }")
-                v-icon.menu-icon(
+                v-btn(
                   @click="KeyboardInputVisible = !KeyboardInputVisible"
-                  v-on="on"
-                  :class="{ 'off': !KeyboardInputVisible && !auxInputVisible }"
-                ) keyboard
+                  text
+                  icon
+                )
+                  v-icon.menu-icon(
+                    v-on="on"
+                    :class="{ 'off': !KeyboardInputVisible && !auxInputVisible }"
+                  ) keyboard
               span {{ KeyboardInputVisible ? 'Hide' : 'Show' }} Keyboard Controller
 
           v-tooltip( right)
               template( v-slot:activator = "{ on }")
-                v-icon.menu-icon(
+                v-btn(
                   @click="AudioInputVisible = !AudioInputVisible"
-                  v-on="on"
-                  :class="{ 'off': !AudioInputVisible && !auxInputVisible }"
-                ) music_note
+                  text
+                  icon
+                )
+                  v-icon.menu-icon(
+                    v-on="on"
+                    :class="{ 'off': !AudioInputVisible && !auxInputVisible }"
+                  ) music_note
               span {{ AudioInputVisible ? 'Hide' : 'Show' }} Audio controller
         ParameterLockToggle(
           :parameter="parameter"
