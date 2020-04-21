@@ -88,8 +88,8 @@ import AudioLocalList from "@/components/AudioLocalList.vue";
 import AudioAnalyzer from "@/js/sketches/SketchBaseAudioAnalyzer";
 import APS from "@/js/services/AudioPlayerService";
 import Utils from "@/js/services/Utils";
-import p5 from "./src/plugins/p5/lib/p5";
-import "./src/plugins/p5/lib/addons/p5.sound";
+// import p5 from "./src/plugins/p5/lib/p5";
+// import "./src/plugins/p5/lib/addons/p5.sound";
 
 export default {
   data: () => ({

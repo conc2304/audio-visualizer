@@ -1,8 +1,8 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
 import store from '@/store';
-import P5 from './src/plugins/p5/lib/p5'; // use this one for instantiation of fft, amplitude ...
-import './src/plugins/p5/lib/addons/p5.sound';
+// import P5 from './src/plugins/p5/lib/p5'; // use this one for instantiation of fft, amplitude ...
+// import './src/plugins/p5/lib/addons/p5.sound';
 
 const AudioPlayerService = {
   audioIsUploading: false,
@@ -93,11 +93,11 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
 
     APS.audio = APS.p5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
 
-    APS.fft = new P5.FFT();
+    APS.fft = new p5.FFT();
     APS.fft.setInput(APS.audio);
-    APS.amplitude = new P5.Amplitude();
+    APS.amplitude = new p5.Amplitude();
     APS.amplitude.setInput(APS.audio);
-    APS.peakDetect = new P5.PeakDetect(1500, 14000, 0.55);
+    APS.peakDetect = new p5.PeakDetect(1500, 14000, 0.55);
   }
 };
 
