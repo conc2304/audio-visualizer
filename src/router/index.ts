@@ -1,10 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-// import Home from "../views/Home.vue";
-
 import SplashScreen from "@/views/HomePage.vue";
 import Visualizer from "@/views/VisualizerPage.vue";
-
 
 Vue.use(VueRouter);
 
@@ -14,23 +11,12 @@ const routes: RouteConfig[] = [
     name: "Home",
     component: SplashScreen,
   },
-
-  // {
-  //   path: "/",
-  //   name: "OG-Home",
-  //   component: Home,
-  // },
-
   {
     path: "/playground",
     name: "playground",
     component: Visualizer,
   },
-  // {
-  //   path: "/home",
-  //   name: "OG-Home",
-  //   component: Home,
-  // },
+
   {
     path: "/about",
     name: "About",
