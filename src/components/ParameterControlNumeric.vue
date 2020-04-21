@@ -19,7 +19,7 @@
                 v-icon.menu-icon(
                   @click="AudioInputVisible = !AudioInputVisible"
                   v-on="on"
-                  :class="{ 'off': !AudioInputVisible }"
+                  :class="{ 'off': !AudioInputVisible && !auxInputVisible }"
                 ) music_note
               span {{ AudioInputVisible ? 'Hide' : 'Show' }} Audio controller
         ParameterLockToggle(
@@ -65,6 +65,8 @@ export default {
   data: () => ({
     sliderConfig: false,
     sliderValues: false,
+    AudioInputVisible: false,
+    KeyboardInputVisible: false,
   }),
 
   components: {
@@ -86,12 +88,6 @@ export default {
     },
     categoryIndex: {
       type: Number,
-    },
-    AudioInputVisible: {
-      type: Boolean,
-    },
-    KeyboardInputVisible: {
-      type: Boolean,
     },
   },
 
