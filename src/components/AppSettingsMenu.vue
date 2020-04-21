@@ -12,13 +12,18 @@
           v-card-text
             LoginPane()
 
-      v-tooltip( left)
-        template( v-slot:activator= "{ on }")
-          v-icon.settings-btn(
-            v-on="on"
-            @click="settingsOpen = !settingsOpen"
-          ) settings
-        span  Preferences
+      .settings-btn
+        v-tooltip( left)
+          template( v-slot:activator= "{ on }")
+            v-btn(
+              @click="settingsOpen = !settingsOpen"
+              text 
+              icon
+            )
+              v-icon(
+                v-on="on"
+              ) settings
+          span  Preferences
 
 
 
