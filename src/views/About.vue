@@ -7,33 +7,33 @@
 
     nav
       ul
-        li( v-for='link in links' :key='link')
+        li( v-for="link in links" :key="link")
           router-link( :to="paths[link]" exact) {{ link }}
     router-view
 </template>
 
 <script>
-const axios = require('axios');
+// const axios = require("axios");
 
 export default {
   data: () => ({
-    title: '',
-    subtitle: '',
-    links: ['home', 'playground'],
+    title: "",
+    subtitle: "",
+    links: ["home", "playground"],
     paths: {
-      home: '/',
-      visualizer: '/playground',
+      home: "/",
+      visualizer: "/playground",
     },
   }),
 
   mounted() {
-    this.title = axios
-      .get('https://my-json-server.typicode.com/conc2304/test-api/db')
-      .then(response => {
-        let data = response.data.about;
-        this.title = data.title;
-        this.subtitle = data.subtitle;
-      });
+    // this.title = axios
+    //   .get("https://my-json-server.typicode.com/conc2304/test-api/db")
+    //   .then(response => {
+    //     const data = response.data.about;
+    //     this.title = data.title;
+    //     this.subtitle = data.subtitle;
+    //   });
   },
 };
 </script>
