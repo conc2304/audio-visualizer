@@ -38,7 +38,7 @@
 
 <script>
 import AudioLocalData from "@/js/services/AudioLocalData";
-// import APS from '@/js/services/AudioPlayerService';
+import APS from "@/js/services/AudioPlayerService";
 
 export default {
   data: () => ({
@@ -47,20 +47,25 @@ export default {
 
   methods: {
     triggerFileUpload() {
+      console.log("trigger file");
+
       this.$emit("close_modal");
       this.$refs.file.click();
     },
 
     uploadServerFile(track) {
-      // APS.audioUploaded(track);
+      console.log("upload file");
+
+      APS.audioUploaded(track);
       this.$emit("close_modal");
     },
 
     onFileChange() {
+      console.log("file change");
       this.tracks = this.$refs.file.files;
       if (!this.tracks.length) return;
 
-      // APS.audioUploaded(this.tracks);
+      APS.audioUploaded(this.tracks);
     },
   },
 };

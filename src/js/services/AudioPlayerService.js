@@ -1,7 +1,7 @@
 import RegisteredSketches from "@/js/services/SketchRegistration";
 
 import store from "@/store";
-import P5 from "p5"; // use this one for instantiation of fft, amplitude ...
+// import APS.p5 from "p5"; // use this one for instantiation of fft, amplitude ...
 // import "p5/lib/addons/p5.sound";
 
 const AudioPlayerService = {
@@ -78,6 +78,8 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
   const APS = AudioPlayerService;
   APS.currentSound = audioFile;
 
+  console.log("setupAudioAnalysis");
+
   // only play the newly loaded song if one is not already playing
   if (
     changeSong ||
@@ -95,7 +97,9 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
     }
 
     store.commit("updateAudioIsLoading", true);
+    
     console.log(APS.p5);
+
     APS.audio = APS.p5.loadSound(
       audioFile,
       audioLoadSuccess,
@@ -103,11 +107,11 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
       whileLoading
     );
 
-    APS.fft = new P5.FFT();
+    APS.fft = new APS.p5.FFT();
     APS.fft.setInput(APS.audio);
-    APS.amplitude = new P5.Amplitude();
+    APS.amplitude = new APS.p5.Amplitude();
     APS.amplitude.setInput(APS.audio);
-    APS.peakDetect = new P5.PeakDetect(1500, 14000, 0.55);
+    APS.peakDetect = new APS.p5.PeakDetect(1500, 14000, 0.55);
   }
 };
 
@@ -134,6 +138,7 @@ AudioPlayerService.toggleAudioState = () => {
  *
  */
 AudioPlayerService.analyzeFFT = (fft) => {
+
   if (!fft || !AudioPlayerService.frequencies) {
     return;
   }
@@ -141,7 +146,6 @@ AudioPlayerService.analyzeFFT = (fft) => {
   const fftAnalysis = [];
   fft.analyze();
 
-  // for (let frequencies of AudioPlayerService.frequencies) {
   for (let index in AudioPlayerService.frequencies) {
     const rangeData = AudioPlayerService.frequencies[index].rangesData;
     fftAnalysis[index] = fft.getEnergy(rangeData[0], rangeData[1]);
@@ -345,6 +349,7 @@ AudioPlayerService.setAudioReactiveFreq = (
  */
 const audioLoadSuccess = () => {
   const APS = AudioPlayerService;
+  console.log("audioLoded");
 
   // only play the newly loaded song if one is not already playing
   if (!APS.audio.isPlaying() || APS.audio.isPaused()) {
