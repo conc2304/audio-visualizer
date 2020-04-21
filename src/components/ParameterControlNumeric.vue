@@ -10,7 +10,7 @@
                 v-icon.menu-icon(
                   @click="KeyboardInputVisible = !KeyboardInputVisible"
                   v-on="on"
-                  :class="{ 'off': !KeyboardInputVisible }"
+                  :class="{ 'off': !KeyboardInputVisible && !auxInputVisible }"
                 ) keyboard
               span {{ KeyboardInputVisible ? 'Hide' : 'Show' }} Keyboard Controller
 

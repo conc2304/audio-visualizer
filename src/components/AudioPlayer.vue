@@ -140,9 +140,7 @@ export default {
   },
 
   mounted() {
-    console.log("mounted sound");
     APS.p5 = new p5(AudioAnalyzer, "audio-sketch-container");
-    console.log(APS.p5.hasOwnProperty("loadSound"));
     APS.songTimeElem = document.getElementById("song-time");
     APS.songProgressElem = document.getElementById("song-progress-bar");
   },
