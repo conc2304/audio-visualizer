@@ -58,13 +58,6 @@ export default {
     freqRangeSelected: {},
     defaultSelect: {},
     frequencies: APS.frequencies,
-    frequencies: [
-      {
-        label: "Low",
-        rangesData: [1, 140],
-        ranges: "1 - 140 Hz",
-      },
-    ],
   }),
 
   components: {
@@ -146,7 +139,7 @@ export default {
   }
 }
 .input-type {
-  color: $color-std-grey;
+  color: $color-off-white;
   margin-right: 8px;
 }
 </style>
