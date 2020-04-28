@@ -56,7 +56,7 @@ export default {
         }
 
         if (!demoEqSet) {
-          // APS.setAudioReactiveFreq(APS.frequencies[2], prop, index);
+          APS.setAudioReactiveFreq(APS.frequencies[2], prop, index);
           demoEqSet = true;
         }
 
