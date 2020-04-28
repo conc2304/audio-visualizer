@@ -60,9 +60,9 @@ export default {
     triggerPreset(index) {
       // de-activate the selected preset on reclick
       if (index === this.presetSelectedIndex) {
-        this.$emit('update_preset_selected', -1);
+        this.$emit("update_preset_selected", -1);
       } else {
-        this.$emit('update_preset_selected', index);
+        this.$emit("update_preset_selected", index);
       }
 
       if (this.presetSlots[index].empty === true) {
@@ -72,11 +72,14 @@ export default {
 
     deleteSelectedPreset() {
       this.presetSlots[this.presetSelectedIndex].empty = true;
-      this.$emit('update_preset_selected', -1);
+      this.$emit("update_preset_selected", -1);
     },
 
     anyPresetsFull() {
-      for (let preset of this.presetSlots) {
+      for (const preset of this.presetSlots) {
+        if (!this.presetSlots.hasOwnProperty(preset)) {
+          continue;
+        }
         if (preset.empty === false) {
           return true;
         }
@@ -95,11 +98,11 @@ export default {
   border: 1px solid $color-primary-blue;
 }
 
-.preset-full i {
+.preset-full i, .preset-full .v-icon {
   color: $color-primary-blue;
 }
 
-.preset-empty i {
+.preset-empty i, .preset-empty .v-icon {
   color: $color-off-white;
 }
 

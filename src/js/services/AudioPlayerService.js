@@ -1,8 +1,8 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
-import store from '@/store/index.js';
-import P5 from 'p5'; // use this one for instantiation of fft, amplitude ...
-import 'p5/lib/addons/p5.sound';
+import store from '@/store';
+// import P5 from './src/plugins/p5/lib/p5'; // use this one for instantiation of fft, amplitude ...
+// import './src/plugins/p5/lib/addons/p5.sound';
 
 const AudioPlayerService = {
   audioIsUploading: false,
@@ -90,13 +90,14 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
     }
 
     store.commit('updateAudioIsLoading', true);
+
     APS.audio = APS.p5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
 
-    APS.fft = new P5.FFT();
+    APS.fft = new p5.FFT();
     APS.fft.setInput(APS.audio);
-    APS.amplitude = new P5.Amplitude();
+    APS.amplitude = new p5.Amplitude();
     APS.amplitude.setInput(APS.audio);
-    APS.peakDetect = new P5.PeakDetect(1500, 14000, 0.55);
+    APS.peakDetect = new p5.PeakDetect(1500, 14000, 0.55);
   }
 };
 
@@ -130,7 +131,6 @@ AudioPlayerService.analyzeFFT = fft => {
   const fftAnalysis = [];
   fft.analyze();
 
-  // for (let frequencies of AudioPlayerService.frequencies) {
   for (let index in AudioPlayerService.frequencies) {
     const rangeData = AudioPlayerService.frequencies[index].rangesData;
     fftAnalysis[index] = fft.getEnergy(rangeData[0], rangeData[1]);

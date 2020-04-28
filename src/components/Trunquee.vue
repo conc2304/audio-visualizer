@@ -1,4 +1,5 @@
-// By James Furey at https://github.com/furey -  https://github.com/furey/vue-trunquee/blob/master/src/components/Trunquee.vue
+// By James Furey at https://github.com/furey -
+https://github.com/furey/vue-trunquee/blob/master/src/components/Trunquee.vue
 
 <template lang="pug">
   .trunquee(
@@ -13,25 +14,24 @@
 <script>
 export default {
   props: {
-    text: {
-    },
+    text: {},
     speed: {
       type: Number,
       default: 85,
     },
     cursor: {
       type: String,
-      default: 'help',
+      default: "help",
     },
   },
   data: () => ({
-    displayText: '',
+    displayText: "",
     interval: null,
   }),
   computed: {
     styles() {
       return {
-        cursor: this.interval ? this.cursor : 'default',
+        cursor: this.interval ? this.cursor : "default",
       };
     },
   },
@@ -39,7 +39,9 @@ export default {
     text: {
       immediate: true,
       handler() {
-        if (!this.interval) this.resetText();
+        if (!this.interval) {
+          this.resetText();
+        }
       },
     },
   },
@@ -48,11 +50,15 @@ export default {
   },
   methods: {
     onEnter() {
-      if (this.interval || !this.isTruncated()) return;
+      if (this.interval || !this.isTruncated()) {
+        return;
+      }
       this.interval = setInterval(() => {
-        if (!this.isTruncated()) return clearInterval(this.interval);
+        if (!this.isTruncated()) {
+          return clearInterval(this.interval);
+        }
         this.displayText = this.displayText.slice(1);
-        while (this.displayText.charAt() === ' ') {
+        while (this.displayText.charAt() === " ") {
           this.displayText = this.displayText.slice(1);
         }
       }, this.speed);

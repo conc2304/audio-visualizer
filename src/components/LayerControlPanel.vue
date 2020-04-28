@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import LayerDashboard from '@/components/LayerDashboard.vue';
-import LayerCategoriesExpansionList from '@/components/LayerCategoriesExpansionList.vue';
+import LayerDashboard from "@/components/LayerDashboard.vue";
+import LayerCategoriesExpansionList from "@/components/LayerCategoriesExpansionList.vue";
 
 export default {
   data: () => ({
@@ -34,7 +34,6 @@ export default {
   },
 
   props: {
-
     RegisteredSketches: {
       type: Array,
     },
@@ -46,8 +45,8 @@ export default {
   methods: {
     closeMenu() {
       this.menuOpen = false;
-      this.$store.commit('updateSketchIndexSelected', null);
-      this.$emit('layer_menu_toggle', false);
+      this.$store.commit("updateSketchIndexSelected", null);
+      this.$emit("layer_menu_toggle", false);
     },
   },
 

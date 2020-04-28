@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
+import ParameterLockToggle from "@/components/ParameterLockToggle.vue";
 
 export default {
   data: () => ({
@@ -69,6 +69,4 @@ export default {
     float: right;
   }
 }
-
-
 </style>

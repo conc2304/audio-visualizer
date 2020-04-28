@@ -50,25 +50,27 @@ export default {
     },
   },
 
-  data: () => ({
-  }),
+  data: () => ({}),
 
   methods: {
     saveToPreset(i) {
       this.presetSlots[i].empty = false;
-      this.$emit('update_snackbar', false);
+      this.$emit("update_snackbar", false);
     },
 
     closeSnackBar() {
-      this.$emit('update_snackbar', false);
+      this.$emit("update_snackbar", false);
     },
 
     clearPresets() {
-      for (let i in this.presetSlots) {
+      for (const i in this.presetSlots) {
+        if (!this.presetSlots.hasOwnProperty(i)) {
+          continue;
+        }
         this.presetSlots[i].empty = true;
       }
-      this.$emit('update_preset_selected', -1);
-    }
+      this.$emit("update_preset_selected", -1);
+    },
   },
 };
 </script>

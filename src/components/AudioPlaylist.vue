@@ -43,9 +43,9 @@
 </template>
 
 <script>
-import Trunquee from '@/components/Trunquee.vue';
-import AudioPlayerService from '@/js/services/AudioPlayerService';
-import Utils from '@/js/services/Utils';
+import Trunquee from "@/components/Trunquee.vue";
+import APS from "@/js/services/AudioPlayerService";
+import Utils from "@/js/services/Utils";
 
 export default {
   components: {
@@ -61,20 +61,20 @@ export default {
   methods: {
     setSong(index) {
       const selectedSound = this.$store.state.audio.tracks[index];
-      this.$store.commit('updateCurrentTrackIndex', index);
-      AudioPlayerService.setupAudioAnalysis(selectedSound, true, this.p5);
+      this.$store.commit("updateCurrentTrackIndex", index);
+      APS.setupAudioAnalysis(selectedSound, true, this.p5);
     },
 
     removeSong(index) {
       const tracks = this.$store.state.audio.tracks;
       tracks.splice(index, 1);
-      this.$store.commit('updateTracks', tracks);
+      this.$store.commit("updateTracks", tracks);
 
       if (this.$store.state.audio.currentTrackIndex === index) {
         if (tracks.length === 0) {
-          this.$store.commit('updateCurrentTrackIndex', -1);
-          AudioPlayerService.audio.stop();
-          AudioPlayerService.audio.disconnect();
+          this.$store.commit("updateCurrentTrackIndex", -1);
+          APS.audio.stop();
+          APS.audio.disconnect();
         } else {
           this.setSong(index);
         }
@@ -113,7 +113,7 @@ export default {
       const tracks = this.$store.state.audio.tracks;
       const playlist = [];
 
-      for (let file of tracks) {
+      for (const file of tracks) {
         const formattedFilename = Utils.formatAudioFilename(file);
         playlist.push(formattedFilename);
       }

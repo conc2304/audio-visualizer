@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import LayerParameterControls from '@/components/LayerParameterControls.vue';
+import LayerParameterControls from "@/components/LayerParameterControls.vue";
 
 export default {
-  name: 'LayerControllerCategories',
+  name: "LayerControllerCategories",
   components: {
     LayerParameterControls,
   },
@@ -54,10 +54,13 @@ export default {
     },
 
     getPropertyCategories(layerIndex) {
-      let categories = [];
-
+      const categories = [];
       const currentSketch = this.RegisteredSketches[layerIndex];
-      for (let property in currentSketch) {
+
+      for (const property in currentSketch) {
+        if (!currentSketch.hasOwnProperty(property)) {
+          continue;
+        }
         const category = currentSketch[property].category;
         if (category && !categories.includes(category)) {
           categories.push(category);

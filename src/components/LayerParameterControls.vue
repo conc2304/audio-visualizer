@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import ParameterControlNumeric from '@/components/ParameterControlNumeric.vue';
-import ParameterControlVariable from '@/components/ParameterControlVariable.vue';
+import ParameterControlNumeric from "@/components/ParameterControlNumeric.vue";
+import ParameterControlVariable from "@/components/ParameterControlVariable.vue";
 
 export default {
   data: () => ({
@@ -58,18 +58,29 @@ export default {
   },
 
   mounted() {
-    this.numericAttributes = this.getCategoryParameters('numeric');
-    this.booleanAttributes = this.getCategoryParameters('boolean');
-    this.variableAttributes = this.getCategoryParameters('variable');
+    this.numericAttributes = this.getCategoryParameters("numeric");
+    this.booleanAttributes = this.getCategoryParameters("boolean");
+    this.variableAttributes = this.getCategoryParameters("variable");
   },
 
   methods: {
     getCategoryParameters(attributeType) {
-      let properties = [];
-      const validPropTypes = ['numeric', 'variable', 'boolean'];
+      const properties = [];
+      const validPropTypes = ["numeric", "variable", "boolean"];
 
-      for (let parameter in this.RegisteredSketches[this.sketchIndexSelected]) {
-        let thisParameter = this.RegisteredSketches[this.sketchIndexSelected][parameter];
+      for (const parameter in this.RegisteredSketches[
+        this.sketchIndexSelected
+      ]) {
+        if (
+          !this.RegisteredSketches[this.sketchIndexSelected].hasOwnProperty(
+            parameter
+          )
+        ) {
+          continue;
+        }
+        const thisParameter = this.RegisteredSketches[this.sketchIndexSelected][
+          parameter
+        ];
 
         if (
           thisParameter.category !== this.category ||

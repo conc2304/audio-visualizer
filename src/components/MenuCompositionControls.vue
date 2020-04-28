@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import IconWithTooltip from '@/components/IconWithTooltip.vue';
-import BulkUpdateService from '@/js/services/BulkUpdaterService';
-import RegisteredSketches from '@/js/services/SketchRegistration';
+import IconWithTooltip from "@/components/IconWithTooltip.vue";
+import BulkUpdateService from "@/js/services/BulkUpdaterService";
+import RegisteredSketches from "@/js/services/SketchRegistration";
 
 export default {
   components: {
@@ -40,29 +40,30 @@ export default {
     auxInputVisible: false,
     masterMenuItems: [
       {
-        mdIconText: 'help',
-        id: 'toggle-help',
-        title: 'Show Help Box',
-        action: 'openHelpModal',
+        mdIconText: "help",
+        id: "toggle-help",
+        title: "Show Help Box",
+        action: "openHelpModal",
       },
       {
-        mdIconText: 'shuffle',
-        id: 'randomize-settings',
-        title: 'Randomize Everything',
-        action: 'randomizeComposition',
+        mdIconText: "shuffle",
+        id: "randomize-settings",
+        title: "Randomize Everything",
+        action: "randomizeComposition",
       },
 
       {
-        mdIconText: 'restore',
-        id: 'reset-settings',
-        title: 'Reset Everything',
-        action: 'resetComposition',
+        mdIconText: "restore",
+        id: "reset-settings",
+        title: "Reset Everything",
+        action: "resetComposition",
       },
       {
-        mdIconText: 'input',
-        id: 'toggle-input-assigner',
-        title: 'Toggle layers\' auxiliary input settings (set keyboard inputs, audio inputs ...)',
-        action: 'toggleAuxInputFields',
+        mdIconText: "input",
+        id: "toggle-input-assigner",
+        title:
+          "Toggle layers' auxiliary input settings (set keyboard inputs, audio inputs ...)",
+        action: "toggleAuxInputFields",
       },
       // {
       //   mdIconText: 'save_alt',
@@ -80,25 +81,25 @@ export default {
 
     randomizeComposition() {
       const indices = Object.keys(RegisteredSketches);
-      BulkUpdateService.changeParameterValues(indices, 'randomize');
+      BulkUpdateService.changeParameterValues(indices, "randomize");
     },
 
     openHelpModal() {
-      this.$emit('update_help_modal', true);
+      this.$emit("update_help_modal", true);
     },
 
     resetComposition() {
       const indices = Object.keys(RegisteredSketches);
-      BulkUpdateService.changeParameterValues(indices, 'reset');
+      BulkUpdateService.changeParameterValues(indices, "reset");
     },
 
     toggleAuxInputFields() {
       this.auxInputVisible = !this.auxInputVisible;
-      this.$emit('toggle_aux_input', true);
+      this.$emit("toggle_aux_input", true);
     },
 
     openPresetAssigner() {
-      this.$emit('update_snackbar', true);
+      this.$emit("update_snackbar", true);
     },
   },
 };

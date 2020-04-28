@@ -26,7 +26,7 @@ export default {
 .control-icon-wrapper {
   margin: 0 auto;
 
-  i {
+  i, .v-icon {
     width: 24px;
     height: 24px;
   }

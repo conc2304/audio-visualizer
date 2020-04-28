@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import KnobControl from 'vue-knob-control';
-import APS from '@/js/services/AudioPlayerService';
-import RegisteredSketches from '@/js/services/SketchRegistration';
+import KnobControl from "vue-knob-control";
+import APS from "@/js/services/AudioPlayerService";
+import RegisteredSketches from "@/js/services/SketchRegistration";
 
 export default {
   data: () => ({
@@ -81,7 +81,7 @@ export default {
       APS.setAudioReactiveFreq(
         this.freqRangeSelected,
         this.parameter.attrName,
-        this.selectedSketchIndex,
+        this.selectedSketchIndex
       );
     },
   },
@@ -89,19 +89,28 @@ export default {
   mounted() {
     this.gain = this.parameter.audio.gain * 100;
 
-    if (this.selectedSketchIndex === 0 && this.categoryIndex === 0 && this.parameterIndex === 0 ) {
+    if (
+      this.selectedSketchIndex === 0 &&
+      this.categoryIndex === 0 &&
+      this.parameterIndex === 0
+    ) {
       this.freqRangeSelected = APS.frequencies[2];
     }
   },
 
   watch: {
     gain(newValue, oldValue) {
-      RegisteredSketches[this.selectedSketchIndex][this.parameter.attrName].audio.gain =
-        newValue && newValue !== oldValue ? newValue * 0.01 : 0.5;
+      RegisteredSketches[this.selectedSketchIndex][
+        this.parameter.attrName
+      ].audio.gain = newValue && newValue !== oldValue ? newValue * 0.01 : 0.5;
     },
 
     freqRangeSelected(newValue, oldValue) {
-      APS.setAudioReactiveFreq(newValue, this.parameter.attrName, this.selectedSketchIndex);
+      APS.setAudioReactiveFreq(
+        newValue,
+        this.parameter.attrName,
+        this.selectedSketchIndex
+      );
     },
   },
 
@@ -130,7 +139,7 @@ export default {
   }
 }
 .input-type {
-  color: $color-std-grey;
+  color: $color-off-white;
   margin-right: 8px;
 }
 </style>

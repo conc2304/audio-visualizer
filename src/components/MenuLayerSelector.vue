@@ -79,31 +79,29 @@ export default {
   methods: {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
-      this.$store.commit('updateSketchIndexSelected', layerIndex);
-      this.$store.commit('updateLayerMenuOpen', true);
-      this.$store.commit('updateCatalogueOpen', false);
-      this.$store.commit('updateAudioPlayerOpen', false);
+      this.$store.commit("updateSketchIndexSelected", layerIndex);
+      this.$store.commit("updateLayerMenuOpen", true);
+      this.$store.commit("updateCatalogueOpen", false);
+      this.$store.commit("updateAudioPlayerOpen", false);
     },
 
     addNewSketch() {
-      this.$store.commit('updateCatalogueOpen', true);
-      this.$store.commit('updateLayerMenuOpen', false);
-      this.$store.commit('updateAudioPlayerOpen', false);
-      this.$store.commit('updateSketchIndexSelected', -1);
+      this.$store.commit("updateCatalogueOpen", true);
+      this.$store.commit("updateLayerMenuOpen", false);
+      this.$store.commit("updateAudioPlayerOpen", false);
+      this.$store.commit("updateSketchIndexSelected", -1);
     },
 
     sketchOrderShift(deltaPos) {
-      this.RegisteredSketches[this.layerSelected];
-
       this.RegisteredSketches = array_move(
         this.RegisteredSketches,
         this.layerSelected,
-        this.layerSelected + deltaPos,
+        this.layerSelected + deltaPos
       );
 
       function array_move(arr, old_index, new_index) {
         if (new_index >= arr.length) {
-          var k = new_index - arr.length + 1;
+          let k = new_index - arr.length + 1;
           while (k--) {
             arr.push(undefined);
           }
@@ -114,7 +112,7 @@ export default {
     },
 
     removeSketch() {
-      let layerSelected = this.sketchIndexSelected;
+      const layerSelected = this.sketchIndexSelected;
       if (layerSelected == null || layerSelected < 0) {
         return;
       }
@@ -142,7 +140,7 @@ export default {
     padding: 0;
   }
 
-  .v-list-item--disabled i {
+  .v-list-item--disabled i, .v-list-item--disabled i .v-icon {
     color: #777;
   }
 
