@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import SplashScreen from "@/views/HomePage.vue";
+import SplashScreen from "../views/HomePage.vue";
 import Visualizer from "@/views/VisualizerPage.vue";
+import GeometryWrapUp from "@/views/threejs/GeometryWrapUp.vue";
 
 Vue.use(VueRouter);
 
@@ -16,15 +17,11 @@ const routes: RouteConfig[] = [
     name: "playground",
     component: Visualizer,
   },
-
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
+    path: "/threejs/geometry-wrap-up",
+    name: "geometry wrap up",
+    component: GeometryWrapUp,
+  }
 ];
 
 const router = new VueRouter({
