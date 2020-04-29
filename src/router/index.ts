@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import SplashScreen from "../views/HomePage.vue";
+import SplashScreen from "@/views/HomePage.vue";
 import Visualizer from "@/views/VisualizerPage.vue";
 import GeometryWrapUp from "@/views/threejs/GeometryWrapUp.vue";
 
@@ -24,10 +24,10 @@ const routes: RouteConfig[] = [
   }
 ];
 
-const router = new VueRouter({
+const Router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
 });
 
-export default router;
+export default Router;
