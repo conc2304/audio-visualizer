@@ -2,24 +2,21 @@
   .nav-wrapper
     nav
       ul
-        li( v-for='route in routesbyType' :key='route.name')
+        li( v-for="route in routesByType" :key="route.name")
           router-link(:to="route.path" exact) {{ route.name }}
     router-view
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import routes from "@/router";
+import * as Routing from "@/router";
 
-console.log(routes);
 @Component<Navigation>({
   components: {},
 })
-export default class Navigation extends Vue {
+export default class Navigation extends Vue{
   constructor() {
     super();
-    // private routes: Object = Router.options.routes
-    // private routes: Array<Object>
   }
 
   // PROPS
@@ -27,19 +24,13 @@ export default class Navigation extends Vue {
 
   // LIFECYCLE HOOKS
   mounted(): void {
-    // this.routes = Router.options?.routes
   }
   // COMPONENT DATA
-  // private routes: Array<any> = Router.
 
   // COMPUTED PROPERTIES
-  private get routesByType() {
-    // console.log("this.routes");
-    // console.log(this.routes);
-    // if (!this.navType) return this.routes;
-
-    // return this.routes.filter(r => r.path.indexOf(`/${this.navType}`) === 0);
-    return;
+  get routesByType() {
+    if (!this.navType) return Routing.routes;
+    return Routing.routes.filter(r => r.path.indexOf(`/${this.navType}`) === 0);
   }
 }
 </script>

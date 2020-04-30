@@ -6,7 +6,7 @@ import GeometryWrapUp from "@/views/threejs/GeometryWrapUp.vue";
 
 Vue.use(VueRouter);
 
-const routes: RouteConfig[] = [
+export const routes: RouteConfig[] = [
   {
     path: "/",
     name: "Home",
