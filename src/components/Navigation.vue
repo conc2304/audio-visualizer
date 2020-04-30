@@ -14,7 +14,7 @@ import * as Routing from "@/router";
 @Component<Navigation>({
   components: {},
 })
-export default class Navigation extends Vue{
+export default class Navigation extends Vue {
   constructor() {
     super();
   }
@@ -23,8 +23,7 @@ export default class Navigation extends Vue{
   @Prop({ type: String, default: "" }) navType!: String;
 
   // LIFECYCLE HOOKS
-  mounted(): void {
-  }
+  mounted(): void {}
   // COMPONENT DATA
 
   // COMPUTED PROPERTIES
