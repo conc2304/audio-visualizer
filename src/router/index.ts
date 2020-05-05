@@ -4,7 +4,8 @@ import SplashScreen from "@/views/HomePage.vue";
 import Visualizer from "@/views/VisualizerPage.vue";
 // ThreeJS Tutorials
 import GeometryWrapUp from "@/views/threejs/GeometryWrapUp.vue";
-import Materials01 from "@/views/threejs/Materials01.vue";
+import NormalMaterials from "@/views/threejs/NormalMaterials.vue";
+import DepthMaterials from "@/views/threejs/DepthMaterials.vue";
 
 Vue.use(VueRouter);
 
@@ -26,9 +27,14 @@ export const routes: RouteConfig[] = [
     component: GeometryWrapUp,
   },
   {
-    path: "/threejs/Materials01",
-    name: "Materials 01",
-    component: Materials01,
+    path: "/threejs/normal-materials",
+    name: "Normal Materials",
+    component: NormalMaterials,
+  },
+  {
+    path: "/threejs/depth-materials",
+    name: "Depth Materials",
+    component: DepthMaterials,
   }
 ];
 

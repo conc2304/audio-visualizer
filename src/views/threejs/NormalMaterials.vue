@@ -1,5 +1,5 @@
 <template lang="pug">
-  ThreeJsCanvasWrapper( :pageTitle="'Materials 01'")
+  ThreeJsCanvasWrapper( :pageTitle="'Normal Materials'")
 </template>
 
 <script lang="ts">
@@ -15,7 +15,7 @@ import { FaceNormalsHelper } from "three/examples/jsm/helpers/FaceNormalsHelper.
     ThreeJsCanvasWrapper,
   },
 })
-export default class Materials01 extends Vue {
+export default class NormalMaterials extends Vue {
   constructor() {
     super();
   }
