@@ -7,8 +7,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import ThreeJsCanvasWrapper from "@/components/ThreeJsCanvasWrapper.vue";
 
 import * as THREE from "three";
-import { Object3D, SphereGeometry } from "three";
-import { FaceNormalsHelper } from "three/examples/jsm/helpers/FaceNormalsHelper.js";
+import { Object3D } from "three";
+// import { FaceNormalsHelper } from "three/examples/jsm/helpers/FaceNormalsHelper.js";
 
 @Component({
   components: {
@@ -116,7 +116,7 @@ export default class NormalMaterials extends Vue {
         opacity: 0.8,
       }),
     );
-    this.normals = new FaceNormalsHelper(this.cube2, 10);
+    // this.normals = new FaceNormalsHelper(this.cube2, 10);
     this.scene.add(this.cube2);
     this.scene.add(this.normals);
 
@@ -137,10 +137,10 @@ export default class NormalMaterials extends Vue {
 
     // SPHERE
     this.sphere = new THREE.Mesh(new THREE.SphereGeometry(33), new THREE.MeshNormalMaterial());
-    this.sphereNormals = new FaceNormalsHelper(this.sphere, 10);
+    // this.sphereNormals = new FaceNormalsHelper(this.sphere, 10);
     this.sphere.position.z = -50;
     this.scene.add(this.sphere);
-    this.scene.add(this.sphereNormals);
+    // this.scene.add(this.sphereNormals);
 
   }
 
