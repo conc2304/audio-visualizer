@@ -7,7 +7,7 @@
  *
  */
 
-import RenderPolygon from "@/js/services/RenderPolygon";
+import { RenderPolygon } from "@/js/services/RenderPolygon.ts";
 import RegisteredSketches from "@/js/services/SketchRegistration";
 import KeyboardControlsService from "@/js/services/KeyboardControlsService";
 import PoseNetService from "@/js/services/PoseNetService";

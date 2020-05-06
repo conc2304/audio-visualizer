@@ -1,11 +1,11 @@
-import SketchCatalogue from '@/js/services/SketchCatalogue';
+import SketchCatalogue from "@/js/services/SketchCatalogue";
 
-import CenterWave from '@/js/sketches/SketchConstructorCenterWave';
-import WEBGLWave from  '@/js/sketches/SketchConstructorWEBGLWave';
-import OuterWaves from '@/js/sketches/SketchConstructorOuterWaves';
-import Parametric from '@/js/sketches/SketchConstructorParametric';
-import Tunnel from '@/js/sketches/SketchConstructorTunnel';
-import BodyBrush from '@/js/sketches/SketchConstructorBodyBrush';
+import CenterWave from "@/js/sketches/SketchConstructorCenterWave";
+import WEBGLWave from  "@/js/sketches/SketchConstructorWEBGLWave";
+import OuterWaves from "@/js/sketches/SketchConstructorOuterWaves";
+import Parametric from "@/js/sketches/SketchConstructorParametric";
+import Tunnel from "@/js/sketches/SketchConstructorTunnel";
+import BodyBrush from "@/js/sketches/SketchConstructorBodyBrush";
 
 const registeredSketches = [];
 

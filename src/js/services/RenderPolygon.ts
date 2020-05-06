@@ -1,6 +1,5 @@
 
-const renderPolygon = function (x, y, radius, numPoints, p5) {
-  'use strict';
+export function RenderPolygon(x: number, y: number, radius: number, numPoints: number, p5: any) {
   const angle = p5.TWO_PI / numPoints;
   p5.beginShape();
   for (let a = 0; a < p5.TWO_PI; a += angle) {
@@ -9,6 +8,4 @@ const renderPolygon = function (x, y, radius, numPoints, p5) {
     p5.vertex(sx, sy);
   }
   p5.endShape(p5.CLOSE);
-};
-
-export default renderPolygon;
+}
