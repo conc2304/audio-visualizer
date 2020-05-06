@@ -68,10 +68,7 @@ export default class GeometryWrapUp extends Vue {
   private createCube(): void {
     const radius: number = this.randomInRange(1, 8);
     const geometry: THREE.BoxGeometry = new THREE.BoxGeometry(radius, radius, radius);
-    const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      wireframe: false,
-    });
+    const material = new THREE.MeshDepthMaterial({});
     const cubeSpeed: CubeSpeed = { speed: this.randomInRange(0.01, 0.1) };
     const cube: Object3D = new THREE.Mesh(geometry, material);
 

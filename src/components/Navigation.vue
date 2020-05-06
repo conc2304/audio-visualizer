@@ -11,7 +11,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import * as Routing from "@/router";
 
-@Component<Navigation>({
+@Component({
   components: {},
 })
 export default class Navigation extends Vue {
@@ -33,3 +33,11 @@ export default class Navigation extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.nav-wrapper li {
+  list-style: none;
+  display: inline;
+  margin-right: 1rem;
+}
+</style>

@@ -6,6 +6,7 @@ import Visualizer from "@/views/VisualizerPage.vue";
 import GeometryWrapUp from "@/views/threejs/GeometryWrapUp.vue";
 import NormalMaterials from "@/views/threejs/NormalMaterials.vue";
 import DepthMaterials from "@/views/threejs/DepthMaterials.vue";
+import LightSensitiveMaterials from "@/views/threejs/LightSensitiveMaterials.vue";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,11 @@ export const routes: RouteConfig[] = [
     path: "/threejs/depth-materials",
     name: "Depth Materials",
     component: DepthMaterials,
+  },
+  {
+    path: "/threejs/light-sensitive-materials",
+    name: "Light Sensitive Materials",
+    component: LightSensitiveMaterials,
   }
 ];
 

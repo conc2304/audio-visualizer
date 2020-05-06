@@ -85,7 +85,7 @@ export default class NormalMaterials extends Vue {
     this.sceneInit();
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    const canvas = <HTMLElement>document.getElementById("threejs-canvas");
+    const canvas = <HTMLCanvasElement>document.getElementById("threejs-canvas");
     canvas.appendChild(this.renderer.domElement);
   }
 
