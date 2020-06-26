@@ -64,7 +64,6 @@
           v-col( cols="12")
             v-card(
               color="#385F73"
-
             )
               v-card-title.headline Tons of processing sketches to choose from!
               v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
@@ -83,7 +82,7 @@
               :catalogueItem="sketch.catalogueInfo"
               :search="search"
               :catalogueIndex="index"
-          )
+            )
 </template>
 
 <script>
@@ -208,6 +207,7 @@ export default {
   padding-bottom: 250px;
   padding-right: 1.5rem;
   overflow-y: scroll;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: $color-transparent-black;
 
