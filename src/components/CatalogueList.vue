@@ -71,7 +71,7 @@
               v-card-subtitle
                 small Got a sketch idea you want to see here? Well now is your chance to contribute!
                 br
-                small Head over to <a href="https://github.com/conc2304/audio-visualizer/" target="_blank"> Github </a> and become a creator!
+                small Head over to <a href="https://github.com/conc2304/audio-visualizer/" target="_blank" rel="noreferrer noopener"> Github </a> and become a creator!
 
           v-col(
             v-for="(sketch, index) in filteredSketchCatalogue"

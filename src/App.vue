@@ -37,7 +37,7 @@ body {
 
   .inactive {
     i, .v-icon{
-      color: $color-inactive-red;
+      color: $color-inactive-red-hover;
 
       &:hover {
         color: $color-inactive-red-hover;

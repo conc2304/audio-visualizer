@@ -310,6 +310,6 @@ i, .v-icon {
 }
 
 #composition-controls .inactive .v-icon.menu-icon {
-  color: $color-inactive-red;
+  color: $color-inactive-red-hover;
 }
 </style>
