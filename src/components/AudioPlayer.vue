@@ -90,9 +90,7 @@ import AudioAnalyzer from "@/js/sketches/SketchBaseAudioAnalyzer";
 import APS from "@/js/services/AudioPlayerService";
 import Utils from "@/js/services/Utils";
 import P5 from "p5";
-
-// import p5 from "./src/plugins/p5/lib/p5";
-// import "./src/plugins/p5/lib/addons/p5.sound";
+import "@/plugins/p5/lib/addons/p5.sound";
 
 export default {
   data: () => ({
