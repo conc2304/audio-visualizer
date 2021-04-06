@@ -18,7 +18,6 @@ import AppSettingsMenu from "@/components/AppSettingsMenu.vue";
 import Visualizer from "@/js/sketches/SketchBaseVisualizer";
 import RegisteredSketches from "@/js/services/SketchRegistration";
 import KeyboardControlsService from "@/js/services/KeyboardControlsService";
-// import p5 from "@/plugins/p5/lib/p5"; // use this one for instantiation of fft, amplitude ...
 import P5 from "p5";
 import APS from "@/js/services/AudioPlayerService";
 import Utils from "@/js/services/Utils";
