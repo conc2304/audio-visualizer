@@ -59,6 +59,7 @@
         v-tooltip( right)
           template( v-slot:activator= "{ on }")
             v-btn#upload-file-button(
+              aria-label="Choose Music"
               @click="uploadAudioDialog = true"
               text icon
             )

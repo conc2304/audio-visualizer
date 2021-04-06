@@ -17,7 +17,8 @@
           template( v-slot:activator= "{ on }")
             v-btn(
               @click="settingsOpen = !settingsOpen"
-              text 
+              aria-label="App Settings"
+              text
               icon
             )
               v-icon(

@@ -12,7 +12,6 @@
           to="/playground"
           color="color_primary_blue"
           x-large
-
         ) To Playground
       .user-wrapper( v-if="!loginDisabled")
         .logged-in-wrapper( v-if="user.loggedIn && user.username != ''")
@@ -168,6 +167,10 @@ h2 {
   font-weight: 300;
   font-size: 2.5rem;
   line-height: 1.15em;
+}
+
+.btn-wrapper .v-btn {
+  font-size: 1.5rem;
 }
 
 .btn-wrapper,

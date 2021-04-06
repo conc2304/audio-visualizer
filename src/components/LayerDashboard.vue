@@ -62,7 +62,7 @@ export default {
 
       {
         mdIconText: "restore",
-        id: "reset-settings",
+        id: "reset-layer-settings",
         tooltipText: "Reset Layer. Excludes audio reactive control",
         title: "Layer Reset",
         action: "resetLayer",
