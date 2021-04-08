@@ -9,8 +9,7 @@ import SketchCatalogue from '@/js/services/SketchCatalogue';
 
 class CenterWave {
   constructor(windowWidth, windowHeight, p5) {
-
-    this.sid =  Utils.guidGenerator();
+    this.sid = Utils.guidGenerator();
 
     this.catalogueInfo = new CatalogueDataEntry(
       this.constructor,
@@ -20,7 +19,7 @@ class CenterWave {
       'NOTNOTclyzby',
       './assets/sketch_catalogue_gifs/center-wave_200.gif',
       300,
-      2,
+      2
     );
 
     this.windowWidth = windowWidth;
@@ -51,13 +50,10 @@ class CenterWave {
       'triangle',
       'square',
       'pentagon',
-      'ellipse',
+      'ellipse'
     ]);
 
-    this.stroke = new VariableProperty('Outline and Fill', 'Color', 'Outline', [
-      'Outline',
-      'Filled',
-    ]);
+    this.stroke = new VariableProperty('Outline and Fill', 'Color', 'Outline', ['Outline', 'Filled']);
   }
 }
 
@@ -115,7 +111,6 @@ CenterWave.prototype.rotateWave = function(p5) {
   p5.rotateY(p5.frameCount * this.waveRotateYVelocity.currentValue + this.waveRotateY.currentValue);
   p5.rotateZ(p5.frameCount * this.waveRotateZVelocity.currentValue + this.waveRotateZ.currentValue);
 };
-
 
 CenterWave.prototype.rotateShape = helper.rotateShape;
 CenterWave.prototype.setColor = helper.setColor;

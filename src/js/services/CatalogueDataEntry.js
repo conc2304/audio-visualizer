@@ -4,7 +4,7 @@ class CatalogueInfoProperty {
    * @param {Constructor} constructor
    * @param {String} title
    * @param {String} description
-   * @param {Array} tags     // a list of categories to desribe the sketch to filter on
+   * @param {Array} tags     // a list of categories to describe the sketch to filter on
    * @param {String} creator
    * @param {String} avatarURI
    * @param {Number} popularity      // currently a made up number

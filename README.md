@@ -35,9 +35,9 @@ Production URL [http://vyzby.joseconchello.com/](http://vyzby.joseconchello.com/
 ## Anatomy of p5js Sketch Developement within VYZBY
 New Sketches in p5Js get registered in `'./src/js/services/SketchRegistration.js'` and get imported together as an array of objects.
 
-p5JS sketches are found and kept in the `./src/js/sketches/` directory.  An exampple of an existing sketch is `vyzby-app/src/js/sketches/SketchConstructorWEBGLWave.js`
+p5JS sketches are found and kept in the `./src/js/sketches/` directory.  An example of an existing sketch is `vyzby-app/src/js/sketches/SketchConstructorWEBGLWave.js`
 
-Sketches are created as a constructror class
+Sketches are created as a constructor class
 The constructor must have a `render()` function.  This is what gets called for each registered sketch on the p5js `draw()` cycle.
 
 New Sketch files need the following files 
