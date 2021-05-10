@@ -38,8 +38,6 @@ const VisualizerSketch = (p5) => {
       true
     );
 
-    // p5.textureAssets.moon = p5.loadImage("./assets/textures/2k_venus_surface.jpeg");
-    // p5.textureAssets.moon =
 
     p5.ctrlElementsArray = RegisteredSketches;
   };

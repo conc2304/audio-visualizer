@@ -2,30 +2,41 @@ let video;
 let poses = [];
 let pose;
 
-const partsToTrack = ['nose', 'rightWrist', 'rightElbow', 'leftElbow', 'leftWrist', 'rightAnkle', 'leftAnkle', 'leftHip', 'rightHip'];
+const partsToTrack = [
+  'nose',
+  'rightWrist',
+  'rightElbow',
+  'leftElbow',
+  'leftWrist',
+  'rightAnkle',
+  'leftAnkle',
+  'leftHip',
+  'rightHip'
+];
 
-
-let p5setupPoseNet = sketch => {
+let p5setupPoseNet = (sketch) => {
   video = createCapture(sketch.VIDEO);
   video.size(sketch.width, sketch.height);
 
   const ml5Options = {
     imageScaleFactor: 0.2,
-    outputStride: 16,  // 8, 16, 32
+    outputStride: 16, // 8, 16, 32
     flipHorizontal: true,
     minConfidence: 0.5,
     maxPoseDetections: 1,
     scoreThreshold: 0.5,
     nmsRadius: 20,
     detectionType: 'single',
-    multiplier: 0.75,
-  }
+    multiplier: 0.75
+  };
 
   // Create a new poseNet method with a single detection
-  const poseNet = ml5.poseNet(video, ml5Options, function () { console.log('ML5 Model Loaded') });
+  const poseNet = ml5.poseNet(video, ml5Options, function() {
+    console.log('ML5 Model Loaded');
+  });
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
-  poseNet.on("pose", function (results) {
+  poseNet.on('pose', function(results) {
     poses = results;
   });
 
@@ -44,21 +55,20 @@ class PoseDetector {
     this.colorRotate = true;
     this.bypass = true;
 
-
     this.mode = {
-      displayLabel: "Mode",
-      resetValue: "Triangulate",
-      defaultValue: "Triangulate",
-      currentValue: "Triangulate",
+      displayLabel: 'Mode',
+      resetValue: 'Triangulate',
+      defaultValue: 'Triangulate',
+      currentValue: 'Triangulate',
       targetValue: null,
-      options: ["Flocking", "Triangulate",],
-      attrType: "variable",
+      options: ['Flocking', 'Triangulate'],
+      attrType: 'variable',
       lockOn: false
     };
 
     this.radius = {
-      displayLabel: "Size",
-      description: "Sets the size of all of the 3D shapes.",
+      displayLabel: 'Size',
+      description: 'Sets the size of all of the 3D shapes.',
       resetValue: 40,
       defaultValue: 40,
       currentValue: 40,
@@ -67,12 +77,12 @@ class PoseDetector {
       defaultMin: 20, // this is the range within which the user can edit the min and max values
       max: 500, // this can be edited by the user
       defaultMax: 500, // this is the range within which the user can edit the min and max values
-      attrType: "numeric",
+      attrType: 'numeric',
       triggerSource: null,
       lockOn: false,
       audio: {
-        responsiveType: "add",
-        responsiveOptions: ["add", "subtract"],
+        responsiveType: 'add',
+        responsiveOptions: ['add', 'subtract'],
         gain: 0.5,
         fall: 1
       },
@@ -83,7 +93,7 @@ class PoseDetector {
     };
 
     this.trailLength = {
-      displayLabel: "Trail Length",
+      displayLabel: 'Trail Length',
       resetValue: 50,
       defaultValue: 50,
       currentValue: 50,
@@ -92,10 +102,10 @@ class PoseDetector {
       defaultMin: 0, //  this is the range within which the user can edit the min and max values
       max: 100, // this can be edited by the user
       defaultMax: 100, //  this is the range within which the user can edit the min and max values
-      attrType: "numeric",
+      attrType: 'numeric',
       audio: {
-        responsiveType: "add",
-        responsiveOptions: ["add", "subtract"],
+        responsiveType: 'add',
+        responsiveOptions: ['add', 'subtract'],
         gain: 0.5,
         fall: 1 // not sure what this will do yet
       },
@@ -108,7 +118,7 @@ class PoseDetector {
     };
 
     this.magnitude = {
-      displayLabel: "Magnitude",
+      displayLabel: 'Magnitude',
       resetValue: 8,
       defaultValue: 8,
       currentValue: 8,
@@ -117,10 +127,10 @@ class PoseDetector {
       defaultMin: 3, //  this is the range within which the user can edit the min and max values
       max: 14, // this can be edited by the user
       defaultMax: 14, //  this is the range within which the user can edit the min and max values
-      attrType: "numeric",
+      attrType: 'numeric',
       audio: {
-        responsiveType: "add",
-        responsiveOptions: ["add", "subtract"],
+        responsiveType: 'add',
+        responsiveOptions: ['add', 'subtract'],
         gain: 0.5,
         fall: 1 // not sure what this will do yet
       },
@@ -133,18 +143,18 @@ class PoseDetector {
     };
 
     this.shape = {
-      displayLabel: "Keypoint Shape",
-      resetValue: "off",
-      defaultValue: "off",
-      currentValue: "off",
+      displayLabel: 'Keypoint Shape',
+      resetValue: 'off',
+      defaultValue: 'off',
+      currentValue: 'off',
       targetValue: null,
-      options: ["off", "line", "triangle", "square", "pentagon", "ellipse"],
-      attrType: "variable",
+      options: ['off', 'line', 'triangle', 'square', 'pentagon', 'ellipse'],
+      attrType: 'variable',
       lockOn: false
     };
 
     this.hue = {
-      displayLabel: "Color",
+      displayLabel: 'Color',
       resetValue: 100,
       defaultValue: 100,
       currentValue: 200,
@@ -153,10 +163,10 @@ class PoseDetector {
       defaultMin: 0, //  this is the range within which the user can edit the min and max values
       max: 360, // this can be edited by the user
       defaultMax: 360, //  this is the range within which the user can edit the min and max values
-      attrType: "numeric",
+      attrType: 'numeric',
       audio: {
-        responsiveType: "add",
-        responsiveOptions: ["add", "subtract"],
+        responsiveType: 'add',
+        responsiveOptions: ['add', 'subtract'],
         gain: 0.5,
         fall: 1 // not sure what this will do yet
       },
@@ -169,7 +179,7 @@ class PoseDetector {
     };
 
     this.saturation = {
-      displayLabel: "Saturation",
+      displayLabel: 'Saturation',
       resetValue: 100,
       defaultValue: 100,
       currentValue: 100,
@@ -178,10 +188,10 @@ class PoseDetector {
       defaultMin: 0, //  this is the range within which the user can edit the min and max values
       max: 100, // this can be edited by the user
       defaultMax: 100, //  this is the range within which the user can edit the min and max values
-      attrType: "numeric",
+      attrType: 'numeric',
       audio: {
-        responsiveType: "add",
-        responsiveOptions: ["add", "subtract"],
+        responsiveType: 'add',
+        responsiveOptions: ['add', 'subtract'],
         gain: 0.5,
         fall: 1 // not sure what this will do yet
       },
@@ -195,26 +205,23 @@ class PoseDetector {
   }
 }
 
-
 let poseDetectionInstance = new PoseDetector(window.innerWidth, window.innerHeight);
 var registeredCtrlElements = registeredCtrlElements || [];
 registeredCtrlElements.push(poseDetectionInstance);
 
-
-
-PoseDetector.prototype.render = function () {
+PoseDetector.prototype.render = function() {
   // We can call both functions to draw all keypoints and the skeletons
 
-  if (this.mode.currentValue === "Flocking") {
+  if (this.mode.currentValue === 'Flocking') {
     flock.run();
   }
 
-  if (this.mode.currentValue === "Triangulate") {
+  if (this.mode.currentValue === 'Triangulate') {
     createParticle();
     renderParticleNet();
   }
 
-  if (this.mode.currentValue === "Shaper") {
+  if (this.mode.currentValue === 'Shaper') {
     this.renderShaper();
   }
 
@@ -223,10 +230,8 @@ PoseDetector.prototype.render = function () {
   // this.drawSkeleton();
 };
 
-
-
 // A function to draw ellipses over the detected keypoints
-PoseDetector.prototype.drawKeypoints = function () {
+PoseDetector.prototype.drawKeypoints = function() {
   // Loop through all the poses detected
   if (!poses) {
     return;
@@ -243,7 +248,7 @@ PoseDetector.prototype.drawKeypoints = function () {
   }
 };
 
-PoseDetector.prototype.drawSkeleton = function () {
+PoseDetector.prototype.drawSkeleton = function() {
   // Loop through all the skeletons detected
   if (!poses) {
     return;
@@ -257,18 +262,12 @@ PoseDetector.prototype.drawSkeleton = function () {
       myp5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
       myp5.stroke(0, this.saturation.currentValue, 100);
       myp5.strokeWeight(8);
-      myp5.line(
-        partA.position.x,
-        partA.position.y,
-        partB.position.x,
-        partB.position.y
-      );
+      myp5.line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
     }
   }
 };
 
-
-PoseDetector.prototype.drawTrailers = function () {
+PoseDetector.prototype.drawTrailers = function() {
   this.history = this.history.slice(0, this.trailLength.currentValue);
   let historyLength = this.history.length;
 
@@ -278,8 +277,7 @@ PoseDetector.prototype.drawTrailers = function () {
     let pose = this.history[i];
     let tempHue = this.hue.currentValue;
 
-    let hue =
-      this.colorRotate === true ? (tempHue + rotationAmount) % 360 : tempHue;
+    let hue = this.colorRotate === true ? (tempHue + rotationAmount) % 360 : tempHue;
 
     myp5.noFill();
     myp5.strokeWeight(3);
@@ -288,13 +286,11 @@ PoseDetector.prototype.drawTrailers = function () {
   }
 };
 
-
-PoseDetector.prototype.renderPose = function (pose) {
+PoseDetector.prototype.renderPose = function(pose) {
   for (let j = 0; j < pose.keypoints.length; j++) {
     // A keypoint is an object describing a body part (like rightArm or leftShoulder)
     let keypoint = pose.keypoints[j];
     if (keypoint.score > 0.2) {
-
       this.renderShape(
         keypoint.position.x - this.windowWidth / 2,
         keypoint.position.y - this.windowHeight / 2,
@@ -310,27 +306,27 @@ PoseDetector.prototype.renderPose = function (pose) {
  * @param yPos
  * @param radius
  */
-PoseDetector.prototype.renderShape = function (xPos, yPos, radius) {
-  let polygons = ["line", "triangle", "square", "pentagon"]; // polygons we are allowing for set in the shape attribute
+PoseDetector.prototype.renderShape = function(xPos, yPos, radius) {
+  let polygons = ['line', 'triangle', 'square', 'pentagon']; // polygons we are allowing for set in the shape attribute
 
-  if (this.shape.currentValue === "off") {
+  if (this.shape.currentValue === 'off') {
     return;
   }
-  if (this.shape.currentValue === "ellipse") {
+  if (this.shape.currentValue === 'ellipse') {
     myp5.ellipse(xPos, yPos, radius, radius); // one above and one below
   } else if (polygons.includes(this.shape.currentValue)) {
     let sides;
     switch (this.shape.currentValue) {
-      case "line":
+      case 'line':
         sides = 2;
         break;
-      case "triangle":
+      case 'triangle':
         sides = 3;
         break;
-      case "square":
+      case 'square':
         sides = 4;
         break;
-      case "pentagon":
+      case 'pentagon':
         sides = 5;
         break;
     }
@@ -344,9 +340,6 @@ PoseDetector.prototype.renderShape = function (xPos, yPos, radius) {
     myp5.ellipse(xPos, yPos, radius, radius); // one above and one below
   }
 };
-
-
-
 
 // The Nature of Code
 // Daniel Shiffman
@@ -426,7 +419,7 @@ class Boid {
   // A method that calculates and applies a steering force towards a target
   // STEER = DESIRED MINUS VELOCITY
   seekBoid(target) {
-    let nearestTarget = getNearestTartget(this.position);
+    let nearestTarget = getNearestTarget(this.position);
     // console.log(nearestTarget);
     // console.log(nearestTarget);
     let homingDirection = myp5.createVector(nearestTarget.x, nearestTarget.y);
@@ -437,12 +430,25 @@ class Boid {
     desired.mult(this.maxspeed);
     // Steering = Desired minus Velocity
     let steer = p5.Vector.sub(desired, this.velocity);
-    this.maxforce = myp5.map(poseDetectionInstance.magnitude.currentValue, poseDetectionInstance.magnitude.min, poseDetectionInstance.magnitude.min, 0.03, 1)
+    this.maxforce = myp5.map(
+      poseDetectionInstance.magnitude.currentValue,
+      poseDetectionInstance.magnitude.min,
+      poseDetectionInstance.magnitude.min,
+      0.03,
+      1
+    );
     steer.limit(this.maxforce); // Limit to maximum steering force
     return steer;
   }
   renderBoid() {
-    this.r = myp5.map(poseDetectionInstance.radius.currentValue, poseDetectionInstance.radius.min, poseDetectionInstance.radius.max, 1, 30, true);
+    this.r = myp5.map(
+      poseDetectionInstance.radius.currentValue,
+      poseDetectionInstance.radius.min,
+      poseDetectionInstance.radius.max,
+      1,
+      30,
+      true
+    );
     // Draw a triangle rotated in the direction of velocity
     let theta = this.velocity.heading() + radians(90);
     myp5.noFill();
@@ -452,7 +458,7 @@ class Boid {
     myp5.translate(this.position.x - myp5.width / 2, this.position.y - myp5.height / 2);
     myp5.rotate(theta);
     myp5.beginShape();
-    myp5.vertex(0, -this.r* 2);
+    myp5.vertex(0, -this.r * 2);
     myp5.vertex(-this.r, this.r * 5);
     myp5.vertex(this.r, this.r * 5);
     myp5.endShape(CLOSE);
@@ -460,19 +466,21 @@ class Boid {
   }
   // Wraparound
   boidBorders() {
-    if (this.position.x < -this.r)
-      this.position.x = myp5.width + this.r;
-    if (this.position.y < -this.r)
-      this.position.y = myp5.height + this.r;
-    if (this.position.x > myp5.width + this.r)
-      this.position.x = -this.r;
-    if (this.position.y > myp5.height + this.r)
-      this.position.y = -this.r;
+    if (this.position.x < -this.r) this.position.x = myp5.width + this.r;
+    if (this.position.y < -this.r) this.position.y = myp5.height + this.r;
+    if (this.position.x > myp5.width + this.r) this.position.x = -this.r;
+    if (this.position.y > myp5.height + this.r) this.position.y = -this.r;
   }
   // Separation
   // Method checks for nearby boids and steers away
   separateBoids(boids) {
-    let desiredseparation = myp5.map(poseDetectionInstance.trailLength.currentValue, poseDetectionInstance.trailLength.min, poseDetectionInstance.trailLength.max, 10, 60);
+    let desiredseparation = myp5.map(
+      poseDetectionInstance.trailLength.currentValue,
+      poseDetectionInstance.trailLength.min,
+      poseDetectionInstance.trailLength.max,
+      10,
+      60
+    );
     let steer = myp5.createVector(0, 0);
     let count = 0;
     // For every boid in the system, check if it's too close
@@ -522,8 +530,7 @@ class Boid {
       let steer = p5.Vector.sub(sum, this.velocity);
       steer.limit(this.maxforce);
       return steer;
-    }
-    else {
+    } else {
       return createVector(0, 0);
     }
   }
@@ -543,13 +550,11 @@ class Boid {
     if (count > 0) {
       sum.div(count);
       return this.seekBoid(sum); // Steer towards the location
-    }
-    else {
+    } else {
       return myp5.createVector(0, 0);
     }
   }
 }
-
 
 let flock;
 function initializeBoids(windowWidth, windowHeight) {
@@ -566,12 +571,9 @@ function addBoid() {
   flock.addBoid(new Boid(myp5.mouseX - myp5.width, myp5.mouseY));
 }
 
-
-
-function getNearestTartget(seeker) {
+function getNearestTarget(seeker) {
   let distance = null;
   let position = { x: 0, y: 0 };
-
 
   if (!poses || poses.length <= 0 || !poses[0].pose.keypoints) {
     return position;
@@ -585,7 +587,12 @@ function getNearestTartget(seeker) {
       continue;
     }
 
-    if (keypoint.position.x > myp5.width || keypoint.position.x < 0 || keypoint.position.y < 0 || keypoint.position.y > myp5.height) {
+    if (
+      keypoint.position.x > myp5.width ||
+      keypoint.position.x < 0 ||
+      keypoint.position.y < 0 ||
+      keypoint.position.y > myp5.height
+    ) {
       continue;
     }
 
@@ -599,21 +606,15 @@ function getNearestTartget(seeker) {
     // have a graviational preference to these body parts
     if (part.includes('wrist')) {
       gravity = 0.4;
-    }
-    else if (part.includes('ankle')) {
+    } else if (part.includes('ankle')) {
       gravity = 0.3;
-    }
-    else if (part.includes('elbow')) {
+    } else if (part.includes('elbow')) {
       gravity = 0.1;
-    }
-    else if (part.includes('nose')) {
+    } else if (part.includes('nose')) {
       gravity = 0.1;
-    }
-    else if (part.includes('hip')) {
+    } else if (part.includes('hip')) {
       gravity = 0.05;
     }
-
-
 
     nextDistance = getDistance(seeker, keypoint.position);
     nextDistance = nextDistance * gravity;
@@ -638,7 +639,6 @@ function getNearestTartget(seeker) {
   }
   // }
 
-
   return position;
 }
 
@@ -648,8 +648,6 @@ function getDistance(p, q) {
   let dist = Math.sqrt(dx * dx + dy * dy);
   return dist;
 }
-
-
 
 /*
 Frozen brush
@@ -677,7 +675,6 @@ var useFill = false;
 
 var data = [];
 
-
 // Moves to a random direction and comes to a stop.
 // Spawns other particles within its lifetime.
 class Particle {
@@ -687,7 +684,7 @@ class Particle {
     this.pos = new p5.Vector(x, y);
     this.vel = p5.Vector.random2D();
     this.vel.mult(map(this.level, 0, maxLevel, 6, 2));
-    this.move = function () {
+    this.move = function() {
       this.life++;
       // Add friction.
       this.vel.mult(0.9);
@@ -704,26 +701,33 @@ class Particle {
   }
 }
 
-
-
-
 function renderParticleNet() {
-
   // Move and spawn particles.
   // Remove any that is below the velocity threshold.
   for (var i = allParticles.length - 1; i > -1; i--) {
     allParticles[i].move();
 
-    if (allParticles[i].vel.mag() < myp5.map(poseDetectionInstance.magnitude.currentValue, poseDetectionInstance.magnitude.min, poseDetectionInstance.magnitude.max, 0.05,  0.5)) {
+    if (
+      allParticles[i].vel.mag() <
+      myp5.map(
+        poseDetectionInstance.magnitude.currentValue,
+        poseDetectionInstance.magnitude.min,
+        poseDetectionInstance.magnitude.max,
+        0.05,
+        0.5
+      )
+    ) {
       allParticles.splice(i, 1);
     }
   }
 
   if (allParticles.length > 0) {
     // Run script to get points to create triangles with.
-    data = Delaunay.triangulate(allParticles.map(function (pt) {
-      return [pt.pos.x, pt.pos.y];
-    }));
+    data = Delaunay.triangulate(
+      allParticles.map(function(pt) {
+        return [pt.pos.x, pt.pos.y];
+      })
+    );
 
     myp5.strokeWeight(0.1);
 
@@ -735,38 +739,80 @@ function renderParticleNet() {
       var p3 = allParticles[data[i + 2]];
 
       // Don't draw triangle if its area is too big.
-      var distThreshMax = myp5.map(poseDetectionInstance.trailLength.currentValue, poseDetectionInstance.trailLength.min, poseDetectionInstance.trailLength.max, 100, 500);
-      var distTreshMin = myp5.map(poseDetectionInstance.trailLength.currentValue, poseDetectionInstance.trailLength.min, poseDetectionInstance.trailLength.max, 5, 30);
+      var distThreshMax = myp5.map(
+        poseDetectionInstance.trailLength.currentValue,
+        poseDetectionInstance.trailLength.min,
+        poseDetectionInstance.trailLength.max,
+        100,
+        500
+      );
+      var distTreshMin = myp5.map(
+        poseDetectionInstance.trailLength.currentValue,
+        poseDetectionInstance.trailLength.min,
+        poseDetectionInstance.trailLength.max,
+        5,
+        30
+      );
 
-      if (myp5.dist(p1.pos.x, p1.pos.y, p2.pos.x, p2.pos.y) > distThreshMax || myp5.dist(p1.pos.x, p1.pos.y, p2.pos.x, p2.pos.y) < distTreshMin) {
+      if (
+        myp5.dist(p1.pos.x, p1.pos.y, p2.pos.x, p2.pos.y) > distThreshMax ||
+        myp5.dist(p1.pos.x, p1.pos.y, p2.pos.x, p2.pos.y) < distTreshMin
+      ) {
         continue;
       }
 
-      if (myp5.dist(p2.pos.x, p2.pos.y, p3.pos.x, p3.pos.y) > distThreshMax || myp5.dist(p2.pos.x, p2.pos.y, p3.pos.x, p3.pos.y) < distTreshMin) {
+      if (
+        myp5.dist(p2.pos.x, p2.pos.y, p3.pos.x, p3.pos.y) > distThreshMax ||
+        myp5.dist(p2.pos.x, p2.pos.y, p3.pos.x, p3.pos.y) < distTreshMin
+      ) {
         continue;
       }
 
-      if (myp5.dist(p1.pos.x, p1.pos.y, p3.pos.x, p3.pos.y) > distThreshMax || myp5.dist(p1.pos.x, p1.pos.y, p3.pos.x, p3.pos.y) < distTreshMin) {
+      if (
+        myp5.dist(p1.pos.x, p1.pos.y, p3.pos.x, p3.pos.y) > distThreshMax ||
+        myp5.dist(p1.pos.x, p1.pos.y, p3.pos.x, p3.pos.y) < distTreshMin
+      ) {
         continue;
       }
 
       // Base its hue by the particle's life.
       if (useFill) {
         myp5.noStroke();
-        myp5.fill(poseDetectionInstance.hue.currentValue + p1.life * 1.5, poseDetectionInstance.saturation.currentValue, 360);
+        myp5.fill(
+          poseDetectionInstance.hue.currentValue + p1.life * 1.5,
+          poseDetectionInstance.saturation.currentValue,
+          360
+        );
       } else {
         myp5.noFill();
-        myp5.stroke(poseDetectionInstance.hue.currentValue + p1.life * 1.5, poseDetectionInstance.saturation.currentValue, 360);
+        myp5.stroke(
+          poseDetectionInstance.hue.currentValue + p1.life * 1.5,
+          poseDetectionInstance.saturation.currentValue,
+          360
+        );
       }
 
-      myp5.strokeWeight(myp5.map(poseDetectionInstance.radius.currentValue, poseDetectionInstance.radius.min, poseDetectionInstance.radius.max, 1, 4))
+      myp5.strokeWeight(
+        myp5.map(
+          poseDetectionInstance.radius.currentValue,
+          poseDetectionInstance.radius.min,
+          poseDetectionInstance.radius.max,
+          1,
+          4
+        )
+      );
       myp5.push();
-      myp5.scale(myp5.map(poseDetectionInstance.radius.currentValue, poseDetectionInstance.radius.min, poseDetectionInstance.radius.max, 1, 4));
-      myp5.triangle(p1.pos.x, p1.pos.y,
-        p2.pos.x, p2.pos.y,
-        p3.pos.x, p3.pos.y);
+      myp5.scale(
+        myp5.map(
+          poseDetectionInstance.radius.currentValue,
+          poseDetectionInstance.radius.min,
+          poseDetectionInstance.radius.max,
+          1,
+          4
+        )
+      );
+      myp5.triangle(p1.pos.x, p1.pos.y, p2.pos.x, p2.pos.y, p3.pos.x, p3.pos.y);
       myp5.pop();
-
     }
   }
 
@@ -774,9 +820,7 @@ function renderParticleNet() {
   // myp5.fill(255);
 }
 
-
 function createParticle() {
-
   for (let i = 0; i < poses.length; i++) {
     let pose = poses[i].pose;
 
@@ -784,14 +828,17 @@ function createParticle() {
       // A keypoint is an object describing a body part (like rightArm or leftShoulder)
       let keypoint = pose.keypoints[j];
       if (keypoint.score > 0.2 && partsToTrack.includes(keypoint.part)) {
-        allParticles.push(new Particle(keypoint.position.x - this.windowWidth / 2, keypoint.position.y - this.windowHeight / 2, maxLevel));
+        allParticles.push(
+          new Particle(
+            keypoint.position.x - this.windowWidth / 2,
+            keypoint.position.y - this.windowHeight / 2,
+            maxLevel
+          )
+        );
       }
     }
   }
 }
-
-
-
 
 function keyPressed() {
   useFill = !useFill;

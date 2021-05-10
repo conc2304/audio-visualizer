@@ -11,12 +11,14 @@ import OuterWaves from '@/js/sketches/SketchConstructorOuterWaves';
 import Parametric from '@/js/sketches/SketchConstructorParametric';
 import Tunnel from '@/js/sketches/SketchConstructorTunnel';
 import BodyBrush from '@/js/sketches/SketchConstructorBodyBrush';
+import ParametricFlocking from '@/js/sketches/SketchParametricFlocking';
 import FlockingLight from '@/js/sketches/SketchFlockingLight';
 
 const registeredSketches = [];
 
 // SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new FlockingLight(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new ParametricFlocking(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new FlockingLight(window.innerWidth, window.innerHeight));
 // SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
 // SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
 // SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
