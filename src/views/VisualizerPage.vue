@@ -18,7 +18,7 @@ import AppSettingsMenu from "@/components/AppSettingsMenu.vue";
 import Visualizer from "@/js/sketches/SketchBaseVisualizer";
 import RegisteredSketches from "@/js/services/SketchRegistration";
 import KeyboardControlsService from "@/js/services/KeyboardControlsService";
-// import p5 from "@/plugins/p5/lib/p5"; // use this one for instantiation of fft, amplitude ...
+import P5 from "p5";
 import APS from "@/js/services/AudioPlayerService";
 import Utils from "@/js/services/Utils";
 
@@ -42,7 +42,7 @@ export default {
     },
   },
   mounted() {
-    const sketch = new p5(Visualizer, "sketch-container");
+    const sketch = new P5(Visualizer, "sketch-container");
 
     // alphabet charcodes fo A-Z = [65 - 90]
     // number 0-1 = [49 - 57]
@@ -56,7 +56,7 @@ export default {
         }
 
         if (!demoEqSet) {
-          // APS.setAudioReactiveFreq(APS.frequencies[2], prop, index);
+          APS.setAudioReactiveFreq(APS.frequencies[2], prop, index);
           demoEqSet = true;
         }
 

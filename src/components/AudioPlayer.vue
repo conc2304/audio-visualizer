@@ -59,6 +59,7 @@
         v-tooltip( right)
           template( v-slot:activator= "{ on }")
             v-btn#upload-file-button(
+              aria-label="Choose Music"
               @click="uploadAudioDialog = true"
               text icon
             )
@@ -88,8 +89,8 @@ import AudioLocalList from "@/components/AudioLocalList.vue";
 import AudioAnalyzer from "@/js/sketches/SketchBaseAudioAnalyzer";
 import APS from "@/js/services/AudioPlayerService";
 import Utils from "@/js/services/Utils";
-// import p5 from "./src/plugins/p5/lib/p5";
-// import "./src/plugins/p5/lib/addons/p5.sound";
+import P5 from "p5";
+import "@/plugins/p5/lib/addons/p5.sound";
 
 export default {
   data: () => ({
@@ -140,7 +141,7 @@ export default {
   },
 
   mounted() {
-    APS.p5 = new p5(AudioAnalyzer, "audio-sketch-container");
+    APS.p5 = new P5(AudioAnalyzer, "audio-sketch-container");
     APS.songTimeElem = document.getElementById("song-time");
     APS.songProgressElem = document.getElementById("song-progress-bar");
   },

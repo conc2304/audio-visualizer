@@ -12,7 +12,6 @@ import KnobControl from "vue-knob-control";
 Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
-Vue.use(vuetify);
 Vue.use(VNus);
 Vue.use(KnobControl);
 

@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app#app
-    v-content
+    v-main
       router-view
 </template>
 
@@ -37,7 +37,7 @@ body {
 
   .inactive {
     i, .v-icon{
-      color: $color-inactive-red;
+      color: $color-inactive-red-hover;
 
       &:hover {
         color: $color-inactive-red-hover;

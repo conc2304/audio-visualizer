@@ -77,7 +77,7 @@ export default {
 #song-list-wrapper {
   max-height: 400px;
   overflow-y: scroll;
-  padding: 0rem 1.5rem 1.5rem;
+  padding: 1.5rem;
 
   &.custom-thin-scrollbar {
     &::-webkit-scrollbar-thumb {

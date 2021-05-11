@@ -64,14 +64,13 @@
           v-col( cols="12")
             v-card(
               color="#385F73"
-
             )
               v-card-title.headline Tons of processing sketches to choose from!
               v-card-subtitle Choose sketches from your favorite categories and made by your favorite creators!
               v-card-subtitle
                 small Got a sketch idea you want to see here? Well now is your chance to contribute!
                 br
-                small Head over to <a href="https://github.com/conc2304/audio-visualizer/" target="_blank"> Github </a> and become a creator!
+                small Head over to <a href="https://github.com/conc2304/audio-visualizer/" target="_blank" rel="noreferrer noopener"> Github </a> and become a creator!
 
           v-col(
             v-for="(sketch, index) in filteredSketchCatalogue"
@@ -83,7 +82,7 @@
               :catalogueItem="sketch.catalogueInfo"
               :search="search"
               :catalogueIndex="index"
-          )
+            )
 </template>
 
 <script>
@@ -208,6 +207,7 @@ export default {
   padding-bottom: 250px;
   padding-right: 1.5rem;
   overflow-y: scroll;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: $color-transparent-black;
 

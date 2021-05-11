@@ -3,7 +3,7 @@
       v-model="snackbarOpen"
       left
       multi-line
-      :timeout=0
+      :timeout=-1
       vertical
 
     )

@@ -12,7 +12,6 @@
           to="/playground"
           color="color_primary_blue"
           x-large
-
         ) To Playground
       .user-wrapper( v-if="!loginDisabled")
         .logged-in-wrapper( v-if="user.loggedIn && user.username != ''")
@@ -57,6 +56,7 @@
 import ParticleScript from "@/js/sketches/SketchBaseHomePage";
 import LoginPane from "@/components/LoginPane.vue";
 import AppSettingsMenu from "@/components/AppSettingsMenu.vue";
+import P5 from "p5";
 
 export default {
   components: {
@@ -98,9 +98,8 @@ export default {
     },
   },
   mounted() {
-    // const P5 = require("p5");
     // load p5 in instance mode
-    const sketch = new p5(ParticleScript, "splash-sketch-background");
+    const sketch = new P5(ParticleScript, "splash-sketch-background");
 
     const userObj = JSON.parse(localStorage.getItem("user"));
     if (userObj) {
@@ -168,6 +167,10 @@ h2 {
   font-weight: 300;
   font-size: 2.5rem;
   line-height: 1.15em;
+}
+
+.btn-wrapper .v-btn {
+  font-size: 1.5rem;
 }
 
 .btn-wrapper,
