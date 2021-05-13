@@ -9,25 +9,25 @@
 </template>
 
 <script>
-import * as THREE from 'three';
-import Navigation from '@/components/Navigation';
+import * as THREE from "three";
+import Navigation from "@/components/Navigation";
 
 let scene = null;
 let camera = null;
 let renderer = null;
-let donuts = [];
-let velocity = 0.1;
+const donuts = [];
+const velocity = 0.1;
 
 const randomInRange = (from, to) => {
   const x = Math.random() * (to - from);
   return x + from;
 };
 
-
-
 const createDonut = () => {
   const geometry = new THREE.TorusGeometry(1, 0.5, 5, 30);
-  const material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xff55ee });
+  const material = new THREE.MeshBasicMaterial({
+    color: Math.random() * 0xff55ee,
+  });
   const donut = new THREE.Mesh(geometry, material);
 
   donut.position.x = randomInRange(-15, 15);
@@ -53,7 +53,12 @@ export default {
       scene.add(new THREE.AxesHelper(8));
 
       // create and place camera
-      camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1000);
+      camera = new THREE.PerspectiveCamera(
+        30,
+        window.innerWidth / window.innerHeight,
+        1,
+        1000,
+      );
       camera.position.z = 5; // 15
       camera.position.y = 0; // -10
 
@@ -61,7 +66,7 @@ export default {
       renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
 
-      const renderElem = document.getElementById('threeJS-canvas');
+      const renderElem = document.getElementById("threeJS-canvas");
       renderElem.appendChild(renderer.domElement);
     },
 

@@ -7,44 +7,46 @@
 </template>
 
 <script>
-import * as THREE from 'three';
-import Navigation from '@/components/Navigation';
-import { FontLoader } from 'three';
+import * as THREE from "three";
+import Navigation from "@/components/Navigation";
+import { FontLoader } from "three";
 
 let scene = null;
 let camera = null;
 let renderer = null;
 let textMesh = null;
-let text = `The dead speak! The galaxy has heard a mysterious broadcast, \n
-a threat of REVENGE in the sinister voice of the late EMPEROR PALPATINE. \n
-GENERAL LEIA ORGANA dispatches secret agents to gather intelligence, \n
-while REY, the last hope of the Jedi, trains for battle against \n
-the diabolical FIRST ORDER. Meanwhile, Supreme Leader KYLO REN \n
-rages in search of the phantom Emperor, determined \n
-to destroy any threat to his power....`;
+// let text = `The dead speak! The galaxy has heard a mysterious broadcast, \n
+// a threat of REVENGE in the sinister voice of the late EMPEROR PALPATINE. \n
+// GENERAL LEIA ORGANA dispatches secret agents to gather intelligence, \n
+// while REY, the last hope of the Jedi, trains for battle against \n
+// the diabolical FIRST ORDER. Meanwhile, Supreme Leader KYLO REN \n
+// rages in search of the phantom Emperor, determined \n
+// to destroy any threat to his power....`;
 
 const loadFont = () => {
   const fontLoader = new THREE.FontLoader();
-  let test = text;
-  fontLoader.load('/assets/fonts/droid/droid_serif_bold.typeface.json', font => {
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const textGeometry = new THREE.TextGeometry(test, {
-      font,
-      size: 2,
-      height: 0.1,
-    });
+  fontLoader.load(
+    "/assets/fonts/droid/droid_serif_bold.typeface.json",
+    font => {
+      const textMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const textGeometry = new THREE.TextGeometry(test, {
+        font,
+        size: 2,
+        height: 0.1,
+      });
 
-    textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.position.x = -50;
-    textMesh.position.z = 1;
-    textMesh.rotation.x = -0.5;
-    scene.add(textMesh);
-  });
+      textMesh = new THREE.Mesh(textGeometry, textMaterial);
+      textMesh.position.x = -50;
+      textMesh.position.z = 1;
+      textMesh.rotation.x = -0.5;
+      scene.add(textMesh);
+    },
+  );
 };
 
 export default {
   data: () => ({
-    navType: 'threejs',
+    navType: "threejs",
   }),
 
   components: {
@@ -72,7 +74,7 @@ export default {
       renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
 
-      const renderElem = document.getElementById('threeJS-canvas');
+      const renderElem = document.getElementById("threeJS-canvas");
       renderElem.appendChild(renderer.domElement);
     },
 

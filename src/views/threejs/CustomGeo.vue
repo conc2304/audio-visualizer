@@ -9,8 +9,8 @@
 <script></script>
 
 <script>
-import * as THREE from 'three';
-import Navigation from '@/components/Navigation';
+import * as THREE from "three";
+import Navigation from "@/components/Navigation";
 
 let scene = null;
 let camera = null;
@@ -45,7 +45,7 @@ const addCustomGeo = () => {
 
 export default {
   data: () => ({
-    navType: 'threejs',
+    navType: "threejs",
   }),
 
   components: {
@@ -73,7 +73,7 @@ export default {
       renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
 
-      const renderElem = document.getElementById('threeJS-canvas');
+      const renderElem = document.getElementById("threeJS-canvas");
       renderElem.appendChild(renderer.domElement);
     },
 
@@ -83,13 +83,18 @@ export default {
       shape.rotation.y = time * 0.1;
       // shape.rotation.z = 2 * Math.PI * Math.cos(time);
 
-      if (!initialY && !initialX && shape.geometry.vertices[2].y && shape.geometry.vertices[3].y) {
+      if (
+        !initialY &&
+        !initialX &&
+        shape.geometry.vertices[2].y &&
+        shape.geometry.vertices[3].y
+      ) {
         initialY = shape.geometry.vertices[2].y || shape.geometry.vertices[3].y;
         initialX = shape.geometry.vertices[2].x || shape.geometry.vertices[3].x;
       }
 
-      let addY = 2 * Math.sin(time) - 4;
-      let addX = Math.sin(time) - 2;
+      const addY = 2 * Math.sin(time) - 4;
+      const addX = Math.sin(time) - 2;
       // let add = Math.sin(time );
       if (time && true) {
         shape.geometry.vertices[2].y = initialY + addY;

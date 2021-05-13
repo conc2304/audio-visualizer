@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import * as THREE from 'three';
-import Navigation from '@/components/Navigation';
-import { FontLoader } from 'three';
+import * as THREE from "three";
+import Navigation from "@/components/Navigation";
+import { FontLoader } from "three";
 
 let scene, camera, renderer, frustum;
-const cubes = []
+const cubes = [];
 
 const sceneInit = () => {
   const limit = 69;
@@ -24,15 +24,14 @@ const sceneInit = () => {
   }
 };
 
-const animate = (time) => {
+const animate = time => {
   cubes.forEach((c, i) => {
     // console.log(c.speed);
     c.position.y -= c.speed;
     c.position.z += c.speed * 1.2;
 
-    const rDirection = (c.position.x < 0) ? 1 : -1;
+    const rDirection = c.position.x < 0 ? 1 : -1;
     c.rotation.z += c.speed * 0.2 * rDirection;
-
 
     const pos = new THREE.Vector3(c.position.x, c.position.y, c.position.z);
     if (!frustum.containsPoint(pos)) {
@@ -47,7 +46,10 @@ const animate = (time) => {
 const createCube = () => {
   const radius = randomInRange(1, 8);
   const geometry = new THREE.BoxGeometry(radius, radius, radius);
-  const material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: false });
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    wireframe: false,
+  });
   const cube = new THREE.Mesh(geometry, material);
 
   cube.speed = randomInRange(0.01, 0.1);
@@ -68,7 +70,7 @@ const randomInRange = (from, to) => {
 
 export default {
   data: () => ({
-    navType: 'threejs',
+    navType: "threejs",
   }),
 
   components: {
@@ -92,7 +94,10 @@ export default {
       camera.updateMatrixWorld();
       frustum = new THREE.Frustum();
       frustum.setFromProjectionMatrix(
-        new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse),
+        new THREE.Matrix4().multiplyMatrices(
+          camera.projectionMatrix,
+          camera.matrixWorldInverse,
+        ),
       );
 
       sceneInit();
@@ -100,7 +105,7 @@ export default {
       renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
 
-      const canvas = document.getElementById('threeJS-canvas');
+      const canvas = document.getElementById("threeJS-canvas");
       canvas.appendChild(renderer.domElement);
     },
 

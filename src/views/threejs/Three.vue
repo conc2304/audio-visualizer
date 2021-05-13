@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import * as THREE from 'three';
-import Navigation from '@/components/Navigation';
+import * as THREE from "three";
+import Navigation from "@/components/Navigation";
 
 export default {
   data: () => ({
@@ -20,7 +20,7 @@ export default {
     objects: {},
     ADD: -0.04,
 
-    navType: 'threejs',
+    navType: "threejs",
   }),
 
   components: {
@@ -57,7 +57,7 @@ export default {
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-      const renderingElem = document.getElementById('threejs-renderer');
+      const renderingElem = document.getElementById("threejs-renderer");
       renderingElem.appendChild(this.renderer.domElement);
     },
 
@@ -71,8 +71,19 @@ export default {
     },
 
     createSphere() {
-      const geometry = new THREE.SphereGeometry(1, 30, 30, 0, Math.PI, 0, Math.PI / 2);
-      const material = new THREE.MeshBasicMaterial({ color: 0x000ff88, wireframe: true });
+      const geometry = new THREE.SphereGeometry(
+        1,
+        30,
+        30,
+        0,
+        Math.PI,
+        0,
+        Math.PI / 2,
+      );
+      const material = new THREE.MeshBasicMaterial({
+        color: 0x000ff88,
+        wireframe: true,
+      });
       const sphere = new THREE.Mesh(geometry, material);
 
       this.objects.sphere = sphere;
@@ -81,7 +92,10 @@ export default {
 
     createTorus() {
       const geometry = new THREE.TorusGeometry(2, 0.5, 20, 20, 2 * Math.PI);
-      const material = new THREE.MeshBasicMaterial({ color: 0xff55ee, wireframe: true });
+      const material = new THREE.MeshBasicMaterial({
+        color: 0xff55ee,
+        wireframe: true,
+      });
       const torus = new THREE.Mesh(geometry, material);
 
       this.objects.torus = torus;
@@ -90,7 +104,7 @@ export default {
 
     moveSphere() {
       const sphere = this.objects.sphere || null;
-      if (!sphere) reutrn;
+      if (!sphere) return;
 
       sphere.rotation.y += this.ADD;
 

@@ -6,21 +6,24 @@
 </template>
 
 <script>
-import * as THREE from 'three';
-import Navigation from '@/components/Navigation';
+import * as THREE from "three";
+import Navigation from "@/components/Navigation";
 
 let scene;
 let camera;
 let renderer;
-let rings = {
+const rings = {
   velocity: 0.001,
   instances: [],
-}
+};
 
 const createPlanet = (options = {}) => {
   const { radius, x, y, z } = options;
   const geometry = new THREE.SphereGeometry(radius, 30, 30);
-  const material = new THREE.MeshBasicMaterial({ color: 0x000ff88, wireframe: false });
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x000ff88,
+    wireframe: false,
+  });
   const sphere = new THREE.Mesh(geometry, material);
 
   sphere.position.x = x || 0;
@@ -33,7 +36,10 @@ const createRing = (options = {}) => {
   const { radius, tilt, x, y, z } = options;
   const ringWidth = Math.random() * (radius * 0.4 - radius * 0.1);
   const geometry = new THREE.TorusGeometry(radius, ringWidth, 2, 30);
-  const material = new THREE.MeshBasicMaterial({ color: 0x0dffe6, wireframe: true });
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x0dffe6,
+    wireframe: true,
+  });
   const ring = new THREE.Mesh(geometry, material);
 
   ring.position.x = x || 0;
@@ -60,11 +66,10 @@ const createSaturn = () => {
 };
 
 const animateRings = () => {
-  rings.instances.forEach(
-    ring => {
-      ring.rotation.z += rings.velocity;
-    });
-}
+  rings.instances.forEach(ring => {
+    ring.rotation.z += rings.velocity;
+  });
+};
 
 const onWindowResize = () => {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -87,7 +92,12 @@ export default {
       scene.background = new THREE.Color(0x000000);
       scene.add(new THREE.AxesHelper(5));
 
-      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+      camera = new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth / window.innerHeight,
+        1,
+        1000,
+      );
       camera.position.z = 5;
 
       renderer = new THREE.WebGLRenderer();
@@ -95,10 +105,10 @@ export default {
 
       createSaturn();
 
-      const renderElem = document.getElementById('threeJS-canvas');
+      const renderElem = document.getElementById("threeJS-canvas");
       renderElem.appendChild(renderer.domElement);
 
-      window.addEventListener('resize', onWindowResize, false);
+      window.addEventListener("resize", onWindowResize, false);
     },
 
     mainLoop() {

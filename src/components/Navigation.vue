@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Router from '@/router/index.js';
+import Router from "@/router/index.js";
 
 export default {
   data: () => ({
@@ -18,7 +18,7 @@ export default {
 
   props: {
     navType: {
-      default: '',
+      default: "",
       type: String,
     },
   },
