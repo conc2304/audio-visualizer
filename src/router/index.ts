@@ -10,6 +10,7 @@ import CustomGeo from "@/views/threejs/CustomGeo.vue";
 import TextGeometry from "@/views/threejs/TextGeometry.vue";
 import GeometryWrapUp from "@/views/threejs/GeometryWrapUp.vue";
 import ThreeTut from "../views/threejs/ThreeTut.vue";
+import loader3dm from "@/views/threejs/loader-3dm.vue";
 
 Vue.use(VueRouter);
 
@@ -59,6 +60,11 @@ const routes: RouteConfig[] = [
     path: "/threejs/new-tut",
     name: "New Tut",
     component: ThreeTut,
+  },
+  {
+    path: "/threejs/3dm-loaders",
+    name: "3dmLoaders",
+    component: loader3dm,
   },
 ];
 
