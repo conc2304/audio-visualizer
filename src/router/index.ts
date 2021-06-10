@@ -11,6 +11,7 @@ import TextGeometry from "@/views/threejs/TextGeometry.vue";
 import GeometryWrapUp from "@/views/threejs/GeometryWrapUp.vue";
 import ThreeTut from "../views/threejs/ThreeTut.vue";
 import loader3dm from "@/views/threejs/loader-3dm.vue";
+import Lights from "@/views/threejs/Lights.vue";
 
 Vue.use(VueRouter);
 
@@ -65,6 +66,11 @@ const routes: RouteConfig[] = [
     path: "/threejs/3dm-loaders",
     name: "3dmLoaders",
     component: loader3dm,
+  },
+  {
+    path: "/threejs/lights",
+    name: "Lights",
+    component: Lights,
   },
 ];
 
