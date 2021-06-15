@@ -9,14 +9,14 @@
 import Vue from "vue";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
-import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper";
+// import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+// import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
+// import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper";
 // import {  } from "three/examples/jsm/helpers;
-import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib";
+// import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib";
 import Stats from "three/examples/jsm/libs/stats.module";
 import { GUI } from "three/examples/jsm/libs/dat.gui.module";
-import { ObjectLoader } from "three";
+// import { ObjectLoader } from "three";
 
 const assetPath = "../../assets-tutorial/";
 
@@ -27,7 +27,7 @@ let controls: OrbitControls;
 let stats: Stats;
 // let rectLight: THREE.RectAreaLight;
 // let rectLightHelper: RectAreaLightHelper;
-let object: THREE.Object3D;
+const object: THREE.Object3D | null = null;
 // let pointLight: THREE.PointLight;
 let spotLight: THREE.SpotLight;
 let lightHelper: THREE.SpotLightHelper;
@@ -278,12 +278,12 @@ export default Vue.extend({
 
     animate() {
       // rectLightHelper.update();
-      const time = Date.now() * 0.0005;
-      const delta = clock.getDelta();
+      // const time = Date.now() * 0.0005;
+      // const delta = clock.getDelta();
 
-      if (object) {
-        object.rotation.y *= 1.5 * delta;
-      }
+      // if (object) {
+      //   object.rotation.y *= 1.5 * delta;
+      // }
 
       // pointLight.position.y = 15 + Math.sin(time * 0.7) * 30;
 

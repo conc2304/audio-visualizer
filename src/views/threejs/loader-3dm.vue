@@ -10,13 +10,13 @@ import Vue from "vue";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Rhino3dmLoader } from "three/examples/jsm/loaders/3DMLoader";
-import { Object3D } from "three";
+// import { Object3D } from "three";
 
 let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
 let camera: THREE.PerspectiveCamera;
 let controls: OrbitControls;
-let canvas: HTMLCanvasElement;
+// let canvas: HTMLCanvasElement;
 
 export default Vue.extend({
   components: {},
@@ -67,7 +67,7 @@ export default Vue.extend({
         "https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/",
       );
       loader.load("../assets-tutorial/Rhino_Logo.3dm", obj => {
-        let object = obj as THREE.Object3D;
+        const object = obj as THREE.Object3D;
         scene.add(object);
         object.position.set(0, 10, 0);
         object.rotation.z = Math.PI / 2;
