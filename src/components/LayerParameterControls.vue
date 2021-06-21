@@ -73,7 +73,7 @@ export default {
       ]) {
         if (
           !this.RegisteredSketches[this.sketchIndexSelected].hasOwnProperty(
-            parameter
+            parameter,
           )
         ) {
           continue;
