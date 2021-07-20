@@ -7,32 +7,32 @@
  *
  */
 
-import RenderPolygon from "@/js/services/RenderPolygon";
-import RegisteredSketches from "@/js/services/SketchRegistration";
-import KeyboardControlsService from "@/js/services/KeyboardControlsService";
-import PoseNetService from "@/js/services/PoseNetService";
+import RenderPolygon from '@/js/services/RenderPolygon';
+import RegisteredSketches from '@/js/services/SketchRegistration';
+import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import PoseNetService from '@/js/services/PoseNetService';
 
 // keep all 'custom' code here
-const VisualizerSketch = (p5) => {
+const VisualizerSketch = p5 => {
   p5.preload = () => {
     p5.objects = {};
-    p5.objects.lambo = p5.loadModel("./assets/webgl_models/lambo.obj", true);
-    p5.objects.glock = p5.loadModel("./assets/webgl_models/glock.obj", true);
-    p5.objects.dolphin = p5.loadModel(
-      "./assets/webgl_models/dolphin.obj",
-      true
-    );
-    p5.objects.ducky = p5.loadModel("./assets/webgl_models/ducky.obj", true);
-    p5.objects.satellite = p5.loadModel(
-      "./assets/webgl_models/satellite.obj",
-      true
-    );
-    p5.objects.sword = p5.loadModel("./assets/webgl_models/sword.obj", true);
-    p5.objects.whale = p5.loadModel("./assets/webgl_models/whale.obj", true);
-    p5.objects.shuttle = p5.loadModel(
-      "./assets/webgl_models/shuttle.obj",
-      true
-    );
+    // p5.objects.lambo = p5.loadModel("./assets/webgl_models/lambo.obj", true);
+    // p5.objects.glock = p5.loadModel("./assets/webgl_models/glock.obj", true);
+    // p5.objects.dolphin = p5.loadModel(
+    //   "./assets/webgl_models/dolphin.obj",
+    //   true
+    // );
+    // p5.objects.ducky = p5.loadModel("./assets/webgl_models/ducky.obj", true);
+    // p5.objects.satellite = p5.loadModel(
+    //   "./assets/webgl_models/satellite.obj",
+    //   true
+    // );
+    // p5.objects.sword = p5.loadModel("./assets/webgl_models/sword.obj", true);
+    // p5.objects.whale = p5.loadModel("./assets/webgl_models/whale.obj", true);
+    // p5.objects.shuttle = p5.loadModel(
+    //   "./assets/webgl_models/shuttle.obj",
+    //   true
+    // );
 
     p5.ctrlElementsArray = RegisteredSketches;
   };
@@ -59,12 +59,12 @@ const VisualizerSketch = (p5) => {
       }
     }
 
-    if (PoseNetService.status === "ready") {
+    if (PoseNetService.status === 'ready') {
       PoseNetService.appWidth = p5.windowWidth;
       PoseNetService.appHeight = p5.windowHeight;
       PoseNetService.imageSource.size(
         PoseNetService.appWidth,
-        PoseNetService.appHeight
+        PoseNetService.appHeight,
       );
     }
 
