@@ -2,9 +2,11 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "outDir": "./dist",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
+    "allowJs": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "esModuleInterop": true,
