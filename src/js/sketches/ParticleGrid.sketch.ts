@@ -32,13 +32,12 @@ export default class ParticleGrid implements P5Sketch {
   private simplex = new SimplexNoise(Math.random);
 
   // Sketch Parameters
+  public noiseZoom = new NumericProperty('Noise Zoom', 'Base', -250, -700, 250, 0.7);
   public columns = new NumericProperty('Columns', 'Base', 20, 5, 40, 0.7);
   public rows = new NumericProperty('Rows', 'Base', 20, 5, 40, 0.7);
   public noiseVelocity = new NumericProperty('Noise Speed', 'Base', 0, 1, 100, 0.7);
   public noiseAmount = new NumericProperty('Noise Amount', 'Base', 50, 0, 100, 0.7);
   public noiseAmplitude = new NumericProperty('Noise Amplitude', 'Base', 3, 1, 8, 0.7);
-  public noiseZoom = new NumericProperty('Noise Zoom', 'Base', -250, -500, 250, 0.7);
-  // public noiseZoom = new NumericProperty('Zoom', 'Base', -250, -500, 250, 0.7);
 
   public strokeHue = new NumericProperty('Line Color', 'Color', 200, 0, 360, 0.7);
   public fillHue = new NumericProperty('Fill Color', 'Color', 200, 0, 360, 0.7);
@@ -76,7 +75,6 @@ export default class ParticleGrid implements P5Sketch {
     const verticalPadding = this.windowHeight * (paddingPercent * 0.01);
     const hSpacing = this.windowWidth / this.columns.currentValue;
     const vSpacing = this.windowHeight / this.rows.currentValue;
-
     const factor = this.noiseAmount.currentValue * 0.0007;
     const velocity = this.noiseVelocity.currentValue * 0.0001;
     const amplitude = this.noiseAmplitude.currentValue;
@@ -85,8 +83,7 @@ export default class ParticleGrid implements P5Sketch {
       for (let x = 0; x < this.rows.currentValue; x++) {
         const xPos = horizontalPadding + (hSpacing * y) - this.windowWidth * 0.5;
         const yPos = verticalPadding + (vSpacing * x) - this.windowHeight * 0.5;
-        let n = this.simplex.noise3D(x * factor, y * factor, sketch.frameCount * velocity) * amplitude;
-        // console.log()
+        const n = this.simplex.noise3D(x * factor, y * factor, sketch.frameCount * velocity) * amplitude;
         const i = Math.floor(sketch.map(sketch.cos(n) * sketch.cos(n), -0.5, 0.8, 0, 1000));
 
         sketch.push();

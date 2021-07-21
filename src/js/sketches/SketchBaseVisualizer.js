@@ -16,34 +16,13 @@ import PoseNetService from '@/js/services/PoseNetService';
 const VisualizerSketch = p5 => {
   p5.preload = () => {
     p5.objects = {};
-    // p5.objects.lambo = p5.loadModel("./assets/webgl_models/lambo.obj", true);
-    // p5.objects.glock = p5.loadModel("./assets/webgl_models/glock.obj", true);
-    // p5.objects.dolphin = p5.loadModel(
-    //   "./assets/webgl_models/dolphin.obj",
-    //   true
-    // );
-    // p5.objects.ducky = p5.loadModel("./assets/webgl_models/ducky.obj", true);
-    // p5.objects.satellite = p5.loadModel(
-    //   "./assets/webgl_models/satellite.obj",
-    //   true
-    // );
-    // p5.objects.sword = p5.loadModel("./assets/webgl_models/sword.obj", true);
-    // p5.objects.whale = p5.loadModel("./assets/webgl_models/whale.obj", true);
-    // p5.objects.shuttle = p5.loadModel(
-    //   "./assets/webgl_models/shuttle.obj",
-    //   true
-    // );
-
     p5.ctrlElementsArray = RegisteredSketches;
   };
 
-  let video;
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.polygon = RenderPolygon;
     p5.colorMode(p5.HSB);
-
-    // PoseNetService.initializeNet(p5);
   };
 
   p5.windowResized = () => {
@@ -79,7 +58,6 @@ const VisualizerSketch = p5 => {
       PoseNetService.imageSource.elt.readyState === 4
     ) {
       if (PoseNetService.flipHorizontal === false) p5.scale(-1.0, 1.0); // flip x-axis backwards
-      // p5.image(PoseNetService.imageSource, 0, 0, 100, 100);
       PoseNetService.getPose(p5);
     }
 

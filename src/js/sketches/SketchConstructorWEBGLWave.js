@@ -8,7 +8,6 @@ import SketchCatalogue from '@/js/services/SketchCatalogue';
 
 class WEBGLWave {
   constructor(windowWidth, windowHeight) {
-
     this.sid = Utils.guidGenerator();
 
     this.catalogueInfo = new CatalogueDataEntry(
@@ -32,32 +31,127 @@ class WEBGLWave {
     this.shakeGain = 0.009; // should be make this a dial/ controllable by button
 
     this.radius = new NumericProperty('Size', 'Base', 20, 15, 150, 0.7);
-    this.elemQty = new NumericProperty('Number of Shapes', 'Base', 1, 1, 20, 0.7);
+    this.elemQty = new NumericProperty(
+      'Number of Shapes',
+      'Base',
+      1,
+      1,
+      20,
+      0.7,
+    );
     this.xSpacing = new NumericProperty('X Spacing', 'Base', 300, 0, 900, 0.7);
     this.amplitude = new NumericProperty('Amplitude', 'Base', 75, 0, 500, 0.7);
     this.period = new NumericProperty('Period', 'Base', 500, 0, 850, 0.7);
-    this.velocity = new NumericProperty('Velocity', 'Base', -0.001, 0.005, 0.2, 0.7);
+    this.velocity = new NumericProperty(
+      'Velocity',
+      'Base',
+      -0.001,
+      0.005,
+      0.2,
+      0.7,
+    );
 
-    this.rotateX = new NumericProperty('Rotate Shape X', 'Rotation', 0, -10, 10, 0.7);
-    this.rotateY = new NumericProperty('Rotate Shape Y', 'Rotation', 0, -10, 10, 0.7);
-    this.rotateZ = new NumericProperty('Rotate Shape Z', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateX = new NumericProperty('Rotate Wave X', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateY = new NumericProperty('Rotate Wave Y', 'Rotation', 0, -10, 10, 0.7);
-    this.waveRotateZ = new NumericProperty('Rotate Wave Z', 'Rotation', 0, -10, 10, 0.7);
+    this.rotateX = new NumericProperty(
+      'Rotate Shape X',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
+    this.rotateY = new NumericProperty(
+      'Rotate Shape Y',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
+    this.rotateZ = new NumericProperty(
+      'Rotate Shape Z',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
+    this.waveRotateX = new NumericProperty(
+      'Rotate Wave X',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
+    this.waveRotateY = new NumericProperty(
+      'Rotate Wave Y',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
+    this.waveRotateZ = new NumericProperty(
+      'Rotate Wave Z',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
 
-    this.translateX = new NumericProperty('Translate X', 'Position', 0, -900, 900, 0.7);
-    this.translateY = new NumericProperty('Translate Y', 'Position', 0, -900, 900, 0.7);
-    this.translateZ = new NumericProperty('Translate Z', 'Position', 0, -900, 900, 0.7);
+    this.translateX = new NumericProperty(
+      'Translate X',
+      'Position',
+      0,
+      -900,
+      900,
+      0.7,
+    );
+    this.translateY = new NumericProperty(
+      'Translate Y',
+      'Position',
+      0,
+      -900,
+      900,
+      0.7,
+    );
+    this.translateZ = new NumericProperty(
+      'Translate Z',
+      'Position',
+      0,
+      -900,
+      900,
+      0.7,
+    );
 
-    this.strokeHue = new NumericProperty('Line Color', 'Color', 200, 0, 360, 0.7);
+    this.strokeHue = new NumericProperty(
+      'Line Color',
+      'Color',
+      200,
+      0,
+      360,
+      0.7,
+    );
     this.fillHue = new NumericProperty('Fill Color', 'Color', 200, 0, 360, 0.7);
-    this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.7);
+    this.saturation = new NumericProperty(
+      'Saturation',
+      'Color',
+      100,
+      0,
+      100,
+      0.7,
+    );
     this.stroke = new VariableProperty('Outline and Fill', 'Color', 'Outline', [
       'Outline',
       'Fill + Outline',
     ]);
 
-    this.waveType = new VariableProperty('Wave Type', 'Base', 'sin', ['sin', 'cos', 'tan']);
+    this.waveType = new VariableProperty('Wave Type', 'Base', 'sin', [
+      'sin',
+      'cos',
+      'tan',
+    ]);
     this.shape = new VariableProperty('Shape', 'Base', 'torus', [
       'torus',
       'plane',
@@ -76,7 +170,9 @@ class WEBGLWave {
       'sword',
     ]);
 
-    this.yPoints = new Array(Math.floor(this.waveWidth / this.xSpacing.currentValue));
+    this.yPoints = new Array(
+      Math.floor(this.waveWidth / this.xSpacing.currentValue),
+    );
   }
 }
 
@@ -85,14 +181,18 @@ class WEBGLWave {
  * get the location of the y points to be rendered in the wave
  */
 WEBGLWave.prototype.calcWave = function(p5) {
-  const dx = (p5.TWO_PI / this.period.currentValue) * this.xSpacing.currentValue;
-  this.waveType.currentValue = this.waveType.options.includes(this.waveType.currentValue)
+  const dx =
+    (p5.TWO_PI / this.period.currentValue) * this.xSpacing.currentValue;
+  this.waveType.currentValue = this.waveType.options.includes(
+    this.waveType.currentValue,
+  )
     ? this.waveType.currentValue
     : 'sin';
   this.origin += this.velocity.currentValue;
   let x = this.origin;
   for (let i = 0; i < this.yPoints.length; i++) {
-    this.yPoints[i] = Math[this.waveType.currentValue](x) * this.amplitude.currentValue;
+    this.yPoints[i] =
+      Math[this.waveType.currentValue](x) * this.amplitude.currentValue;
     x += dx;
   }
 };
@@ -110,8 +210,11 @@ WEBGLWave.prototype.render = function(p5) {
   if (this.elemQty.currentValue < this.elemQty.defaultMin) {
     this.elemQty.currentValue = this.elemQty.defaultMin;
   }
-  this.yPoints = new Array(Math.floor(this.waveWidth / this.elemQty.currentValue));
-  let waveWidth = this.xSpacing.currentValue * Math.round(this.elemQty.currentValue - 1);
+  this.yPoints = new Array(
+    Math.floor(this.waveWidth / this.elemQty.currentValue),
+  );
+  let waveWidth =
+    this.xSpacing.currentValue * Math.round(this.elemQty.currentValue - 1);
 
   this.calcWave(p5);
   this.rotateWave(p5);
@@ -190,8 +293,9 @@ WEBGLWave.prototype.setColor = function(p5) {
  * Renders the given 3D Primitive Shape
  */
 WEBGLWave.prototype.renderShape = function(p5) {
-  p5.push();
+  if (!p5.objects) p5.objects = {};
 
+  p5.push();
   this.rotateShape(p5);
 
   switch (this.shape.currentValue) {
@@ -201,13 +305,22 @@ WEBGLWave.prototype.renderShape = function(p5) {
       break;
     case 'plane':
     case 'torus':
-      p5[this.shape.currentValue](this.radius.currentValue * 3.5, this.radius.currentValue * 1.5);
+      p5[this.shape.currentValue](
+        this.radius.currentValue * 3.5,
+        this.radius.currentValue * 1.5,
+      );
       break;
     case 'cylinder':
-      p5[this.shape.currentValue](this.radius.currentValue * 4, this.radius.currentValue * 5);
+      p5[this.shape.currentValue](
+        this.radius.currentValue * 4,
+        this.radius.currentValue * 5,
+      );
       break;
     case 'cone':
-      p5[this.shape.currentValue](this.radius.currentValue * 5, this.radius.currentValue * 20);
+      p5[this.shape.currentValue](
+        this.radius.currentValue * 5,
+        this.radius.currentValue * 20,
+      );
       break;
     case 'ellipsoid':
       p5[this.shape.currentValue](
@@ -217,18 +330,69 @@ WEBGLWave.prototype.renderShape = function(p5) {
       );
       break;
     case 'lambo':
+      if (!p5.objects.lambo) {
+        p5.objects.lambo = p5.loadModel(
+          './assets/webgl_models/lambo.obj',
+          true,
+        );
+      }
     case 'glock':
+      if (!p5.objects.glock) {
+        p5.objects.glock = p5.loadModel(
+          './assets/webgl_models/glock.obj',
+          true,
+        );
+      }
     case 'shuttle':
+      if (!p5.objects.shuttle) {
+        p5.objects.shuttle = p5.loadModel(
+          './assets/webgl_models/shuttle.obj',
+          true,
+        );
+      }
     case 'ducky':
+      if (!p5.objects.ducky) {
+        p5.objects.ducky = p5.loadModel(
+          './assets/webgl_models/ducky.obj',
+          true,
+        );
+      }
     case 'whale':
-    case 'dolphin':
-    case 'satellite':
-    case 'sword':
-      p5.normalMaterial();
+      if (!p5.objects.whale) {
+        p5.objects.whale = p5.loadModel(
+          './assets/webgl_models/whale.obj',
+          true,
+        );
+      }
 
+    case 'dolphin':
+      if (!p5.objects.dolphin) {
+        p5.objects.dolphin = p5.loadModel(
+          './assets/webgl_models/dolphin.obj',
+          true,
+        );
+      }
+    case 'satellite':
+      if (!p5.objects.satellite) {
+        p5.objects.satellite = p5.loadModel(
+          './assets/webgl_models/satellite.obj',
+          true,
+        );
+      }
+    case 'sword':
+      if (!p5.objects.sword) {
+        p5.objects.sword = p5.loadModel(
+          './assets/webgl_models/sword.obj',
+          true,
+        );
+      }
+
+      p5.normalMaterial();
       p5.scale(this.radius.currentValue * 0.07);
       p5.model(p5.objects[this.shape.currentValue]);
       break;
+
+    // p5.objects.lambo = p5.loadModel('./assets/webgl_models/lambo.obj', true);
   }
   p5.pop();
 };
