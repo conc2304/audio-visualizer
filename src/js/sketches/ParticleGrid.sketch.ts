@@ -34,9 +34,11 @@ export default class ParticleGrid implements P5Sketch {
   // Sketch Parameters
   public columns = new NumericProperty('Columns', 'Base', 20, 5, 40, 0.7);
   public rows = new NumericProperty('Rows', 'Base', 20, 5, 40, 0.7);
-  public noiseVelocity = new NumericProperty('Noise Speed', 'Base', 0.015, 0.0001, 1, 0.7);
-  public noiseAmount = new NumericProperty('Noise Amount', 'Base', 0.01, 0.0001, 2, 0.7);
+  public noiseVelocity = new NumericProperty('Noise Speed', 'Base', 0, 1, 100, 0.7);
+  public noiseAmount = new NumericProperty('Noise Amount', 'Base', 50, 0, 100, 0.7);
   public noiseAmplitude = new NumericProperty('Noise Amplitude', 'Base', 3, 1, 8, 0.7);
+  public noiseZoom = new NumericProperty('Noise Zoom', 'Base', -250, -500, 250, 0.7);
+  // public noiseZoom = new NumericProperty('Zoom', 'Base', -250, -500, 250, 0.7);
 
   public strokeHue = new NumericProperty('Line Color', 'Color', 200, 0, 360, 0.7);
   public fillHue = new NumericProperty('Fill Color', 'Color', 200, 0, 360, 0.7);
@@ -75,8 +77,8 @@ export default class ParticleGrid implements P5Sketch {
     const hSpacing = this.windowWidth / this.columns.currentValue;
     const vSpacing = this.windowHeight / this.rows.currentValue;
 
-    const factor = this.noiseAmount.currentValue;
-    const velocity = this.noiseVelocity.currentValue;
+    const factor = this.noiseAmount.currentValue * 0.0007;
+    const velocity = this.noiseVelocity.currentValue * 0.0001;
     const amplitude = this.noiseAmplitude.currentValue;
 
     for (let y = 0; y < this.columns.currentValue; y++) {
@@ -89,7 +91,8 @@ export default class ParticleGrid implements P5Sketch {
 
         sketch.push();
         this.setColor(sketch, i);
-        sketch.translate(xPos, yPos, 0);
+        console.log(this.noiseZoom.currentValue);
+        sketch.translate(xPos, yPos, this.noiseZoom.currentValue);
         sketch.box(hSpacing * 0.95, vSpacing * 0.95, i);
         sketch.pop();
       }
