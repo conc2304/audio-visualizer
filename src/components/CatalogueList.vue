@@ -86,20 +86,20 @@
 </template>
 
 <script>
-import CatalogueItemCard from "@/components/CatalogueItemCard.vue";
-import SketchCatalogue from "@/js/services/SketchCatalogue";
+import CatalogueItemCard from '@/components/CatalogueItemCard.vue';
+import SketchCatalogue from '@/js/services/SketchCatalogue';
 
 export default {
   data: () => ({
     SketchCatalogue,
-    search: "",
+    search: '',
     sortByFields: [
-      { text: "Creator", value: "creator" },
-      { text: "Title", value: "title" },
-      { text: "Popularity", value: "popularity" },
-      { text: "Complexity", value: "complexity" },
+      { text: 'Creator', value: 'creator' },
+      { text: 'Title', value: 'title' },
+      { text: 'Popularity', value: 'popularity' },
+      { text: 'Complexity', value: 'complexity' },
     ],
-    sortBy: "",
+    sortBy: '',
     reverseSort: false,
   }),
 
@@ -109,7 +109,7 @@ export default {
 
   methods: {
     closeCatalogue() {
-      this.$store.commit("updateCatalogueOpen", false);
+      this.$store.commit('updateCatalogueOpen', false);
     },
 
     compare(a, b) {
@@ -117,8 +117,8 @@ export default {
       a = a.catalogueInfo[sortBy];
       b = b.catalogueInfo[sortBy];
 
-      if (a < b) return 1;
-      if (b < a) return -1;
+      if (a < b) return -1;
+      if (b < a) return 1;
 
       return 0;
     },
@@ -132,14 +132,11 @@ export default {
     },
 
     getFilterList() {
-      const search = this.search ? this.search.toLowerCase() : "";
-      return this.SketchCatalogue.filter((sketch) => {
-        const filterables = ["creator", "title", "description"];
+      const search = this.search ? this.search.toLowerCase() : '';
+      return this.SketchCatalogue.filter(sketch => {
+        const filterables = ['creator', 'title', 'description'];
 
         for (const filterName of filterables) {
-          if (!filterables.hasOwnProperty(filterName)) {
-            continue;
-          }
           if (sketch.catalogueInfo[filterName].toLowerCase().includes(search)) {
             return true;
           }
@@ -147,9 +144,6 @@ export default {
 
         if (sketch.catalogueInfo.tags) {
           for (const tag of sketch.catalogueInfo.tags) {
-            if (!sketch.catalogueInfo.tags.hasOwnProperty(tag)) {
-              continue;
-            }
             if (tag.toLowerCase().includes(search)) {
               return true;
             }
