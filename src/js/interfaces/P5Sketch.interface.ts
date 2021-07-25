@@ -7,6 +7,7 @@ import CatalogueInfoProperty from '../services/CatalogueDataEntry';
 export default interface P5Sketch {
   sid: string;
   catalogueInfo: CatalogueInfoProperty;
+  bypass: boolean;
 
   render(sketch: p5): void;
   easeInto(): void;
