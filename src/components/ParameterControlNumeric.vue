@@ -62,9 +62,9 @@
 </template>
 
 <script>
-import AudioReactiveControls from "@/components/AudioReactiveControls.vue";
-import ParameterLockToggle from "@/components/ParameterLockToggle.vue";
-import ParameterKeyboardInputFields from "@/components/ParameterKeyboardInputFields.vue";
+import AudioReactiveControls from '@/components/AudioReactiveControls.vue';
+import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
+import ParameterKeyboardInputFields from '@/components/ParameterKeyboardInputFields.vue';
 
 export default {
   // Note:
@@ -103,7 +103,7 @@ export default {
     getParameterAttributes() {
       this.sliderConfig = {
         connect: [false, true, true, false],
-        connectColors: ["color_primary_blue", "color_primary_blue"],
+        connectColors: ['color_primary_blue', 'color_primary_blue'],
         start: [
           this.parameter.min,
           this.parameter.currentValue,
@@ -126,6 +126,11 @@ export default {
       this.parameter.min = event[0];
       this.parameter.targetValue = event[1];
       this.parameter.max = event[2];
+    },
+
+    closeAuxInputFields() {
+      this.AudioInputVisible = false;
+      this.KeyboardInputVisible = false;
     },
   },
 
@@ -204,11 +209,11 @@ export default {
   }
 
   .noUi-base :nth-child(2) .noUi-tooltip::after {
-    content: "min";
+    content: 'min';
   }
 
   .noUi-base :nth-child(4) .noUi-tooltip::after {
-    content: "max";
+    content: 'max';
   }
 
   .noUi-handle-draggable-tooltip-overlay {
@@ -216,7 +221,7 @@ export default {
   }
 
   &.color-slider .noUi-connects::after {
-    content: "";
+    content: '';
     background: linear-gradient(
       to right,
       red,
@@ -237,7 +242,7 @@ export default {
   }
 
   &.saturation-slider .noUi-connects::after {
-    content: "";
+    content: '';
     background: linear-gradient(to right, white, $color-primary-blue);
     width: 100%;
     height: 2px;

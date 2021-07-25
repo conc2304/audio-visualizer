@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import LayerParameterControls from "@/components/LayerParameterControls.vue";
+import LayerParameterControls from '@/components/LayerParameterControls.vue';
 
 export default {
-  name: "LayerControllerCategories",
+  name: 'LayerControllerCategories',
   components: {
     LayerParameterControls,
   },
@@ -49,6 +49,10 @@ export default {
   },
 
   methods: {
+    test() {
+      console.log('test');
+    },
+
     updateConfigs() {
       this.RegisteredSketches = this.RegisteredSketches;
     },

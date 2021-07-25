@@ -55,8 +55,16 @@ export default {
     },
 
     sketchName() {
-      return this.RegisteredSketches[this.sketchIndexSelected].catalogueInfo
-        .title;
+      if (
+        this.sketchIndexSelected < 0 ||
+        !this.RegisteredSketches ||
+        !this.RegisteredSketches[this.sketchIndexSelected]
+      )
+        return '';
+      return (
+        this.RegisteredSketches[this.sketchIndexSelected].catalogueInfo.title ||
+        ''
+      );
     },
   },
 };
