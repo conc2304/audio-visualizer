@@ -2,26 +2,25 @@
   #layer-controls-container( v-show="menuOpen")
     .layer-control-header
       .layer-control-title
-        h3 Layer {{ sketchIndexSelected + 1 }} Controls
+        h3.center Layer {{ sketchIndexSelected + 1 }} Controls
+        h5.center {{ sketchName }}
         v-list-item.close( @click="closeMenu")
           v-icon close
 
       LayerDashboard(
-
         :RegisteredSketches="RegisteredSketches"
       )
 
     .layer-control-contents
       LayerCategoriesExpansionList(
-
         :RegisteredSketches="RegisteredSketches"
         :auxInputVisible="auxInputVisible"
       )
 </template>
 
 <script>
-import LayerDashboard from "@/components/LayerDashboard.vue";
-import LayerCategoriesExpansionList from "@/components/LayerCategoriesExpansionList.vue";
+import LayerDashboard from '@/components/LayerDashboard.vue';
+import LayerCategoriesExpansionList from '@/components/LayerCategoriesExpansionList.vue';
 
 export default {
   data: () => ({
@@ -45,14 +44,19 @@ export default {
   methods: {
     closeMenu() {
       this.menuOpen = false;
-      this.$store.commit("updateSketchIndexSelected", null);
-      this.$emit("layer_menu_toggle", false);
+      this.$store.commit('updateSketchIndexSelected', null);
+      this.$emit('layer_menu_toggle', false);
     },
   },
 
   computed: {
     sketchIndexSelected() {
       return this.$store.state.sketchIndexSelected;
+    },
+
+    sketchName() {
+      return this.RegisteredSketches[this.sketchIndexSelected].catalogueInfo
+        .title;
     },
   },
 };
@@ -67,9 +71,14 @@ export default {
 #layer-controls-container {
   width: $secondary-menu-width;
 
-  h3 {
+  .center {
     text-align: center;
-    line-height: 48px;
+  }
+  h3 {
+    margin-top: 10px;
+  }
+  h5 {
+    font-family: Roboto;
   }
 }
 
@@ -79,12 +88,10 @@ export default {
   border-right: 1px solid $subtle-border;
 }
 
-.layer-control-title {
-  height: 49px;
-  border-bottom: 1px solid $color-std-grey;
-}
 .layer-control-header {
   position: relative;
+  height: 97px;
+  border-bottom: 1px solid $color-std-grey;
 
   .close {
     position: absolute;
@@ -100,6 +107,7 @@ export default {
   background-color: $color-std-grey;
   border-left: 1px solid $subtle-border;
   border-radius: 0 10px 10px 0;
+
   i {
     color: $color-off-white;
   }
