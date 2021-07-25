@@ -77,6 +77,10 @@ export class Utils {
     };
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
   };
+
+  degreeToRadian(degree: number) {
+    return degree * (Math.PI / 180);
+  }
 }
 
 

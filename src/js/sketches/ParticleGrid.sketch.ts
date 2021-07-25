@@ -97,7 +97,7 @@ export default class ParticleGrid implements P5Sketch {
         this.setColor(sketch, i);
 
         sketch.translate(xPos, yPos, this.noiseZoom.currentValue);
-        sketch.rotateX(this.rotateX.currentValue * (sketch.PI / 180));
+        sketch.rotateX(Utils.degreeToRadian(this.rotateX.currentValue));
         sketch.box(hSpacing * 0.95, vSpacing * 0.95, i);
         sketch.pop();
       }
