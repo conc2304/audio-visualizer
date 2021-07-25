@@ -6,7 +6,8 @@ export default class NumericProperty {
     public defaultValue: number,
     public defaultMin: number,
     public defaultMax: number,
-    public easingValue: number = 0.7) {
+    public easingValue: number = 0.7,
+    public stepSize: number | null = null) {
 
     const startValue = defaultValue !== null ? defaultValue : defaultMin !== null && defaultMax !== null ? (defaultMin + defaultMax) * 0.51 : 0;
 

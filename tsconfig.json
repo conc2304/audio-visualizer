@@ -4,6 +4,8 @@
     "module": "esnext",
     "outDir": "./dist",
     "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
     "jsx": "preserve",
     "importHelpers": true,
     "allowJs": true,

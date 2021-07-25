@@ -45,6 +45,7 @@
           :value="sliderValues"
           @update="updateSliderValues($event)"
           :disabled='parameter.lockOn'
+          :step="1"
         )
 
       ParameterKeyboardInputFields(
@@ -114,6 +115,7 @@ export default {
           max: [this.parameter.defaultMax],
         },
         tooltips: true,
+        step: this.parameter.stepSize | null,
       };
       this.sliderValues = [
         this.parameter.min,
