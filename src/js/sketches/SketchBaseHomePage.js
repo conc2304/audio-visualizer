@@ -4,7 +4,7 @@ const drag = 0.001;
 let mX = 0;
 let mY = 0;
 
-class Particle {
+export class Particle {
   constructor(p5) {
     this.Xv = p5.random(0, p5.windowWidth);
     this.Yv = p5.random(0, p5.windowHeight);
@@ -15,7 +15,7 @@ class Particle {
     this.Y = p5.random(0, p5.windowHeight);
     this.w = p5.random(1 / tHold, tHold);
 
-    this.render = function () {
+    this.render = function() {
       if (!p5.mouseIsPressed) {
         this.Xv /= gravity;
         this.Yv /= gravity;
@@ -24,12 +24,7 @@ class Particle {
       this.Yv += drag * (mY - this.Y) * this.w;
       this.X += this.Xv;
       this.Y += this.Yv;
-      p5.line(
-        this.X,
-        this.Y,
-        this.pX,
-        this.pY,
-      );
+      p5.line(this.X, this.Y, this.pX, this.pY);
       this.pX = this.X;
       this.pY = this.Y;
     };

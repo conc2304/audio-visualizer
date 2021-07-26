@@ -14,8 +14,8 @@ import VariableProperty from '../services/PropertyConstructorVariable';
 
 export default class ParticleGrid implements P5Sketch {
 
-  constructor (public windowWidth: number, public windowHeight: number) {
-  }
+  constructor (public windowWidth: number, public windowHeight: number) { }
+
   public catalogueInfo = new CatalogueDataEntry(
     this.constructor,
     '3D Noise Grid',
@@ -31,13 +31,13 @@ export default class ParticleGrid implements P5Sketch {
   public bypass = false;
 
   // Sketch Parameters
-  public noiseZoom = new NumericProperty('Noise Zoom', 'Base', -700, -1000, 250, 0.7);
-  public columns = new NumericProperty('Columns', 'Base', 25, 5, 40, 0.7);
-  public rows = new NumericProperty('Rows', 'Base', 25, 5, 40, 0.7);
-  public noiseVelocity = new NumericProperty('Noise Speed', 'Base', 20, 1, 100, 0.7);
-  public noiseAmount = new NumericProperty('Noise Amount', 'Base', 50, 0, 100, 0.7);
-  public noiseAmplitude = new NumericProperty('Noise Amplitude', 'Base', 3, 1, 8, 0.7);
-  public rotateX = new NumericProperty('Rotate X', 'Base', -180, 0, 180, 0.7);
+  public noiseZoom = new NumericProperty('Noise Zoom', 'Base', -700, -1000, 250, 0.7, 1);
+  public columns = new NumericProperty('Columns', 'Base', 25, 5, 40, 0.7, 1);
+  public rows = new NumericProperty('Rows', 'Base', 25, 5, 40, 0.7, 1);
+  public noiseVelocity = new NumericProperty('Noise Speed', 'Base', 20, 1, 100, 0.7, 1);
+  public noiseAmount = new NumericProperty('Noise Amount', 'Base', 50, 0, 100, 0.7, 1);
+  public noiseAmplitude = new NumericProperty('Noise Amplitude', 'Base', 3, 1, 8, 0.7, 0.1);
+  public rotateX = new NumericProperty('Rotate X', 'Base', -180, 0, 180, 0.7, 0.5);
   public mirror = new VariableProperty('Mirror', 'Base', 'None', [
     'None',
     'X',
@@ -45,11 +45,11 @@ export default class ParticleGrid implements P5Sketch {
     'X & Y'
   ]);
 
-  public blackScale = new NumericProperty('Black Scale', 'Color', 0, 0, 100, 0.7);
-  public strokeHue = new NumericProperty('Line Color', 'Color', 200, 0, 360, 0.7);
-  public fillHue = new NumericProperty('Fill Color', 'Color', 200, 0, 360, 0.7);
-  public fillSaturation = new NumericProperty('Fill Saturation', 'Color', 100, 0, 100, 0.7);
-  public strokeSaturation = new NumericProperty('Outline Saturation', 'Color', 100, 0, 100, 0.7);
+  public blackScale = new NumericProperty('Black Scale', 'Color', 0, 0, 100, 0.7, 1);
+  public strokeHue = new NumericProperty('Line Color', 'Color', 200, 0, 360, 0.7, 1);
+  public fillHue = new NumericProperty('Fill Color', 'Color', 200, 0, 360, 0.7, 1);
+  public fillSaturation = new NumericProperty('Fill Saturation', 'Color', 100, 0, 100, 0.7, 1);
+  public strokeSaturation = new NumericProperty('Outline Saturation', 'Color', 100, 0, 100, 0.7, 1);
   public stroke = new VariableProperty('Outline and Fill', 'Color', 'Fill + Outline', [
     'Outline',
     'Fill + Outline',
