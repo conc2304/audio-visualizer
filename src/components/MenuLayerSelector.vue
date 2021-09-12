@@ -79,24 +79,24 @@ export default {
   methods: {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
-      this.$store.commit("updateSketchIndexSelected", layerIndex);
-      this.$store.commit("updateLayerMenuOpen", true);
-      this.$store.commit("updateCatalogueOpen", false);
-      this.$store.commit("updateAudioPlayerOpen", false);
+      this.$store.commit('updateSketchIndexSelected', layerIndex);
+      this.$store.commit('updateLayerMenuOpen', true);
+      this.$store.commit('updateCatalogueOpen', false);
+      this.$store.commit('updateAudioPlayerOpen', false);
     },
 
     addNewSketch() {
-      this.$store.commit("updateCatalogueOpen", true);
-      this.$store.commit("updateLayerMenuOpen", false);
-      this.$store.commit("updateAudioPlayerOpen", false);
-      this.$store.commit("updateSketchIndexSelected", -1);
+      this.$store.commit('updateCatalogueOpen', true);
+      this.$store.commit('updateLayerMenuOpen', false);
+      this.$store.commit('updateAudioPlayerOpen', false);
+      this.$store.commit('updateSketchIndexSelected', -1);
     },
 
     sketchOrderShift(deltaPos) {
       this.RegisteredSketches = array_move(
         this.RegisteredSketches,
         this.layerSelected,
-        this.layerSelected + deltaPos
+        this.layerSelected + deltaPos,
       );
 
       function array_move(arr, old_index, new_index) {
@@ -118,7 +118,9 @@ export default {
       }
 
       this.RegisteredSketches.splice(layerSelected, 1);
-      this.selectLayer(0);
+
+      const nextLayer = this.RegisteredSketches.length > 0 ? 0 : null;
+      this.selectLayer(nextLayer);
     },
   },
 
@@ -140,7 +142,8 @@ export default {
     padding: 0;
   }
 
-  .v-list-item--disabled i, .v-list-item--disabled i .v-icon {
+  .v-list-item--disabled i,
+  .v-list-item--disabled i .v-icon {
     color: #777;
   }
 
