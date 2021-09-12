@@ -15,22 +15,8 @@
             right
           )
             v-icon close
-        .temp( v-if="false")
-          v-row( class="flex-center")
-            v-col( cols="8" sm="8")
-              v-text-field(
-                v-model="search"
-                autocomplete="off"
-                clearable
-                clear-icon="close"
-                :prepend-icon="'search'"
-                placeholder="Search ..."
-                hint="Search for sketches by title, creator, or by tags"
-                outlined
-                dense
-              )
 
-        .temp( v-if="true")
+        .search-container
           v-row.search-wrapper
             v-col( class="d-flex" cols="12" sm="6")
               v-text-field(
@@ -94,9 +80,9 @@ export default {
     SketchCatalogue,
     search: '',
     sortByFields: [
-      { text: 'Creator', value: 'creator' },
+      // { text: 'Creator', value: 'creator' },
       { text: 'Title', value: 'title' },
-      { text: 'Popularity', value: 'popularity' },
+      // { text: 'Popularity', value: 'popularity' },
       { text: 'Complexity', value: 'complexity' },
     ],
     sortBy: '',

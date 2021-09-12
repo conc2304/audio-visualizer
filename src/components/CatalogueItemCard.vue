@@ -9,13 +9,13 @@
           br
 
         v-card-subtitle.no-padding
-          small.creator by {{ catalogueItem.creator }}
+          //- small.creator by {{ catalogueItem.creator }}
           br
-          .favorites
-            v-icon(
-              @click="addFavorite()"
-            ).menu-icon favorite_border
-            small.num-favorite {{catalogueItem.popularity}}
+          //- .favorites
+          //-   v-icon(
+          //-     @click="addFavorite()"
+          //-   ).menu-icon favorite_border
+          //-   small.num-favorite {{catalogueItem.popularity}}
         v-card-subtitle {{ catalogueItem.description }}
 
         v-chip.tag-chip(
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import SketchRegistration from "@/js/services/SketchRegistration";
+import SketchRegistration from '@/js/services/SketchRegistration';
 
 export default {
   data: () => ({
@@ -76,15 +76,15 @@ export default {
       this.SketchRegistration.push(
         new catalogueItem.classConstructor(
           window.innerWidth,
-          window.innerHeight
-        )
+          window.innerHeight,
+        ),
       );
     },
 
     getTagMatchColor(tag) {
       return this.search && tag.toLowerCase() === this.search.toLowerCase()
-        ? "blue"
-        : "grey";
+        ? 'blue'
+        : 'grey';
     },
 
     addFavorite() {
