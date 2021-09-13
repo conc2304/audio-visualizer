@@ -147,7 +147,7 @@ export default class ParticleGrid implements P5Sketch {
       case 'Fill + Outline':
         sketch.strokeWeight(1);
         colorNoise = (typeof noise !== 'undefined') ? (this.fillHue.currentValue + Math.abs(noise)) % this.fillHue.defaultMax : this.fillHue.currentValue;
-        brightnessNoise = (typeof noise !== 'undefined') ? (sketch.map(noise, 500, 1000, this.blackScale.defaultMax - this.blackScale.currentValue, 110, false)) : 100;
+        brightnessNoise = (typeof noise !== 'undefined') ? (sketch.map(Math.abs(noise), 500, 1000, this.blackScale.defaultMax - this.blackScale.currentValue, 110, false)) : 100;
         sketch.stroke(this.strokeHue.currentValue, this.strokeSaturation.currentValue, 100);
         sketch.fill(colorNoise, this.fillSaturation.currentValue, brightnessNoise);
         break;
