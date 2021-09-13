@@ -30,7 +30,7 @@
                 outlined
                 dense
               )
-            v-col( class="d-flex" cols="12" sm="6")
+            v-col( class="d-flex" cols="12" sm="5")
               v-select(
                 v-model="sortBy"
                 :items="sortByFields"
@@ -42,6 +42,10 @@
                 outlined
                 dense
               )
+            v-col( class="d-flex" cols="12" sm="1")
+              v-btn( class="sort-order-btn" @click="reverseSortOrder" x-small plain)
+                v-icon {{getSortIcon()}}
+
 
       v-divider
 
@@ -85,8 +89,8 @@ export default {
       // { text: 'Popularity', value: 'popularity' },
       { text: 'Complexity', value: 'complexity' },
     ],
-    sortBy: '',
-    reverseSort: false,
+    sortBy: 'title',
+    reverseSort: true,
   }),
 
   components: {
@@ -103,8 +107,8 @@ export default {
       a = a.catalogueInfo[sortBy];
       b = b.catalogueInfo[sortBy];
 
-      if (a < b) return -1;
-      if (b < a) return 1;
+      if (a < b) return -1 * (this.reverseSort ? 1 : -1);
+      if (b < a) return 1 * (this.reverseSort ? 1 : -1);
 
       return 0;
     },
@@ -113,8 +117,17 @@ export default {
       this.getFilterList();
     },
 
+    getSortIcon() {
+      return this.reverseSort ? 'mdi-sort-ascending' : 'mdi-sort-descending';
+    },
+
     getSortedList(list) {
       return list.sort(this.compare);
+    },
+
+    reverseSortOrder() {
+      this.reverseSort = !this.reverseSort;
+      this.triggerSort();
     },
 
     getFilterList() {
@@ -181,6 +194,12 @@ export default {
 .flex-center {
   justify-content: center;
 }
+
+.sort-order-btn {
+  margin-top: 9px;
+  margin-left: -11px;
+}
+
 .catalogue-content {
   width: 100%;
   height: 100vh;
@@ -206,6 +225,7 @@ export default {
   }
   &::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     background-color: $color-transparent-black;
     border-radius: 10px;
   }
