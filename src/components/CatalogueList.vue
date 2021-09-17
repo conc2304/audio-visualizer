@@ -43,7 +43,7 @@
                 dense
               )
             v-col( class="d-flex" cols="12" sm="1")
-              v-btn( class="sort-order-btn" @click="reverseSortOrder" x-small plain)
+              v-btn( class="sort-order-btn" :disabled="!sortBy" @click="reverseSortOrder" x-small plain)
                 v-icon {{getSortIcon()}}
 
 
@@ -88,6 +88,7 @@ export default {
       { text: 'Title', value: 'title' },
       // { text: 'Popularity', value: 'popularity' },
       { text: 'Complexity', value: 'complexity' },
+      { text: 'Date Created', value: 'dateTime' },
     ],
     sortBy: 'title',
     reverseSort: true,
@@ -103,7 +104,8 @@ export default {
     },
 
     compare(a, b) {
-      const sortBy = this.sortBy.toLowerCase();
+      const sortBy = this.sortBy;
+      console.log(sortBy);
       a = a.catalogueInfo[sortBy];
       b = b.catalogueInfo[sortBy];
 
@@ -114,6 +116,7 @@ export default {
     },
 
     triggerSort() {
+      console.log(this.sortBy);
       this.getFilterList();
     },
 

@@ -20,6 +20,7 @@ class Parametric {
       './assets/sketch_catalogue_gifs/parametric-1_200.gif',
       300,
       2,
+      '2020-06-11',
     );
 
     this.windowWidth = windowWidth;
@@ -37,7 +38,14 @@ class Parametric {
     this.q = new NumericProperty('Q', 'Base', 1, -5, 5, 0.7);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.7);
-    this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.7);
+    this.saturation = new NumericProperty(
+      'Saturation',
+      'Color',
+      100,
+      0,
+      100,
+      0.7,
+    );
 
     this.translateX = new NumericProperty(
       'Translate X',
@@ -55,11 +63,25 @@ class Parametric {
       windowHeight * 0.5,
       0.7,
     );
-    this.translateZ = new NumericProperty('Translate Z', 'Position', 0, -1000, 1000, 0.7);
+    this.translateZ = new NumericProperty(
+      'Translate Z',
+      'Position',
+      0,
+      -1000,
+      1000,
+      0.7,
+    );
 
     this.velocity = new NumericProperty('Velocity', 'Base', 0, -0.5, 0.5, 0.7);
 
-    this.rotateX = new NumericProperty('Rotate Shape X', 'Rotation', 0, -10, 10, 0.7);
+    this.rotateX = new NumericProperty(
+      'Rotate Shape X',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
     this.rotateXVelocity = new NumericProperty(
       'Rotate Shape X Velocity',
       'Rotation',
@@ -68,7 +90,14 @@ class Parametric {
       10,
       0.7,
     );
-    this.rotateY = new NumericProperty('Rotate Shape Y', 'Rotation', 0, -10, 10, 0.7);
+    this.rotateY = new NumericProperty(
+      'Rotate Shape Y',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
     this.rotateYVelocity = new NumericProperty(
       'Rotate Shape Y Velocity',
       'Rotation',
@@ -77,7 +106,14 @@ class Parametric {
       10,
       0.7,
     );
-    this.rotateZ = new NumericProperty('Rotate Shape Z', 'Rotation', 0, -10, 10, 0.7);
+    this.rotateZ = new NumericProperty(
+      'Rotate Shape Z',
+      'Rotation',
+      0,
+      -10,
+      10,
+      0.7,
+    );
     this.rotateZVelocity = new NumericProperty(
       'Rotate Shape Z Velocity',
       'Rotation',
@@ -87,7 +123,11 @@ class Parametric {
       0.7,
     );
 
-    this.equationType = new VariableProperty('Shape Type', 'Base', 'Ring', ['Ring', 'Pipe', 'Triangle']);
+    this.equationType = new VariableProperty('Shape Type', 'Base', 'Ring', [
+      'Ring',
+      'Pipe',
+      'Triangle',
+    ]);
   }
 }
 
@@ -138,15 +178,18 @@ Parametric.prototype.getEquation = function() {
 
 Parametric.prototype.rotateShape = function(p5) {
   p5.rotateX(
-    p5.frameCount * (this.rotateXVelocity ? this.rotateXVelocity.currentValue : 0) +
+    p5.frameCount *
+      (this.rotateXVelocity ? this.rotateXVelocity.currentValue : 0) +
       this.rotateX.currentValue,
   );
   p5.rotateY(
-    p5.frameCount * (this.rotateYVelocity ? this.rotateYVelocity.currentValue : 0) +
+    p5.frameCount *
+      (this.rotateYVelocity ? this.rotateYVelocity.currentValue : 0) +
       this.rotateY.currentValue,
   );
   p5.rotateZ(
-    p5.frameCount * (this.rotateZVelocity ? this.rotateZVelocity.currentValue : 0) +
+    p5.frameCount *
+      (this.rotateZVelocity ? this.rotateZVelocity.currentValue : 0) +
       this.rotateZ.currentValue,
   );
 };
@@ -180,7 +223,10 @@ Parametric.prototype.parametricTest = function(p5) {
       (cos(this.q + sin(this.theta)) * this.windowWidth) / this.width +
       windowWidth / 2 +
       this.translateX,
-    y: (cos(this.theta) * windowHeight) / this.height + windowHeight / 2 + this.translateY,
+    y:
+      (cos(this.theta) * windowHeight) / this.height +
+      windowHeight / 2 +
+      this.translateY,
   };
 };
 
@@ -220,7 +266,10 @@ Parametric.prototype.parametricFullScreenBounce = function(p5) {
       (p5.cos(this.q + p5.sin(this.theta)) * this.windowWidth) / this.width +
       this.windowWidth / 2 +
       this.translateX,
-    y: (p5.cos(this.theta) * windowHeight) / this.height + this.windowHeight / 2 + this.translateY,
+    y:
+      (p5.cos(this.theta) * windowHeight) / this.height +
+      this.windowHeight / 2 +
+      this.translateY,
   };
 };
 
@@ -237,10 +286,14 @@ Parametric.prototype.parametricSizeBounceTest = function(p5) {
 
   return {
     x:
-      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) * windowWidth) / this.width +
+      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) * windowWidth) /
+        this.width +
       windowWidth / 2 +
       this.translateX,
-    y: (p5.cos(this.theta) * windowHeight) / this.height + windowHeight / 2 + this.translateY,
+    y:
+      (p5.cos(this.theta) * windowHeight) / this.height +
+      windowHeight / 2 +
+      this.translateY,
   };
 };
 
@@ -250,7 +303,8 @@ Parametric.prototype.parametricFullScreenPattern002 = function(p5) {
 
   return {
     x:
-      (p5.sin(shape.theta + p5.cos(4 * shape.theta + shape.q)) * this.windowWidth) /
+      (p5.sin(shape.theta + p5.cos(4 * shape.theta + shape.q)) *
+        this.windowWidth) /
       (p5.sin(m) / 2),
     y: p5.cos(this.theta) * this.windowHeight,
   };
@@ -261,10 +315,14 @@ Parametric.prototype.parametricFullScreenPattern001 = function(p5) {
 
   return {
     x:
-      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) * windowWidth) / (p5.sin(m) / 2) +
+      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) * windowWidth) /
+        (p5.sin(m) / 2) +
       windowWidth / 2 +
       this.translateX,
-    y: (p5.cos(this.theta) * windowHeight) / this.height + windowHeight / 2 + this.translateY,
+    y:
+      (p5.cos(this.theta) * windowHeight) / this.height +
+      windowHeight / 2 +
+      this.translateY,
   };
 };
 
@@ -273,17 +331,24 @@ Parametric.prototype.parametricVerticalNoise = function(p5) {
 
   return {
     x:
-      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) * this.windowWidth) / m +
+      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) *
+        this.windowWidth) /
+        m +
       this.windowWidth / 2 +
       this.translateX,
-    y: (p5.cos(this.theta) * windowHeight) / this.height + this.windowHeight / 2 + this.translateY,
+    y:
+      (p5.cos(this.theta) * windowHeight) / this.height +
+      this.windowHeight / 2 +
+      this.translateY,
   };
 };
 
 Parametric.prototype.parametric010 = function(p5) {
   return {
     x:
-      (p5.cos(this.q + p5.sin(this.theta + 2 * this.theta)) * this.windowWidth) / 3 +
+      (p5.cos(this.q + p5.sin(this.theta + 2 * this.theta)) *
+        this.windowWidth) /
+        3 +
       this.windowWidth / 2 +
       this.translateX,
     y:
@@ -315,7 +380,9 @@ Parametric.prototype.parametric006 = function(p5) {
 Parametric.prototype.parametric009 = function(p5) {
   return {
     x:
-      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) * this.windowWidth) / this.width +
+      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) *
+        this.windowWidth) /
+        this.width +
       this.windowWidth / 2 +
       this.translateX,
     y:
@@ -328,7 +395,9 @@ Parametric.prototype.parametric009 = function(p5) {
 Parametric.prototype.parametric008 = function(p5) {
   return {
     x:
-      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) * this.windowWidth) / this.width +
+      (p5.sin(this.theta + p5.cos(4 * this.theta + this.q)) *
+        this.windowWidth) /
+        this.width +
       this.windowWidth / 2 +
       this.translateX,
     y:
@@ -341,11 +410,15 @@ Parametric.prototype.parametric008 = function(p5) {
 Parametric.prototype.parametric007 = function(p5) {
   return {
     x:
-      (p5.sin(this.theta + p5.sin(4 * this.theta + this.q)) * this.windowWidth) / 4 +
+      (p5.sin(this.theta + p5.sin(4 * this.theta + this.q)) *
+        this.windowWidth) /
+        4 +
       windowWidth / 2 +
       this.translateX,
     y:
-      (p5.cos(this.theta + p5.sin(4 * this.theta + this.q)) * this.windowHeight) / this.height +
+      (p5.cos(this.theta + p5.sin(4 * this.theta + this.q)) *
+        this.windowHeight) /
+        this.height +
       this.windowHeight / 2 +
       this.translateY,
   };

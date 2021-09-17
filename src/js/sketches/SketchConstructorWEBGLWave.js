@@ -19,6 +19,7 @@ class WEBGLWave {
       './assets/sketch_catalogue_gifs/webgl-wave_200.gif',
       277,
       4,
+      '2019-07-17',
     );
 
     this.windowWidth = windowWidth;

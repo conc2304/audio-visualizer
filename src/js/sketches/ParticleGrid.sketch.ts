@@ -26,6 +26,7 @@ export default class ParticleGrid implements P5Sketch {
     './assets/sketch_catalogue_gifs/noise-grid_200.gif',
     300,
     8,
+    '2021-08-15'
   );
 
   public sid = Utils.guidGenerator();

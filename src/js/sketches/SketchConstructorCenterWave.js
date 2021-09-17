@@ -20,6 +20,7 @@ class CenterWave {
       './assets/sketch_catalogue_gifs/center-wave_200.gif',
       300,
       2,
+      '2018-11-20',
     );
 
     this.windowWidth = windowWidth;

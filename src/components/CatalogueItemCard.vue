@@ -32,7 +32,7 @@
         tile
       )
         .img-wrap
-          v-img( width="150" :src="catalogueItem.gifURI" alt='test')
+          v-img( width="150" :src="catalogueItem.gifUri" alt='test')
           small.complexity Complexity: {{ catalogueItem.complexity }}/10
 
         v-card-actions

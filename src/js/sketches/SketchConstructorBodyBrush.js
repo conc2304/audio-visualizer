@@ -23,6 +23,7 @@ class BodyBrush {
       './assets/sketch_catalogue_gifs/body-brush_200.gif',
       400,
       5,
+      '2019-11-20',
     );
 
     this.windowWidth = windowWidth;
@@ -59,13 +60,33 @@ class BodyBrush {
     this.gravity = new NumericProperty('Gravity', 'Base', 50, 0.1, 10, 0.7);
     this.drag = new NumericProperty('Drag', 'Base', 50, 1, 100, 0.7);
     this.wDelta = new NumericProperty('T Hold?', 'Base', 50, 1, 100, 0.7);
-    this.gravityOn = new VariableProperty('Gravity On', 'Base', 'off', ['on', 'off']);
+    this.gravityOn = new VariableProperty('Gravity On', 'Base', 'off', [
+      'on',
+      'off',
+    ]);
 
-    this.shape = new VariableProperty('Show Key Point', 'Base', 'off', ['off', 'ellipse']);
+    this.shape = new VariableProperty('Show Key Point', 'Base', 'off', [
+      'off',
+      'ellipse',
+    ]);
 
     this.hue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.7);
-    this.strokeWeight = new NumericProperty('Line Width', 'Base', 1, 1, 50, 0.7);
-    this.saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.17);
+    this.strokeWeight = new NumericProperty(
+      'Line Width',
+      'Base',
+      1,
+      1,
+      50,
+      0.7,
+    );
+    this.saturation = new NumericProperty(
+      'Saturation',
+      'Color',
+      100,
+      0,
+      100,
+      0.17,
+    );
   }
 }
 
@@ -154,7 +175,11 @@ const threshold = {
   y: PoseNetService.appHeight * thresholdPercent,
 };
 BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
-  for (let particleI = 1; particleI < this.particleBodies.length + 1; particleI++) {
+  for (
+    let particleI = 1;
+    particleI < this.particleBodies.length + 1;
+    particleI++
+  ) {
     let particle = this.particleBodies[particleI - 1];
     for (let i = 0; i < pose.keypoints.length; i++) {
       let keyPoint = pose.keypoints[i];
@@ -185,7 +210,8 @@ BodyBrush.prototype.renderParticleBrush = function(p5, pose) {
         //   }
         // }
 
-        particle.gravityOn = this.gravityOn.currentValue === 'on' ? true : false;
+        particle.gravityOn =
+          this.gravityOn.currentValue === 'on' ? true : false;
 
         if (particle.targetPartName === 'nose') {
           // particle.gravityOn = true;
@@ -263,7 +289,12 @@ BodyBrush.prototype.renderSkeleton = function(p5, pose) {
     p5.stroke(this.hue.currentValue, this.saturation.currentValue, 100);
     p5.stroke(0, this.saturation.currentValue, 100);
     p5.strokeWeight(8);
-    p5.line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
+    p5.line(
+      partA.position.x,
+      partA.position.y,
+      partB.position.x,
+      partB.position.y,
+    );
   }
 };
 
@@ -277,7 +308,8 @@ BodyBrush.prototype.drawTrailers = function(p5) {
     const pose = this.history[i];
     const tempHue = this.hue.currentValue;
 
-    const hue = this.colorRotate === true ? (tempHue + rotationAmount) % 360 : tempHue;
+    const hue =
+      this.colorRotate === true ? (tempHue + rotationAmount) % 360 : tempHue;
 
     p5.noFill();
     p5.strokeWeight(3);
