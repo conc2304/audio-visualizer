@@ -18,7 +18,7 @@
         .layer-selector-wrapper( class="custom-thin-scrollbar")
           v-list-item(
             v-for="(sketch, i) in RegisteredSketches"
-            :key="i"
+            :key="sketch.sid"
             :class="{ 'active': sketchIndexSelected === i, 'inactive': sketch.bypass }"
             @click="selectLayer(i)"
           )
