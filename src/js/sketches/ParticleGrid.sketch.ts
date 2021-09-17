@@ -40,7 +40,8 @@ export default class ParticleGrid implements P5Sketch {
   public gridHeight = new NumericProperty('Grid Height', 'Base', window.innerHeight, window.innerHeight / 2, window.innerHeight * 4, 0.7, 0.5);
   public gapSize = new NumericProperty('Gap Size', 'Base', 5, 0, 100, 0.7, 1);
 
-  public functionType = new VariableProperty('Type', 'Base', 'Sine', [
+  public functionType = new VariableProperty('Type', 'Base', 'Ripple', [
+    'Ripple',
     'Sine',
     'Noise'
   ]);
@@ -52,7 +53,7 @@ export default class ParticleGrid implements P5Sketch {
   ]);
 
 
-  public zoomAmount = new NumericProperty(' Zoom', 'Transform', -700, -1000, 250, 0.7, 1);
+  public zoomAmount = new NumericProperty(' Zoom', 'Transform', -700, -8000, 250, 0.7, 1);
   public rotateXBase = new NumericProperty('Rotate X (Base)', 'Transform', 0, -180, 180, 0.7, 1);
   public rotateXParticle = new NumericProperty('Rotate X (Particle)', 'Transform', 0, -180, 180, 0.7, 0.5);
   public rotateZVelocity = new NumericProperty('Z Rotation Speed', 'Transform', 0, 0, 10, 0.7, 0.5);
@@ -84,8 +85,8 @@ export default class ParticleGrid implements P5Sketch {
     const vSpacing = this.gridHeight.currentValue / rows;
     const gapSize = (100 - this.gapSize.currentValue) * 0.01;
 
-    const particleWidth = hSpacing * gapSize;
-    const particleHeight = vSpacing * gapSize;
+    const particleWidth = Math.round(hSpacing * gapSize);
+    const particleHeight = Math.round(vSpacing * gapSize);
 
     const periodAdjustmentMap = {
       noise: 0.0007,
@@ -156,6 +157,17 @@ export default class ParticleGrid implements P5Sketch {
           this.renderNoiseParticle(sketch, zInstance, xOrigin, yOrigin, particleWidth, particleHeight);
           // this.renderNoiseParticle(sketch, zInstance * 1.05, xOrigin, yOrigin, particleWidth * 0.5, particleHeight * 0.5);
           // this.renderNoiseParticle(sketch, zInstance * 1.15, xOrigin, yOrigin, particleWidth * 0.25, particleHeight * 0.25);
+        } else if (functionType === 'ripple') {
+          const Rsq = (x * x) + (y * y);
+          const R = Math.sqrt(Rsq);
+          const z = 0.5 * (1 + Math.sin(R));
+          const zInstance = Math.floor(sketch.map(z, -1, 1, 10, 100 * amplitude));
+
+          // console.log(z, zInstance);
+
+          // this.renderNoiseParticle(sketch, zInstance, xOrigin, yOrigin, particleWidth, particleHeight);
+          console.log(zInstance, xOrigin, yOrigin, particleWidth, particleHeight);
+          this.renderNoiseParticle(sketch, zInstance, xOrigin, yOrigin, particleWidth, particleHeight);
         }
 
       }
@@ -173,16 +185,17 @@ export default class ParticleGrid implements P5Sketch {
     const dx = centerXY.x - pointXY.x;
     const dy = centerXY.y - pointXY.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    // console.log(distance <= radius, distance, radius);
     return distance <= radius;
   }
 
   private renderNoiseParticle(sketch: p5, noiseInstance: number, xPos: number, yPos: number, width: number, height: number) {
+    // console.log('renderNoise', width, height, noiseInstance);
+    const depth = noiseInstance;
     sketch.push();
     this.setColor(sketch, noiseInstance);
     sketch.translate(xPos, yPos, 0);
     sketch.rotateX(Utils.degreeToRadian(this.rotateXParticle.currentValue));
-    sketch.box(width, height, noiseInstance);
+    sketch.box(width, height, depth);
     sketch.pop();
   }
 
@@ -203,7 +216,8 @@ export default class ParticleGrid implements P5Sketch {
         colorNoise = (typeof noise !== 'undefined') ? (this.fillHue.currentValue + Math.abs(noise)) % (this.fillHue.defaultMax * colorBanding) : this.fillHue.currentValue;
         brightnessNoise = (typeof noise !== 'undefined') ? (sketch.map(Math.abs(noise), 500, 1000, this.blackScale.defaultMax - this.blackScale.currentValue, 110, false)) : 100;
         sketch.stroke(this.strokeHue.currentValue, this.strokeSaturation.currentValue, 100);
-        sketch.fill(colorNoise, this.fillSaturation.currentValue, brightnessNoise);
+        // sketch.fill(colorNoise, this.fillSaturation.currentValue, brightnessNoise);
+        sketch.fill(100, 100, 100);
         break;
     }
   };
