@@ -12,9 +12,8 @@ class CatalogueInfoProperty {
     public complexity: number,
     public creationDate: string
   ) {
-    console.log(this.creationDate);
     this.dateTime = new Date(this.creationDate || Date.now()).getTime();
-    console.log(this.dateTime);
+    this.dateTime = isNaN(this.dateTime) ? new Date(Date.now()).getTime() : this.dateTime;
   }
 
   public dateTime: number;

@@ -49,10 +49,6 @@ export default {
   },
 
   methods: {
-    test() {
-      console.log('test');
-    },
-
     updateConfigs() {
       this.RegisteredSketches = this.RegisteredSketches;
     },

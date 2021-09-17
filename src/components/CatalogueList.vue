@@ -105,7 +105,6 @@ export default {
 
     compare(a, b) {
       const sortBy = this.sortBy;
-      console.log(sortBy);
       a = a.catalogueInfo[sortBy];
       b = b.catalogueInfo[sortBy];
 
@@ -116,7 +115,6 @@ export default {
     },
 
     triggerSort() {
-      console.log(this.sortBy);
       this.getFilterList();
     },
 
