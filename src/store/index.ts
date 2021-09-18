@@ -1,11 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import RegisteredSketches from "@/js/services/SketchRegistration";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    RegisteredSketches,
     user: {},
     sketchIndexSelected: -1,
     audio: {
@@ -29,6 +30,10 @@ export default new Vuex.Store({
     loginDisabled: true,
   },
   mutations: {
+    updateRegisteredSketches(state, payload) {
+      state.RegisteredSketches = payload;
+    },
+
     updateSketchIndexSelected(state, payload) {
       state.sketchIndexSelected = payload;
     },

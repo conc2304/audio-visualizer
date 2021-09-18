@@ -8,7 +8,7 @@ import Tunnel from '@/js/sketches/SketchConstructorTunnel';
 import BodyBrush from '@/js/sketches/SketchConstructorBodyBrush';
 import ParticleGrid from '../sketches/ParticleGrid.sketch';
 
-const registeredSketches: Array<any> = [];
+const RegisteredSketches: Array<any> = [];
 
 SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
@@ -27,8 +27,8 @@ while (i < 3) {
   }
 
   const catalogueItem = SketchCatalogue[ i ].catalogueInfo;
-  registeredSketches.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
+  RegisteredSketches.push(new catalogueItem.classConstructor(window.innerWidth, window.innerHeight));
   i++;
 }
 
-export default registeredSketches;
+export default RegisteredSketches;
