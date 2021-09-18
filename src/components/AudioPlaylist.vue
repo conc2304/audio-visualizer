@@ -43,9 +43,13 @@
 </template>
 
 <script>
-import Trunquee from "@/components/Trunquee.vue";
-import APS from "@/js/services/AudioPlayerService";
-import Utils from "@/js/services/Utils";
+import Trunquee from '@/components/Trunquee.vue';
+import APS from '@/js/services/AudioPlayerService';
+import Utils from '@/js/services/Utils';
+import {
+  UPDATE_CURRENT_TRACK_INDEX,
+  UPDATE_TRACKS,
+} from '../store/mutationTypes';
 
 export default {
   components: {
@@ -61,18 +65,18 @@ export default {
   methods: {
     setSong(index) {
       const selectedSound = this.$store.state.audio.tracks[index];
-      this.$store.commit("updateCurrentTrackIndex", index);
+      this.$store.commit(UPDATE_CURRENT_TRACK_INDEX, index);
       APS.setupAudioAnalysis(selectedSound, true, this.p5);
     },
 
     removeSong(index) {
       const tracks = this.$store.state.audio.tracks;
       tracks.splice(index, 1);
-      this.$store.commit("updateTracks", tracks);
+      this.$store.commit(UPDATE_TRACKS, tracks);
 
       if (this.$store.state.audio.currentTrackIndex === index) {
         if (tracks.length === 0) {
-          this.$store.commit("updateCurrentTrackIndex", -1);
+          this.$store.commit(UPDATE_CURRENT_TRACK_INDEX, -1);
           APS.audio.stop();
           APS.audio.disconnect();
         } else {

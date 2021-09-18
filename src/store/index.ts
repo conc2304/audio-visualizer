@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import RegisteredSketches from "@/js/services/SketchRegistration";
+import initialState from "./initial-state";
+import * as actions from "./mutationTypes";
 
 Vue.use(Vuex);
 
@@ -30,72 +32,81 @@ export default new Vuex.Store({
     loginDisabled: true,
   },
   mutations: {
-    updateRegisteredSketches(state, payload) {
+
+    [ actions.UPDATE_REGISTERED_SKETCHES ](state, payload) {
+      console.log('UPDATE_REGISTERED_SKETCHES');
       state.RegisteredSketches = payload;
     },
 
-    updateSketchIndexSelected(state, payload) {
+    [ actions.UPDATE_SKETCH_INDEX_SELECTED ](state, payload) {
       state.sketchIndexSelected = payload;
     },
 
-    updateLayerMenuOpen(state, payload) {
+    [ actions.UPDATE_LAYER_MENU_OPEN ](state, payload) {
       state.layerMenuOpen = payload;
     },
 
-    updateMasterMenuOpen(state, payload) {
+    [ actions.UPDATE_MASTER_MENU_OPEN ](state, payload) {
       state.masterMenuOpen = payload;
     },
 
-    updateCatalogueOpen(state, payload) {
+    [ actions.UPDATE_CATALOGUE_OPEN ](state, payload) {
       state.catalogueOpen = payload;
     },
 
-    updateAudioPlayerOpen(state, payload) {
+    [ actions.UPDATE_AUDIO_PLAYER_OPEN ](state, payload) {
       state.audioPlayerOpen = payload;
     },
 
-    updateUserLoggedIn(state, payload) {
+    [ actions.UPDATE_USER_LOGGED_IN ](state, payload) {
       state.userLoggedIn = payload;
     },
 
-    updateUser(state, payload) {
+    [ actions.UPDATE_USER ](state, payload) {
       state.user = payload;
     },
 
-    updateIsPlaying(state, payload) {
+    [ actions.UPDATE_IS_PLAYING ](state, payload) {
       state.audio.isPlaying = payload;
     },
 
-    updateCurrentSound(state, payload) {
+    [ actions.UPDATE_CURRENT_SOUND ](state, payload) {
       state.audio.currentSound = payload;
     },
 
-    updateSoundDuration(state, payload) {
+    [ actions.UPDATE_SOUND_DURATION ](state, payload) {
       state.audio.duration = payload;
     },
 
-    updateCurrentTrackIndex(state, payload) {
+    [ actions.UPDATE_CURRENT_TRACK_INDEX ](state, payload) {
       state.audio.currentTrackIndex = payload;
     },
 
-    updateAudioIsLoading(state, payload) {
+    [ actions.UPDATE_AUDIO_IS_LOADING ](state, payload) {
       state.audio.currentTrackTime = "--:--";
       state.audio.audioIsLoading = payload;
     },
 
-    updateTracks(state, payload) {
+    [ actions.UPDATE_TRACKS ](state, payload) {
       state.audio.tracks = payload;
     },
 
-    updateCurrentTrackTime(state, payload) {
+    [ actions.UPDATE_CURRENT_TRACK_TIME ](state, payload) {
       state.audio.currentTrackTime = payload;
     },
-    updateSongProgress(state, payload) {
+    [ actions.UPDATE_SONG_PROGRESS ](state, payload) {
       state.audio.songProgress = payload;
     },
   },
+  getters: {
+    RegisteredSketches: state => {
+      return state.RegisteredSketches;
+    }
+  },
+
   actions: {
   },
   modules: {
   },
+
 });

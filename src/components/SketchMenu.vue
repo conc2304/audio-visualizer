@@ -77,16 +77,23 @@
 </template>
 
 <script>
-import MenuLayerSelector from "@/components/MenuLayerSelector.vue";
-import MenuCompositionControls from "@/components/MenuCompositionControls.vue";
-import MenuPresetLauncher from "@/components/MenuPresetLauncher.vue";
-import LayerControlPanel from "@/components/LayerControlPanel.vue";
-import AudioPlayer from "@/components/AudioPlayer.vue";
-import CatalogueList from "@/components/CatalogueList.vue";
-import HelpDialog from "@/components/HelpDialog.vue";
-import PresetAssignSnackbar from "@/components/PresetAssignSnackbar.vue";
+import MenuLayerSelector from '@/components/MenuLayerSelector.vue';
+import MenuCompositionControls from '@/components/MenuCompositionControls.vue';
+import MenuPresetLauncher from '@/components/MenuPresetLauncher.vue';
+import LayerControlPanel from '@/components/LayerControlPanel.vue';
+import AudioPlayer from '@/components/AudioPlayer.vue';
+import CatalogueList from '@/components/CatalogueList.vue';
+import HelpDialog from '@/components/HelpDialog.vue';
+import PresetAssignSnackbar from '@/components/PresetAssignSnackbar.vue';
 
-import RegisteredSketches from "@/js/services/SketchRegistration";
+import RegisteredSketches from '@/js/services/SketchRegistration';
+
+import {
+  UPDATE_SKETCH_INDEX_SELECTED,
+  UPDATE_LAYER_MENU_OPEN,
+  UPDATE_AUDIO_PLAYER_OPEN,
+  UPDATE_CATALOGUE_OPEN,
+} from '../store/mutationTypes';
 
 export default {
   components: {
@@ -110,19 +117,19 @@ export default {
 
     presetSlots: [
       {
-        iconText: "looks_one",
+        iconText: 'looks_one',
         empty: true,
       },
       {
-        iconText: "looks_two",
+        iconText: 'looks_two',
         empty: true,
       },
       {
-        iconText: "looks_3",
+        iconText: 'looks_3',
         empty: true,
       },
       {
-        iconText: "looks_4",
+        iconText: 'looks_4',
         empty: true,
       },
     ],
@@ -148,24 +155,24 @@ export default {
 
   methods: {
     updateMasterMenu() {
-      this.$store.commit("updateMasterMenuOpen", false);
+      this.$store.commit(UPDATE_LAYER_MENU_OPEN, false);
     },
 
     layerMenuToggleEvent(status) {
       // this.layerMenuOpen = status;
-      this.$store.commit("updateLayerMenuOpen", status);
+      this.$store.commit(UPDATE_LAYER_MENU_OPEN, status);
       if (status === true) {
-        this.$store.commit("updateCatalogueOpen", false);
-        this.$store.commit("updateAudioPlayerOpen", false);
+        this.$store.commit(UPDATE_CATALOGUE_OPEN, false);
+        this.$store.commit(UPDATE_AUDIO_PLAYER_OPEN, false);
       }
     },
 
     updateAudioPlayerOpen(status) {
-      this.$store.commit("updateAudioPlayerOpen", status);
+      this.$store.commit(UPDATE_AUDIO_PLAYER_OPEN, status);
       if (status === true) {
-        this.$store.commit("updateCatalogueOpen", false);
-        this.$store.commit("updateLayerMenuOpen", false);
-        this.$store.commit("updateSketchIndexSelected", -1);
+        this.$store.commit(UPDATE_CATALOGUE_OPEN, false);
+        this.$store.commit(UPDATE_LAYER_MENU_OPEN, false);
+        this.$store.commit(UPDATE_SKETCH_INDEX_SELECTED, -1);
       }
     },
 
@@ -176,12 +183,12 @@ export default {
     setCatalogueStatus(status) {
       this.catalogueOpen = status;
       if (this.catalogueOpen === true) {
-        this.$store.commit("updateLayerMenuOpen", false);
-      this.$store.commit("updateAudioPlayerOpen", status);
+        this.$store.commit(UPDATE_LAYER_MENU_OPEN, false);
+        this.$store.commit(UPDATE_AUDIO_PLAYER_OPEN, status);
         return;
       }
       if (this.catalogueOpen === false && this.sketchIndexSelected !== null) {
-        this.$store.commit("updateLayerMenuOpen", true);
+        this.$store.commit(UPDATE_LAYER_MENU_OPEN, true);
       }
     },
 
@@ -242,7 +249,8 @@ i.off-white {
 </style>
 
 <style lang="scss">
-i, .v-icon {
+i,
+.v-icon {
   margin: 0 auto;
   text-align: center;
 }

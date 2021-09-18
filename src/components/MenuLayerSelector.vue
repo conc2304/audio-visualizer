@@ -62,6 +62,12 @@
 </template>
 
 <script>
+import {
+  UPDATE_SKETCH_INDEX_SELECTED,
+  UPDATE_LAYER_MENU_OPEN,
+  UPDATE_CATALOGUE_OPEN,
+  UPDATE_AUDIO_PLAYER_OPEN,
+} from '../store/mutationTypes';
 export default {
   data: () => ({
     layerDashVisible: true,
@@ -79,17 +85,17 @@ export default {
   methods: {
     selectLayer(layerIndex) {
       this.layerSelected = layerIndex;
-      this.$store.commit('updateSketchIndexSelected', layerIndex);
-      this.$store.commit('updateLayerMenuOpen', true);
-      this.$store.commit('updateCatalogueOpen', false);
-      this.$store.commit('updateAudioPlayerOpen', false);
+      this.$store.commit(UPDATE_SKETCH_INDEX_SELECTED, layerIndex);
+      this.$store.commit(UPDATE_LAYER_MENU_OPEN, true);
+      this.$store.commit(UPDATE_CATALOGUE_OPEN, false);
+      this.$store.commit(UPDATE_AUDIO_PLAYER_OPEN, false);
     },
 
     addNewSketch() {
-      this.$store.commit('updateCatalogueOpen', true);
-      this.$store.commit('updateLayerMenuOpen', false);
-      this.$store.commit('updateAudioPlayerOpen', false);
-      this.$store.commit('updateSketchIndexSelected', -1);
+      this.$store.commit(UPDATE_CATALOGUE_OPEN, true);
+      this.$store.commit(UPDATE_LAYER_MENU_OPEN, false);
+      this.$store.commit(UPDATE_AUDIO_PLAYER_OPEN, false);
+      this.$store.commit(UPDATE_SKETCH_INDEX_SELECTED, -1);
     },
 
     sketchOrderShift(deltaPos) {

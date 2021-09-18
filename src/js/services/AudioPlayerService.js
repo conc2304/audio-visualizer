@@ -1,8 +1,16 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
 import store from '@/store';
-import P5 from "p5";
+import P5 from 'p5';
 import '@/plugins/p5/lib/addons/p5.sound';
+import {
+  UPDATE_IS_PLAYING,
+  UPDATE_CURRENT_SOUND,
+  UPDATE_AUDIO_IS_LOADING,
+  UPDATE_TRACKS,
+  UPDATE_SOUND_DURATION,
+  UPDATE_CURRENT_TRACK_INDEX,
+} from '../../store/mutationTypes';
 
 const AudioPlayerService = {
   audioIsUploading: false,
@@ -64,7 +72,7 @@ AudioPlayerService.audioUploaded = files => {
     file = files[0];
   }
 
-  store.commit('updateTracks', tracks);
+  store.commit(UPDATE_TRACKS, tracks);
 
   APS.currentSound = file;
   APS.setupAudioAnalysis(file, false);
@@ -78,7 +86,12 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
   APS.currentSound = audioFile;
 
   // only play the newly loaded song if one is not already playing
-  if (changeSong || !APS.audio || !APS.audio.isPlaying() || APS.audio.isPaused()) {
+  if (
+    changeSong ||
+    !APS.audio ||
+    !APS.audio.isPlaying() ||
+    APS.audio.isPaused()
+  ) {
     if (APS.audio) {
       APS.audio.stop();
       APS.audio.disconnect();
@@ -88,9 +101,14 @@ AudioPlayerService.setupAudioAnalysis = (audioFile, changeSong) => {
       audioFile = audioFile.path;
     }
 
-    store.commit('updateAudioIsLoading', true);
+    store.commit(UPDATE_AUDIO_IS_LOADING, true);
 
-    APS.audio = APS.p5.loadSound(audioFile, audioLoadSuccess, audioLoadError, whileLoading);
+    APS.audio = APS.p5.loadSound(
+      audioFile,
+      audioLoadSuccess,
+      audioLoadError,
+      whileLoading,
+    );
 
     APS.fft = new P5.FFT();
     APS.fft.setInput(APS.audio);
@@ -116,7 +134,7 @@ AudioPlayerService.toggleAudioState = () => {
     APS.audio.pause();
   }
 
-  store.commit('updateIsPlaying', APS.audio.isPlaying());
+  store.commit(UPDATE_IS_PLAYING, APS.audio.isPlaying());
 };
 
 /**
@@ -170,7 +188,11 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
       const eqBand = ctrlHandlers[sketchIndex][ctrlProp];
       // the value in eq band will be somewhere between 0 and 255
       // we need to scale that between the upper and lower bounds of the element
-      if (fftAnalysis[eqBand] === 0 || !controlObject || !controlObject[ctrlProp]) {
+      if (
+        fftAnalysis[eqBand] === 0 ||
+        !controlObject ||
+        !controlObject[ctrlProp]
+      ) {
         continue;
       } else {
         audioValue = APS.p5.map(
@@ -182,46 +204,81 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
         );
       }
 
-      audioValue = parseFloat(audioValue) * parseFloat(controlObject[ctrlProp].audio.gain) * 0.6;
+      audioValue =
+        parseFloat(audioValue) *
+        parseFloat(controlObject[ctrlProp].audio.gain) *
+        0.6;
 
       let setValue;
       let overBy;
       switch (controlObject[ctrlProp].audio.responsiveType) {
         case 'infinite':
-          audioValue = APS.p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
+          audioValue = APS.p5.map(
+            energyValues[eqBand],
+            0,
+            255,
+            0,
+            controlObject[ctrlProp].max,
+          );
           audioValue = audioValue * 0.01;
           setValue = controlObject[ctrlProp].targetValue + audioValue;
           break;
         case 'loop up':
-          audioValue = APS.p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
+          audioValue = APS.p5.map(
+            energyValues[eqBand],
+            0,
+            255,
+            0,
+            controlObject[ctrlProp].max,
+          );
 
           audioValue = audioValue * 0.01;
           // increase it by how much it went over and then loop from top again
-          if (controlObject[ctrlProp].targetValue + audioValue > controlObject[ctrlProp].max) {
-            overBy = controlObject[ctrlProp].targetValue + audioValue - controlObject[ctrlProp].max;
+          if (
+            controlObject[ctrlProp].targetValue + audioValue >
+            controlObject[ctrlProp].max
+          ) {
+            overBy =
+              controlObject[ctrlProp].targetValue +
+              audioValue -
+              controlObject[ctrlProp].max;
             setValue = controlObject[ctrlProp].min + overBy;
           } else {
             setValue = controlObject[ctrlProp].targetValue + audioValue;
           }
           break;
         case 'loop down':
-          audioValue = APS.p5.map(energyValues[eqBand], 0, 255, 0, controlObject[ctrlProp].max);
+          audioValue = APS.p5.map(
+            energyValues[eqBand],
+            0,
+            255,
+            0,
+            controlObject[ctrlProp].max,
+          );
 
           audioValue = audioValue * 0.01;
           // decrease it by how much it went under and then loop from top again
-          if (controlObject[ctrlProp].targetValue - audioValue < controlObject[ctrlProp].min) {
-            overBy = controlObject[ctrlProp].targetValue - audioValue + controlObject[ctrlProp].min;
+          if (
+            controlObject[ctrlProp].targetValue - audioValue <
+            controlObject[ctrlProp].min
+          ) {
+            overBy =
+              controlObject[ctrlProp].targetValue -
+              audioValue +
+              controlObject[ctrlProp].min;
             setValue = controlObject[ctrlProp].max - overBy;
           } else {
             setValue = controlObject[ctrlProp].targetValue - audioValue;
           }
           break;
         case 'subtract':
-          setValue = controlObject[ctrlProp].resetValue - Number(audioValue.toFixed(3));
+          setValue =
+            controlObject[ctrlProp].resetValue - Number(audioValue.toFixed(3));
           break;
         case 'add':
         default:
-          setValue = controlObject[ctrlProp].resetValue + Number(audioValue.toFixed(3));
+          setValue =
+            controlObject[ctrlProp].resetValue + Number(audioValue.toFixed(3));
           break;
       }
 
@@ -233,14 +290,22 @@ AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
 /**
  *
  */
-AudioPlayerService.setPropertyGain = (gainValue, parameterName, sketchIndexSelected) => {
+AudioPlayerService.setPropertyGain = (
+  gainValue,
+  parameterName,
+  sketchIndexSelected,
+) => {
   RegisteredSketches[sketchIndexSelected][parameterName].audio.gain = gainValue;
 };
 
 /**
  *
  */
-AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchIndexSelected) => {
+AudioPlayerService.setAudioReactiveFreq = (
+  frequencyRange,
+  parameter,
+  sketchIndexSelected,
+) => {
   const APS = AudioPlayerService;
   const ctrlObjectName = sketchIndexSelected;
   const freqIndex = APS.frequencies.indexOf(frequencyRange);
@@ -248,17 +313,21 @@ AudioPlayerService.setAudioReactiveFreq = (frequencyRange, parameter, sketchInde
 
   if (freqLabel && ctrlObjectName !== null && parameter && frequencyRange) {
     APS.audioCtrl[freqLabel] = APS.audioCtrl[freqLabel] || {};
-    APS.audioCtrl[freqLabel][ctrlObjectName] = APS.audioCtrl[freqLabel][ctrlObjectName] || {};
+    APS.audioCtrl[freqLabel][ctrlObjectName] =
+      APS.audioCtrl[freqLabel][ctrlObjectName] || {};
     APS.audioCtrl[freqLabel][ctrlObjectName][parameter] = frequencyRange;
 
-    APS.elementPropToFQMap[ctrlObjectName] = APS.elementPropToFQMap[ctrlObjectName] || {};
+    APS.elementPropToFQMap[ctrlObjectName] =
+      APS.elementPropToFQMap[ctrlObjectName] || {};
     APS.elementPropToFQMap[ctrlObjectName][parameter] = freqIndex;
   } else {
     if (
       APS.elementPropToFQMap[ctrlObjectName] &&
       APS.elementPropToFQMap[ctrlObjectName][parameter]
     ) {
-      const freqToClean = APS.frequencies[APS.elementPropToFQMap[ctrlObjectName][parameter]].label;
+      const freqToClean =
+        APS.frequencies[APS.elementPropToFQMap[ctrlObjectName][parameter]]
+          .label;
 
       delete APS.audioCtrl[freqToClean][ctrlObjectName][parameter];
       if (Object.size(APS.audioCtrl[freqToClean][ctrlObjectName]) === 0) {
@@ -288,22 +357,22 @@ const audioLoadSuccess = () => {
     APS.audio.stop();
     const index = store.state.audio.tracks.indexOf(APS.currentSound);
 
-    store.commit('updateCurrentSound', APS.currentSound);
-    store.commit('updateCurrentTrackIndex', index);
-    store.commit('updateSoundDuration', APS.audio.duration());
-    store.commit('updateIsPlaying', APS.audio.isPlaying());
+    store.commit(UPDATE_CURRENT_SOUND, APS.currentSound);
+    store.commit(UPDATE_CURRENT_TRACK_INDEX, index);
+    store.commit(UPDATE_SOUND_DURATION, APS.audio.duration());
+    store.commit(UPDATE_IS_PLAYING, APS.audio.isPlaying());
 
     APS.audio.playMode('restart');
     APS.audio.play();
   }
 
-  store.commit('updateIsPlaying', APS.audio.isPlaying());
-  store.commit('updateAudioIsLoading', false);
+  store.commit(UPDATE_IS_PLAYING, APS.audio.isPlaying());
+  store.commit(UPDATE_AUDIO_IS_LOADING, false);
   APS.audio.onended(endSong);
 };
 
 const audioLoadError = error => {
-  store.commit('updateAudioIsLoading', false);
+  store.commit(UPDATE_AUDIO_IS_LOADING, false);
 };
 
 /**
@@ -341,7 +410,10 @@ const endSong = () => {
     !APS.audio.isPaused() &&
     (APS.audio.currentTime() === '0' || songEnded)
   ) {
-    next = current !== tracks.length - 1 ? Math.min(current + 1, tracks.length - 1) : 0;
+    next =
+      current !== tracks.length - 1
+        ? Math.min(current + 1, tracks.length - 1)
+        : 0;
     store.state.audio.songProgress = APS.audio.currentTime();
     APS.setupAudioAnalysis(tracks[next], true, APS.p5);
   }

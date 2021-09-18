@@ -21,6 +21,7 @@
 <script>
 import LayerDashboard from '@/components/LayerDashboard.vue';
 import LayerCategoriesExpansionList from '@/components/LayerCategoriesExpansionList.vue';
+import { UPDATE_SKETCH_INDEX_SELECTED } from '../store/mutationTypes';
 
 export default {
   data: () => ({
@@ -44,7 +45,7 @@ export default {
   methods: {
     closeMenu() {
       this.menuOpen = false;
-      this.$store.commit('updateSketchIndexSelected', null);
+      this.$store.commit(UPDATE_SKETCH_INDEX_SELECTED, null);
       this.$emit('layer_menu_toggle', false);
     },
   },

@@ -78,7 +78,7 @@
 <script>
 import CatalogueItemCard from '@/components/CatalogueItemCard.vue';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
-
+import { UPDATE_CATALOGUE_OPEN } from '../store/mutationTypes';
 export default {
   data: () => ({
     SketchCatalogue,
@@ -100,7 +100,7 @@ export default {
 
   methods: {
     closeCatalogue() {
-      this.$store.commit('updateCatalogueOpen', false);
+      this.$store.commit(UPDATE_CATALOGUE_OPEN, false);
     },
 
     compare(a, b) {

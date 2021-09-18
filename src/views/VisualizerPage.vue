@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import SketchMenu from "@/components/SketchMenu.vue";
-import AppSettingsMenu from "@/components/AppSettingsMenu.vue";
-import Visualizer from "@/js/sketches/SketchBaseVisualizer";
-import RegisteredSketches from "@/js/services/SketchRegistration";
-import KeyboardControlsService from "@/js/services/KeyboardControlsService";
-import P5 from "p5";
-import APS from "@/js/services/AudioPlayerService";
-import Utils from "@/js/services/Utils";
+import SketchMenu from '@/components/SketchMenu.vue';
+import AppSettingsMenu from '@/components/AppSettingsMenu.vue';
+import Visualizer from '@/js/sketches/SketchBaseVisualizer';
+import RegisteredSketches from '@/js/services/SketchRegistration';
+import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import P5 from 'p5';
+import APS from '@/js/services/AudioPlayerService';
+import Utils from '@/js/services/Utils';
 
 export default {
   data: () => ({}),
@@ -32,7 +32,7 @@ export default {
 
   methods: {
     updateMasterMenu(status) {
-      this.$store.commit("updateMasterMenuOpen", status);
+      this.$store.commit(UPDATE_LAYER_MENU_OPEN, status);
     },
   },
 
@@ -42,7 +42,7 @@ export default {
     },
   },
   mounted() {
-    const sketch = new P5(Visualizer, "sketch-container");
+    const sketch = new P5(Visualizer, 'sketch-container');
 
     // alphabet charcodes fo A-Z = [65 - 90]
     // number 0-1 = [49 - 57]
@@ -51,7 +51,7 @@ export default {
       if (!RegisteredSketches.hasOwnProperty(index)) continue;
       for (const prop in RegisteredSketches[index]) {
         if (!RegisteredSketches[index].hasOwnProperty(prop)) continue;
-        if (!RegisteredSketches[index][prop].hasOwnProperty("defaultValue")) {
+        if (!RegisteredSketches[index][prop].hasOwnProperty('defaultValue')) {
           continue;
         }
 
@@ -75,7 +75,7 @@ export default {
           keyboardCharacter,
           rValue,
           prop,
-          index
+          index,
         );
       }
     }
@@ -110,7 +110,7 @@ export default {
 }
 
 * {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #settings-open {
