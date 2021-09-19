@@ -119,11 +119,10 @@ export default {
     },
 
     removeSketch() {
+      const currentLength = this.RegisteredSketches.length;
+      console.log(currentLength);
       const layerSelected = this.sketchIndexSelected;
-      const layerSelectedID = this.RegisteredSketches[this.sketchIndexSelected]
-        .sid;
-
-      console.log(layerSelectedID);
+      const layerSelectedID = this.RegisteredSketches[layerSelected].sid;
 
       if (layerSelected == null || layerSelected < 0) {
         return;
@@ -135,7 +134,8 @@ export default {
 
       this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
 
-      const nextLayer = this.RegisteredSketches.length > 0 ? 0 : null;
+      const nextLayer = currentLength > 1 ? 0 : null;
+      console.log(nextLayer);
       this.selectLayer(nextLayer);
     },
   },
