@@ -1,5 +1,5 @@
-import RegisteredSketches from '@/js/services/SketchRegistration';
-import BulkUpdateService from '@/js/services/BulkUpdaterService';
+import { getNextVariableOption } from '@/js/services/BulkUpdaterService';
+import store from '../../store';
 
 const KeyboardControlsService = {
   keyboardCtrl: {},
@@ -15,6 +15,7 @@ const KeyboardControlsService = {
  */
 KeyboardControlsService.playPianoKey = (key, pressed) => {
   const KCS = KeyboardControlsService;
+  const RegisteredSketches = store.getters.RegisteredSketches;
 
   const ctrlHandlers = KCS.keyboardCtrl[key];
   let controlObject;
@@ -37,26 +38,26 @@ KeyboardControlsService.playPianoKey = (key, pressed) => {
 
       if (controlObject[ctrlProp].attrType === 'numeric') {
         if (pressed) {
-          controlObject[ctrlProp].targetValue = controlObject[ctrlProp].currentValue = Number(
-            ctrlHandlers[controlElementName][ctrlProp],
-          );
+          controlObject[ctrlProp].targetValue = controlObject[
+            ctrlProp
+          ].currentValue = Number(ctrlHandlers[controlElementName][ctrlProp]);
         } else {
-          controlObject[ctrlProp].targetValue = controlObject[ctrlProp].currentValue = Number(
-            controlObject[ctrlProp].resetValue,
-          );
+          controlObject[ctrlProp].targetValue = controlObject[
+            ctrlProp
+          ].currentValue = Number(controlObject[ctrlProp].resetValue);
         }
       }
 
       if (controlObject[ctrlProp].attrType === 'variable') {
         if (pressed) {
-          controlObject[ctrlProp].currentValue = BulkUpdateService.getNextVariableOption(
+          controlObject[ctrlProp].currentValue = getNextVariableOption(
             controlObject,
             ctrlProp,
           );
         } else {
-          controlObject[ctrlProp].targetValue = controlObject[ctrlProp].currentValue = Number(
-            controlObject[ctrlProp].resetValue,
-          );
+          controlObject[ctrlProp].targetValue = controlObject[
+            ctrlProp
+          ].currentValue = Number(controlObject[ctrlProp].resetValue);
         }
       }
     }
@@ -104,13 +105,20 @@ KeyboardControlsService.setKeyboardControl = (
   let charCode = keyboardKey.toUpperCase().charCodeAt(0);
   let propValue = value;
 
-  if (!Number.isNaN(charCode) && ctrlObjectName !== null && property && propValue) {
+  if (
+    !Number.isNaN(charCode) &&
+    ctrlObjectName !== null &&
+    property &&
+    propValue
+  ) {
     // only update the keyboard control if we have a key to control it with
     KCS.keyboardCtrl[charCode] = KCS.keyboardCtrl[charCode] || {};
-    KCS.keyboardCtrl[charCode][ctrlObjectName] = KCS.keyboardCtrl[charCode][ctrlObjectName] || {};
+    KCS.keyboardCtrl[charCode][ctrlObjectName] =
+      KCS.keyboardCtrl[charCode][ctrlObjectName] || {};
     KCS.keyboardCtrl[charCode][ctrlObjectName][property] = Number(propValue);
 
-    KCS.ctrlElemPropToKeyMap[ctrlObjectName] = KCS.ctrlElemPropToKeyMap[ctrlObjectName] || {};
+    KCS.ctrlElemPropToKeyMap[ctrlObjectName] =
+      KCS.ctrlElemPropToKeyMap[ctrlObjectName] || {};
     KCS.ctrlElemPropToKeyMap[ctrlObjectName][property] = charCode;
   } else {
     if (

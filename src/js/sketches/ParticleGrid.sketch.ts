@@ -3,7 +3,7 @@ import p5 from 'p5';
 import SimplexNoise from "simplex-noise";
 
 // App Imports
-import Utils from '@/js/services/Utils';
+import { guidGenerator, degreeToRadian } from '@/js/services/Utils';
 import CatalogueDataEntry from '../services/CatalogueDataEntry';
 import NumericProperty from '../services/PropertyConstructorNumeric';
 import P5Sketch from '../interfaces/P5Sketch.interface';
@@ -29,7 +29,7 @@ export default class ParticleGrid implements P5Sketch {
     '2021-08-15'
   );
 
-  public sid = Utils.guidGenerator();
+  public sid = guidGenerator();
   public bypass = false;
 
   // Sketch Parameters
@@ -99,7 +99,7 @@ export default class ParticleGrid implements P5Sketch {
 
     sketch.pop();
     sketch.translate(0, 0, this.zoomAmount.currentValue);
-    sketch.rotateX(Utils.degreeToRadian(this.rotateXBase.currentValue));
+    sketch.rotateX(degreeToRadian(this.rotateXBase.currentValue));
     sketch.rotateZ(time * this.rotateZVelocity.currentValue);
     sketch.push();
     for (let y = 0; y < this.rows.currentValue; y++) {
@@ -129,7 +129,7 @@ export default class ParticleGrid implements P5Sketch {
     sketch.push();
     this.setColor(sketch, noiseInstance);
     sketch.translate(xPos, yPos, 0);
-    sketch.rotateX(Utils.degreeToRadian(this.rotateXParticle.currentValue));
+    sketch.rotateX(degreeToRadian(this.rotateXParticle.currentValue));
     sketch.box(width, height, noiseInstance);
     sketch.pop();
   }

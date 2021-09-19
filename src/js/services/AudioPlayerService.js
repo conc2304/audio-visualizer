@@ -1,5 +1,3 @@
-import RegisteredSketches from '@/js/services/SketchRegistration';
-
 import store from '@/store';
 import P5 from 'p5';
 import '@/plugins/p5/lib/addons/p5.sound';
@@ -10,6 +8,7 @@ import {
   UPDATE_TRACKS,
   UPDATE_SOUND_DURATION,
   UPDATE_CURRENT_TRACK_INDEX,
+  UPDATE_REGISTERED_SKETCHES,
 } from '../../store/mutationTypes';
 
 const AudioPlayerService = {
@@ -165,6 +164,7 @@ AudioPlayerService.analyzeFFT = fft => {
  */
 AudioPlayerService.applyAudioEnergyValues = fftAnalysis => {
   const APS = AudioPlayerService;
+  const RegisteredSketches = store.getters.RegisteredSketches;
 
   if (!fftAnalysis || fftAnalysis.size < 1) {
     return false;
@@ -295,7 +295,10 @@ AudioPlayerService.setPropertyGain = (
   parameterName,
   sketchIndexSelected,
 ) => {
+  const RegisteredSketches = store.getters.RegisteredSketches;
   RegisteredSketches[sketchIndexSelected][parameterName].audio.gain = gainValue;
+
+  store.commit(UPDATE_REGISTERED_SKETCHES, RegisteredSketches);
 };
 
 /**

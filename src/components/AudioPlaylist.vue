@@ -45,7 +45,7 @@
 <script>
 import Trunquee from '@/components/Trunquee.vue';
 import APS from '@/js/services/AudioPlayerService';
-import Utils from '@/js/services/Utils';
+import { formatAudioFilename } from '@/js/services/Utils';
 import {
   UPDATE_CURRENT_TRACK_INDEX,
   UPDATE_TRACKS,
@@ -118,7 +118,7 @@ export default {
       const playlist = [];
 
       for (const file of tracks) {
-        const formattedFilename = Utils.formatAudioFilename(file);
+        const formattedFilename = formatAudioFilename(file);
         playlist.push(formattedFilename);
       }
 

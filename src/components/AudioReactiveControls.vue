@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import KnobControl from "vue-knob-control";
-import APS from "@/js/services/AudioPlayerService";
-import RegisteredSketches from "@/js/services/SketchRegistration";
+import KnobControl from 'vue-knob-control';
+import APS from '@/js/services/AudioPlayerService';
+import { UPDATE_REGISTERED_SKETCHES } from '@/store/mutationTypes';
 
 export default {
   data: () => ({
@@ -81,7 +81,7 @@ export default {
       APS.setAudioReactiveFreq(
         this.freqRangeSelected,
         this.parameter.attrName,
-        this.selectedSketchIndex
+        this.selectedSketchIndex,
       );
     },
   },
@@ -100,16 +100,22 @@ export default {
 
   watch: {
     gain(newValue, oldValue) {
-      RegisteredSketches[this.selectedSketchIndex][
+      const sketchArrayCopy = this.RegisteredSketches;
+      const updatedGain =
+        newValue && newValue !== oldValue ? newValue * 0.01 : 0.5;
+
+      sketchArrayCopy[this.selectedSketchIndex][
         this.parameter.attrName
-      ].audio.gain = newValue && newValue !== oldValue ? newValue * 0.01 : 0.5;
+      ].audio.gain = updatedGain;
+
+      this.$store.commit(UPDATE_REGISTERED_SKETCHES, sketchArrayCopy);
     },
 
     freqRangeSelected(newValue, oldValue) {
       APS.setAudioReactiveFreq(
         newValue,
         this.parameter.attrName,
-        this.selectedSketchIndex
+        this.selectedSketchIndex,
       );
     },
   },
@@ -117,6 +123,10 @@ export default {
   computed: {
     selectedSketchIndex() {
       return this.$store.state.sketchIndexSelected;
+    },
+
+    RegisteredSketches() {
+      return this.$store.state.RegisteredSketches;
     },
   },
 };

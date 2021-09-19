@@ -1,15 +1,13 @@
 import easeInto from '@/js/services/EasingService';
 import helper from '@/js/services/p5Helper.js';
-import Utils from '@/js/services/Utils';
+import { guidGenerator } from '../services/Utils';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
 
-import SketchCatalogue from '@/js/services/SketchCatalogue';
-
 class CenterWave {
   constructor(windowWidth, windowHeight, p5) {
-    this.sid = Utils.guidGenerator();
+    this.sid = guidGenerator();
 
     this.catalogueInfo = new CatalogueDataEntry(
       this.constructor,

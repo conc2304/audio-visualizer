@@ -48,12 +48,9 @@
 </template>
 
 <script>
-import SketchRegistration from '@/js/services/SketchRegistration';
-
 export default {
   data: () => ({
     maxLayers: 8,
-    SketchRegistration,
   }),
 
   props: {
@@ -73,7 +70,7 @@ export default {
 
   methods: {
     registerNewSketch(catalogueItem) {
-      this.SketchRegistration.push(
+      this.RegisteredSketches.push(
         new catalogueItem.classConstructor(
           window.innerWidth,
           window.innerHeight,
@@ -93,8 +90,12 @@ export default {
   },
 
   computed: {
+    RegisteredSketches() {
+      return this.$store.state.RegisteredSketches;
+    },
+
     maxLayersReached() {
-      return this.SketchRegistration.length > this.maxLayers;
+      return this.RegisteredSketches.length > this.maxLayers;
     },
   },
 

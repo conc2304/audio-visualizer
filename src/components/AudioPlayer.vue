@@ -88,7 +88,7 @@ import AudioPlaylist from '@/components/AudioPlaylist.vue';
 import AudioLocalList from '@/components/AudioLocalList.vue';
 import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
 import APS from '@/js/services/AudioPlayerService';
-import Utils from '@/js/services/Utils';
+import { formatAudioFilename, formatTime } from '@/js/services/Utils';
 import P5 from 'p5';
 import '@/plugins/p5/lib/addons/p5.sound';
 import {
@@ -172,7 +172,7 @@ export default {
     currentSound() {
       const soundFile = this.$store.state.audio.currentSound;
       const duration = this.$store.state.audio.duration;
-      const formattedFilename = Utils.formatAudioFilename(soundFile);
+      const formattedFilename = formatAudioFilename(soundFile);
 
       if (formattedFilename === false) {
         return false;
@@ -181,7 +181,7 @@ export default {
       const currentSound = {};
       currentSound.title = formattedFilename.title;
       currentSound.artist = formattedFilename.artist;
-      currentSound.duration = Utils.formatTime(duration) || 'Duration';
+      currentSound.duration = formatTime(duration) || 'Duration';
 
       return currentSound;
     },

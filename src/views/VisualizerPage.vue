@@ -16,11 +16,10 @@
 import SketchMenu from '@/components/SketchMenu.vue';
 import AppSettingsMenu from '@/components/AppSettingsMenu.vue';
 import Visualizer from '@/js/sketches/SketchBaseVisualizer';
-import RegisteredSketches from '@/js/services/SketchRegistration';
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
 import P5 from 'p5';
 import APS from '@/js/services/AudioPlayerService';
-import Utils from '@/js/services/Utils';
+import { getRandomInt } from '@/js/services/Utils';
 
 export default {
   data: () => ({}),
@@ -46,6 +45,8 @@ export default {
 
     // alphabet charcodes fo A-Z = [65 - 90]
     // number 0-1 = [49 - 57]
+    const { RegisteredSketches } = this.$store.state;
+
     let demoEqSet = false;
     for (const index in RegisteredSketches) {
       if (!RegisteredSketches.hasOwnProperty(index)) continue;
@@ -61,9 +62,9 @@ export default {
         }
 
         let keyboardCharacter =
-          Utils.getRandomInt(0, 10) < 4
-            ? Utils.getRandomInt(49, 57)
-            : (keyboardCharacter = Utils.getRandomInt(65, 90));
+          getRandomInt(0, 10) < 4
+            ? getRandomInt(49, 57)
+            : (keyboardCharacter = getRandomInt(65, 90));
 
         keyboardCharacter = String.fromCharCode(keyboardCharacter);
         const min = parseFloat(RegisteredSketches[index][prop].min);

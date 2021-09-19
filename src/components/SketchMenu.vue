@@ -86,8 +86,6 @@ import CatalogueList from '@/components/CatalogueList.vue';
 import HelpDialog from '@/components/HelpDialog.vue';
 import PresetAssignSnackbar from '@/components/PresetAssignSnackbar.vue';
 
-import RegisteredSketches from '@/js/services/SketchRegistration';
-
 import {
   UPDATE_SKETCH_INDEX_SELECTED,
   UPDATE_LAYER_MENU_OPEN,
@@ -108,7 +106,6 @@ export default {
   },
 
   data: () => ({
-    RegisteredSketches,
     sketchIndexSelected: null,
     auxInputVisible: false,
     helpModalOpen: false,
@@ -136,6 +133,10 @@ export default {
   }),
 
   computed: {
+    RegisteredSketches() {
+      return this.$store.state.RegisteredSketches;
+    },
+
     presetSlotsDisabled() {
       return this.$store.state.presetSlotsDisabled;
     },

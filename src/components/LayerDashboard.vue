@@ -20,8 +20,9 @@
       </template>
 
 <script>
-import IconWithTooltip from "@/components/IconWithTooltip.vue";
-import BulkUpdateService from "@/js/services/BulkUpdaterService";
+import IconWithTooltip from '@/components/IconWithTooltip.vue';
+import { changeParameterValues } from '@/js/services/BulkUpdaterService';
+import { UPDATE_REGISTERED_SKETCHES } from '@/store/mutationTypes';
 
 export default {
   components: {
@@ -29,9 +30,6 @@ export default {
   },
 
   props: {
-    // sketchIndexSelected: {
-    //   type: Number,
-    // },
     RegisteredSketches: {
       type: Array,
     },
@@ -40,10 +38,10 @@ export default {
   data: () => ({
     layerDashboardActions: [
       {
-        mdIconText: "visibility",
-        tooltipText: "Toggle Layer Visibility",
-        title: "Visibility",
-        action: "toggleLayerVisibility",
+        mdIconText: 'visibility',
+        tooltipText: 'Toggle Layer Visibility',
+        title: 'Visibility',
+        action: 'toggleLayerVisibility',
         bypass: false,
       },
       // {
@@ -53,19 +51,19 @@ export default {
       //   action: 'randomizeAudioResponse',
       // },
       {
-        mdIconText: "shuffle",
+        mdIconText: 'shuffle',
         tooltipText:
-          "Randomizes all values this layer. Excludes audio reactive control",
-        title: "Randomize Everything",
-        action: "randomizeLayerParameters",
+          'Randomizes all values this layer. Excludes audio reactive control',
+        title: 'Randomize Everything',
+        action: 'randomizeLayerParameters',
       },
 
       {
-        mdIconText: "restore",
-        id: "reset-layer-settings",
-        tooltipText: "Reset Layer. Excludes audio reactive control",
-        title: "Layer Reset",
-        action: "resetLayer",
+        mdIconText: 'restore',
+        id: 'reset-layer-settings',
+        tooltipText: 'Reset Layer. Excludes audio reactive control',
+        title: 'Layer Reset',
+        action: 'resetLayer',
       },
     ],
   }),
@@ -80,7 +78,8 @@ export default {
     resetLayer() {
       const iString = this.sketchIndexSelected.toString();
       const indices = [iString];
-      BulkUpdateService.changeParameterValues(indices, "reset");
+      const updatedSketches = [...changeParameterValues(indices, 'reset')];
+      this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
     },
 
     randomizeAudioResponse() {},
@@ -89,7 +88,8 @@ export default {
       const iString = this.sketchIndexSelected.toString();
       const indices = [iString];
 
-      BulkUpdateService.changeParameterValues(indices, "randomize");
+      const updatedSketches = [...changeParameterValues(indices, 'randomize')];
+      this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
     },
 
     toggleLayerVisibility() {
@@ -97,8 +97,8 @@ export default {
       const bypassStatus = !this.RegisteredSketches[index].bypass;
       this.RegisteredSketches[index].bypass = bypassStatus;
       this.layerDashboardActions[0].mdIconText = bypassStatus
-        ? "visibility_off"
-        : "visibility";
+        ? 'visibility_off'
+        : 'visibility';
     },
   },
 
