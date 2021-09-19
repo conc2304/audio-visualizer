@@ -67,6 +67,7 @@ import {
   UPDATE_LAYER_MENU_OPEN,
   UPDATE_CATALOGUE_OPEN,
   UPDATE_AUDIO_PLAYER_OPEN,
+  UPDATE_REGISTERED_SKETCHES,
 } from '../store/mutationTypes';
 export default {
   data: () => ({
@@ -119,11 +120,20 @@ export default {
 
     removeSketch() {
       const layerSelected = this.sketchIndexSelected;
+      const layerSelectedID = this.RegisteredSketches[this.sketchIndexSelected]
+        .sid;
+
+      console.log(layerSelectedID);
+
       if (layerSelected == null || layerSelected < 0) {
         return;
       }
 
-      this.RegisteredSketches.splice(layerSelected, 1);
+      const updatedSketches = this.RegisteredSketches.filter(sketchItem => {
+        return sketchItem.sid !== layerSelectedID;
+      });
+
+      this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
 
       const nextLayer = this.RegisteredSketches.length > 0 ? 0 : null;
       this.selectLayer(nextLayer);

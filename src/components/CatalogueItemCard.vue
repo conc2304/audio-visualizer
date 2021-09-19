@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { UPDATE_REGISTERED_SKETCHES } from '@/store/mutationTypes';
 export default {
   data: () => ({
     maxLayers: 8,
@@ -70,12 +71,13 @@ export default {
 
   methods: {
     registerNewSketch(catalogueItem) {
-      this.RegisteredSketches.push(
-        new catalogueItem.classConstructor(
-          window.innerWidth,
-          window.innerHeight,
-        ),
+      const newSketchItem = new catalogueItem.classConstructor(
+        window.innerWidth,
+        window.innerHeight,
       );
+      const updatedSketches = [...this.RegisteredSketches, newSketchItem];
+
+      this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
     },
 
     getTagMatchColor(tag) {

@@ -52,6 +52,8 @@ const VisualizerSketch = p5 => {
   };
 
   p5.draw = () => {
+    const RegisteredSketches = store.getters.RegisteredSketches;
+
     p5.background(0);
 
     if (
@@ -67,22 +69,22 @@ const VisualizerSketch = p5 => {
       KeyboardControlsService.playPianoKey(p5.keyCode, false);
     };
 
-    for (let ctrlElement in p5.ctrlElementsArray) {
-      if (!p5.ctrlElementsArray.hasOwnProperty(ctrlElement)) {
+    for (let sketchItem in RegisteredSketches) {
+      if (!RegisteredSketches.hasOwnProperty(sketchItem)) {
         continue;
       }
 
       // don't render an object if we have made it not visible it
-      if (p5.ctrlElementsArray[ctrlElement].bypass === true) {
+      if (RegisteredSketches[sketchItem].bypass === true) {
         continue;
       }
 
-      if (p5.ctrlElementsArray[ctrlElement].easeInto) {
-        p5.ctrlElementsArray[ctrlElement].easeInto();
+      if (RegisteredSketches[sketchItem].easeInto) {
+        RegisteredSketches[sketchItem].easeInto();
       }
 
       p5.push();
-      p5.ctrlElementsArray[ctrlElement].render(p5);
+      RegisteredSketches[sketchItem].render(p5);
       p5.pop();
     }
   };
