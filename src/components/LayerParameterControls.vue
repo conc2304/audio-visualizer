@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import ParameterControlNumeric from "@/components/ParameterControlNumeric.vue";
-import ParameterControlVariable from "@/components/ParameterControlVariable.vue";
+import ParameterControlNumeric from '@/components/ParameterControlNumeric.vue';
+import ParameterControlVariable from '@/components/ParameterControlVariable.vue';
 
 export default {
   data: () => ({
@@ -39,9 +39,6 @@ export default {
   props: {
     category: {
       type: String,
-    },
-    RegisteredSketches: {
-      type: Array,
     },
     auxInputVisible: {
       type: Boolean,
@@ -58,22 +55,22 @@ export default {
   },
 
   mounted() {
-    this.numericAttributes = this.getCategoryParameters("numeric");
-    this.booleanAttributes = this.getCategoryParameters("boolean");
-    this.variableAttributes = this.getCategoryParameters("variable");
+    this.numericAttributes = this.getCategoryParameters('numeric');
+    this.booleanAttributes = this.getCategoryParameters('boolean');
+    this.variableAttributes = this.getCategoryParameters('variable');
   },
 
   methods: {
     getCategoryParameters(attributeType) {
       const properties = [];
-      const validPropTypes = ["numeric", "variable", "boolean"];
+      const validPropTypes = ['numeric', 'variable', 'boolean'];
 
       for (const parameter in this.RegisteredSketches[
         this.sketchIndexSelected
       ]) {
         if (
           !this.RegisteredSketches[this.sketchIndexSelected].hasOwnProperty(
-            parameter
+            parameter,
           )
         ) {
           continue;
@@ -101,6 +98,10 @@ export default {
   computed: {
     sketchIndexSelected() {
       return this.$store.state.sketchIndexSelected;
+    },
+
+    RegisteredSketches() {
+      return this.$store.state.RegisteredSketches;
     },
   },
 };

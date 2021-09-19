@@ -34,7 +34,6 @@ export default new Vuex.Store({
   mutations: {
 
     [ types.UPDATE_REGISTERED_SKETCHES ](state, payload) {
-      console.log('UPDATE_REGISTERED_SKETCHES');
       state.RegisteredSketches = payload;
     },
 

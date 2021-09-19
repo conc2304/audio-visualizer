@@ -19,7 +19,6 @@
               v-icon expand_more
           v-expansion-panel-content
             LayerParameterControls(
-              :RegisteredSketches="RegisteredSketches"
               :category="category"
               :auxInputVisible="auxInputVisible"
               :categoryIndex="i"
@@ -39,9 +38,9 @@ export default {
   data: () => ({}),
 
   props: {
-    RegisteredSketches: {
-      type: Array,
-    },
+    // RegisteredSketches: {
+    //   type: Array,
+    // },
     auxInputVisible: {
       type: Boolean,
       default: false,
@@ -74,6 +73,10 @@ export default {
   computed: {
     sketchIndexSelected() {
       return this.$store.state.sketchIndexSelected;
+    },
+
+    RegisteredSketches() {
+      return this.$store.state.RegisteredSketches;
     },
   },
 };

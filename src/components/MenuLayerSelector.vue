@@ -120,7 +120,6 @@ export default {
 
     removeSketch() {
       const currentLength = this.RegisteredSketches.length;
-      console.log(currentLength);
       const layerSelected = this.sketchIndexSelected;
       const layerSelectedID = this.RegisteredSketches[layerSelected].sid;
 
@@ -135,7 +134,6 @@ export default {
       this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
 
       const nextLayer = currentLength > 1 ? 0 : null;
-      console.log(nextLayer);
       this.selectLayer(nextLayer);
     },
   },
