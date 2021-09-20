@@ -125,6 +125,7 @@ export default {
     },
 
     updateSliderValues(event) {
+      console.log('update val');
       this.parameter.min = event[0];
       this.parameter.targetValue = event[1];
       this.parameter.max = event[2];
@@ -140,12 +141,17 @@ export default {
     this.getParameterAttributes();
   },
 
+  updated() {
+    console.log('UPDATE ME');
+  },
+
   watch: {
     sketchSelected(newValue, oldValue) {
       this.getParameterAttributes();
     },
 
     sliderValues(newValue, oldValue) {
+      console.log('shange');
       this.parameter.min = newValue[0];
       this.parameter.targetValue = newValue[1];
       this.parameter.max = newValue[2];
@@ -193,6 +199,7 @@ export default {
   .noUi-tooltip {
     border-radius: 0 50% 50%;
   }
+
   .noUi-horizontal .noUi-tooltip {
     bottom: initial;
     top: 32px;
@@ -210,16 +217,37 @@ export default {
     }
   }
 
-  .noUi-base :nth-child(2) .noUi-tooltip::after {
-    content: 'min';
+  .noUi-handle-lower {
+    border: 2px solid $color-active-green !important;
   }
 
-  .noUi-base :nth-child(4) .noUi-tooltip::after {
-    content: 'max';
+  .noUi-handle-upper {
+    border: 2px solid $color-inactive-red-hover !important;
+  }
+
+  .noUi-base :nth-child(2) {
+    .noUi-tooltip::after {
+      content: 'min';
+      font-weight: bold;
+      font-size: 14px;
+      border: 2px solid $color-active-green;
+      border-radius: 4px;
+    }
+  }
+
+  .noUi-base :nth-child(4) {
+    .noUi-tooltip::after {
+      content: 'max';
+      font-weight: bold;
+      font-size: 14px;
+      border: 2px solid $color-inactive-red;
+      border-radius: 4px;
+    }
   }
 
   .noUi-handle-draggable-tooltip-overlay {
     top: 22px;
+    cursor: pointer;
   }
 
   &.color-slider .noUi-connects::after {

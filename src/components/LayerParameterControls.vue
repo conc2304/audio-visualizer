@@ -64,23 +64,19 @@ export default {
     getCategoryParameters(attributeType) {
       const properties = [];
       const validPropTypes = ['numeric', 'variable', 'boolean'];
+      const { RegisteredSketches, sketchIndexSelected, category } = this;
 
-      for (const parameter in this.RegisteredSketches[
-        this.sketchIndexSelected
-      ]) {
+      for (const parameter in RegisteredSketches[this.sketchIndexSelected]) {
         if (
-          !this.RegisteredSketches[this.sketchIndexSelected].hasOwnProperty(
-            parameter,
-          )
+          !RegisteredSketches[sketchIndexSelected].hasOwnProperty(parameter)
         ) {
           continue;
         }
-        const thisParameter = this.RegisteredSketches[this.sketchIndexSelected][
-          parameter
-        ];
+        const thisParameter =
+          RegisteredSketches[sketchIndexSelected][parameter];
 
         if (
-          thisParameter.category !== this.category ||
+          thisParameter.category !== category ||
           !validPropTypes.includes(thisParameter.attrType) ||
           thisParameter.attrType !== attributeType
         ) {
