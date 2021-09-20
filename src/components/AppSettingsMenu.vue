@@ -110,8 +110,8 @@
 </template>
 
 <script>
-import { required, minLength } from "vuelidate/lib/validators";
-import LoginPane from "@/components/LoginPane.vue";
+import { required, minLength } from 'vuelidate/lib/validators';
+import LoginPane from '@/components/LoginPane.vue';
 
 export default {
   components: {
@@ -124,8 +124,8 @@ export default {
     loginDialog: false,
     openSessionDialog: false,
     saveSessionDialog: false,
-    sessionName: "",
-    savedSessionName: "",
+    sessionName: '',
+    savedSessionName: '',
     fullscreenOn: false,
   }),
 
@@ -143,11 +143,11 @@ export default {
     },
 
     goToHome() {
-      this.$router.push("/");
+      this.$router.push('/');
     },
 
     userLogout() {
-      localStorage.removeItem("user");
+      localStorage.removeItem('user');
       this.userIsLoggedIn = false;
     },
 
@@ -166,11 +166,11 @@ export default {
     },
 
     toGithub() {
-      window.open("https://github.com/conc2304/audio-visualizer");
+      window.open('https://github.com/conc2304/audio-visualizer');
     },
 
     redirectToMain() {
-      window.location = "http://www.joseconchello.com/";
+      window.open('http://www.joseconchello.com/');
     },
 
     openFullscreen() {
@@ -222,15 +222,15 @@ export default {
       if (!this.$v.sessionName.$dirty) return errors;
       const requiredValid =
         !this.$v.sessionName.required &&
-        errors.push("Session Name is required.");
+        errors.push('Session Name is required.');
       const minLengthValid =
         !this.$v.sessionName.minLength &&
-        errors.push("Session Name must be at least 6 characters long");
+        errors.push('Session Name must be at least 6 characters long');
       return errors;
     },
   },
   mounted() {
-    const userObj = JSON.parse(localStorage.getItem("user"));
+    const userObj = JSON.parse(localStorage.getItem('user'));
     this.userIsLoggedIn = userObj != null && userObj.loggedIn;
   },
 };
