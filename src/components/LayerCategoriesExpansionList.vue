@@ -2,16 +2,11 @@
 
   #controller-property-categories
 
-    .layer-wrapper(
-      v-for="(layer, layerIndex) in RegisteredSketches"
-      v-show="layerIndex === sketchIndexSelected"
-      :key="layerIndex"
-    )
-
+    .layer-wrapper
       v-expansion-panels( accordion focusable=true)
         v-expansion-panel(
-          v-for="(category, i) in getPropertyCategories(layerIndex)"
-          :key="i"
+          v-for="(category, i) in propertyCategories"
+          :key="category"
         )
 
           v-expansion-panel-header.category-name  {{ category }}
@@ -38,29 +33,28 @@ export default {
   data: () => ({}),
 
   props: {
-    // RegisteredSketches: {
-    //   type: Array,
-    // },
     auxInputVisible: {
       type: Boolean,
       default: false,
     },
   },
 
+  mounted() {
+    this.categories = this.propertyCategories;
+    console.log(this.categories);
+  },
+
   methods: {
-    updateConfigs() {
-      this.RegisteredSketches = this.RegisteredSketches;
-    },
-
-    getPropertyCategories(layerIndex) {
+    getPropertyCategories() {
+      console.log('getPropertyCategories');
       const categories = [];
-      const currentSketch = this.RegisteredSketches[layerIndex];
+      const currentSketchProps = this.$store.state.sketchSelected;
 
-      for (const property in currentSketch) {
-        if (!currentSketch.hasOwnProperty(property)) {
+      for (const property in currentSketchProps) {
+        if (!currentSketchProps.hasOwnProperty(property)) {
           continue;
         }
-        const category = currentSketch[property].category;
+        const category = currentSketchProps[property].category;
         if (category && !categories.includes(category)) {
           categories.push(category);
         }
@@ -75,8 +69,26 @@ export default {
       return this.$store.state.sketchIndexSelected;
     },
 
-    RegisteredSketches() {
-      return this.$store.state.RegisteredSketches;
+    sketchSelected() {
+      return this.$store.state.sketchSelected;
+    },
+
+    propertyCategories() {
+      console.log('COmputed Prop Categoreis');
+      const categories = [];
+      const currentSketchProps = this.sketchSelected;
+
+      if (!currentSketchProps) return categories;
+
+      const { dynamicProps } = currentSketchProps;
+      const propKeys = Object.keys(dynamicProps);
+
+      for (let property of propKeys) {
+        const { category } = dynamicProps[property];
+
+        if (!categories?.includes(category)) categories.push(category);
+      }
+      return categories;
     },
   },
 };

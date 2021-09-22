@@ -68,6 +68,7 @@ import {
   UPDATE_CATALOGUE_OPEN,
   UPDATE_AUDIO_PLAYER_OPEN,
   UPDATE_REGISTERED_SKETCHES,
+  UPDATE_SKETCH_SELECTED,
 } from '../store/mutationTypes';
 export default {
   data: () => ({
@@ -90,6 +91,10 @@ export default {
       this.$store.commit(UPDATE_LAYER_MENU_OPEN, true);
       this.$store.commit(UPDATE_CATALOGUE_OPEN, false);
       this.$store.commit(UPDATE_AUDIO_PLAYER_OPEN, false);
+      this.$store.commit(
+        UPDATE_SKETCH_SELECTED,
+        this.$store.state.RegisteredSketches[layerIndex] || null,
+      );
     },
 
     addNewSketch() {
@@ -142,6 +147,10 @@ export default {
     sketchIndexSelected() {
       return this.$store.state.sketchIndexSelected;
     },
+  },
+
+  updated() {
+    console.log('UPDATE MENU L-SELCTOR');
   },
 };
 </script>

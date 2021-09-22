@@ -55,6 +55,7 @@ export default {
   },
 
   mounted() {
+    console.log('LPC - mounted');
     this.numericAttributes = this.getCategoryParameters('numeric');
     this.booleanAttributes = this.getCategoryParameters('boolean');
     this.variableAttributes = this.getCategoryParameters('variable');
@@ -62,18 +63,17 @@ export default {
 
   methods: {
     getCategoryParameters(attributeType) {
+      console.log('LPC - get category parameters');
       const properties = [];
       const validPropTypes = ['numeric', 'variable', 'boolean'];
-      const { RegisteredSketches, sketchIndexSelected, category } = this;
+      const { RegisteredSketches, category, sketchSelected } = this;
+      const { dynamicProps } = { ...sketchSelected };
+      console.log(dynamicProps);
 
-      for (const parameter in RegisteredSketches[this.sketchIndexSelected]) {
-        if (
-          !RegisteredSketches[sketchIndexSelected].hasOwnProperty(parameter)
-        ) {
-          continue;
-        }
-        const thisParameter =
-          RegisteredSketches[sketchIndexSelected][parameter];
+      for (const property in dynamicProps) {
+        if (!dynamicProps?.[property]) continue;
+
+        const thisParameter = dynamicProps[property];
 
         if (
           thisParameter.category !== category ||
@@ -83,7 +83,7 @@ export default {
           continue;
         }
 
-        thisParameter.attrName = parameter;
+        thisParameter.attrName = property;
         properties.push(thisParameter);
       }
 
@@ -98,6 +98,10 @@ export default {
 
     RegisteredSketches() {
       return this.$store.state.RegisteredSketches;
+    },
+
+    sketchSelected() {
+      return this.$store.state.sketchSelected;
     },
   },
 };

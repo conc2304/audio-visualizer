@@ -22,18 +22,17 @@
 <script>
 import IconWithTooltip from '@/components/IconWithTooltip.vue';
 import { changeParameterValues } from '@/js/services/BulkUpdaterService';
-import { UPDATE_REGISTERED_SKETCHES } from '@/store/mutationTypes';
+import {
+  UPDATE_REGISTERED_SKETCHES,
+  UPDATE_SKETCH_SELECTED,
+} from '@/store/mutationTypes';
 
 export default {
   components: {
     IconWithTooltip,
   },
 
-  props: {
-    RegisteredSketches: {
-      type: Array,
-    },
-  },
+  props: {},
 
   data: () => ({
     layerDashboardActions: [
@@ -77,25 +76,52 @@ export default {
 
     resetLayer() {
       const iString = this.sketchIndexSelected.toString();
-      const indices = [iString];
-      const updatedSketches = [...changeParameterValues(indices, 'reset')];
-      this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
+      const indicesToUpdate = [iString];
+      const RegisteredSketches = this.$store.state.RegisteredSketches;
+      const operation = 'reset';
+      const updatedSketches = [
+        ...changeParameterValues({
+          RegisteredSketches,
+          indicesToUpdate,
+          operation,
+        }),
+      ];
+      // this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
     },
 
     randomizeAudioResponse() {},
 
     randomizeLayerParameters() {
-      const iString = this.sketchIndexSelected.toString();
-      const indices = [iString];
+      const index = this.sketchIndexSelected;
+      const indicesToUpdate = [index.toString()];
+      const RegisteredSketches = this.$store.state.RegisteredSketches;
+      const operation = 'randomize';
+      const updatedValues = [
+        ...changeParameterValues({
+          RegisteredSketches,
+          indicesToUpdate,
+          operation,
+        }),
+      ];
 
-      const updatedSketches = [...changeParameterValues(indices, 'randomize')];
+      console.log(updatedValues);
+
+      const updatedSketches = [
+        ...RegisteredSketches.slice(0, index),
+        updatedValues[index],
+        ...RegisteredSketches.slice(index + 1),
+      ];
+
+      console.log(99, updatedSketches);
+
       this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
+      this.$store.commit(UPDATE_SKETCH_SELECTED, updatedSketches[index]);
     },
 
     toggleLayerVisibility() {
       const index = this.sketchIndexSelected;
-      const bypassStatus = !this.RegisteredSketches[index].bypass;
-      this.RegisteredSketches[index].bypass = bypassStatus;
+      // const bypassStatus = !this.RegisteredSketches[index].bypass;
+      // this.RegisteredSketches[index].bypass = bypassStatus;
       this.layerDashboardActions[0].mdIconText = bypassStatus
         ? 'visibility_off'
         : 'visibility';
@@ -105,6 +131,10 @@ export default {
   computed: {
     sketchIndexSelected() {
       return this.$store.state.sketchIndexSelected;
+    },
+
+    sketchSelected() {
+      return this.$store.state.sketchSelected;
     },
   },
 };

@@ -32,47 +32,52 @@ export default class ParticleGrid implements P5Sketch {
   public sid = guidGenerator();
   public bypass = false;
 
+  public dynamicProps = {
+    columns: new NumericProperty('Columns', 'Base', 25, 5, 40, 0.7, 1),
+    rows: new NumericProperty('Rows', 'Base', 25, 5, 40, 0.7, 1),
+    frequency: new NumericProperty('Frequency', 'Base', 20, 1, 100, 0.7, 1),
+    period: new NumericProperty('Period', 'Base', 50, 0, 100, 0.7, 1),
+    amplitude: new NumericProperty('Amplitude', 'Base', 3, 1, 8, 0.7, 0.1),
+    gridWidth: new NumericProperty('Grid Width', 'Base', window.innerWidth, window.innerWidth / 2, window.innerWidth * 4, 0.7, 0.5),
+    gridHeight: new NumericProperty('Grid Height', 'Base', window.innerHeight, window.innerHeight / 2, window.innerHeight * 4, 0.7, 0.5),
+    mirror: new VariableProperty('Mirror', 'Base', 'None', [
+      'None',
+      'X',
+      'Y',
+      'X & Y'
+    ]),
+
+    zoomAmount: new NumericProperty(' Zoom', 'Transform', -700, -1000, 250, 0.7, 1),
+    rotateXBase: new NumericProperty('Rotate X (Base)', 'Transform', 0, -180, 180, 0.7, 1),
+    rotateXParticle: new NumericProperty('Rotate X (Particle)', 'Transform', 0, -180, 180, 0.7, 0.5),
+    rotateZVelocity: new NumericProperty('Z Rotation Speed', 'Transform', 0, 0, 10, 0.7, 0.5),
+
+
+    blackScale: new NumericProperty('Black Scale', 'Color', 0, 0, 100, 0.7, 1),
+    strokeHue: new NumericProperty('Line Color', 'Color', 200, 0, 360, 0.7, 1),
+    fillHue: new NumericProperty('Fill Color', 'Color', 200, 0, 360, 0.7, 1),
+    fillSaturation: new NumericProperty('Fill Saturation', 'Color', 100, 0, 100, 0.7, 1),
+    strokeSaturation: new NumericProperty('Outline Saturation', 'Color', 100, 0, 100, 0.7, 1),
+    stroke: new VariableProperty('Outline and Fill', 'Color', 'Fill + Outline', [
+      'Outline',
+      'Fill + Outline',
+    ]),
+  };
   // Sketch Parameters
-  public columns = new NumericProperty('Columns', 'Base', 25, 5, 40, 0.7, 1);
-  public rows = new NumericProperty('Rows', 'Base', 25, 5, 40, 0.7, 1);
-  public frequency = new NumericProperty('Frequency', 'Base', 20, 1, 100, 0.7, 1);
-  public period = new NumericProperty('Period', 'Base', 50, 0, 100, 0.7, 1);
-  public amplitude = new NumericProperty('Amplitude', 'Base', 3, 1, 8, 0.7, 0.1);
-  public gridWidth = new NumericProperty('Grid Width', 'Base', window.innerWidth, window.innerWidth / 2, window.innerWidth * 4, 0.7, 0.5);
-  public gridHeight = new NumericProperty('Grid Height', 'Base', window.innerHeight, window.innerHeight / 2, window.innerHeight * 4, 0.7, 0.5);
-  public mirror = new VariableProperty('Mirror', 'Base', 'None', [
-    'None',
-    'X',
-    'Y',
-    'X & Y'
-  ]);
-
-  public zoomAmount = new NumericProperty(' Zoom', 'Transform', -700, -1000, 250, 0.7, 1);
-  public rotateXBase = new NumericProperty('Rotate X (Base)', 'Transform', 0, -180, 180, 0.7, 1);
-  public rotateXParticle = new NumericProperty('Rotate X (Particle)', 'Transform', 0, -180, 180, 0.7, 0.5);
-  public rotateZVelocity = new NumericProperty('Z Rotation Speed', 'Transform', 0, 0, 10, 0.7, 0.5);
 
 
-  public blackScale = new NumericProperty('Black Scale', 'Color', 0, 0, 100, 0.7, 1);
-  public strokeHue = new NumericProperty('Line Color', 'Color', 200, 0, 360, 0.7, 1);
-  public fillHue = new NumericProperty('Fill Color', 'Color', 200, 0, 360, 0.7, 1);
-  public fillSaturation = new NumericProperty('Fill Saturation', 'Color', 100, 0, 100, 0.7, 1);
-  public strokeSaturation = new NumericProperty('Outline Saturation', 'Color', 100, 0, 100, 0.7, 1);
-  public stroke = new VariableProperty('Outline and Fill', 'Color', 'Fill + Outline', [
-    'Outline',
-    'Fill + Outline',
-  ]);
+  public render = (p5: p5, props: any = this): void => {
+
+    const sketchProps = this.dynamicProps;
 
 
-  public render(sketch: p5): void {
-
-    const columns = Math.round(this.columns.currentValue);
-    const rows = Math.round(this.rows.currentValue);
+    const columns = Math.round(sketchProps.columns.currentValue);
+    const rows = Math.round(sketchProps.rows.currentValue);
     const middleCol = Math.ceil((columns) * 0.5);
     const middleRow = Math.ceil((rows + 1) * 0.5);
 
-    const hSpacing = this.gridWidth.currentValue / columns;
-    const vSpacing = this.gridHeight.currentValue / rows;
+    const hSpacing = sketchProps.gridWidth.currentValue / columns;
+    const vSpacing = sketchProps.gridHeight.currentValue / rows;
 
     const particleWidth = hSpacing * 0.95;
     const particleHeight = vSpacing * 0.95;
@@ -81,29 +86,29 @@ export default class ParticleGrid implements P5Sketch {
       noise: 0.0007,
       sin: 0.07
     };
-    const period = this.period.currentValue * periodAdjustmentMap.noise;
+    const period = sketchProps.period.currentValue * periodAdjustmentMap.noise;
 
     const frequencyAdjustmentMap = {
       noise: 0.0001,
       sin: 0.0001,
     };
 
-    const frequency = this.frequency.currentValue * frequencyAdjustmentMap.noise;
-    const amplitude = this.amplitude.currentValue;
-    const time = sketch.frameCount * frequency;
+    const frequency = sketchProps.frequency.currentValue * frequencyAdjustmentMap.noise;
+    const amplitude = sketchProps.amplitude.currentValue;
+    const time = p5.frameCount * frequency;
 
-    const originX = this.gridWidth.currentValue * 0.5;
-    const originY = this.gridHeight.currentValue * 0.5;
-    const mirrorXOn = this.mirror.currentValue.indexOf("X") > -1;
-    const mirrorYOn = this.mirror.currentValue.indexOf("Y") > -1;
+    const originX = sketchProps.gridWidth.currentValue * 0.5;
+    const originY = sketchProps.gridHeight.currentValue * 0.5;
+    const mirrorXOn = sketchProps.mirror.currentValue.indexOf("X") > -1;
+    const mirrorYOn = sketchProps.mirror.currentValue.indexOf("Y") > -1;
 
-    sketch.pop();
-    sketch.translate(0, 0, this.zoomAmount.currentValue);
-    sketch.rotateX(degreeToRadian(this.rotateXBase.currentValue));
-    sketch.rotateZ(time * this.rotateZVelocity.currentValue);
-    sketch.push();
-    for (let y = 0; y < this.rows.currentValue; y++) {
-      for (let x = 0; x < this.columns.currentValue; x++) {
+    p5.pop();
+    p5.translate(0, 0, sketchProps.zoomAmount.currentValue);
+    p5.rotateX(degreeToRadian(sketchProps.rotateXBase.currentValue));
+    p5.rotateZ(time * sketchProps.rotateZVelocity.currentValue);
+    p5.push();
+    for (let y = 0; y < sketchProps.rows.currentValue; y++) {
+      for (let x = 0; x < sketchProps.columns.currentValue; x++) {
 
         const xOrigin = (hSpacing * x) - originX;
         const yOrigin = (vSpacing * y) - originY;
@@ -112,12 +117,12 @@ export default class ParticleGrid implements P5Sketch {
         const yPos = (mirrorXOn && x >= middleCol) ? columns - x : x;
 
         const z = this.simplex.noise3D(xPos * period, yPos * period, time);
-        const zInstance = Math.floor(sketch.map(z, -0.1, 1, 0, 500 * (amplitude)));
+        const zInstance = Math.floor(p5.map(z, -0.1, 1, 0, 500 * (amplitude)));
 
-        this.renderNoiseParticle(sketch, zInstance, xOrigin, yOrigin, particleWidth, particleHeight);
+        this.renderNoiseParticle(p5, zInstance, xOrigin, yOrigin, particleWidth, particleHeight);
       }
     }
-  }
+  };
 
 
   // Private Properties
@@ -125,36 +130,36 @@ export default class ParticleGrid implements P5Sketch {
 
   // Private Methods
 
-  private renderNoiseParticle(sketch: p5, noiseInstance: number, xPos: number, yPos: number, width: number, height: number) {
-    sketch.push();
-    this.setColor(sketch, noiseInstance);
-    sketch.translate(xPos, yPos, 0);
-    sketch.rotateX(degreeToRadian(this.rotateXParticle.currentValue));
-    sketch.box(width, height, noiseInstance);
-    sketch.pop();
+  private renderNoiseParticle(p5: p5, noiseInstance: number, xPos: number, yPos: number, width: number, height: number) {
+    p5.push();
+    this.setColor(p5, noiseInstance);
+    p5.translate(xPos, yPos, 0);
+    p5.rotateX(degreeToRadian(this.dynamicProps.rotateXParticle.currentValue));
+    p5.box(width, height, noiseInstance);
+    p5.pop();
   }
 
-  private setColor(sketch: p5, noise?: number): void {
+  private setColor(p5: p5, noise?: number): void {
     let colorNoise: number;
     let brightnessNoise: number;
 
-    switch (this.stroke.currentValue) {
+    switch (this.dynamicProps.stroke.currentValue) {
       case 'Outline':
-        colorNoise = (typeof noise !== 'undefined') ? (this.strokeHue.currentValue + Math.abs(noise)) % this.strokeHue.defaultMax : this.strokeHue.currentValue;
-        sketch.strokeWeight(1);
-        sketch.stroke(colorNoise, this.strokeSaturation.currentValue, 100);
-        sketch.noFill();
+        colorNoise = (typeof noise !== 'undefined') ? (this.dynamicProps.strokeHue.currentValue + Math.abs(noise)) % this.dynamicProps.strokeHue.defaultMax : this.dynamicProps.strokeHue.currentValue;
+        p5.strokeWeight(1);
+        p5.stroke(colorNoise, this.dynamicProps.strokeSaturation.currentValue, 100);
+        p5.noFill();
         break;
       case 'Fill + Outline':
-        sketch.strokeWeight(1);
-        colorNoise = (typeof noise !== 'undefined') ? (this.fillHue.currentValue + Math.abs(noise)) % this.fillHue.defaultMax : this.fillHue.currentValue;
-        brightnessNoise = (typeof noise !== 'undefined') ? (sketch.map(Math.abs(noise), 500, 1000, this.blackScale.defaultMax - this.blackScale.currentValue, 110, false)) : 100;
-        sketch.stroke(this.strokeHue.currentValue, this.strokeSaturation.currentValue, 100);
-        sketch.fill(colorNoise, this.fillSaturation.currentValue, brightnessNoise);
+        p5.strokeWeight(1);
+        colorNoise = (typeof noise !== 'undefined') ? (this.dynamicProps.fillHue.currentValue + Math.abs(noise)) % this.dynamicProps.fillHue.defaultMax : this.dynamicProps.fillHue.currentValue;
+        brightnessNoise = (typeof noise !== 'undefined') ? (p5.map(Math.abs(noise), 500, 1000, this.dynamicProps.blackScale.defaultMax - this.dynamicProps.blackScale.currentValue, 110, false)) : 100;
+        p5.stroke(this.dynamicProps.strokeHue.currentValue, this.dynamicProps.strokeSaturation.currentValue, 100);
+        p5.fill(colorNoise, this.dynamicProps.fillSaturation.currentValue, brightnessNoise);
         break;
     }
   };
 
-  easeInto = easeInto;
+  public easeInto = easeInto.bind(this);
 }
 

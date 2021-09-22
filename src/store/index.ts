@@ -9,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     RegisteredSketches,
+    sketchSelected: null,
     user: {},
     sketchIndexSelected: -1,
     audio: {
@@ -34,7 +35,16 @@ export default new Vuex.Store({
   mutations: {
 
     [ types.UPDATE_REGISTERED_SKETCHES ](state, payload) {
+      console.log(types.UPDATE_REGISTERED_SKETCHES);
+      console.log(payload);
+
       state.RegisteredSketches = payload;
+    },
+
+    [ types.UPDATE_SKETCH_SELECTED ](state, payload) {
+      console.log(types.UPDATE_SKETCH_SELECTED);
+      console.log(payload);
+      state.sketchSelected = payload;
     },
 
     [ types.UPDATE_SKETCH_INDEX_SELECTED ](state, payload) {

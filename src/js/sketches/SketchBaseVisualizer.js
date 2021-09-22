@@ -12,12 +12,12 @@ import KeyboardControlsService from '@/js/services/KeyboardControlsService';
 import PoseNetService from '@/js/services/PoseNetService';
 import store from '../../store';
 
+let RegisteredSketches = store.getters.RegisteredSketches;
+
 // keep all 'custom' code here
 const VisualizerSketch = p5 => {
   p5.preload = () => {
     p5.objects = {};
-    const RegisteredSketches = store.getters.RegisteredSketches;
-    p5.ctrlElementsArray = RegisteredSketches;
   };
 
   p5.setup = () => {
@@ -27,15 +27,15 @@ const VisualizerSketch = p5 => {
   };
 
   p5.windowResized = () => {
-    for (let ctrlElement in p5.ctrlElementsArray) {
-      if (!p5.ctrlElementsArray.hasOwnProperty(ctrlElement)) {
+    for (let sketch in RegisteredSketches) {
+      if (!RegisteredSketches.hasOwnProperty(sketch)) {
         continue;
       }
 
-      p5.ctrlElementsArray[ctrlElement].windowWidth = p5.windowWidth;
-      p5.ctrlElementsArray[ctrlElement].windowHeight = p5.windowHeight;
-      if (p5.ctrlElementsArray[ctrlElement].waveWidth) {
-        p5.ctrlElementsArray[ctrlElement].waveWidth = p5.windowWidth + 200;
+      RegisteredSketches[sketch].windowWidth = p5.windowWidth;
+      RegisteredSketches[sketch].windowHeight = p5.windowHeight;
+      if (RegisteredSketches[sketch].waveWidth) {
+        RegisteredSketches[sketch].waveWidth = p5.windowWidth + 200;
       }
     }
 
@@ -52,40 +52,46 @@ const VisualizerSketch = p5 => {
   };
 
   p5.draw = () => {
-    const RegisteredSketches = store.getters.RegisteredSketches;
+    try {
+      RegisteredSketches = store.getters.RegisteredSketches;
+      // if (p5.frameCount % 60 === 0) console.log(RegisteredSketches);
 
-    p5.background(0);
+      p5.background(0);
 
-    if (
-      PoseNetService.imageSource !== null &&
-      PoseNetService.imageSource.elt.readyState === 4
-    ) {
-      if (PoseNetService.flipHorizontal === false) p5.scale(-1.0, 1.0); // flip x-axis backwards
-      PoseNetService.getPose(p5);
-    }
+      if (PoseNetService?.imageSource?.elt?.readyState === 4) {
+        if (!PoseNetService.flipHorizontal) p5.scale(-1.0, 1.0); // flip x-axis backwards
 
-    KeyboardControlsService.playKeyboardKeys(p5);
-    p5.keyReleased = () => {
-      KeyboardControlsService.playPianoKey(p5.keyCode, false);
-    };
-
-    for (let sketchItem in RegisteredSketches) {
-      if (!RegisteredSketches.hasOwnProperty(sketchItem)) {
-        continue;
+        PoseNetService.getPose(p5);
       }
 
-      // don't render an object if we have made it not visible it
-      if (RegisteredSketches[sketchItem].bypass === true) {
-        continue;
-      }
+      KeyboardControlsService.playKeyboardKeys(p5);
+      p5.keyReleased = () => {
+        KeyboardControlsService.playPianoKey(p5.keyCode, false);
+      };
 
-      if (RegisteredSketches[sketchItem].easeInto) {
-        RegisteredSketches[sketchItem].easeInto();
-      }
+      for (let sketch of RegisteredSketches) {
+        // don't render an object if we have made it not visible it
+        if (sketch?.shape && p5.frameCount % 60 === 0) {
+          // console.log(`${sketch.shape.currentValue}`);
+        }
 
-      p5.push();
-      RegisteredSketches[sketchItem].render(p5);
-      p5.pop();
+        if (!sketch.render) {
+          throw new Error('No render() available on sketch', sketch);
+        }
+
+        if (sketch?.bypass) continue;
+
+        if (sketch?.easeInto) {
+          console.log('here');
+          sketch.easeInto.apply(sketch);
+        }
+
+        p5.push();
+        sketch.render(p5);
+        p5.pop();
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 };

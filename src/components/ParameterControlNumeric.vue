@@ -66,6 +66,7 @@
 import AudioReactiveControls from '@/components/AudioReactiveControls.vue';
 import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
 import ParameterKeyboardInputFields from '@/components/ParameterKeyboardInputFields.vue';
+import { UPDATE_REGISTERED_SKETCHES } from '@/store/mutationTypes';
 
 export default {
   // Note:
@@ -117,6 +118,7 @@ export default {
         tooltips: true,
         step: this.parameter.stepSize | null,
       };
+
       this.sliderValues = [
         this.parameter.min,
         this.parameter.currentValue,
@@ -126,9 +128,45 @@ export default {
 
     updateSliderValues(event) {
       console.log('update val');
-      this.parameter.min = event[0];
-      this.parameter.targetValue = event[1];
-      this.parameter.max = event[2];
+
+      const {
+        RegisteredSketches,
+        sketchSelected,
+        sketchIndexSelected,
+      } = this.$store.state;
+
+      const parameterKey = Object.keys(sketchSelected.dynamicProps).find(
+        key => sketchSelected.dynamicProps[key] === this.parameter,
+      );
+
+      console.log(parameterKey);
+
+      console.log(...event);
+      this.parameter.min = Number(event[0]);
+      this.parameter.targetValue = Number(event[1]);
+      this.parameter.max = Number(event[2]);
+
+      console.log(this.parameter.targetValue);
+
+      const updatedDynamicProps = {
+        ...sketchSelected.dynamicProps,
+        [parameterKey]: { ...this.parameter },
+      };
+
+      const updatedSketch = {
+        ...sketchSelected,
+        dynamicProps: updatedDynamicProps,
+      };
+
+      const updatedSketches = [
+        ...RegisteredSketches.slice(0, sketchIndexSelected || 0),
+        updatedSketch,
+        ...RegisteredSketches.slice(sketchIndexSelected + 1),
+      ];
+
+      console.log(4, updatedSketches);
+
+      this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
     },
 
     closeAuxInputFields() {
@@ -143,6 +181,20 @@ export default {
 
   updated() {
     console.log('UPDATE ME');
+  },
+
+  computed: {
+    sketchIndexSelected() {
+      return this.$store.state.sketchIndexSelected;
+    },
+
+    RegisteredSketches() {
+      return this.$store.state.RegisteredSketches;
+    },
+
+    sketchSelected() {
+      return this.$store.state.sketchSelected;
+    },
   },
 
   watch: {

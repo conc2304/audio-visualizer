@@ -11,8 +11,9 @@ import store from '../../store';
  * @param {String} operation
  * @return {Void}
  */
-export const changeParameterValues = (indicesToUpdate: Array<string>, operation) => {
-  const RegisteredSketches = [ ...store.getters.RegisteredSketches ];
+export const changeParameterValues = ({ RegisteredSketches = [], indicesToUpdate = [], operation }) => {
+  console.log('changeParameterValues');
+  // const RegisteredSketches = [ ...store.getters.RegisteredSketches ];
   const globalReset =
     operation === 'reset' &&
     indicesToUpdate.length === RegisteredSketches.length;
@@ -27,40 +28,49 @@ export const changeParameterValues = (indicesToUpdate: Array<string>, operation)
     );
   }
 
+  let updatedSketches = [];
+
   for (let index in RegisteredSketches) {
-    if (!indicesToUpdate.includes(index)) {
-      continue;
-    }
+    if (!indicesToUpdate.includes(index)) continue;
 
-    if (!RegisteredSketches.hasOwnProperty(index)) {
-      continue;
-    }
+    let oldSketchProps = RegisteredSketches[ index ];
+    let { dynamicProps } = oldSketchProps;
 
-    for (let prop in RegisteredSketches[ index ]) {
+    console.log(100, dynamicProps);
+
+    for (let prop in RegisteredSketches[ index ].dynamicProperties) {
+      let sketchPropertyAttributes = oldSketchProps.dynamicProperties[ prop ];
+
       if (
-        !RegisteredSketches[ index ].hasOwnProperty(prop) ||
-        !RegisteredSketches[ index ][ prop ].hasOwnProperty('defaultValue') ||
-        !RegisteredSketches[ index ][ prop ].hasOwnProperty('currentValue')
-      ) {
-        continue;
-      }
+        !sketchPropertyAttributes?.defaultValue ||
+        !sketchPropertyAttributes?.currentValue
+      ) continue;
+      if (sketchPropertyAttributes.lockOn && !globalReset) continue;
 
-      if (RegisteredSketches[ index ][ prop ].lockOn === true && !globalReset) {
-        continue;
-      }
+      let propValues = { ...sketchPropertyAttributes };
+      console.log(101, propValues);
 
       if (operation === 'randomize') {
-        setRandomValue(Number(index), prop);
-      } else if (operation === 'reset') {
-        if (globalReset === true) {
-          RegisteredSketches[ index ][ prop ].lockOn = false;
-        }
-        setDefaultValue(Number(index), prop);
-      }
-    }
-  }
+        const randomValues = getRandomValue(sketchPropertyAttributes);
 
-  return RegisteredSketches;
+        propValues = { ...propValues, ...randomValues };
+
+      } else if (operation === 'reset') {
+        if (globalReset) {
+          propValues = { ...propValues, lockOn: false };
+        }
+        const defaultValues = getDefaultValue(sketchPropertyAttributes);
+        propValues = { ...propValues, ...defaultValues };
+      }
+
+      dynamicProps = { ...dynamicProps, [ prop ]: propValues };
+
+    } // end properties of current sketch
+    updatedSketches[ index ] = { ...RegisteredSketches[ index ], ...dynamicProps };// incorrect
+
+  } // end index of all sketches
+
+  return updatedSketches;
 };
 
 /**
@@ -85,52 +95,46 @@ export const getNextVariableOption = (ctrlElement, attr) => {
  * Sets the target property for a sketch element to a random value
 
  */
-export const setRandomValue = (index: number, prop: string) => {
-  const RegisteredSketches = store.getters.RegisteredSketches;
-
+export const getRandomValue = (property) => {
   let rVal;
-  if (RegisteredSketches[ index ][ prop ].attrType === 'numeric') {
-    let min = parseFloat(RegisteredSketches[ index ][ prop ].min);
-    let max = parseFloat(RegisteredSketches[ index ][ prop ].max);
+  if (property.attrType === 'numeric') {
+    const min = parseFloat(property.min);
+    const max = parseFloat(property.max);
 
     rVal = Number((Math.random() * (max - min + min)).toFixed(4));
-  } else if (RegisteredSketches[ index ][ prop ].attrType === 'variable') {
-    const optLength = RegisteredSketches[ index ][ prop ].options.length;
+  } else if (property.attrType === 'variable') {
+    const optLength = property.options.length;
     const optIndex = getRandomInt(0, optLength - 1);
 
-    rVal = RegisteredSketches[ index ][ prop ].options[ optIndex ];
+    rVal = property.options[ optIndex ];
 
     if (typeof rVal === 'undefined') {
       throw new Error('rVal was set to undefined');
     }
   }
-
-  RegisteredSketches[ index ][ prop ].currentValue = rVal;
-  RegisteredSketches[ index ][ prop ].targetValue = rVal;
+  return {
+    currentValue: rVal,
+    targetVal: rVal,
+  };
 };
 
 /**
- * Rest thhe value of the indicated sketch property to its' default settings
- *
- * @param {Number} index
- * @param {String} prop
- * @return {Void}
+ * Reset the value of the indicated sketch property to their default settings
  */
-const setDefaultValue = (index: number, prop: string) => {
-  const RegisteredSketches = store.getters.RegisteredSketches;
-  if (RegisteredSketches[ index ][ prop ].attrType === 'numeric') {
-    RegisteredSketches[ index ][ prop ].min =
-      RegisteredSketches[ index ][ prop ].defaultMin;
-    RegisteredSketches[ index ][ prop ].max =
-      RegisteredSketches[ index ][ prop ].defaultMax;
-  }
+const getDefaultValue = (property) => {
+  let { min, defaultMin, max, defaultMax, currentValue, defaultValue, targetVal } = property;
 
-  RegisteredSketches[ index ][ prop ].currentValue =
-    RegisteredSketches[ index ][ prop ].defaultValue;
-  RegisteredSketches[ index ][ prop ].targetValue =
-    RegisteredSketches[ index ][ prop ].defaultValue;
+  min = defaultMin;
+  max = defaultMax;
+  currentValue = defaultValue;
+  targetVal = defaultValue;
 
-  return RegisteredSketches;
+  return {
+    min,
+    max,
+    currentValue,
+    targetVal
+  };
 };
 
 

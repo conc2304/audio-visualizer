@@ -104,7 +104,7 @@ export default {
       const updatedGain =
         newValue && newValue !== oldValue ? newValue * 0.01 : 0.5;
 
-      sketchArrayCopy[this.selectedSketchIndex][
+      sketchArrayCopy[this.selectedSketchIndex].dynamicProps[
         this.parameter.attrName
       ].audio.gain = updatedGain;
 
