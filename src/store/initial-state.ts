@@ -1,7 +1,7 @@
 import RegisteredSketches from '@/js/services/SketchRegistration';
 
 const initialState = {
-  RegisteredSketches,
+  RegisteredSketches, // the problem is that internal props are changing (ie )
   user: {},
   sketchIndexSelected: -1,
   audio: {

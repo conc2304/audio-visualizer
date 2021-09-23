@@ -5,6 +5,7 @@ import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
 
+let origin = 0;
 class CenterWave {
   constructor(windowWidth, windowHeight, p5) {
     this.sid = guidGenerator();
@@ -23,7 +24,7 @@ class CenterWave {
 
     this.windowWidth = windowWidth;
     this.windowHeight = windowHeight;
-    this.origin = 0;
+    // this.origin = 0;
     this.bypass = false;
     this.waveWidth = windowWidth + 200; // have some of it go off the page
 
@@ -165,8 +166,8 @@ CenterWave.prototype.calcWave = function(p5) {
     ? this.waveType.currentValue
     : 'sin';
 
-  this.origin += this.velocity.currentValue;
-  let x = this.origin;
+  origin += this.velocity.currentValue;
+  let x = origin;
 
   this.yPoints = new Array(
     Math.ceil(this.waveWidth / this.xSpacing.currentValue),
