@@ -32,8 +32,8 @@ export default class CenterWave implements P5Sketch {
       'Velocity',
       'Base',
       0.025,
-      -1,
-      1.1,
+      -0.5,
+      0.5,
       0.1,
       0.05,
     ),
@@ -208,11 +208,10 @@ export default class CenterWave implements P5Sketch {
  * Paint the object onto the screen based on the object's attributes.
  */
   public render = (p5: p5) => {
+
+    if (p5.frameCount % 120 == 0) console.log(this);
     const { dynamicProps } = this;
 
-    if (dynamicProps.shape && p5.frameCount % 60 === 0) {
-      console.log('Render: ', dynamicProps.shape.currentValue);
-    }
     if (dynamicProps.xSpacing.currentValue <= 0) {
       dynamicProps.xSpacing.currentValue = dynamicProps.xSpacing.min / 2;
     }

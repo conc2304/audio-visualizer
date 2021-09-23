@@ -54,7 +54,7 @@ const VisualizerSketch = p5 => {
   p5.draw = () => {
     try {
       RegisteredSketches = store.getters.RegisteredSketches;
-      // if (p5.frameCount % 60 === 0) console.log(RegisteredSketches);
+      if (p5.frameCount % 120 === 0) console.log(RegisteredSketches);
 
       p5.background(0);
 
@@ -79,10 +79,15 @@ const VisualizerSketch = p5 => {
           throw new Error('No render() available on sketch', sketch);
         }
 
+        if (p5.frameCount % 120 === 0) {
+          console.log(0, 'here');
+          console.log(RegisteredSketches);
+          console.log(sketch);
+        }
+
         if (sketch?.bypass) continue;
 
         if (sketch?.easeInto) {
-          console.log('here');
           sketch.easeInto.apply(sketch);
         }
 

@@ -139,32 +139,34 @@ export default {
         key => sketchSelected.dynamicProps[key] === this.parameter,
       );
 
-      console.log(parameterKey);
-
-      console.log(...event);
-      this.parameter.min = Number(event[0]);
-      this.parameter.targetValue = Number(event[1]);
-      this.parameter.max = Number(event[2]);
-
-      console.log(this.parameter.targetValue);
+      // this.parameter.min = Number(event[0]);
+      // this.parameter.targetValue = Number(event[1]);
+      // this.parameter.max = Number(event[2]);
 
       const updatedDynamicProps = {
         ...sketchSelected.dynamicProps,
-        [parameterKey]: { ...this.parameter },
+        [parameterKey]: {
+          ...this.parameter,
+          min: Number(event[0]),
+          targetValue: Number(event[1]),
+          max: Number(event[2]),
+        },
       };
+
+      console.log(88, updatedDynamicProps);
 
       const updatedSketch = {
         ...sketchSelected,
         dynamicProps: updatedDynamicProps,
       };
 
+      console.log(89, updatedSketch);
+
       const updatedSketches = [
         ...RegisteredSketches.slice(0, sketchIndexSelected || 0),
         updatedSketch,
         ...RegisteredSketches.slice(sketchIndexSelected + 1),
       ];
-
-      console.log(4, updatedSketches);
 
       this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
     },
@@ -180,7 +182,7 @@ export default {
   },
 
   updated() {
-    console.log('UPDATE ME');
+    // this.getParameterAttributes();
   },
 
   computed: {

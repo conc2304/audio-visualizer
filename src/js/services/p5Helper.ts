@@ -7,7 +7,6 @@ export const polygons = [ 'line', 'triangle', 'square', 'pentagon' ]; // polygon
  * Renders a given shape along the the passed x and y positions.
  */
 export function render2DShape(p5: p5, xPos: number, yPos: number, radius: number, shape: string) {
-  // console.log('HERE');
   p5.push();
   if (shape === 'ellipse') {
     p5.ellipse(xPos, yPos, radius, radius);

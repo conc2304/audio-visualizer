@@ -1,24 +1,25 @@
 import { getRandomInt } from '@/js/services/Utils';
-import store from '../../store';
+import P5Sketch from '../interfaces/P5Sketch.interface';
 
-
+export enum ParameterOperation {
+  RESET = 'RESET',
+  RANDOMIZE = 'RANDOMIZE',
+}
 
 /**
  * Updates the parameter properties for indicated sketch elements.
  * Can either reset or randomize the parameters.
  *
- * @param {Array} indicesToUpdate
- * @param {String} operation
- * @return {Void}
  */
-export const changeParameterValues = ({ RegisteredSketches = [], indicesToUpdate = [], operation }) => {
+export const changeParameterValues = (RegisteredSketches: Array<P5Sketch>, indicesToUpdate: Array<string | number>, operation: ParameterOperation): Array<P5Sketch> => {
   console.log('changeParameterValues');
-  // const RegisteredSketches = [ ...store.getters.RegisteredSketches ];
+
+  console.log(operation);
   const globalReset =
-    operation === 'reset' &&
+    operation === ParameterOperation.RANDOMIZE &&
     indicesToUpdate.length === RegisteredSketches.length;
 
-  if (![ 'reset', 'randomize' ].includes(operation)) {
+  if (![ ParameterOperation.RESET, ParameterOperation.RANDOMIZE ].includes(operation)) {
     throw new Error('Invalid argument received for operation type');
   }
 
@@ -38,8 +39,8 @@ export const changeParameterValues = ({ RegisteredSketches = [], indicesToUpdate
 
     console.log(100, dynamicProps);
 
-    for (let prop in RegisteredSketches[ index ].dynamicProperties) {
-      let sketchPropertyAttributes = oldSketchProps.dynamicProperties[ prop ];
+    for (let prop in RegisteredSketches[ index ].dynamicProps) {
+      let sketchPropertyAttributes = dynamicProps[ prop ];
 
       if (
         !sketchPropertyAttributes?.defaultValue ||
@@ -50,12 +51,12 @@ export const changeParameterValues = ({ RegisteredSketches = [], indicesToUpdate
       let propValues = { ...sketchPropertyAttributes };
       console.log(101, propValues);
 
-      if (operation === 'randomize') {
+      if (operation === ParameterOperation.RANDOMIZE) {
         const randomValues = getRandomValue(sketchPropertyAttributes);
-
+        console.log(101.5, randomValues);
         propValues = { ...propValues, ...randomValues };
 
-      } else if (operation === 'reset') {
+      } else if (operation === ParameterOperation.RESET) {
         if (globalReset) {
           propValues = { ...propValues, lockOn: false };
         }
@@ -63,32 +64,33 @@ export const changeParameterValues = ({ RegisteredSketches = [], indicesToUpdate
         propValues = { ...propValues, ...defaultValues };
       }
 
+
+      console.log(102, dynamicProps);
       dynamicProps = { ...dynamicProps, [ prop ]: propValues };
+      console.log(103, dynamicProps);
 
     } // end properties of current sketch
-    updatedSketches[ index ] = { ...RegisteredSketches[ index ], ...dynamicProps };// incorrect
+
+    updatedSketches[ index ] = { ...RegisteredSketches[ index ], dynamicProps };// incorrect
 
   } // end index of all sketches
-
+  console.log(104, updatedSketches);
   return updatedSketches;
 };
 
 /**
  * Cycle to the next available option for an attribute
- * @param ctrlElement   - the instance whose attributes we are changing
- * @param attr          - the attribute we are changing in the instance
- * @returns {string}    - the string value that we are setting
  */
-export const getNextVariableOption = (ctrlElement, attr) => {
-  if (!ctrlElement[ attr ].options) {
+export const getNextVariableOption = (sketch: P5Sketch, attr) => {
+  if (!sketch.dynamicProps[ attr ].options) {
     return;
   }
 
-  let numOptions = ctrlElement[ attr ].options.length;
-  let index = ctrlElement[ attr ].options.indexOf(ctrlElement[ attr ].currentValue);
+  let numOptions = sketch.dynamicProps[ attr ].options.length;
+  let index = sketch[ attr ].options.indexOf(sketch.dynamicProps[ attr ].currentValue);
   index = (index + 1) % numOptions;
 
-  return ctrlElement[ attr ].options[ index ];
+  return sketch.dynamicProps[ attr ].options[ index ];
 };
 
 /**

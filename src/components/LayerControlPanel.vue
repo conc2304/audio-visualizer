@@ -58,8 +58,7 @@ export default {
     },
 
     sketchName() {
-      if (!this.sketchSelected) return '';
-      return this.sketchSelected.catalogueInfo.title || '';
+      return this.sketchSelected?.catalogueInfo?.title ?? '';
     },
   },
 };

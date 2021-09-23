@@ -21,7 +21,10 @@
 
 <script>
 import IconWithTooltip from '@/components/IconWithTooltip.vue';
-import { changeParameterValues } from '@/js/services/BulkUpdaterService';
+import {
+  ParameterOperation,
+  changeParameterValues,
+} from '@/js/services/BulkUpdaterService';
 import {
   UPDATE_REGISTERED_SKETCHES,
   UPDATE_SKETCH_SELECTED,
@@ -78,13 +81,13 @@ export default {
       const iString = this.sketchIndexSelected.toString();
       const indicesToUpdate = [iString];
       const RegisteredSketches = this.$store.state.RegisteredSketches;
-      const operation = 'reset';
+      const operation = ParameterOperation.RESET;
       const updatedSketches = [
-        ...changeParameterValues({
+        ...changeParameterValues(
           RegisteredSketches,
           indicesToUpdate,
           operation,
-        }),
+        ),
       ];
       // this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
     },
@@ -95,16 +98,15 @@ export default {
       const index = this.sketchIndexSelected;
       const indicesToUpdate = [index.toString()];
       const RegisteredSketches = this.$store.state.RegisteredSketches;
-      const operation = 'randomize';
-      const updatedValues = [
-        ...changeParameterValues({
-          RegisteredSketches,
-          indicesToUpdate,
-          operation,
-        }),
-      ];
+      const operation = ParameterOperation.RANDOMIZE;
 
-      console.log(updatedValues);
+      const updatedValues = changeParameterValues(
+        RegisteredSketches,
+        indicesToUpdate,
+        operation,
+      );
+
+      console.log(90, updatedValues);
 
       const updatedSketches = [
         ...RegisteredSketches.slice(0, index),
