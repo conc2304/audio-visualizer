@@ -7,15 +7,10 @@
         v-list-item.close( @click="closeMenu")
           v-icon close
 
-      LayerDashboard(
-        :RegisteredSketches="RegisteredSketches"
-      )
+      LayerDashboard
 
     .layer-control-contents
-      LayerCategoriesExpansionList(
-        :RegisteredSketches="RegisteredSketches"
-        :auxInputVisible="auxInputVisible"
-      )
+      LayerCategoriesExpansionList
 </template>
 
 <script>
@@ -33,14 +28,7 @@ export default {
     LayerCategoriesExpansionList,
   },
 
-  props: {
-    RegisteredSketches: {
-      type: Array,
-    },
-    auxInputVisible: {
-      type: Boolean,
-    },
-  },
+  props: {},
 
   methods: {
     closeMenu() {
@@ -50,22 +38,21 @@ export default {
     },
   },
 
+  updated() {
+    console.log(0, 'UPDATED', 'Layer Control Panel');
+  },
+
   computed: {
     sketchIndexSelected() {
       return this.$store.state.sketchIndexSelected;
     },
 
+    sketchInView() {
+      return this.$store.state.sketchInView;
+    },
+
     sketchName() {
-      if (
-        this.sketchIndexSelected < 0 ||
-        !this.RegisteredSketches ||
-        !this.RegisteredSketches[this.sketchIndexSelected]
-      )
-        return '';
-      return (
-        this.RegisteredSketches[this.sketchIndexSelected].catalogueInfo.title ||
-        ''
-      );
+      return this.sketchInView?.catalogueInfo?.title ?? '';
     },
   },
 };

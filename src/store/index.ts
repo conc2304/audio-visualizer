@@ -9,8 +9,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     RegisteredSketches,
+    sketchInView: null,
     user: {},
     sketchIndexSelected: -1,
+    auxInputVisible: false,
     audio: {
       isPlaying: false,
       currentSound: {},
@@ -35,10 +37,13 @@ export default new Vuex.Store({
 
     [ types.UPDATE_REGISTERED_SKETCHES ](state, payload) {
       state.RegisteredSketches = payload;
+      console.log(1, 'STORE', types.UPDATE_REGISTERED_SKETCHES);
     },
 
     [ types.UPDATE_SKETCH_INDEX_SELECTED ](state, payload) {
       state.sketchIndexSelected = payload;
+      console.log(1, 'STORE', types.UPDATE_SKETCH_INDEX_SELECTED);
+      state.sketchInView = (state.sketchIndexSelected >= 0) ? state.RegisteredSketches[ state.sketchIndexSelected ] : null;
     },
 
     [ types.UPDATE_LAYER_MENU_OPEN ](state, payload) {
@@ -51,6 +56,10 @@ export default new Vuex.Store({
 
     [ types.UPDATE_CATALOGUE_OPEN ](state, payload) {
       state.catalogueOpen = payload;
+    },
+
+    [ types.UPDATE_AUX_INPUT_VISIBLE ](state, payload) {
+      state.auxInputVisible = payload;
     },
 
     [ types.UPDATE_AUDIO_PLAYER_OPEN ](state, payload) {

@@ -47,8 +47,6 @@
       LayerControlPanel(
         v-show="layerMenuOpen"
         @layer_menu_toggle="layerMenuToggleEvent"
-        :RegisteredSketches="RegisteredSketches"
-        :auxInputVisible="auxInputVisible"
       )
 
 
@@ -91,6 +89,7 @@ import {
   UPDATE_LAYER_MENU_OPEN,
   UPDATE_AUDIO_PLAYER_OPEN,
   UPDATE_CATALOGUE_OPEN,
+  UPDATE_AUX_INPUT_VISIBLE,
 } from '../store/mutationTypes';
 
 export default {
@@ -107,7 +106,6 @@ export default {
 
   data: () => ({
     sketchIndexSelected: null,
-    auxInputVisible: false,
     helpModalOpen: false,
     snackbarOpen: false,
     presetSelectedIndex: -1,
@@ -141,6 +139,10 @@ export default {
       return this.$store.state.presetSlotsDisabled;
     },
 
+    auxInputVisible() {
+      return this.$store.state.auxInputVisible;
+    },
+
     layerMenuOpen() {
       return this.$store.state.layerMenuOpen;
     },
@@ -160,7 +162,6 @@ export default {
     },
 
     layerMenuToggleEvent(status) {
-      // this.layerMenuOpen = status;
       this.$store.commit(UPDATE_LAYER_MENU_OPEN, status);
       if (status === true) {
         this.$store.commit(UPDATE_CATALOGUE_OPEN, false);
@@ -178,7 +179,7 @@ export default {
     },
 
     toggleAuxInputFields() {
-      this.auxInputVisible = !this.auxInputVisible;
+      this.$store.commit(UPDATE_AUX_INPUT_VISIBLE, !this.auxInputVisible);
     },
 
     setCatalogueStatus(status) {

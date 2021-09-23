@@ -88,10 +88,7 @@ export default {
     parameter: {
       type: Object,
     },
-    auxInputVisible: {
-      type: Boolean,
-      default: false,
-    },
+
     parameterIndex: {
       type: Number,
     },
@@ -143,6 +140,12 @@ export default {
 
   updated() {
     console.log('UPDATE ME');
+  },
+
+  computed: {
+    auxInputVisible() {
+      return this.$store.state.auxInputVisible;
+    },
   },
 
   watch: {

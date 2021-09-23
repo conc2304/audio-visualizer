@@ -2,16 +2,12 @@
 
   #controller-property-categories
 
-    .layer-wrapper(
-      v-for="(layer, layerIndex) in RegisteredSketches"
-      v-show="layerIndex === sketchIndexSelected"
-      :key="layerIndex"
-    )
+    .layer-wrapper
 
       v-expansion-panels( accordion focusable=true)
         v-expansion-panel(
-          v-for="(category, i) in getPropertyCategories(layerIndex)"
-          :key="i"
+          v-for="(category, i) in propertyCategories"
+          :key="category"
         )
 
           v-expansion-panel-header.category-name  {{ category }}
@@ -20,7 +16,6 @@
           v-expansion-panel-content
             LayerParameterControls(
               :category="category"
-              :auxInputVisible="auxInputVisible"
               :categoryIndex="i"
             )
 
@@ -35,26 +30,26 @@ export default {
     LayerParameterControls,
   },
 
-  data: () => ({}),
+  data: () => ({
+    catagories: [],
+  }),
 
-  props: {
-    // RegisteredSketches: {
-    //   type: Array,
-    // },
-    auxInputVisible: {
-      type: Boolean,
-      default: false,
-    },
+  props: {},
+
+  mounted() {
+    this.catagories = this.getPropertyCategories();
+  },
+
+  updated() {
+    console.log('UPDATED', 'Layer Expansion List');
+    this.catagories = this.getPropertyCategories();
   },
 
   methods: {
-    updateConfigs() {
-      this.RegisteredSketches = this.RegisteredSketches;
-    },
-
-    getPropertyCategories(layerIndex) {
+    getPropertyCategories() {
+      console.log('getProperties');
       const categories = [];
-      const currentSketch = this.RegisteredSketches[layerIndex];
+      const currentSketch = this.sketchInView;
 
       for (const property in currentSketch) {
         if (!currentSketch.hasOwnProperty(property)) {
@@ -71,12 +66,12 @@ export default {
   },
 
   computed: {
-    sketchIndexSelected() {
-      return this.$store.state.sketchIndexSelected;
+    sketchInView() {
+      return this.$store.state.sketchInView;
     },
 
-    RegisteredSketches() {
-      return this.$store.state.RegisteredSketches;
+    propertyCategories() {
+      return this.getPropertyCategories();
     },
   },
 };

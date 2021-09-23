@@ -7,7 +7,6 @@
         :key="`numeric-${i}`"
       )
         ParameterControlNumeric(
-          :auxInputVisible="auxInputVisible"
           :parameter="parameter"
           :parameterIndex="i"
           :categoryIndex="categoryIndex"
@@ -20,7 +19,6 @@
         :key="`variable-${i}`"
       )
         ParameterControlVariable(
-          :auxInputVisible="auxInputVisible"
           :parameter="parameter"
         )
 
@@ -40,10 +38,7 @@ export default {
     category: {
       type: String,
     },
-    auxInputVisible: {
-      type: Boolean,
-      default: false,
-    },
+
     categoryIndex: {
       type: Number,
     },
@@ -60,8 +55,13 @@ export default {
     this.variableAttributes = this.getCategoryParameters('variable');
   },
 
+  updated() {
+    console.log('UPDATED', 'Layer Parameter Control');
+  },
+
   methods: {
     getCategoryParameters(attributeType) {
+      console.log('getCategoryParameters');
       const properties = [];
       const validPropTypes = ['numeric', 'variable', 'boolean'];
       const { RegisteredSketches, sketchIndexSelected, category } = this;

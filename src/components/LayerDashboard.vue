@@ -68,6 +68,10 @@ export default {
     ],
   }),
 
+  updated() {
+    console.log('UPDATED', 'Layer Dashboard');
+  },
+
   methods: {
     layerClickHandler(functionName) {
       this[functionName]();
