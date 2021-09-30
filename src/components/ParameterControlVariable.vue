@@ -8,23 +8,6 @@
           :parameter="parameter"
         )
 
-    //- v-if(radio)
-    //-   v-radio-group(
-    //-     v-if="parameter.attrType === 'variable'"
-    //-     v-model="parameter.currentValue"
-    //-     :disabled='parameter.lockOn'
-    //-     row
-    //-   )
-    //-     v-radio(
-    //-       v-for="(option, i) in parameter.options"
-    //-       :label="parameter.options[i]"
-    //-       :value="parameter.options[i]"
-    //-       :key="i"
-    //-       color="color_secondary_blue"
-    //-       on-icon="radio_button_checked"
-    //-       off-icon="radio_button_unchecked"
-    //-   )
-
     v-select(
       outlined
       hide-selected
@@ -40,11 +23,6 @@
 import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
 
 export default {
-  data: () => ({
-    parameterValue: null,
-    radio: false,
-  }),
-
   components: {
     ParameterLockToggle,
   },
@@ -53,10 +31,6 @@ export default {
     parameter: {
       type: Object,
     },
-  },
-
-  mounted() {
-    this.parameterValue = this.parameter.currentValue;
   },
 };
 </script>
