@@ -1,5 +1,6 @@
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 
+// Sketches
 import CenterWave from '@/js/sketches/SketchConstructorCenterWave';
 import WEBGLWave from '@/js/sketches/SketchConstructorWEBGLWave';
 import OuterWaves from '@/js/sketches/SketchConstructorOuterWaves';
