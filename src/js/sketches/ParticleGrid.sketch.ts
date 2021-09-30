@@ -47,7 +47,7 @@ export default class ParticleGrid implements P5Sketch {
     'X & Y'
   ]);
 
-  public zoomAmount = new NumericProperty(' Zoom', 'Transform', -700, -1000, 250, 0.7, 1);
+  public zoomAmount = new NumericProperty(' Zoom', 'Transform', -700, -2000, 250, 0.7, 1);
   public rotateXBase = new NumericProperty('Rotate X (Base)', 'Transform', 0, -180, 180, 0.7, 1);
   public rotateXParticle = new NumericProperty('Rotate X (Particle)', 'Transform', 0, -180, 180, 0.7, 0.5);
   public rotateZVelocity = new NumericProperty('Z Rotation Speed', 'Transform', 0, 0, 10, 0.7, 0.5);
@@ -112,7 +112,7 @@ export default class ParticleGrid implements P5Sketch {
         const yPos = (mirrorXOn && x >= middleCol) ? columns - x : x;
 
         const z = this.simplex.noise3D(xPos * period, yPos * period, time);
-        const zInstance = Math.floor(sketch.map(z, -0.1, 1, 0, 500 * (amplitude)));
+        const zInstance = Math.floor(sketch.map(z, -0.1, 1, 0, 300 * (amplitude)));
 
         this.renderNoiseParticle(sketch, zInstance, xOrigin, yOrigin, particleWidth, particleHeight);
       }
@@ -128,9 +128,9 @@ export default class ParticleGrid implements P5Sketch {
   private renderNoiseParticle(sketch: p5, noiseInstance: number, xPos: number, yPos: number, width: number, height: number) {
     sketch.push();
     this.setColor(sketch, noiseInstance);
-    sketch.translate(xPos, yPos, 0);
+    sketch.translate(xPos, yPos, noiseInstance);
     sketch.rotateX(degreeToRadian(this.rotateXParticle.currentValue));
-    sketch.box(width, height, noiseInstance);
+    sketch.box(width, height, width);
     sketch.pop();
   }
 

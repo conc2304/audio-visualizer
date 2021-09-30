@@ -12,11 +12,11 @@ import P5Sketch from '../interfaces/P5Sketch.interface';
 
 const RegisteredSketches: Array<P5Sketch> = [];
 
-SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
+// SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new ParticleGrid(window.innerWidth, window.innerHeight));
 // SketchCatalogue.push(new BodyBrush(window.innerWidth, window.innerHeight)); // TODO - broken
 
