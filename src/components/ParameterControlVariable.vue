@@ -1,6 +1,5 @@
 <template lang="pug">
   .sketch-parameter-control
-
     .parameter-title-bar
       p {{ parameter.displayLabel }}
 
@@ -9,29 +8,41 @@
           :parameter="parameter"
         )
 
-    v-radio-group(
-      v-if="parameter.attrType === 'variable'"
+    //- v-if(radio)
+    //-   v-radio-group(
+    //-     v-if="parameter.attrType === 'variable'"
+    //-     v-model="parameter.currentValue"
+    //-     :disabled='parameter.lockOn'
+    //-     row
+    //-   )
+    //-     v-radio(
+    //-       v-for="(option, i) in parameter.options"
+    //-       :label="parameter.options[i]"
+    //-       :value="parameter.options[i]"
+    //-       :key="i"
+    //-       color="color_secondary_blue"
+    //-       on-icon="radio_button_checked"
+    //-       off-icon="radio_button_unchecked"
+    //-   )
+
+    v-select(
+      outlined
+      hide-selected
+      :items="parameter.options"
       v-model="parameter.currentValue"
-      :disabled='parameter.lockOn'
-      row
+      single-line
+      dense
+      color="#0e83cd"
     )
-      v-radio(
-        v-for="(option, i) in parameter.options"
-        :label="parameter.options[i]"
-        :value="parameter.options[i]"
-        :key="i"
-        color="color_secondary_blue"
-        on-icon="radio_button_checked"
-        off-icon="radio_button_unchecked"
-      )
 </template>
 
 <script>
-import ParameterLockToggle from "@/components/ParameterLockToggle.vue";
+import ParameterLockToggle from '@/components/ParameterLockToggle.vue';
 
 export default {
   data: () => ({
     parameterValue: null,
+    radio: false,
   }),
 
   components: {
