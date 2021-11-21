@@ -97,11 +97,11 @@ export default class ParticleGrid implements P5Sketch {
     const mirrorXOn = this.mirror.currentValue.indexOf("X") > -1;
     const mirrorYOn = this.mirror.currentValue.indexOf("Y") > -1;
 
-    sketch.pop();
+    sketch.push();
     sketch.translate(0, 0, this.zoomAmount.currentValue);
     sketch.rotateX(degreeToRadian(this.rotateXBase.currentValue));
     sketch.rotateZ(time * this.rotateZVelocity.currentValue);
-    sketch.push();
+    sketch.pop();
     for (let y = 0; y < this.rows.currentValue; y++) {
       for (let x = 0; x < this.columns.currentValue; x++) {
 
