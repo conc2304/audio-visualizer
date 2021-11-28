@@ -5,11 +5,13 @@ import { guidGenerator } from '../services/Utils';
 import CatalogueDataEntry from '../services/CatalogueDataEntry';
 import NumericProperty from '../services/PropertyConstructorNumeric';
 import VariableProperty from '../services/PropertyConstructorVariable';
+import p5Helper from '../services/p5Helper';
 
 let deltaRotation = 0;
 let deltaRotationX = 0;
 let deltaRotationY = 0;
 let deltaRotationZ = 0;
+let deltaTunnel = 0;
 
 export default class RotaryTunnel implements P5Sketch {
   constructor (public windowWidth: number, public windowHeight: number) { }
@@ -29,7 +31,7 @@ export default class RotaryTunnel implements P5Sketch {
   public readonly sid = guidGenerator();
   public bypass = false;
 
-  private readonly zMax = 600;
+  private readonly zMax = 1000;
   private readonly zMin = -3000;
   private readonly zRange = this.zMax - this.zMin;
 
@@ -42,7 +44,7 @@ export default class RotaryTunnel implements P5Sketch {
   public pointsQty = new NumericProperty('Points', 'Base', 8, 1, 40, 0.7, 1);
   public rotationVelocity = new NumericProperty('Rotation Speed', 'Base', 0.2, -2, 2, 0.7, 0.1);
   public fanAmount = new NumericProperty('Fan Amount', 'Base', 360, 0, 360, 0.7, 1);
-  public zDepthDensity = new NumericProperty('Z Depth', 'Base', 5, 1, 20, 0.7, 0.5);
+  public zDepthDensity = new NumericProperty('Z Depth', 'Base', 1, 1, 20, 0.7, 0.5);
   public iterations = new NumericProperty('Iterations', 'Base', 3, 1, 15, 0.7, 1);
 
   public cloneRotationOffset = new NumericProperty('Z Rotation Delay', 'Base', 0, 0, 360, 0.7, 1);
@@ -56,28 +58,10 @@ export default class RotaryTunnel implements P5Sketch {
   public rotateZ = new NumericProperty('Rotate Z', 'Rotation', 0, -10, 10, 0.7, 0.1);
   public rotateZVelocity = new NumericProperty('Rotate Z Velocity', 'Rotation', 0, -1, 1, 0.7, 0.1);
 
-  public render(sketch: p5): void {
-    const iterations = Math.floor(this.iterations.currentValue);
-    const pointsQty = Math.floor(this.pointsQty.currentValue);
-    const pointSize = this.pointSize.currentValue;
-    const orbitRadius = this.orbitRadius.currentValue;
-    const zDensity = this.zDepthDensity.currentValue;
-    const zStep = (this.zRange / zDensity) / iterations;
-    const cloneRotationOffset = this.cloneRotationOffset.currentValue;
+  public tunnelVelocity = new NumericProperty('Tunnel Velocity', 'Rotation', 0, -10, 10, 0.7, 0.1);
 
-    sketch.push();
 
-    for (let i = 0; i < iterations; i++) {
-      const zPos = this.zMax - (i * zStep);
-      sketch.rotateZ(sketch.radians(i * cloneRotationOffset));
-      this.createRotatingRing({ radius: orbitRadius, pointSize, pointsQty, z: zPos }, sketch);
-    }
-
-    sketch.pop();
-
-    this.updateRotationDelta();
-  }
-
+  // Render Methods
 
   private orbitAroundOrigin = ({ radius = 20, anglePos = 0, z = 0 }, sketch: p5) => {
     const x = radius * Math.sin(anglePos);
@@ -108,6 +92,7 @@ export default class RotaryTunnel implements P5Sketch {
     deltaRotationX += this.rotateXVelocity.currentValue * 0.1;
     deltaRotationY += this.rotateYVelocity.currentValue * 0.1;
     deltaRotationZ += this.rotateZVelocity.currentValue * 0.1;
+    deltaTunnel += this.tunnelVelocity.currentValue;
   };
 
   private shapeSizeMap = {
@@ -147,9 +132,10 @@ export default class RotaryTunnel implements P5Sketch {
 
     sketch.push();
     this.rotateShape(sketch);
+    sketch.strokeWeight(0.5);
 
-    // p5 primitive shapes
     if (typeof sketch[ shape ] === 'function') {
+      // p5 primitive shapes
       this.renderPrimitiveShape(shape, shapeSize, sketch);
     } else {
       this.renderCustomModel(shape, shapeSize, sketch);
@@ -159,16 +145,41 @@ export default class RotaryTunnel implements P5Sketch {
   };
 
   private rotateShape = (sketch: p5) => {
-    // const angleX = ;
-    // const angleY = ;
-    // const angleZ = ;
-    // sketch.push();
-    sketch.rotateX((deltaRotationX * this.rotateXVelocity.currentValue) + this.rotateX.currentValue);
-    sketch.rotateY((deltaRotationY * this.rotateYVelocity.currentValue) + this.rotateY.currentValue);
-    sketch.rotateZ((deltaRotationZ * this.rotateZVelocity.currentValue) + this.rotateZ.currentValue);
-    // sketch.pop();
+    const angleX = (deltaRotationX * this.rotateXVelocity.currentValue) + this.rotateX.currentValue;
+    const angleY = (deltaRotationY * this.rotateYVelocity.currentValue) + this.rotateY.currentValue;
+    const angleZ = (deltaRotationZ * this.rotateZVelocity.currentValue) + this.rotateZ.currentValue;
 
+    sketch.rotateX(angleX);
+    sketch.rotateY(angleY);
+    sketch.rotateZ(angleZ);
   };
 
-  easeInto = easeInto;
+  private setColor = p5Helper.setColor;
+  public easeInto = easeInto;
+
+  public render(sketch: p5): void {
+    const iterations = Math.floor(this.iterations.currentValue);
+    const pointsQty = Math.floor(this.pointsQty.currentValue);
+    const pointSize = this.pointSize.currentValue;
+    const orbitRadius = this.orbitRadius.currentValue;
+    const zDensity = this.zDepthDensity.currentValue;
+    const zStep = (this.zRange / zDensity) / iterations;
+    const cloneRotationOffset = this.cloneRotationOffset.currentValue;
+
+    sketch.push();
+
+    for (let i = 0; i < iterations; i++) {
+      const iPos = this.zMax - (i * zStep);
+      const tunnelPos = (deltaTunnel * this.tunnelVelocity.currentValue) % this.zRange;
+      const zPos = iPos + tunnelPos;
+      const z = zPos > this.zMax ? zPos - this.zRange : zPos;
+
+      sketch.rotateZ(sketch.radians(i * cloneRotationOffset));
+      this.createRotatingRing({ radius: orbitRadius, pointSize, pointsQty, z }, sketch);
+    }
+
+    sketch.pop();
+
+    this.updateRotationDelta();
+  }
 }
