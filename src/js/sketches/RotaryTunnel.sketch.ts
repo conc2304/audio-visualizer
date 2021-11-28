@@ -7,6 +7,9 @@ import NumericProperty from '../services/PropertyConstructorNumeric';
 import VariableProperty from '../services/PropertyConstructorVariable';
 
 let deltaRotation = 0;
+let deltaRotationX = 0;
+let deltaRotationY = 0;
+let deltaRotationZ = 0;
 
 export default class RotaryTunnel implements P5Sketch {
   constructor (public windowWidth: number, public windowHeight: number) { }
@@ -42,11 +45,16 @@ export default class RotaryTunnel implements P5Sketch {
   public zDepthDensity = new NumericProperty('Z Depth', 'Base', 5, 1, 20, 0.7, 0.5);
   public iterations = new NumericProperty('Iterations', 'Base', 3, 1, 15, 0.7, 1);
 
-  public zRotationDelay = new NumericProperty('Z Rotation Delay', 'Base', 0, 0, 360, 0.7, 1);
+  public cloneRotationOffset = new NumericProperty('Z Rotation Delay', 'Base', 0, 0, 360, 0.7, 1);
 
-  public shape = new VariableProperty("Shape", "Shape", 'torus', [ 'torus', 'plane', 'box', 'sphere', 'glock', 'ellipsoid', 'cylinder', 'cone', 'lambo', 'shuttle', 'ducky', 'whale', 'dolphin', 'satellite', 'sword' ]);
+  public shape = new VariableProperty("Shape", "Shape", 'sphere', [ 'torus', 'plane', 'box', 'sphere', 'glock', 'ellipsoid', 'cylinder', 'cone', 'lambo', 'shuttle', 'ducky', 'whale', 'dolphin', 'satellite', 'sword' ]);
 
-
+  public rotateX = new NumericProperty('Rotate X', 'Rotation', 0, -10, 10, 0.7, 0.1);
+  public rotateXVelocity = new NumericProperty('Rotate X Velocity', 'Rotation', 0, -1, 1, 0.7, 0.1);
+  public rotateY = new NumericProperty('Rotate Y', 'Rotation', 0, -10, 10, 0.7, 0.1);
+  public rotateYVelocity = new NumericProperty('Rotate Y Velocity', 'Rotation', 0, -1, 1, 0.7, 0.1);
+  public rotateZ = new NumericProperty('Rotate Z', 'Rotation', 0, -10, 10, 0.7, 0.1);
+  public rotateZVelocity = new NumericProperty('Rotate Z Velocity', 'Rotation', 0, -1, 1, 0.7, 0.1);
 
   public render(sketch: p5): void {
     const iterations = Math.floor(this.iterations.currentValue);
@@ -55,21 +63,19 @@ export default class RotaryTunnel implements P5Sketch {
     const orbitRadius = this.orbitRadius.currentValue;
     const zDensity = this.zDepthDensity.currentValue;
     const zStep = (this.zRange / zDensity) / iterations;
-    const zRotationDelay = this.zRotationDelay.currentValue;
+    const cloneRotationOffset = this.cloneRotationOffset.currentValue;
 
     sketch.push();
 
     for (let i = 0; i < iterations; i++) {
       const zPos = this.zMax - (i * zStep);
-      sketch.rotateZ(sketch.radians(i * zRotationDelay));
+      sketch.rotateZ(sketch.radians(i * cloneRotationOffset));
       this.createRotatingRing({ radius: orbitRadius, pointSize, pointsQty, z: zPos }, sketch);
     }
 
     sketch.pop();
 
     this.updateRotationDelta();
-
-    // sketch.pop();
   }
 
 
@@ -87,13 +93,11 @@ export default class RotaryTunnel implements P5Sketch {
       const anglePos = theta * point + deltaRotation;
       this.orbitAroundOrigin({ radius, anglePos, z }, sketch);
       this.renderShape(sketch);
-      // sketch.sphere(pointSize);
       sketch.pop();
     }
   };
 
   private createZClones = (iterations = 1, repeaterFn) => {
-
     for (let i = 0; i < iterations; i++) {
       repeaterFn;
     }
@@ -101,50 +105,69 @@ export default class RotaryTunnel implements P5Sketch {
 
   private updateRotationDelta = () => {
     deltaRotation += this.rotationVelocity.currentValue * 0.01;
+    deltaRotationX += this.rotateXVelocity.currentValue * 0.1;
+    deltaRotationY += this.rotateYVelocity.currentValue * 0.1;
+    deltaRotationZ += this.rotateZVelocity.currentValue * 0.1;
+  };
+
+  private shapeSizeMap = {
+    box: [ 1 ],
+    sphere: [ 1 ],
+    plane: [ 3.5, 1.5 ],
+    torus: [ 1.2, 0.6 ],
+    cylinder: [ 1, 2 ],
+    cone: [ 1, 2 ],
+    ellipsoid: [ 1, 2, 0.5 ],
+  };
+
+  private renderPrimitiveShape = (shape = 'sphere', shapeSize = 1, sketch: p5) => {
+    const mappedDimensions = this.shapeSizeMap[ shape ].map((dimension) =>
+      shapeSize * dimension);
+    sketch[ shape ](...mappedDimensions);
+  };
+
+  private renderCustomModel = async (shape = 'sphere', shapeSize = 1, sketch: p5) => {
+    const modelDir = './assets/webgl_models';
+    const modelPath = `${modelDir}/${shape.toString()}.obj`;
+
+    if (!sketch[ 'objects' ][ shape ]) {
+      sketch[ 'objects' ][ shape ] = sketch.loadModel(modelPath, true);
+    }
+
+    sketch.normalMaterial();
+    sketch.scale(shapeSize * 0.025);
+    sketch.model(sketch[ 'objects' ][ shape ]);
   };
 
   private renderShape = (sketch: p5) => {
+    if (!sketch[ 'objects' ]) sketch[ 'objects' ] = {};
 
-    sketch.push();
-
-    // this.rotateShape();
-    const radius = this.pointSize.currentValue;
+    const shapeSize = this.pointSize.currentValue;
     const shape = this.shape.currentValue;
 
-    switch (this.shape.currentValue) {
-      case 'box':
-      case 'sphere':
-        sketch[ shape ](radius * 3);
-        break;
-      case 'plane':
-      case 'torus':
-        sketch[ shape ](radius * 3.5, radius * 1.5);
-        break;
-      case 'cylinder':
-        sketch[ shape ](radius * 4, radius * 5);
-        break;
-      case 'cone':
-        sketch[ shape ](radius * 5, radius * 20);
-        break;
-      case 'ellipsoid':
-        sketch[ shape ](radius * (5), radius * (2), radius);
-        break;
-      case 'lambo':
-      case 'glock':
-      case 'shuttle':
-      case 'ducky':
-      case 'whale':
-      case 'dolphin':
-      case 'satellite':
-      case 'sword':
+    sketch.push();
+    this.rotateShape(sketch);
 
-        sketch.normalMaterial();
-
-        sketch.scale(radius * 0.07);
-        sketch.model(sketch[ 'objects' ][ shape.currentValue ]);
-        break;
+    // p5 primitive shapes
+    if (typeof sketch[ shape ] === 'function') {
+      this.renderPrimitiveShape(shape, shapeSize, sketch);
+    } else {
+      this.renderCustomModel(shape, shapeSize, sketch);
     }
+
     sketch.pop();
+  };
+
+  private rotateShape = (sketch: p5) => {
+    // const angleX = ;
+    // const angleY = ;
+    // const angleZ = ;
+    // sketch.push();
+    sketch.rotateX((deltaRotationX * this.rotateXVelocity.currentValue) + this.rotateX.currentValue);
+    sketch.rotateY((deltaRotationY * this.rotateYVelocity.currentValue) + this.rotateY.currentValue);
+    sketch.rotateZ((deltaRotationZ * this.rotateZVelocity.currentValue) + this.rotateZ.currentValue);
+    // sketch.pop();
+
   };
 
   easeInto = easeInto;
