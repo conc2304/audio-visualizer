@@ -159,6 +159,9 @@ export default class RotaryTunnel implements P5Sketch {
   private setColor = p5Helper.setColor;
   public easeInto = easeInto;
 
+  /**
+   * Primary Render Function
+   */
   public render(sketch: p5): void {
     const iterations = Math.floor(this.iterations.currentValue);
     const pointsQty = Math.floor(this.pointsQty.currentValue);
