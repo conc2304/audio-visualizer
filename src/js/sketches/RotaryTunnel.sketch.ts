@@ -6,6 +6,7 @@ import CatalogueDataEntry from '../services/CatalogueDataEntry';
 import NumericProperty from '../services/PropertyConstructorNumeric';
 import VariableProperty from '../services/PropertyConstructorVariable';
 import p5Helper from '../services/p5Helper';
+import { P5_PRIMITIVES_3D, WEBGL_MODELS } from '../constants';
 
 let deltaRotation = 0;
 let deltaRotationX = 0;
@@ -49,7 +50,7 @@ export default class RotaryTunnel implements P5Sketch {
 
   public cloneRotationOffset = new NumericProperty('Z Rotation Delay', 'Base', 0, 0, 360, 0.7, 1);
 
-  public shape = new VariableProperty("Shape", "Shape", 'sphere', [ 'torus', 'plane', 'box', 'sphere', 'glock', 'ellipsoid', 'cylinder', 'cone', 'lambo', 'shuttle', 'ducky', 'whale', 'dolphin', 'satellite', 'sword' ]);
+  public shape = new VariableProperty("Shape", "Shape", 'sphere', [].concat(P5_PRIMITIVES_3D, WEBGL_MODELS));
 
   public rotateX = new NumericProperty('Rotate X', 'Rotation', 0, -10, 10, 0.7, 0.1);
   public rotateXVelocity = new NumericProperty('Rotate X Velocity', 'Rotation', 0, -1, 1, 0.7, 0.1);
@@ -145,6 +146,7 @@ export default class RotaryTunnel implements P5Sketch {
   };
 
   private rotateShape = (sketch: p5) => {
+
     const angleX = (deltaRotationX * this.rotateXVelocity.currentValue) + this.rotateX.currentValue;
     const angleY = (deltaRotationY * this.rotateYVelocity.currentValue) + this.rotateY.currentValue;
     const angleZ = (deltaRotationZ * this.rotateZVelocity.currentValue) + this.rotateZ.currentValue;
