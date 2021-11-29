@@ -23,7 +23,7 @@ export default class RotaryTunnel implements P5Sketch {
     'A Spinning Tunnel of Suff!',
     [ 'Particles', 'Tunnel' ],
     'clyzby',
-    './assets/sketch_catalogue_gifs/noise-grid_200.gif',
+    './assets/sketch_catalogue_gifs/rotary-tunnel_200.gif',
     300,
     8,
     '2021-11-20',
@@ -62,7 +62,10 @@ export default class RotaryTunnel implements P5Sketch {
   public tunnelVelocity = new NumericProperty('Tunnel Velocity', 'Rotation', 0, -10, 10, 0.7, 0.1);
 
 
-  // Render Methods
+  /**
+   *  Render Methods
+   */
+
 
   private orbitAroundOrigin = ({ radius = 20, anglePos = 0, z = 0 }, sketch: p5) => {
     const x = radius * Math.sin(anglePos);
@@ -96,7 +99,7 @@ export default class RotaryTunnel implements P5Sketch {
     deltaTunnel += this.tunnelVelocity.currentValue;
   };
 
-  private shapeSizeMap = {
+  private readonly shapeSizeMap = {
     box: [ 1 ],
     sphere: [ 1 ],
     plane: [ 3.5, 1.5 ],
@@ -157,6 +160,7 @@ export default class RotaryTunnel implements P5Sketch {
   };
 
   private setColor = p5Helper.setColor;
+
   public easeInto = easeInto;
 
   /**

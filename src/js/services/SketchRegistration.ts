@@ -11,13 +11,13 @@ import RotaryTunnel from '../sketches/RotaryTunnel.sketch';
 
 const RegisteredSketches: Array<any> = [];
 
-// SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new BodyBrush(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new ParticleGrid(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new BodyBrush(window.innerWidth, window.innerHeight));
+SketchCatalogue.push(new ParticleGrid(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new RotaryTunnel(window.innerWidth, window.innerHeight));
 
 
