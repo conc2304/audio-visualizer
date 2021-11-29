@@ -9,6 +9,7 @@ import Tunnel from '@/js/sketches/SketchConstructorTunnel';
 // import BodyBrush from '@/js/sketches/SketchConstructorBodyBrush'; TODO - FIX
 import ParticleGrid from '../sketches/ParticleGrid.sketch';
 import P5Sketch from '../interfaces/P5Sketch.interface';
+import RotaryTunnel from '../sketches/RotaryTunnel.sketch';
 
 const RegisteredSketches: Array<P5Sketch> = [];
 
@@ -19,6 +20,7 @@ SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
 SketchCatalogue.push(new ParticleGrid(window.innerWidth, window.innerHeight));
 // SketchCatalogue.push(new BodyBrush(window.innerWidth, window.innerHeight)); // TODO - broken
+SketchCatalogue.push(new RotaryTunnel(window.innerWidth, window.innerHeight));
 
 
 let i = 0;
