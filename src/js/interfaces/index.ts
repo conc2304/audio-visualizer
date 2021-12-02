@@ -1,4 +1,4 @@
-export type CustomModelShape =
+export type CustomModelShape = 
   | 'glock'
   | 'lambo'
   | 'shuttle'

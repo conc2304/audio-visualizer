@@ -5,6 +5,7 @@ import {P5Base, P5Constructor, P5Sketch} from '../interfaces/P5Sketch.interface'
 import p5 from 'p5';
 import { loadCustomModel } from '../services/p5Helper';
 import { CUSTOM_MODELS, P5_PRIMITIVES_3D } from '../constants';
+import { CustomModelShape, WebglShape } from '../interfaces';
 
 let origin = 0;
 let yPoints: Array<number> = [];
@@ -122,7 +123,7 @@ export default class WEBGLWave extends P5Base implements P5Sketch {
 
     p5.push();
     this.rotateShape(p5);
-    const shape = this.shape.currentValue;
+    const shape = this.shape.currentValue as CustomModelShape;
 
     if (CUSTOM_MODELS.includes(shape)) {
       if (!p5[ 'objects' ][ shape ]) {
@@ -171,7 +172,7 @@ export default class WEBGLWave extends P5Base implements P5Sketch {
       this.translateZ.currentValue,
     );
 
-    if (!CUSTOM_MODELS.includes(this.shape.currentValue)) {
+    if (!CUSTOM_MODELS.includes(this.shape.currentValue as CustomModelShape)) {
       this.setColor(p5);
     }
 

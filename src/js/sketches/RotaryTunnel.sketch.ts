@@ -143,7 +143,7 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
     sketch[shape](...mappedDimensions);
   };
 
-  private renderCustomModel = async (shape: WebglShape, shapeSize = 1, sketch: p5) => {
+  private renderCustomModel = (shape: WebglShape, shapeSize = 1, sketch: p5) => {
     if (!sketch['objects'][shape]) {
       loadCustomModel(shape as CustomModelShape, sketch);
     }
@@ -157,7 +157,7 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
     if (!sketch['objects']) sketch['objects'] = {};
 
     const shapeSize = this.pointSize.currentValue;
-    const shape = this.shape.currentValue;
+    const shape = this.shape.currentValue as WebglShape;
 
     sketch.push();
     this.rotateShape(sketch);
