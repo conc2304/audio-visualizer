@@ -4,29 +4,29 @@ import { guidGenerator } from '../services/Utils';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
-import P5Sketch from '../interfaces/P5Sketch.interface';
+import {P5Base, P5Sketch} from '../interfaces/P5Sketch.interface';
 import p5 from 'p5';
 
 let origin = 0;
 let yPoints: Array<number> = [];
 
-export default class CenterWave implements P5Sketch {
-  constructor (public windowWidth: number, public windowHeight: number) { }
+export default class CenterWave extends P5Base implements P5Sketch {
+  constructor () { 
+    super();
+  }
 
-  public sid = guidGenerator();
 
   public catalogueInfo = new CatalogueDataEntry(
-    this.constructor,
+    this,
     'Basic Sine Wave',
     'A simple parametric sine wave with various shapes as point along the wave.',
     [ 'Parametric', 'Awesome' ],
     'NOTNOTclyzby',
-    './assets/sketch_catalogue_gifs/center-wave_200.gif',
+    'center-wave_200.gif',
     300,
     2,
     '2018-11-20',
   );
-  public bypass = false;
 
   public waveWidth = window.innerWidth + 200; // have some of it go off the page
   public radius = new NumericProperty('Size', 'Base', 20, -1000, 2000, 0.7, 10);
@@ -89,12 +89,13 @@ export default class CenterWave implements P5Sketch {
     );
   };
 
-  private rotateShape = helper.rotateShape;
+  // private rotateShape = helper.rotateShape;
   private setColor = helper.setColor;
   private renderShape = helper.renderShape;
-  public easeInto = easeInto;
 
-
+  /**
+   * Primary Render Function
+   */
   public render = (p5: p5) => {
     if (this.xSpacing.currentValue <= 0) {
       this.xSpacing.currentValue = this.xSpacing.min / 2;

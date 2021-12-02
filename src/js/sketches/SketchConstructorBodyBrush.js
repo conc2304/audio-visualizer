@@ -20,7 +20,7 @@ class BodyBrush {
       'Kinetic art meets your computer, dance around and become a digital brush',
       ['Body Tracking', 'Web Cam', 'Interactive', 'Particle System'],
       'clyzby',
-      './assets/sketch_catalogue_gifs/body-brush_200.gif',
+      'body-brush_200.gif',
       400,
       5,
       '2019-11-20',

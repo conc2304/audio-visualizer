@@ -1,9 +1,7 @@
-import easeInto from '@/js/services/EasingService';
-import { guidGenerator } from '@/js/services/Utils';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
-import P5Sketch from '../interfaces/P5Sketch.interface';
+import {P5Base, P5Constructor, P5Sketch} from '../interfaces/P5Sketch.interface';
 import p5 from 'p5';
 
 let origin = 0;
@@ -22,25 +20,24 @@ const loadedModels = [
 
 const loadedModelsPath = './assets/webgl_models';
 
-export default class WEBGLWave implements P5Sketch {
-  constructor (public windowWidth: number = window.innerWidth, public windowHeight: number = window.innerHeight) {
+export default class WEBGLWave extends P5Base implements P5Sketch {
+  constructor () {
+    super();
   }
-  public sid = guidGenerator();
 
   public catalogueInfo = new CatalogueDataEntry(
-    this.constructor,
-    'WEBGL Sine Wave',
+    this,
+    '3D Sine Wave',
     'A parametric sine wave with various 3D shapes as point along the wave.',
-    [ 'Parametric', 'WEBGL' ],
+    [ 'Parametric', '3D' ],
     'clyzby',
-    './assets/sketch_catalogue_gifs/webgl-wave_200.gif',
+    'webgl-wave_200.gif',
     277,
     4,
     '2019-07-17',
   );
 
   public waveWidth = window.innerWidth + 200; // have some of it go off the page
-  public bypass = false;
 
   public shake = false;
   public shakeGain = 0.009; // should be make this a dial/ controllable by button
@@ -87,8 +84,6 @@ export default class WEBGLWave implements P5Sketch {
     'cone',
     ...loadedModels,
   ]);
-
-  public easeInto = easeInto;
 
   private calcWave = (p5: p5) => {
     yPoints = new Array(

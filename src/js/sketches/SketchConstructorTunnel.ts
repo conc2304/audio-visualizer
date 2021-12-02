@@ -1,11 +1,9 @@
-import easeInto from '@/js/services/EasingService';
-import { guidGenerator } from '@/js/services/Utils';
 import helper from '@/js/services/p5Helper.js';
 
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
-import P5Sketch from '../interfaces/P5Sketch.interface';
+import { P5Base, P5Constructor, P5Sketch } from '../interfaces/P5Sketch.interface';
 import p5 from 'p5';
 
 let zMax = 900;
@@ -13,25 +11,22 @@ let zMin = -6000;
 let zDist = zMax - zMin;
 let zPos = zMin;
 
-export default class Tunnel implements P5Sketch {
-  constructor (public windowWidth = window.innerWidth, public windowHeight = window.innerHeight) { }
-  public sid = guidGenerator();
+export default class Tunnel extends P5Base implements P5Sketch {
+  constructor() {
+    super();
+  }
 
   public catalogueInfo = new CatalogueDataEntry(
-    this.constructor,
+    this,
     'Infinite Tunnel',
     'A generative never ending tunnel ',
-    [ 'Generative', 'Tunnel', 'Loop' ],
+    ['Generative', 'Tunnel', 'Loop'],
     'StillClyzby',
-    './assets/sketch_catalogue_gifs/tunnel_200.gif',
+    'tunnel_200.gif',
     202,
     1,
     '2020-09-19',
   );
-
-  public bypass = false;
-
-
 
   public radius = new NumericProperty('Size', 'Base', 20, 0, 2000, 0.7, 0.5);
   public strokeWeight = new NumericProperty('Line Width', 'Base', 2, 2, 200, 0.7, 1);
@@ -52,7 +47,6 @@ export default class Tunnel implements P5Sketch {
   public saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1, 0.5);
 
   private renderShape = helper.renderShape;
-  public easeInto = easeInto;
 
   public render = (p5: p5) => {
     p5.push();
@@ -70,22 +64,12 @@ export default class Tunnel implements P5Sketch {
       const zToSet = zMin + tunnelPos + i * zStep;
       zPos = zToSet > zMax ? zToSet - zDist : zToSet;
 
-      p5.translate(
-        this.translateX.currentValue,
-        this.translateY.currentValue,
-        zPos,
-      );
+      p5.translate(this.translateX.currentValue, this.translateY.currentValue, zPos);
 
       p5.strokeWeight(this.strokeWeight.currentValue);
       const calc = p5.sin(p5.noise((frame + 2.5 * i) * 0.01));
       const wave = p5.map(calc, 0, 1, 0, 100);
-      const hue = p5.map(
-        calc,
-        0,
-        1,
-        Number(this.hue.min),
-        Number(this.hue.max),
-      );
+      const hue = p5.map(calc, 0, 1, Number(this.hue.min), Number(this.hue.max));
       const saturation = p5.map(
         calc,
         0,
