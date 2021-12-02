@@ -3,8 +3,9 @@ import { P5Base, P5Sketch } from '../interfaces/P5Sketch.interface';
 import CatalogueDataEntry from '../services/CatalogueDataEntry';
 import NumericProperty from '../services/PropertyConstructorNumeric';
 import VariableProperty from '../services/PropertyConstructorVariable';
-import p5Helper from '../services/p5Helper';
-import { P5_PRIMITIVES_3D, WEBGL_MODELS } from '../constants';
+import p5Helper, { loadCustomModel } from '../services/p5Helper';
+import { P5_PRIMITIVES_3D, CUSTOM_MODELS } from '../constants';
+import { CustomModelShape, WebglShape } from '../interfaces';
 
 let deltaRotation = 0;
 let deltaRotationX = 0;
@@ -52,7 +53,7 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
     'Shape',
     'Shape',
     'sphere',
-    [].concat(P5_PRIMITIVES_3D, WEBGL_MODELS),
+    [].concat(P5_PRIMITIVES_3D, CUSTOM_MODELS),
   );
 
   public rotateX = new NumericProperty('Rotate X', 'Rotation', 0, -10, 10, 0.7, 0.1);
@@ -137,17 +138,14 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
     ellipsoid: [1, 2, 0.5],
   };
 
-  private renderPrimitiveShape = (shape = 'sphere', shapeSize = 1, sketch: p5) => {
-    const mappedDimensions = this.shapeSizeMap[shape].map(dimension => shapeSize * dimension);
+  private renderPrimitiveShape = (shape: WebglShape, shapeSize = 1, sketch: p5) => {
+    const mappedDimensions = this.shapeSizeMap[shape].map((dimension: number) => shapeSize * dimension);
     sketch[shape](...mappedDimensions);
   };
 
-  private renderCustomModel = async (shape = 'sphere', shapeSize = 1, sketch: p5) => {
-    const modelDir = './assets/webgl_models';
-    const modelPath = `${modelDir}/${shape.toString()}.obj`;
-
+  private renderCustomModel = async (shape: WebglShape, shapeSize = 1, sketch: p5) => {
     if (!sketch['objects'][shape]) {
-      sketch['objects'][shape] = sketch.loadModel(modelPath, true);
+      loadCustomModel(shape as CustomModelShape, sketch);
     }
 
     sketch.normalMaterial();

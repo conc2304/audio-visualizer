@@ -1,4 +1,4 @@
-import helper from '@/js/services/p5Helper.js';
+import helper from '@/js/services/p5Helper';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
