@@ -1,46 +1,42 @@
-import easeInto from '@/js/services/EasingService';
-import { guidGenerator } from '@/js/services/Utils';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
-import P5Sketch from '../interfaces/P5Sketch.interface';
+import { P5Base, P5Constructor, P5Sketch } from '../interfaces/P5Sketch.interface';
 import p5 from 'p5';
+import { loadCustomModel } from '../services/p5Helper';
+import { CUSTOM_MODELS, P5_PRIMITIVES_3D } from '../constants';
+import { CustomModelShape, WebglShape } from '../interfaces';
 
 let origin = 0;
 let yPoints: Array<number> = [];
-const loadedModels = [
-  'lambo',
-  'glock',
-  'shuttle',
-  'shuttle',
-  'ducky',
-  'whale',
-  'dolphin',
-  'satellite',
-  'sword',
-];
 
-const loadedModelsPath = './assets/webgl_models';
 
-export default class WEBGLWave implements P5Sketch {
-  constructor (public windowWidth: number = window.innerWidth, public windowHeight: number = window.innerHeight) {
+
+export default class WEBGLWave extends P5Base implements P5Sketch {
+  constructor () {
+    super();
   }
-  public sid = guidGenerator();
 
   public catalogueInfo = new CatalogueDataEntry(
-    this.constructor,
+    // <<<<<<< HEAD
+    //     this.constructor,
+    //     '3D Sine Wave',
+    //     'A parametric sine wave with various 3D shapes as point along the wave.',
+    //     [ 'Parametric', '3D', 'Wave' ],
+    // =======
+    this,
     '3D Sine Wave',
     'A parametric sine wave with various 3D shapes as point along the wave.',
-    [ 'Parametric', '3D', 'Wave' ],
+    [ 'Parametric', '3D' ],
+    // >>>>>>> 2e623f67975bc3c819f249b889504d9099408b5c
     'clyzby',
-    './assets/sketch_catalogue_gifs/webgl-wave_200.gif',
+    'webgl-wave_200.gif',
     277,
     4,
     '2019-07-17',
   );
 
   public waveWidth = window.innerWidth + 200; // have some of it go off the page
-  public bypass = false;
 
   public shake = false;
   public shakeGain = 0.009; // should be make this a dial/ controllable by button
@@ -78,17 +74,9 @@ export default class WEBGLWave implements P5Sketch {
     'tan',
   ]);
   public shape = new VariableProperty('Shape', 'Base', 'torus', [
-    'torus',
-    'plane',
-    'box',
-    'sphere',
-    'ellipsoid',
-    'cylinder',
-    'cone',
-    ...loadedModels,
+    ...P5_PRIMITIVES_3D,
+    ...CUSTOM_MODELS,
   ]);
-
-  public easeInto = easeInto;
 
   private calcWave = (p5: p5) => {
     yPoints = new Array(
@@ -142,23 +130,11 @@ export default class WEBGLWave implements P5Sketch {
 
     p5.push();
     this.rotateShape(p5);
-    const shape = this.shape.currentValue;
-    const shapeRadiusMap = {
-      box: [ 1 ],
-      sphere: [ 3 ],
-      plane: [ 1 ],
-      torus: [ 3.5, 1.5 ],
-      cylinder: [ 4, 5 ],
-      cone: [ 5, 20 ],
-      ellipsoid: [ 5, 2, 1 ]
-    };
+    const shape = this.shape.currentValue as CustomModelShape;
 
-    if (loadedModels.includes(shape)) {
+    if (CUSTOM_MODELS.includes(shape)) {
       if (!p5[ 'objects' ][ shape ]) {
-        p5[ 'objects' ][ shape ] = p5.loadModel(
-          `${loadedModelsPath}/${shape}.obj`,
-          true,
-        );
+        loadCustomModel(shape, p5);
       }
 
       p5.normalMaterial();
@@ -166,6 +142,15 @@ export default class WEBGLWave implements P5Sketch {
       p5.model(p5[ 'objects' ][ shape ]);
 
     } else {
+      const shapeRadiusMap = {
+        box: [ 1 ],
+        sphere: [ 3 ],
+        plane: [ 1 ],
+        torus: [ 3.5, 1.5 ],
+        cylinder: [ 4, 5 ],
+        cone: [ 5, 20 ],
+        ellipsoid: [ 5, 2, 1 ]
+      };
       const shapeArgs = shapeRadiusMap[ shape ].map((radiusMult: number) => radiusMult * this.radius.currentValue);
       p5[ shape ](...shapeArgs);
     }
@@ -194,7 +179,7 @@ export default class WEBGLWave implements P5Sketch {
       this.translateZ.currentValue,
     );
 
-    if (!loadedModels.includes(this.shape.currentValue)) {
+    if (!CUSTOM_MODELS.includes(this.shape.currentValue as CustomModelShape)) {
       this.setColor(p5);
     }
 

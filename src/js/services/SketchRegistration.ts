@@ -1,35 +1,39 @@
-import SketchCatalogue from '@/js/services/SketchCatalogue';
 
 // Sketches
 import CenterWave from '@/js/sketches/SketchConstructorCenterWave';
 import WEBGLWave from '@/js/sketches/SketchConstructorWEBGLWave';
 import OuterWaves from '@/js/sketches/SketchConstructorOuterWaves';
-import Parametric from '@/js/sketches/SketchConstructorParametric';
+import Parametric from '@/js/sketches/ParametricCurve.sketch';
 import Tunnel from '@/js/sketches/SketchConstructorTunnel';
 // import BodyBrush from '@/js/sketches/SketchConstructorBodyBrush'; TODO - FIX
 import ParticleGrid from '../sketches/ParticleGrid.sketch';
-import P5Sketch from '../interfaces/P5Sketch.interface';
+import { P5Sketch } from '../interfaces/P5Sketch.interface';
 import RotaryTunnel from '../sketches/RotaryTunnel.sketch';
+import SketchCatalog from '@/js/services/SketchCatalogue';
 
 const RegisteredSketches: Array<P5Sketch> = [];
 
-SketchCatalogue.push(new CenterWave(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new OuterWaves(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new WEBGLWave(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new Parametric(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new Tunnel(window.innerWidth, window.innerHeight));
-SketchCatalogue.push(new ParticleGrid(window.innerWidth, window.innerHeight));
-// SketchCatalogue.push(new BodyBrush(window.innerWidth, window.innerHeight)); // TODO - broken
-SketchCatalogue.push(new RotaryTunnel(window.innerWidth, window.innerHeight));
-
+// load all sketches into the catalog
+// todo - make each file register itself somehow
+SketchCatalog.push(
+  new CenterWave(),
+  new OuterWaves(),
+  new WEBGLWave(),
+  new Parametric(),
+  new Tunnel(),
+  new ParticleGrid(),
+  new RotaryTunnel(),
+  // new BodyBrush(), // todo - broken
+);
 
 let i = 0;
 // start them with 3 of the sketches
 while (i < 3) {
-  if (!SketchCatalogue[ i ]) break;
+  if (!SketchCatalog[i]) break;
 
-  const { catalogueInfo } = SketchCatalogue[ i ];
-  RegisteredSketches.push(new catalogueInfo.classConstructor(window.innerWidth, window.innerHeight));
+  const { classConstructor } = SketchCatalog[i].catalogueInfo;
+  const newSketch =  new classConstructor()
+  RegisteredSketches.push(newSketch);
   i++;
 }
 

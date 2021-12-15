@@ -3,36 +3,34 @@ import p5 from 'p5';
 import SimplexNoise from "simplex-noise";
 
 // App Imports
-import { guidGenerator, degreeToRadian } from '@/js/services/Utils';
+import { degreeToRadian } from '@/js/services/Utils';
 import CatalogueDataEntry from '../services/CatalogueDataEntry';
 import NumericProperty from '../services/PropertyConstructorNumeric';
-import P5Sketch from '../interfaces/P5Sketch.interface';
-import easeInto from '../services/EasingService';
+import {P5Base, P5Sketch} from '../interfaces/P5Sketch.interface';
 import VariableProperty from '../services/PropertyConstructorVariable';
 
 
 
-export default class ParticleGrid implements P5Sketch {
-
-  constructor (public windowWidth: number, public windowHeight: number) {
+export default class ParticleGrid extends P5Base implements P5Sketch  {
+  constructor () {
+    super();
   }
 
   public catalogueInfo = new CatalogueDataEntry(
-    this.constructor,
+    this,
     '3D Noise Grid',
     'Parametric noise grid in 3D!',
     [ 'Noise', '3D' ],
     'clyzby',
-    './assets/sketch_catalogue_gifs/noise-grid_200.gif',
+    'noise-grid_200.gif',
     300,
     8,
     '2021-08-15'
   );
 
-  public sid = guidGenerator();
-  public bypass = false;
-
-  // Sketch Parameters
+  /**
+   * Sketch Parameters
+   */ 
   public columns = new NumericProperty('Columns', 'Base', 25, 5, 40, 0.7, 1);
   public rows = new NumericProperty('Rows', 'Base', 25, 5, 40, 0.7, 1);
   public frequency = new NumericProperty('Frequency', 'Base', 20, 1, 100, 0.7, 1);
@@ -64,6 +62,45 @@ export default class ParticleGrid implements P5Sketch {
   ]);
 
 
+  // Private Properties
+  private simplex = new SimplexNoise(Math.random);
+
+  // Private Render Methods
+  private renderNoiseParticle(sketch: p5, noiseInstance: number, xPos: number, yPos: number, width: number, height: number) {
+    sketch.push();
+    this.setColor(sketch, noiseInstance);
+    sketch.translate(xPos, yPos, noiseInstance);
+    sketch.rotateX(degreeToRadian(this.rotateXParticle.currentValue));
+    sketch.box(width, height, width);
+    sketch.pop();
+  }
+
+  private setColor(sketch: p5, noise?: number): void {
+    let colorNoise: number;
+    let brightnessNoise: number;
+
+    switch (this.stroke.currentValue) {
+      case 'Outline':
+        colorNoise = (typeof noise !== 'undefined') ? (this.strokeHue.currentValue + Math.abs(noise)) % this.strokeHue.defaultMax : this.strokeHue.currentValue;
+        sketch.strokeWeight(1);
+        sketch.stroke(colorNoise, this.strokeSaturation.currentValue, 100);
+        sketch.noFill();
+        break;
+      case 'Fill + Outline':
+        sketch.strokeWeight(1);
+        colorNoise = (typeof noise !== 'undefined') ? (this.fillHue.currentValue + Math.abs(noise)) % this.fillHue.defaultMax : this.fillHue.currentValue;
+        brightnessNoise = (typeof noise !== 'undefined') ? (sketch.map(Math.abs(noise), 500, 1000, this.blackScale.defaultMax - this.blackScale.currentValue, 110, false)) : 100;
+        sketch.stroke(this.strokeHue.currentValue, this.strokeSaturation.currentValue, 100);
+        sketch.fill(colorNoise, this.fillSaturation.currentValue, brightnessNoise);
+        break;
+    }
+  };
+
+
+  /**
+   * 
+   * Primary Render Function
+   */
   public render(sketch: p5): void {
 
     const columns = Math.round(this.columns.currentValue);
@@ -118,43 +155,5 @@ export default class ParticleGrid implements P5Sketch {
       }
     }
   }
-
-
-  // Private Properties
-  private simplex = new SimplexNoise(Math.random);
-
-  // Private Methods
-
-  private renderNoiseParticle(sketch: p5, noiseInstance: number, xPos: number, yPos: number, width: number, height: number) {
-    sketch.push();
-    this.setColor(sketch, noiseInstance);
-    sketch.translate(xPos, yPos, noiseInstance);
-    sketch.rotateX(degreeToRadian(this.rotateXParticle.currentValue));
-    sketch.box(width, height, width);
-    sketch.pop();
-  }
-
-  private setColor(sketch: p5, noise?: number): void {
-    let colorNoise: number;
-    let brightnessNoise: number;
-
-    switch (this.stroke.currentValue) {
-      case 'Outline':
-        colorNoise = (typeof noise !== 'undefined') ? (this.strokeHue.currentValue + Math.abs(noise)) % this.strokeHue.defaultMax : this.strokeHue.currentValue;
-        sketch.strokeWeight(1);
-        sketch.stroke(colorNoise, this.strokeSaturation.currentValue, 100);
-        sketch.noFill();
-        break;
-      case 'Fill + Outline':
-        sketch.strokeWeight(1);
-        colorNoise = (typeof noise !== 'undefined') ? (this.fillHue.currentValue + Math.abs(noise)) % this.fillHue.defaultMax : this.fillHue.currentValue;
-        brightnessNoise = (typeof noise !== 'undefined') ? (sketch.map(Math.abs(noise), 500, 1000, this.blackScale.defaultMax - this.blackScale.currentValue, 110, false)) : 100;
-        sketch.stroke(this.strokeHue.currentValue, this.strokeSaturation.currentValue, 100);
-        sketch.fill(colorNoise, this.fillSaturation.currentValue, brightnessNoise);
-        break;
-    }
-  };
-
-  easeInto = easeInto;
 }
 

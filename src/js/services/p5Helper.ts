@@ -1,5 +1,7 @@
+import p5 from 'p5';
+import { CustomModelShape } from '../interfaces';
 
-const p5Helper = {};
+const p5Helper: any = {};
 
 /**
  * Renders a given shape along the the passed x and y positions.
@@ -15,7 +17,6 @@ p5Helper.renderShape = function(p5, xPos, yPos, radius) {
     p5.ellipse(xPos, yPos, radius, radius);
   } else if (polygons.includes(this.shape.currentValue)) {
     let sides = 2;
-
 
     switch (this.shape.currentValue) {
       case 'line':
@@ -77,6 +78,16 @@ p5Helper.rotateShape = function(p5) {
       this.rotateZ.currentValue,
   );
   p5.pop();
+};
+
+export const loadCustomModel = (shape: CustomModelShape, sketch: p5): void => {
+
+  if (sketch['objects'][shape]) return; // already loaded
+
+  const modelDir = './assets/webgl_models';
+  const modelPath = `${modelDir}/${shape.toString()}.obj`;
+  // save it to the semi-global sketch variable
+  sketch['objects'][shape] = sketch.loadModel(modelPath, true);
 };
 
 export default p5Helper;
