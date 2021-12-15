@@ -6,7 +6,7 @@ import CatalogueDataEntry from '../services/CatalogueDataEntry';
 import NumericProperty from '../services/PropertyConstructorNumeric';
 import VariableProperty from '../services/PropertyConstructorVariable';
 import p5Helper from '../services/p5Helper';
-import { P5_PRIMITIVES_3D, WEBGL_MODELS } from '../constants';
+import { CATALOGUE_ITEM_AVATAR_DIR, CUSTOM_MODELS_DIR, P5_PRIMITIVES_3D, SKETCH_PROPERTY_3D_SHAPE, WEBGL_MODELS } from '../constants';
 
 let deltaRotation = 0;
 let deltaRotationX = 0;
@@ -19,11 +19,11 @@ export default class RotaryTunnel implements P5Sketch {
 
   public catalogueInfo = new CatalogueDataEntry(
     this.constructor,
-    'Rotatry Tunnel',
+    'Rotary Tunnel',
     'A Spinning Tunnel of Stuff!',
-    [ 'Particles', 'Tunnel' ],
+    [ 'Particles', 'Tunnel', 'Spinning' ],
     'clyzby',
-    './assets/sketch_catalogue_gifs/rotary-tunnel_200.gif',
+    `${CATALOGUE_ITEM_AVATAR_DIR}/rotary-tunnel_200.gif`,
     300,
     8,
     '2021-11-20',
@@ -50,7 +50,7 @@ export default class RotaryTunnel implements P5Sketch {
 
   public cloneRotationOffset = new NumericProperty('Z Rotation Delay', 'Base', 0, 0, 360, 0.7, 1);
 
-  public shape = new VariableProperty("Shape", "Shape", 'sphere', [].concat(P5_PRIMITIVES_3D, WEBGL_MODELS));
+  public shape = SKETCH_PROPERTY_3D_SHAPE;
 
   public rotateX = new NumericProperty('Rotate X', 'Rotation', 0, -10, 10, 0.7, 0.1);
   public rotateXVelocity = new NumericProperty('Rotate X Velocity', 'Rotation', 0, -1, 1, 0.7, 0.1);
@@ -116,8 +116,7 @@ export default class RotaryTunnel implements P5Sketch {
   };
 
   private renderCustomModel = async (shape = 'sphere', shapeSize = 1, sketch: p5) => {
-    const modelDir = './assets/webgl_models';
-    const modelPath = `${modelDir}/${shape.toString()}.obj`;
+    const modelPath = `${CUSTOM_MODELS_DIR}/${shape.toString()}.obj`;
 
     if (!sketch[ 'objects' ][ shape ]) {
       sketch[ 'objects' ][ shape ] = sketch.loadModel(modelPath, true);

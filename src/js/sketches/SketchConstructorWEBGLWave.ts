@@ -29,9 +29,9 @@ export default class WEBGLWave implements P5Sketch {
 
   public catalogueInfo = new CatalogueDataEntry(
     this.constructor,
-    'WEBGL Sine Wave',
+    '3D Sine Wave',
     'A parametric sine wave with various 3D shapes as point along the wave.',
-    [ 'Parametric', 'WEBGL' ],
+    [ 'Parametric', '3D', 'Wave' ],
     'clyzby',
     './assets/sketch_catalogue_gifs/webgl-wave_200.gif',
     277,
