@@ -10,12 +10,14 @@ import ParticleGrid from '../sketches/ParticleGrid.sketch';
 import { P5Sketch } from '../interfaces/P5Sketch.interface';
 import RotaryTunnel from '../sketches/RotaryTunnel.sketch';
 import SketchCatalog from '@/js/services/SketchCatalogue';
+import RotatingSpokes from '@/js/sketches/RotatingSpokes.sketch';
 
 const RegisteredSketches: Array<P5Sketch> = [];
 
 // load all sketches into the catalog
 // todo - make each file register itself somehow
 SketchCatalog.push(
+  new RotatingSpokes(),
   new CenterWave(),
   new OuterWaves(),
   new WEBGLWave(),
@@ -28,7 +30,7 @@ SketchCatalog.push(
 
 let i = 0;
 // start them with 3 of the sketches
-while (i < 3) {
+while (i < 1) {
   if (!SketchCatalog[i]) break;
 
   const { classConstructor } = SketchCatalog[i].catalogueInfo;
