@@ -2,10 +2,10 @@ import p5 from 'p5';
 import { P5Base, P5Sketch } from '../interfaces/P5Sketch.interface';
 import CatalogueDataEntry from '../services/CatalogueDataEntry';
 import NumericProperty from '../services/PropertyConstructorNumeric';
-import VariableProperty from '../services/PropertyConstructorVariable';
+// import VariableProperty from '../services/PropertyConstructorVariable';
 import p5Helper, { loadCustomModel } from '../services/p5Helper';
-import { P5_PRIMITIVES_3D, CUSTOM_MODELS } from '../constants';
-import { CustomModelShape, WebglShape } from '../interfaces';
+// import { P5_PRIMITIVES_3D, CUSTOM_MODELS } from '../constants';
+// import { CustomModelShape, WebglShape } from '../interfaces';
 
 type PointProps = {
   pointRadius: number;
@@ -38,28 +38,40 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
     '2021-11-20',
   );
 
-  public spokeQty = new NumericProperty('Spokes Qty', 'Base', 1, 1, 20, 0.7, 0.1);
-  public pointsPerSpoke = new NumericProperty('Points per Spoke', 'Base', 1, 1, 30, 0.7, 0.1);
-  public spokeLength = new NumericProperty('Spoke Length', 'Base', 400, 10, this.windowWidth * 0.75, 0.7, 0.1);
+  public spokeQty = new NumericProperty('Spokes Qty', 'Base', 3, 1, 20, 0.7, 1);
+  public pointsPerSpoke = new NumericProperty('Points per Spoke', 'Base', 5, 1, 30, 0.7, 1);
+  public spokeLength = new NumericProperty(
+    'Spoke Length',
+    'Base',
+    400,
+    10,
+    this.windowWidth * 0.75,
+    0.7,
+    0.1,
+  );
   public innerRadius = new NumericProperty('Inner Radius', 'Base', 0, 0, 300, 0.7, 0.1);
-  public rotationVelocity = new NumericProperty('Rotation Speed', 'Base', 0.2, -2, 2, 0.7, 0.1);
+  public rotationVelocity = new NumericProperty('Rotation Speed', 'Base', 0.1, -2, 2, 0.7, 0.05);
   public pointSize = new NumericProperty('Point Size', 'Base', 20, 1, 100, 0.7, 0.05);
-  public animationSpeed = new NumericProperty('Animation Speed', 'Base', 1, -5, 5, 0.7, 0.05);
+  // public animationSpeed = new NumericProperty('Animation Speed', 'Base', 1, -5, 5, 0.7, 0.05);
   // public pointSpacing = new NumericProperty('Point Spacing', 'Base', 20, 1, 100, 0.7, 0.05);
   public fillHue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1, 1);
   public fillOpacity = new NumericProperty('Fill Opacity', 'Color', 200, 0, 100, 0.1, 1);
   public saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1, 1);
 
   private renderPoint(sketch: p5, i: number, props: PointProps) {
-    const { pointRadius, innerRadius, spokeLength, spokeQty, pointsPerSpoke, rotationVelocity } =
-      props;
-
-    const time = sketch.frameCount;
+    const {
+      pointRadius,
+      innerRadius,
+      spokeLength,
+      spokeQty,
+      pointsPerSpoke,
+      rotationVelocity,
+    } = props;
 
     const spacing = spokeLength / pointsPerSpoke;
-    const radius = i * spacing + innerRadius;
-    console.log({ radius, spacing, i });
+    const radius = innerRadius + (i % pointsPerSpoke) * spacing;
 
+    const time = sketch.frameCount;
     const angle = 0 + time * rotationVelocity;
     const x = radius + sketch.sin(angle);
     const y = radius + sketch.cos(angle);
@@ -82,6 +94,7 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
 
     const points = new Array(spokeQty * pointsPerSpoke).fill(null);
 
+    // console.log(spokeQty, pointsPerSpoke, points.length);
     // sketch.ellipse(this.windowWidth / 2, this.windowHeight / 2, 100);
     // sketch.fill(200);
     sketch.ellipse(0, 0, 50);
