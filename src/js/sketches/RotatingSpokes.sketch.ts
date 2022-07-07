@@ -57,7 +57,6 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
   public rotationVelocity = new NumericProperty('Rotation Speed', 'Base', 0.1, 0, 3, 0.4, 0.05);
   public pointSize = new NumericProperty('Point Size', 'Base', 20, 1, 100, 0.7, 0.05);
   // public animationSpeed = new NumericProperty('Animation Speed', 'Base', 1, -5, 5, 0.7, 0.05);
-  // public pointSpacing = new NumericProperty('Point Spacing', 'Base', 20, 1, 100, 0.7, 0.05);
   public fillHue = new NumericProperty('Color', 'Color', 200, 0, 360, 0.1, 1);
   public fillOpacity = new NumericProperty('Fill Opacity', 'Color', 200, 0, 100, 0.1, 1);
   public saturation = new NumericProperty('Saturation', 'Color', 100, 0, 100, 0.1, 1);
@@ -101,7 +100,6 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
     y: number;
     delta: number;
   }): void {
-    // const z = this.simplex.noise3D()
 
     const hue = this.simplex.noise3D(x * 0.001, y * 0.001, delta) * 360; // todo these should be configurable equations
     const saturation = 100;
@@ -119,13 +117,9 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
     const pointRadius = this.pointSize.currentValue;
     const innerRadius = this.innerRadius.currentValue;
     const rotationVelocity = this.rotationVelocity.currentValue;
-    // const fillColor = this.fillHue.currentValue;
-    // const fillOpacity = this.fillOpacity.currentValue;
-    // const time = sketch.frameCount;
 
     const points = new Array(spokeQty * pointsPerSpoke).fill(null);
 
-    // sketch.ellipse(0, 0, 50);
     points.map((_p, i) => {
       const pointProps: PointProps = {
         pointRadius,
@@ -137,7 +131,6 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
       };
 
       sketch.push();
-      // sketch.fill(this.fillHue.currentValue, this.saturation.currentValue, 100);
       this.renderPoint(sketch, i, pointProps);
       sketch.pop();
     });
