@@ -188,7 +188,7 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
     sketch.rotateZ(angleZ);
   };
 
-  private setColor = p5Helper.setColor;
+  // private setColor = p5Helper.setColor;
 
   /**
    * Primary Render Function
