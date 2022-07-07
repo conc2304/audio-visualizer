@@ -73,8 +73,8 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
 
     const time = sketch.frameCount;
     const angle = 0 + time * rotationVelocity;
-    const x = radius + sketch.sin(angle);
-    const y = radius + sketch.cos(angle);
+    const x = radius * sketch.sin(angle);
+    const y = radius * sketch.cos(angle);
 
     sketch.ellipse(x, y, pointRadius);
   }
@@ -94,14 +94,8 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
 
     const points = new Array(spokeQty * pointsPerSpoke).fill(null);
 
-    // console.log(spokeQty, pointsPerSpoke, points.length);
-    // sketch.ellipse(this.windowWidth / 2, this.windowHeight / 2, 100);
-    // sketch.fill(200);
     sketch.ellipse(0, 0, 50);
-    // console.log(points.length, spokeQty, spokeLength);
     points.map((_p, i) => {
-      // console.log(_p, i);
-
       const pointProps: PointProps = {
         pointRadius,
         spokeQty,
@@ -110,6 +104,7 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
         rotationVelocity,
         pointsPerSpoke,
       };
+      
       sketch.push();
       sketch.fill(this.fillHue.currentValue, this.saturation.currentValue, 100);
       this.renderPoint(sketch, i, pointProps);
