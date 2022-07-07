@@ -1,3 +1,4 @@
+
 import { CustomModelShape, WebglPrimitiveShape } from "../interfaces";
 
 export const P5_PRIMITIVES_3D: Array<WebglPrimitiveShape> = [

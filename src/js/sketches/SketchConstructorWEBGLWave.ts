@@ -1,7 +1,7 @@
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
-import {P5Base, P5Constructor, P5Sketch} from '../interfaces/P5Sketch.interface';
+import { P5Base, P5Constructor, P5Sketch } from '../interfaces/P5Sketch.interface';
 import p5 from 'p5';
 import { loadCustomModel } from '../services/p5Helper';
 import { CUSTOM_MODELS, P5_PRIMITIVES_3D } from '../constants';
@@ -18,10 +18,17 @@ export default class WEBGLWave extends P5Base implements P5Sketch {
   }
 
   public catalogueInfo = new CatalogueDataEntry(
+    // <<<<<<< HEAD
+    //     this.constructor,
+    //     '3D Sine Wave',
+    //     'A parametric sine wave with various 3D shapes as point along the wave.',
+    //     [ 'Parametric', '3D', 'Wave' ],
+    // =======
     this,
     '3D Sine Wave',
     'A parametric sine wave with various 3D shapes as point along the wave.',
     [ 'Parametric', '3D' ],
+    // >>>>>>> 2e623f67975bc3c819f249b889504d9099408b5c
     'clyzby',
     'webgl-wave_200.gif',
     277,
