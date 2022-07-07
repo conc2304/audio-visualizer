@@ -107,6 +107,7 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
 
     for (let point = 0; point < pointsQty; point++) {
       sketch.push();
+      // const x = radius * Math.sin(anglePos);
       const anglePos = theta * point + deltaRotation;
       this.orbitAroundOrigin({ radius, anglePos, z }, sketch);
       this.renderShape(sketch);

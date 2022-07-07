@@ -50,7 +50,7 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
     0.1,
   );
   public innerRadius = new NumericProperty('Inner Radius', 'Base', 0, 0, 300, 0.7, 0.1);
-  public rotationVelocity = new NumericProperty('Rotation Speed', 'Base', 0.1, -2, 2, 0.7, 0.05);
+  public rotationVelocity = new NumericProperty('Rotation Speed', 'Base', 0.1, -2, 2, 0.4, 0.05);
   public pointSize = new NumericProperty('Point Size', 'Base', 20, 1, 100, 0.7, 0.05);
   // public animationSpeed = new NumericProperty('Animation Speed', 'Base', 1, -5, 5, 0.7, 0.05);
   // public pointSpacing = new NumericProperty('Point Spacing', 'Base', 20, 1, 100, 0.7, 0.05);
@@ -71,8 +71,10 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
     const spacing = spokeLength / pointsPerSpoke;
     const radius = innerRadius + (i % pointsPerSpoke) * spacing;
 
+    const theta = sketch.radians(360 / spokeQty);
     const time = sketch.frameCount;
-    const angle = 0 + time * rotationVelocity;
+    const delta = time * rotationVelocity * -0.1;
+    const angle = theta * (i % spokeQty) + delta;
     const x = radius * sketch.sin(angle);
     const y = radius * sketch.cos(angle);
 
@@ -104,7 +106,7 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
         rotationVelocity,
         pointsPerSpoke,
       };
-      
+
       sketch.push();
       sketch.fill(this.fillHue.currentValue, this.saturation.currentValue, 100);
       this.renderPoint(sketch, i, pointProps);
