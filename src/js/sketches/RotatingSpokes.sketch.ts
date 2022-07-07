@@ -100,7 +100,6 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
     y: number;
     delta: number;
   }): void {
-
     const hue = this.simplex.noise3D(x * 0.001, y * 0.001, delta) * 360; // todo these should be configurable equations
     const saturation = 100;
     const brightness = 100;
@@ -120,7 +119,7 @@ export default class RotatingSpokes extends P5Base implements P5Sketch {
 
     const points = new Array(spokeQty * pointsPerSpoke).fill(null);
 
-    points.map((_p, i) => {
+    points.map((_p: null, i: number): void => {
       const pointProps: PointProps = {
         pointRadius,
         spokeQty,
