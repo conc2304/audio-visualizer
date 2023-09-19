@@ -1,6 +1,6 @@
 # VYZBY - An interactive p5JS sketch visualizer
 
-Production URL [https://modest-darwin-601c1d.netlify.app/)
+Production URL https://modest-darwin-601c1d.netlify.app/
 
 ## Outline of features
   This app is a tool to animate and control sketches made in p5js through the DOM as well as other auxilliary inputs.
