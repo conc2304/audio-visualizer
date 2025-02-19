@@ -30,8 +30,10 @@ export class P5Base {
     this.sid = guidGenerator();
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
+    this.type = type;
   }
 
+  public readonly type;
   public sketchParameters = [];
   public windowWidth: number;
   public windowHeight: number;

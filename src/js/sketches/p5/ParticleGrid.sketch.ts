@@ -13,10 +13,9 @@ export default class ParticleGrid extends P5Base implements BaseSketch {
   constructor() {
     super('p5');
   }
-  type: 'p5';
   public catalogueInfo = new CatalogueDataEntry(
     this,
-    'p5',
+    this.type,
     '3D Noise Grid',
     'Parametric noise grid in 3D!',
     ['Noise', '3D'],

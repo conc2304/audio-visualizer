@@ -3,14 +3,9 @@ import { P5Base, BaseSketch } from '../../interfaces/P5Sketch.interface';
 import CatalogueDataEntry from '../../services/CatalogueDataEntry';
 import NumericProperty from '../../services/PropertyConstructorNumeric';
 import VariableProperty from '../../services/PropertyConstructorVariable';
-// <<<<<<< HEAD
-// import p5Helper from '../services/p5Helper';
-// import { CATALOGUE_ITEM_AVATAR_DIR, CUSTOM_MODELS_DIR, P5_PRIMITIVES_3D, SKETCH_PROPERTY_3D_SHAPE, WEBGL_MODELS } from '../constants';
-// =======
 import p5Helper, { loadCustomModel } from '../../services/p5Helper';
 import { P5_PRIMITIVES_3D, CUSTOM_MODELS } from '../../constants';
 import { CustomModelShape, WebglShape } from '../../interfaces';
-// >>>>>>> 2e623f67975bc3c819f249b889504d9099408b5c
 
 let deltaRotation = 0;
 let deltaRotationX = 0;
@@ -22,10 +17,9 @@ export default class RotaryTunnel extends P5Base implements BaseSketch {
   constructor() {
     super('p5');
   }
-  type: 'p5';
   public catalogueInfo = new CatalogueDataEntry(
     this,
-    'p5',
+    this.type,
     'Rotatry Tunnel',
     'A Spinning Tunnel of Stuff!',
     ['Particles', 'Tunnel'],

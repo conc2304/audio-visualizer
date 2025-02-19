@@ -12,11 +12,10 @@ export default class CenterWave extends P5Base implements BaseSketch {
   constructor() {
     super('p5');
   }
-  type: 'p5';
 
   public catalogueInfo = new CatalogueDataEntry(
     this,
-    'p5',
+    this.type,
     'Basic Sine Wave',
     'A simple parametric sine wave with various shapes as point along the wave.',
     ['Parametric', 'Awesome'],

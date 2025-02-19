@@ -14,11 +14,10 @@ export default class WEBGLWave extends P5Base implements BaseSketch {
   constructor() {
     super('p5');
   }
-  type: 'p5';
 
   public catalogueInfo = new CatalogueDataEntry(
     this,
-    'p5',
+    this.type,
     '3D Sine Wave',
     'A parametric sine wave with various 3D shapes as point along the wave.',
     ['Parametric', '3D'],

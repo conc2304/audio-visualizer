@@ -9,6 +9,7 @@ import ParticleGrid from '../sketches/p5/ParticleGrid.sketch';
 import { BaseSketch } from '../interfaces/P5Sketch.interface';
 import RotaryTunnel from '../sketches/p5/RotaryTunnel.sketch';
 import SketchCatalog from '@/js/services/SketchCatalogue';
+import FlockingBoids from '@/js/sketches/three/boids/Flocking.sketch';
 
 const RegisteredSketches: Array<BaseSketch> = [];
 
@@ -23,6 +24,7 @@ SketchCatalog.push(
   new ParticleGrid(),
   new RotaryTunnel(),
   // new BodyBrush(), // todo - broken
+  new FlockingBoids(),
 );
 
 let i = 0;

@@ -3,6 +3,7 @@
     #sketch-container
     SketchMenu(
       v-show="masterMenuOpen"
+      sketchType="p5"
     )
     v-icon.master-menu-toggle(
       v-show="!masterMenuOpen"

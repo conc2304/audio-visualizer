@@ -143,6 +143,8 @@ export default {
     getFilterList() {
       const search = this.search ? this.search.toLowerCase() : '';
       return this.SketchCatalogue.filter(sketch => {
+        if (sketch.type !== this.sketchType) return false;
+
         const filterables = ['creator', 'title', 'description'];
 
         for (const filterName of filterables) {
@@ -169,7 +171,9 @@ export default {
 
   computed: {
     filteredSketchCatalogue() {
-      let filteredList = this.SketchCatalogue.filter(({ type }) => type === this.sketchType);
+      let filteredList = this.SketchCatalogue.filter(sketch => {
+        return sketch.type === this.sketchType;
+      });
       if (this.search) {
         filteredList = this.getFilterList();
       }

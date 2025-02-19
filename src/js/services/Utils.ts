@@ -1,15 +1,17 @@
 import { File } from 'p5';
 import store from '@/store';
 
-
 export const getRandomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
 };
 
-export const formatAudioFilename = (file: File) => {
+export function getRandomInRange(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+export const formatAudioFilename = (file: File) => {
   // local server file
-  if ((file as any)[ 'path' ]) {
+  if ((file as any)['path']) {
     return file;
   }
 
@@ -18,9 +20,9 @@ export const formatAudioFilename = (file: File) => {
     return false;
   }
 
-  let currentSound: { artist: string | null, title: string | null; } = {
+  let currentSound: { artist: string | null; title: string | null } = {
     artist: null,
-    title: null
+    title: null,
   };
 
   if (file.name) {
@@ -48,20 +50,20 @@ export const formatTime = (time: number): string => {
 
 export const sketchPropertyIterator = (RegisteredSketches, fn: Function, globalReset: boolean) => {
   for (let index in RegisteredSketches) {
-    for (let prop in RegisteredSketches[ index ]) {
+    for (let prop in RegisteredSketches[index]) {
       if (
-        !RegisteredSketches[ index ].hasOwnProperty(prop) ||
-        !RegisteredSketches[ index ][ prop ].hasOwnProperty('defaultValue') ||
-        !RegisteredSketches[ index ][ prop ].hasOwnProperty('currentValue')
+        !RegisteredSketches[index].hasOwnProperty(prop) ||
+        !RegisteredSketches[index][prop].hasOwnProperty('defaultValue') ||
+        !RegisteredSketches[index][prop].hasOwnProperty('currentValue')
       ) {
         continue;
       }
 
-      if (RegisteredSketches[ index ][ prop ].lockOn === true && !globalReset) {
+      if (RegisteredSketches[index][prop].lockOn === true && !globalReset) {
         continue;
       }
 
-      RegisteredSketches[ index ][ prop ] = fn(RegisteredSketches[ index ][ prop ]);
+      RegisteredSketches[index][prop] = fn(RegisteredSketches[index][prop]);
     }
   }
 };
@@ -74,15 +76,9 @@ export const guidGenerator = (): string => {
   const S4 = (): string => {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
   };
-  return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+  return S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4();
 };
 
 export const degreeToRadian = (degree: number): number => {
   return degree * (Math.PI / 180);
 };
-
-
-
-
-
-

@@ -21,10 +21,9 @@ export default class Parametric extends P5Base {
     super('p5');
   }
 
-  type: 'p5';
   public catalogueInfo = new CatalogueDataEntry(
     this,
-    'p5',
+    this.type,
     'Parametric Shapes',
     'A collecetion of simple parametric shapes.',
     ['Parametric'],

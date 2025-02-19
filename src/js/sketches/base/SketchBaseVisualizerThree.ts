@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import store from '../../../store';
 // import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 export class VisualizerBaseThreeSketch {
   private container: HTMLElement;
@@ -8,6 +9,7 @@ export class VisualizerBaseThreeSketch {
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
   private clock: THREE.Clock; // Use Three.js's Clock to handle time tracking
+  private controls: OrbitControls;
 
   constructor(containerId: string) {
     const container = document.getElementById(containerId);
@@ -20,19 +22,22 @@ export class VisualizerBaseThreeSketch {
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000,
+      2000,
     );
+    this.camera.position.set(0, 0, 500);
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setPixelRatio(Math.min(1.5, window.devicePixelRatio));
+    this.renderer.setClearColor(0x121212);
     this.container.appendChild(this.renderer.domElement);
-    this.clock = new THREE.Clock(); // Initialize the clock
+    this.clock = new THREE.Clock();
     this.init();
   }
 
   private init(): void {
-    this.camera.position.z = 5;
     this.addLights();
     this.animate();
+    this.createControls();
   }
 
   private addLights(): void {
@@ -43,8 +48,8 @@ export class VisualizerBaseThreeSketch {
 
   private animate = (): void => {
     requestAnimationFrame(this.animate);
-    const elapsedTime = this.clock.getElapsedTime(); // Get the elapsed time
-    this.update(elapsedTime); // Pass the elapsed time to update
+    const elapsedTime = this.clock.getElapsedTime();
+    this.update(elapsedTime);
     this.renderer.render(this.scene, this.camera);
   };
 
@@ -54,7 +59,6 @@ export class VisualizerBaseThreeSketch {
       if (!RegisteredSketches.hasOwnProperty(sketchItem)) {
         continue;
       }
-
       if (RegisteredSketches[sketchItem].type !== 'three') continue;
 
       // don't render an object if we have made it not visible
@@ -63,11 +67,11 @@ export class VisualizerBaseThreeSketch {
       }
 
       if (RegisteredSketches[sketchItem].easeInto) {
-        RegisteredSketches[sketchItem].easeInto(); // Pass the elapsed time to the easing function if it exists
+        RegisteredSketches[sketchItem].easeInto();
       }
 
       if (typeof RegisteredSketches[sketchItem].update === 'function') {
-        RegisteredSketches[sketchItem].update(elapsedTime); // Update each sketch with the elapsed time
+        RegisteredSketches[sketchItem].update(elapsedTime, this.scene); // Update each sketch with the elapsed time
       }
     }
   }
@@ -78,5 +82,9 @@ export class VisualizerBaseThreeSketch {
     }
     this.renderer.dispose();
     this.clock.stop(); // Stop the clock when destroying the scene
+  }
+
+  private createControls() {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
   }
 }

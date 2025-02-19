@@ -15,10 +15,9 @@ export default class Tunnel extends P5Base implements BaseSketch {
   constructor() {
     super('p5');
   }
-  type: 'p5';
   public catalogueInfo = new CatalogueDataEntry(
     this,
-    'p5',
+    this.type,
     'Infinite Tunnel',
     'A generative never ending tunnel ',
     ['Generative', 'Tunnel', 'Loop'],

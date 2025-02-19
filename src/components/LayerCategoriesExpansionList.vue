@@ -47,7 +47,6 @@ export default {
 
   methods: {
     getPropertyCategories() {
-      console.log('getProperties');
       const categories = [];
       const currentSketch = this.sketchInView;
 
