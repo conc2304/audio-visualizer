@@ -1,15 +1,15 @@
 import p5 from 'p5';
-import { P5Base, P5Sketch } from '../interfaces/P5Sketch.interface';
-import CatalogueDataEntry from '../services/CatalogueDataEntry';
-import NumericProperty from '../services/PropertyConstructorNumeric';
-import VariableProperty from '../services/PropertyConstructorVariable';
+import { P5Base, BaseSketch } from '../../interfaces/P5Sketch.interface';
+import CatalogueDataEntry from '../../services/CatalogueDataEntry';
+import NumericProperty from '../../services/PropertyConstructorNumeric';
+import VariableProperty from '../../services/PropertyConstructorVariable';
 // <<<<<<< HEAD
 // import p5Helper from '../services/p5Helper';
 // import { CATALOGUE_ITEM_AVATAR_DIR, CUSTOM_MODELS_DIR, P5_PRIMITIVES_3D, SKETCH_PROPERTY_3D_SHAPE, WEBGL_MODELS } from '../constants';
 // =======
-import p5Helper, { loadCustomModel } from '../services/p5Helper';
-import { P5_PRIMITIVES_3D, CUSTOM_MODELS } from '../constants';
-import { CustomModelShape, WebglShape } from '../interfaces';
+import p5Helper, { loadCustomModel } from '../../services/p5Helper';
+import { P5_PRIMITIVES_3D, CUSTOM_MODELS } from '../../constants';
+import { CustomModelShape, WebglShape } from '../../interfaces';
 // >>>>>>> 2e623f67975bc3c819f249b889504d9099408b5c
 
 let deltaRotation = 0;
@@ -18,32 +18,23 @@ let deltaRotationY = 0;
 let deltaRotationZ = 0;
 let deltaTunnel = 0;
 
-export default class RotaryTunnel extends P5Base implements P5Sketch {
-  constructor () {
-    super();
+export default class RotaryTunnel extends P5Base implements BaseSketch {
+  constructor() {
+    super('p5');
   }
-
+  type: 'p5';
   public catalogueInfo = new CatalogueDataEntry(
-    // <<<<<<< HEAD
-    //     this.constructor,
-    //     'Rotary Tunnel',
-    //     'A Spinning Tunnel of Stuff!',
-    //     [ 'Particles', 'Tunnel', 'Spinning' ],
-    //     'clyzby',
-    //     `${CATALOGUE_ITEM_AVATAR_DIR}/rotary-tunnel_200.gif`,
-    // =======
     this,
+    'p5',
     'Rotatry Tunnel',
     'A Spinning Tunnel of Stuff!',
-    [ 'Particles', 'Tunnel' ],
+    ['Particles', 'Tunnel'],
     'clyzby',
     'rotary-tunnel_200.gif',
-    // >>>>>>> 2e623f67975bc3c819f249b889504d9099408b5c
     300,
     8,
     '2021-11-20',
   );
-
 
   private readonly zMax = 1000;
   private readonly zMin = -3000;
@@ -147,18 +138,20 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
   };
 
   private readonly shapeSizeMap = {
-    box: [ 1 ],
-    sphere: [ 1 ],
-    plane: [ 3.5, 1.5 ],
-    torus: [ 1.2, 0.6 ],
-    cylinder: [ 1, 2 ],
-    cone: [ 1, 2 ],
-    ellipsoid: [ 1, 2, 0.5 ],
+    box: [1],
+    sphere: [1],
+    plane: [3.5, 1.5],
+    torus: [1.2, 0.6],
+    cylinder: [1, 2],
+    cone: [1, 2],
+    ellipsoid: [1, 2, 0.5],
   };
 
   private renderPrimitiveShape = (shape: WebglShape, shapeSize = 1, sketch: p5) => {
-    const mappedDimensions = this.shapeSizeMap[ shape ].map((dimension: number) => shapeSize * dimension);
-    sketch[ shape ](...mappedDimensions);
+    const mappedDimensions = this.shapeSizeMap[shape].map(
+      (dimension: number) => shapeSize * dimension,
+    );
+    sketch[shape](...mappedDimensions);
   };
 
   // <<<<<<< HEAD
@@ -169,18 +162,18 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
   //       sketch[ 'objects' ][ shape ] = sketch.loadModel(modelPath, true);
   // =======
   private renderCustomModel = (shape: WebglShape, shapeSize = 1, sketch: p5) => {
-    if (!sketch[ 'objects' ][ shape ]) {
+    if (!sketch['objects'][shape]) {
       loadCustomModel(shape as CustomModelShape, sketch);
       // >>>>>>> 2e623f67975bc3c819f249b889504d9099408b5c
     }
 
     sketch.normalMaterial();
     sketch.scale(shapeSize * 0.025);
-    sketch.model(sketch[ 'objects' ][ shape ]);
+    sketch.model(sketch['objects'][shape]);
   };
 
   private renderShape = (sketch: p5) => {
-    if (!sketch[ 'objects' ]) sketch[ 'objects' ] = {};
+    if (!sketch['objects']) sketch['objects'] = {};
 
     const shapeSize = this.pointSize.currentValue;
     const shape = this.shape.currentValue as WebglShape;
@@ -189,7 +182,7 @@ export default class RotaryTunnel extends P5Base implements P5Sketch {
     this.rotateShape(sketch);
     sketch.strokeWeight(0.5);
 
-    if (typeof sketch[ shape ] === 'function') {
+    if (typeof sketch[shape] === 'function') {
       // p5 primitive shapes
       this.renderPrimitiveShape(shape, shapeSize, sketch);
     } else {

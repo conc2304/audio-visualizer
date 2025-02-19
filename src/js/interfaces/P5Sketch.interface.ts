@@ -9,7 +9,8 @@ import NumericProperty from '../services/PropertyConstructorNumeric';
 import VariableProperty from '../services/PropertyConstructorVariable';
 import SketchCatalog from '../services/SketchCatalogue';
 
-export interface P5Sketch {
+export interface BaseSketch {
+  type: 'p5' | 'three';
   sid: string;
   windowWidth: number;
   windowHeight: number;
@@ -25,7 +26,7 @@ export interface P5Sketch {
 export class P5Base {
   public readonly sid: string;
 
-  constructor() {
+  constructor(type: 'p5' | 'three') {
     this.sid = guidGenerator();
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
@@ -39,5 +40,8 @@ export class P5Base {
   public easeInto = easeInto;
 }
 
-export type P5Constructor = new () => P5Sketch;
+export type P5Constructor = new () => BaseSketch;
 
+export interface ThreeSketch extends BaseSketch {
+  update(elapsedTime: number): void;
+}

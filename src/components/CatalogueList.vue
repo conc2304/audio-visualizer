@@ -79,7 +79,16 @@
 import CatalogueItemCard from '@/components/CatalogueItemCard.vue';
 import SketchCatalogue from '@/js/services/SketchCatalogue';
 import { UPDATE_CATALOGUE_OPEN } from '../store/mutationTypes';
+
 export default {
+  props: {
+    sketchType: {
+      type: String,
+      required: true,
+      validator: value => ['p5', 'three'].includes(value),
+    },
+  },
+
   data: () => ({
     SketchCatalogue,
     search: '',
@@ -137,7 +146,10 @@ export default {
         const filterables = ['creator', 'title', 'description'];
 
         for (const filterName of filterables) {
-          if (sketch.catalogueInfo[filterName].toLowerCase().includes(search)) {
+          if (
+            sketch.type == this.sketchType &&
+            sketch.catalogueInfo[filterName].toLowerCase().includes(search)
+          ) {
             return true;
           }
         }
@@ -157,7 +169,7 @@ export default {
 
   computed: {
     filteredSketchCatalogue() {
-      let filteredList = this.SketchCatalogue;
+      let filteredList = this.SketchCatalogue.filter(({ type }) => type === this.sketchType);
       if (this.search) {
         filteredList = this.getFilterList();
       }

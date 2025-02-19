@@ -1,5 +1,5 @@
-import { P5Sketch } from "../interfaces/P5Sketch.interface";
+import { BaseSketch } from '../interfaces/P5Sketch.interface';
 
-const SketchCatalog: Array<P5Sketch> = [];
+const SketchCatalog: Array<BaseSketch> = [];
 
 export default SketchCatalog;

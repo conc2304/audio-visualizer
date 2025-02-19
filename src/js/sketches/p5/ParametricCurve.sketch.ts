@@ -2,7 +2,7 @@ import p5 from 'p5';
 import NumericProperty from '@/js/services/PropertyConstructorNumeric';
 import VariableProperty from '@/js/services/PropertyConstructorVariable';
 import CatalogueDataEntry from '@/js/services/CatalogueDataEntry';
-import { P5Base } from '../interfaces/P5Sketch.interface';
+import { P5Base } from '../../interfaces/P5Sketch.interface';
 
 const shape = {
   k: 0,
@@ -18,11 +18,13 @@ const velocityShapeMap = {
 
 export default class Parametric extends P5Base {
   constructor() {
-    super();
+    super('p5');
   }
 
+  type: 'p5';
   public catalogueInfo = new CatalogueDataEntry(
     this,
+    'p5',
     'Parametric Shapes',
     'A collecetion of simple parametric shapes.',
     ['Parametric'],

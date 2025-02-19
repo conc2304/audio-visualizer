@@ -1,25 +1,31 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
-import SplashScreen from "@/views/HomePage.vue";
-import Visualizer from "@/views/VisualizerPage.vue";
+import Vue from 'vue';
+import VueRouter, { RouteConfig } from 'vue-router';
+import SplashScreen from '@/views/HomePage.vue';
+import Visualizer from '@/views/VisualizerPage.vue';
+import VisualizerThree from '@/views/VisualizerPageThree.vue';
 
 Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: SplashScreen,
   },
   {
-    path: "/playground",
-    name: "playground",
+    path: '/playground',
+    name: 'playground',
     component: Visualizer,
+  },
+  {
+    path: '/playground-three',
+    name: 'playground-three',
+    component: VisualizerThree,
   },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });

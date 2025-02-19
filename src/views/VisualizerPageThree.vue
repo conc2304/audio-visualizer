@@ -1,0 +1,124 @@
+<template lang="pug">
+div#visualizer-wrapper
+  #sketch-container
+  SketchMenu(
+    v-show="masterMenuOpen",
+    :sketchType="'three'"
+  )
+  v-icon.master-menu-toggle(
+    v-show="!masterMenuOpen",
+    @click="updateMasterMenu(true)",
+    dark
+  ) &#9776;
+  AppSettingsMenu
+</template>
+
+<script>
+import SketchMenu from '@/components/SketchMenu.vue';
+import AppSettingsMenu from '@/components/AppSettingsMenu.vue';
+import { VisualizerBaseThreeSketch } from '@/js/sketches/base/SketchBaseVisualizerThree'; // Three.js base sketch
+import APS from '@/js/services/AudioPlayerService';
+import { getRandomInt } from '@/js/services/Utils';
+import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+
+export default {
+  data: () => ({
+    currentSketch: null,
+  }),
+
+  components: {
+    AppSettingsMenu,
+    SketchMenu,
+  },
+
+  methods: {
+    updateMasterMenu(status) {
+      this.$store.commit('UPDATE_LAYER_MENU_OPEN', status);
+    },
+  },
+
+  computed: {
+    masterMenuOpen() {
+      return this.$store.state.masterMenuOpen;
+    },
+  },
+
+  mounted() {
+    new VisualizerBaseThreeSketch('sketch-container');
+
+    // alphabet charcodes fo A-Z = [65 - 90]
+    // number 0-1 = [49 - 57]
+    const { RegisteredSketches } = this.$store.state;
+
+    let demoEqSet = false;
+    for (const index in RegisteredSketches) {
+      if (!RegisteredSketches.hasOwnProperty(index)) continue;
+      for (const prop in RegisteredSketches[index]) {
+        if (!RegisteredSketches[index].hasOwnProperty(prop)) continue;
+        if (!RegisteredSketches[index][prop].hasOwnProperty('defaultValue')) {
+          continue;
+        }
+
+        if (!demoEqSet) {
+          APS.setAudioReactiveFreq(APS.frequencies[2], prop, index);
+          demoEqSet = true;
+        }
+
+        let keyboardCharacter =
+          getRandomInt(0, 10) < 4
+            ? getRandomInt(49, 57)
+            : (keyboardCharacter = getRandomInt(65, 90));
+
+        keyboardCharacter = String.fromCharCode(keyboardCharacter);
+        const min = parseFloat(RegisteredSketches[index][prop].min);
+        const max = parseFloat(RegisteredSketches[index][prop].max);
+
+        const rValue = Number((Math.random() * (max - min + min)).toFixed(4));
+
+        KeyboardControlsService.setKeyboardControl(keyboardCharacter, rValue, prop, index);
+      }
+    }
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+#visualizer-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: #000;
+
+  .master-menu-toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 1rem;
+
+    &:hover {
+      color: $color-secondary-blue;
+    }
+
+    &:active {
+      color: $color-primary-blue;
+    }
+  }
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+#settings-open {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 24px;
+  color: $color-off-white;
+  padding: 15px;
+  float: left;
+}
+</style>

@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import ParticleScript from "@/js/sketches/SketchBaseHomePage";
-import LoginPane from "@/components/LoginPane.vue";
-import AppSettingsMenu from "@/components/AppSettingsMenu.vue";
-import P5 from "p5";
+import ParticleScript from '@/js/sketches/base/SketchBaseHomePage';
+import LoginPane from '@/components/LoginPane.vue';
+import AppSettingsMenu from '@/components/AppSettingsMenu.vue';
+import P5 from 'p5';
 
 export default {
   components: {
@@ -64,25 +64,25 @@ export default {
     LoginPane,
   },
   data: () => ({
-    title: "VYZBY",
-    tagline: "A visceral interactive digital canvas to play and create in.",
+    title: 'VYZBY',
+    tagline: 'A visceral interactive digital canvas to play and create in.',
     loginDialog: false,
     infoDialog: false,
     user: {
-      username: "",
+      username: '',
       loggedIn: false,
     },
-    dialogHeadline: "How to play",
+    dialogHeadline: 'How to play',
     dialogTagline:
       "VYZBY is an interactive audio visualizer that let's you interact with it in many ways in the playground.",
     dialogPoints: [
-      "Manually control the parameters of individual layers through the interface.",
-      "Use your keyboard as an input and play it like piano,",
-      "Customize the parameters to play to whatever key you choose.",
-      "Use a MIDI device as your input device and make custom mappings.",
-      "Add music to your play time from SoundCloud or Spotify or music off your computer.",
-      "Select an audio frequency and automate the animation to the music.",
-      "Use your body as a brush via the webcam.  ** Only available on some layers",
+      'Manually control the parameters of individual layers through the interface.',
+      'Use your keyboard as an input and play it like piano,',
+      'Customize the parameters to play to whatever key you choose.',
+      'Use a MIDI device as your input device and make custom mappings.',
+      'Add music to your play time from SoundCloud or Spotify or music off your computer.',
+      'Select an audio frequency and automate the animation to the music.',
+      'Use your body as a brush via the webcam.  ** Only available on some layers',
     ],
   }),
   methods: {
@@ -92,16 +92,16 @@ export default {
       this.loginDialog = false;
     },
     userLogout() {
-      localStorage.removeItem("user");
-      this.user.username = "";
+      localStorage.removeItem('user');
+      this.user.username = '';
       this.user.loggedIn = false;
     },
   },
   mounted() {
     // load p5 in instance mode
-    const sketch = new P5(ParticleScript, "splash-sketch-background");
+    const sketch = new P5(ParticleScript, 'splash-sketch-background');
 
-    const userObj = JSON.parse(localStorage.getItem("user"));
+    const userObj = JSON.parse(localStorage.getItem('user'));
     if (userObj) {
       this.user.username = userObj.username;
       this.user.loggedIn = userObj.loggedIn;
@@ -156,14 +156,14 @@ export default {
 }
 
 h1 {
-  font-family: "Montserrat", "sans-serif";
+  font-family: 'Montserrat', 'sans-serif';
   font-weight: 900;
   font-size: 8.5rem;
   line-height: 1.5em;
 }
 
 h2 {
-  font-family: "Roboto", "sans-serif";
+  font-family: 'Roboto', 'sans-serif';
   font-weight: 300;
   font-size: 2.5rem;
   line-height: 1.15em;

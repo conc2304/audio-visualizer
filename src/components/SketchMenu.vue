@@ -58,6 +58,7 @@
     CatalogueList(
       v-show="catalogueOpen"
       @catalogue_open="setCatalogueStatus"
+      :sketchType="sketchType"
     )
 
     HelpDialog(
@@ -102,6 +103,14 @@ export default {
     CatalogueList,
     HelpDialog,
     PresetAssignSnackbar,
+  },
+
+  props: {
+    sketchType: {
+      type: String,
+      required: true,
+      validator: value => ['p5', 'three'].includes(value),
+    },
   },
 
   data: () => ({

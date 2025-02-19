@@ -15,7 +15,7 @@
 <script>
 import SketchMenu from '@/components/SketchMenu.vue';
 import AppSettingsMenu from '@/components/AppSettingsMenu.vue';
-import Visualizer from '@/js/sketches/SketchBaseVisualizer';
+import { VisualizerBaseSketch } from '@/js/sketches/base/SketchBaseVisualizer';
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
 import P5 from 'p5';
 import APS from '@/js/services/AudioPlayerService';
@@ -41,7 +41,7 @@ export default {
     },
   },
   mounted() {
-    const sketch = new P5(Visualizer, 'sketch-container');
+    new P5(VisualizerBaseSketch, 'sketch-container');
 
     // alphabet charcodes fo A-Z = [65 - 90]
     // number 0-1 = [49 - 57]
@@ -72,12 +72,7 @@ export default {
 
         const rValue = Number((Math.random() * (max - min + min)).toFixed(4));
 
-        KeyboardControlsService.setKeyboardControl(
-          keyboardCharacter,
-          rValue,
-          prop,
-          index,
-        );
+        KeyboardControlsService.setKeyboardControl(keyboardCharacter, rValue, prop, index);
       }
     }
   },

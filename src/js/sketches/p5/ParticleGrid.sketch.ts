@@ -1,55 +1,72 @@
 // Library Imports
 import p5 from 'p5';
-import SimplexNoise from "simplex-noise";
+import SimplexNoise from 'simplex-noise';
 
 // App Imports
 import { degreeToRadian } from '@/js/services/Utils';
-import CatalogueDataEntry from '../services/CatalogueDataEntry';
-import NumericProperty from '../services/PropertyConstructorNumeric';
-import {P5Base, P5Sketch} from '../interfaces/P5Sketch.interface';
-import VariableProperty from '../services/PropertyConstructorVariable';
+import CatalogueDataEntry from '../../services/CatalogueDataEntry';
+import NumericProperty from '../../services/PropertyConstructorNumeric';
+import { P5Base, BaseSketch } from '../../interfaces/P5Sketch.interface';
+import VariableProperty from '../../services/PropertyConstructorVariable';
 
-
-
-export default class ParticleGrid extends P5Base implements P5Sketch  {
-  constructor () {
-    super();
+export default class ParticleGrid extends P5Base implements BaseSketch {
+  constructor() {
+    super('p5');
   }
-
+  type: 'p5';
   public catalogueInfo = new CatalogueDataEntry(
     this,
+    'p5',
     '3D Noise Grid',
     'Parametric noise grid in 3D!',
-    [ 'Noise', '3D' ],
+    ['Noise', '3D'],
     'clyzby',
     'noise-grid_200.gif',
     300,
     8,
-    '2021-08-15'
+    '2021-08-15',
   );
 
   /**
    * Sketch Parameters
-   */ 
+   */
   public columns = new NumericProperty('Columns', 'Base', 25, 5, 40, 0.7, 1);
   public rows = new NumericProperty('Rows', 'Base', 25, 5, 40, 0.7, 1);
   public frequency = new NumericProperty('Frequency', 'Base', 20, 1, 100, 0.7, 1);
   public period = new NumericProperty('Period', 'Base', 50, 0, 100, 0.7, 1);
   public amplitude = new NumericProperty('Amplitude', 'Base', 3, 1, 8, 0.7, 0.1);
-  public gridWidth = new NumericProperty('Grid Width', 'Base', window.innerWidth, window.innerWidth / 2, window.innerWidth * 4, 0.7, 0.5);
-  public gridHeight = new NumericProperty('Grid Height', 'Base', window.innerHeight, window.innerHeight / 2, window.innerHeight * 4, 0.7, 0.5);
-  public mirror = new VariableProperty('Mirror', 'Base', 'None', [
-    'None',
-    'X',
-    'Y',
-    'X & Y'
-  ]);
+  public gridWidth = new NumericProperty(
+    'Grid Width',
+    'Base',
+    window.innerWidth,
+    window.innerWidth / 2,
+    window.innerWidth * 4,
+    0.7,
+    0.5,
+  );
+  public gridHeight = new NumericProperty(
+    'Grid Height',
+    'Base',
+    window.innerHeight,
+    window.innerHeight / 2,
+    window.innerHeight * 4,
+    0.7,
+    0.5,
+  );
+  public mirror = new VariableProperty('Mirror', 'Base', 'None', ['None', 'X', 'Y', 'X & Y']);
 
   public zoomAmount = new NumericProperty(' Zoom', 'Transform', -700, -2000, 250, 0.7, 1);
   public rotateXBase = new NumericProperty('Rotate X (Base)', 'Transform', 0, -180, 180, 0.7, 1);
-  public rotateXParticle = new NumericProperty('Rotate X (Particle)', 'Transform', 0, -180, 180, 0.7, 0.5);
+  public rotateXParticle = new NumericProperty(
+    'Rotate X (Particle)',
+    'Transform',
+    0,
+    -180,
+    180,
+    0.7,
+    0.5,
+  );
   public rotateZVelocity = new NumericProperty('Z Rotation Speed', 'Transform', 0, 0, 10, 0.7, 0.5);
-
 
   public blackScale = new NumericProperty('Black Scale', 'Color', 0, 0, 100, 0.7, 1);
   public strokeHue = new NumericProperty('Line Color', 'Color', 200, 0, 360, 0.7, 1);
@@ -61,12 +78,18 @@ export default class ParticleGrid extends P5Base implements P5Sketch  {
     'Fill + Outline',
   ]);
 
-
   // Private Properties
   private simplex = new SimplexNoise(Math.random);
 
   // Private Render Methods
-  private renderNoiseParticle(sketch: p5, noiseInstance: number, xPos: number, yPos: number, width: number, height: number) {
+  private renderNoiseParticle(
+    sketch: p5,
+    noiseInstance: number,
+    xPos: number,
+    yPos: number,
+    width: number,
+    height: number,
+  ) {
     sketch.push();
     this.setColor(sketch, noiseInstance);
     sketch.translate(xPos, yPos, noiseInstance);
@@ -81,31 +104,45 @@ export default class ParticleGrid extends P5Base implements P5Sketch  {
 
     switch (this.stroke.currentValue) {
       case 'Outline':
-        colorNoise = (typeof noise !== 'undefined') ? (this.strokeHue.currentValue + Math.abs(noise)) % this.strokeHue.defaultMax : this.strokeHue.currentValue;
+        colorNoise =
+          typeof noise !== 'undefined'
+            ? (this.strokeHue.currentValue + Math.abs(noise)) % this.strokeHue.defaultMax
+            : this.strokeHue.currentValue;
         sketch.strokeWeight(1);
         sketch.stroke(colorNoise, this.strokeSaturation.currentValue, 100);
         sketch.noFill();
         break;
       case 'Fill + Outline':
         sketch.strokeWeight(1);
-        colorNoise = (typeof noise !== 'undefined') ? (this.fillHue.currentValue + Math.abs(noise)) % this.fillHue.defaultMax : this.fillHue.currentValue;
-        brightnessNoise = (typeof noise !== 'undefined') ? (sketch.map(Math.abs(noise), 500, 1000, this.blackScale.defaultMax - this.blackScale.currentValue, 110, false)) : 100;
+        colorNoise =
+          typeof noise !== 'undefined'
+            ? (this.fillHue.currentValue + Math.abs(noise)) % this.fillHue.defaultMax
+            : this.fillHue.currentValue;
+        brightnessNoise =
+          typeof noise !== 'undefined'
+            ? sketch.map(
+                Math.abs(noise),
+                500,
+                1000,
+                this.blackScale.defaultMax - this.blackScale.currentValue,
+                110,
+                false,
+              )
+            : 100;
         sketch.stroke(this.strokeHue.currentValue, this.strokeSaturation.currentValue, 100);
         sketch.fill(colorNoise, this.fillSaturation.currentValue, brightnessNoise);
         break;
     }
-  };
-
+  }
 
   /**
-   * 
+   *
    * Primary Render Function
    */
   public render(sketch: p5): void {
-
     const columns = Math.round(this.columns.currentValue);
     const rows = Math.round(this.rows.currentValue);
-    const middleCol = Math.ceil((columns) * 0.5);
+    const middleCol = Math.ceil(columns * 0.5);
     const middleRow = Math.ceil((rows + 1) * 0.5);
 
     const hSpacing = this.gridWidth.currentValue / columns;
@@ -116,7 +153,7 @@ export default class ParticleGrid extends P5Base implements P5Sketch  {
 
     const periodAdjustmentMap = {
       noise: 0.0007,
-      sin: 0.07
+      sin: 0.07,
     };
     const period = this.period.currentValue * periodAdjustmentMap.noise;
 
@@ -131,8 +168,8 @@ export default class ParticleGrid extends P5Base implements P5Sketch  {
 
     const originX = this.gridWidth.currentValue * 0.5;
     const originY = this.gridHeight.currentValue * 0.5;
-    const mirrorXOn = this.mirror.currentValue.indexOf("X") > -1;
-    const mirrorYOn = this.mirror.currentValue.indexOf("Y") > -1;
+    const mirrorXOn = this.mirror.currentValue.indexOf('X') > -1;
+    const mirrorYOn = this.mirror.currentValue.indexOf('Y') > -1;
 
     sketch.push();
     sketch.translate(0, 0, this.zoomAmount.currentValue);
@@ -141,19 +178,24 @@ export default class ParticleGrid extends P5Base implements P5Sketch  {
     sketch.pop();
     for (let y = 0; y < this.rows.currentValue; y++) {
       for (let x = 0; x < this.columns.currentValue; x++) {
+        const xOrigin = hSpacing * x - originX;
+        const yOrigin = vSpacing * y - originY;
 
-        const xOrigin = (hSpacing * x) - originX;
-        const yOrigin = (vSpacing * y) - originY;
-
-        const xPos = (mirrorYOn && y >= middleRow) ? rows - y : y;
-        const yPos = (mirrorXOn && x >= middleCol) ? columns - x : x;
+        const xPos = mirrorYOn && y >= middleRow ? rows - y : y;
+        const yPos = mirrorXOn && x >= middleCol ? columns - x : x;
 
         const z = this.simplex.noise3D(xPos * period, yPos * period, time);
-        const zInstance = Math.floor(sketch.map(z, -0.1, 1, 0, 300 * (amplitude)));
+        const zInstance = Math.floor(sketch.map(z, -0.1, 1, 0, 300 * amplitude));
 
-        this.renderNoiseParticle(sketch, zInstance, xOrigin, yOrigin, particleWidth, particleHeight);
+        this.renderNoiseParticle(
+          sketch,
+          zInstance,
+          xOrigin,
+          yOrigin,
+          particleWidth,
+          particleHeight,
+        );
       }
     }
   }
 }
-

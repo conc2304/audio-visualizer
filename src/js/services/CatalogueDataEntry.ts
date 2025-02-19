@@ -1,10 +1,10 @@
 import { CATALOG_AVATAR_DIR } from '../constants';
-import { P5Constructor, P5Sketch } from '../interfaces/P5Sketch.interface';
+import { P5Constructor, BaseSketch } from '../interfaces/P5Sketch.interface';
 
 class CatalogDataEntry {
   constructor(
-    // public classConstructor: P5Constructor,
-    proto: P5Sketch,
+    proto: BaseSketch,
+    public type: 'p5' | 'three',
     public title: string,
     public description: string,
     public tags: Array<string>,

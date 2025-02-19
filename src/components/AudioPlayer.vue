@@ -86,15 +86,12 @@
 <script>
 import AudioPlaylist from '@/components/AudioPlaylist.vue';
 import AudioLocalList from '@/components/AudioLocalList.vue';
-import AudioAnalyzer from '@/js/sketches/SketchBaseAudioAnalyzer';
+import AudioAnalyzer from '@/js/sketches/base/SketchBaseAudioAnalyzer';
 import APS from '@/js/services/AudioPlayerService';
 import { formatAudioFilename, formatTime } from '@/js/services/Utils';
 import P5 from 'p5';
 import '@/plugins/p5/lib/addons/p5.sound';
-import {
-  UPDATE_AUDIO_PLAYER_OPEN,
-  UPDATE_CURRENT_TRACK_INDEX,
-} from '../store/mutationTypes';
+import { UPDATE_AUDIO_PLAYER_OPEN, UPDATE_CURRENT_TRACK_INDEX } from '../store/mutationTypes';
 
 export default {
   data: () => ({

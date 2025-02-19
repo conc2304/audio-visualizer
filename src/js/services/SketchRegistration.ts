@@ -1,16 +1,16 @@
 // Sketches
-import CenterWave from '@/js/sketches/CenterOscillator.sketch';
-import WEBGLWave from '@/js/sketches/3DOscillator.sketch';
-import OuterWaves from '@/js/sketches/OuterOscillator.sketch';
-import Parametric from '@/js/sketches/ParametricCurve.sketch';
-import Tunnel from '@/js/sketches/Tunnel.sketch';
+import CenterWave from '@/js/sketches/p5/CenterOscillator.sketch';
+import WEBGLWave from '@/js/sketches/p5/3DOscillator.sketch';
+import OuterWaves from '@/js/sketches/p5/OuterOscillator.sketch';
+import Parametric from '@/js/sketches/p5/ParametricCurve.sketch';
+import Tunnel from '@/js/sketches/p5/Tunnel.sketch';
 // import BodyBrush from '@/js/sketches/SketchConstructorBodyBrush'; TODO - FIX
-import ParticleGrid from '../sketches/ParticleGrid.sketch';
-import { P5Sketch } from '../interfaces/P5Sketch.interface';
-import RotaryTunnel from '../sketches/RotaryTunnel.sketch';
+import ParticleGrid from '../sketches/p5/ParticleGrid.sketch';
+import { BaseSketch } from '../interfaces/P5Sketch.interface';
+import RotaryTunnel from '../sketches/p5/RotaryTunnel.sketch';
 import SketchCatalog from '@/js/services/SketchCatalogue';
 
-const RegisteredSketches: Array<P5Sketch> = [];
+const RegisteredSketches: Array<BaseSketch> = [];
 
 // load all sketches into the catalog
 // todo - make each file register itself somehow

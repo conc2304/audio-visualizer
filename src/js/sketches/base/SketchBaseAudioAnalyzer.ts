@@ -4,10 +4,10 @@ import store from '@/store';
 import {
   UPDATE_CURRENT_TRACK_TIME,
   UPDATE_SONG_PROGRESS,
-} from '../../store/mutationTypes';
+} from '../../../store/mutationTypes';
 
 const AudioAnalyzer = p5 => {
-  p5.setup = () => {};
+  p5.setup = () => { };
 
   p5.draw = () => {
     if (APS.audio && APS.audio.isLoaded() && !APS.audio.isPaused()) {

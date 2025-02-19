@@ -10,10 +10,10 @@
 import RenderPolygon from '@/js/services/RenderPolygon';
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
 import PoseNetService from '@/js/services/PoseNetService';
-import store from '../../store';
+import store from '../../../store';
 
 // keep all 'custom' code here
-const VisualizerSketch = p5 => {
+export const VisualizerBaseSketch = p5 => {
   p5.preload = () => {
     p5.objects = {};
     const RegisteredSketches = store.getters.RegisteredSketches;
@@ -90,4 +90,3 @@ const VisualizerSketch = p5 => {
   };
 };
 
-export default VisualizerSketch;
