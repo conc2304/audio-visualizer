@@ -15,15 +15,22 @@ export default class FlockingBoids extends P5Base implements BaseSketch {
   public catalogueInfo = new CatalogueDataEntry(
     this,
     this.type,
-    '3D Sine Wave',
-    'A parametric sine wave with various 3D shapes as point along the wave.',
-    ['Parametric', '3D'],
+    'Flocking Simulation',
+    'Sumulation of Boids Flocking Behavior',
+    ['Nature', 'Algorithmic'],
     'clyzby',
     'webgl-wave_200.gif',
     277,
     4,
     '2019-07-17',
   );
+  private boidSettings: {
+    speed: number;
+    crowdingRadius: number;
+    collisionRadius: number;
+    neighborhoodRadius: number;
+  };
+  private settingsUpdated: boolean = true;
 
   public boidsQty = new NumericProperty('Total Boids', 'Base', 20, 1, 250, 1, 1);
   public attractorsQty = new NumericProperty('Total Attractors', 'Base', 3, 0, 20, 1, 1);
@@ -33,6 +40,19 @@ export default class FlockingBoids extends P5Base implements BaseSketch {
   ]);
   public boxSize = new NumericProperty('Bounding Box Size', 'Base', 700, 50, 2000, 0.7, 5);
 
+  public boidSpeed = new NumericProperty('Boid Speed', 'Boid', 2, 0.1, 5, 1, 0.1);
+  public crowdingRadius = new NumericProperty('Crowding Radius', 'Boid', 30, 10, 100, 1, 1);
+  public collisionRadius = new NumericProperty('Collision Radius', 'Boid', 60, 20, 200, 1, 1);
+  public neighborhoodRadius = new NumericProperty(
+    'Neighborhood Radius',
+    'Boid',
+    150,
+    50,
+    300,
+    1,
+    1,
+  );
+
   private scene: Scene;
   private boids = [];
   private walls = [];
@@ -41,9 +61,9 @@ export default class FlockingBoids extends P5Base implements BaseSketch {
   private initialized = false;
   private planesGroup = new Mesh();
 
-  public init(scene: Scene) {
+  public init(scene) {
     this.scene = scene;
-    this.createBoids(this.boxSize.currentValue / 2, scene);
+    this.createBoids(this.boxSize.currentValue / 2);
     this.createBoidsBox(this.boxSize.currentValue, true, scene);
     // this.createObstacles();
     this.createAttractors(15, this.boxSize.currentValue, scene);
@@ -62,6 +82,20 @@ export default class FlockingBoids extends P5Base implements BaseSketch {
     this.adjustBoidQuantity(this.boidsQty.currentValue);
 
     for (const boid of this.boids) {
+      // check if we need to update
+      if (boid.boidSpeed !== this.boidSpeed.targetValue) {
+        boid.boidSpeed = this.boidSpeed.currentValue;
+      }
+      if (boid.crowdingRadius !== this.crowdingRadius.targetValue) {
+        boid.crowdingRadius = this.crowdingRadius.currentValue;
+      }
+      if (boid.collisionRadius !== this.collisionRadius.targetValue) {
+        boid.collisionRadius = this.collisionRadius.currentValue;
+      }
+      if (boid.neighborhoodRadius !== this.neighborhoodRadius.targetValue) {
+        boid.neighborhoodRadius = this.neighborhoodRadius.currentValue;
+      }
+
       boid.update(this.boids, this.walls, this.obstacles, this.attractors, elapsedTime);
     }
 
@@ -70,13 +104,18 @@ export default class FlockingBoids extends P5Base implements BaseSketch {
     }
   }
 
-  private createBoids(maxRange = 200, scene) {
+  private createBoids(maxRange = 200) {
     for (let i = 0; i < this.boidsQty.currentValue; i++) {
       const boid = new Boid();
       const boidMesh = boid.createBoid(maxRange);
 
+      boid.neighborhoodRadius = this.neighborhoodRadius.currentValue;
+      boid.boidSpeed = this.boidSpeed.currentValue;
+      boid.crowdingRadius = this.crowdingRadius.currentValue;
+      boid.collisionRadius = this.collisionRadius.currentValue;
+
       this.boids[i] = boid;
-      scene.add(boidMesh);
+      this.scene.add(boidMesh);
     }
   }
 
@@ -228,6 +267,15 @@ export default class FlockingBoids extends P5Base implements BaseSketch {
         }
       }
     }
+  }
+
+  private updateSettings() {
+    this.boidSettings = {
+      speed: this.boidSpeed.currentValue,
+      crowdingRadius: this.crowdingRadius.currentValue,
+      collisionRadius: this.collisionRadius.currentValue,
+      neighborhoodRadius: this.neighborhoodRadius.currentValue,
+    };
   }
 
   public render(p5) {

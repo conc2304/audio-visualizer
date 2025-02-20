@@ -20,6 +20,9 @@ import { VisualizerBaseThreeSketch } from '@/js/sketches/base/SketchBaseVisualiz
 import APS from '@/js/services/AudioPlayerService';
 import { getRandomInt } from '@/js/services/Utils';
 import KeyboardControlsService from '@/js/services/KeyboardControlsService';
+import { UPDATE_REGISTERED_SKETCHES } from '@/store/mutationTypes';
+import SketchCatalog from '@/js/services/SketchCatalogue';
+import { BaseSketch } from '@/js/interfaces/P5Sketch.interface';
 
 export default {
   data: () => ({
@@ -45,6 +48,25 @@ export default {
 
   mounted() {
     new VisualizerBaseThreeSketch('sketch-container');
+
+    // filter out any sketch that isnt three.js
+    const registeredSketches = this.$store.state.RegisteredSketches;
+    const updatedSketches = registeredSketches.filter(sketchItem => {
+      return sketchItem.type === 'three';
+    });
+
+    // if there are no Three.js sketches find ONE in the catalog and load it
+    if (updatedSketches.length === 0) {
+      for (const sketchItem of SketchCatalog) {
+        if (sketchItem.type !== 'three') continue;
+        const { classConstructor } = sketchItem.catalogueInfo;
+        const newSketch = new classConstructor(window.innerWidth, window.innerHeight);
+        updatedSketches.push(newSketch);
+        break;
+      }
+    }
+
+    this.$store.commit(UPDATE_REGISTERED_SKETCHES, updatedSketches);
 
     // alphabet charcodes fo A-Z = [65 - 90]
     // number 0-1 = [49 - 57]
